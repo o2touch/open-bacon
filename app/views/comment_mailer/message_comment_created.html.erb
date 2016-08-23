@@ -1,0 +1,33 @@
+<table class="message-title" border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+ 	<tr>
+			<td valign="middle" align="center">
+	 			<img class="circle" src="<%= paperclip_url(@comment.user.profile.profile_picture_small_url) %>"/>
+			</td>
+			<td valign="middle" align="center">
+	 			<h2><%= @comment.user.name %> has commented:</h2>
+			</td>
+	</tr>
+</table>
+
+<div class="grey-comment">
+	<p class="comment"><%= h(@comment.text).gsub(/\n/, '<br/>').html_safe %></p>
+	<small class="time-stamp">posted on <%= BFTime.new(@comment.updated_at, @recipient.time_zone).pp_time %><small>
+</div>
+
+<h3>In response to the message</h3>
+
+<div class="grey-comment origanal-comment">
+	<p class="comment"><%= h(@original_comment).gsub(/\n/, '<br/>').html_safe %></p>
+	<small class="time-stamp">posted on <%= BFTime.new(@activity_item.updated_at, @recipient.time_zone).pp_time %><small>
+</div>
+
+<p>To add your own comment, just reply to this email, or click below to view the thread in full</p>
+
+<a class="button" href="<%= url_for @feed_owner %>">View or reply to this thread</a>
+
+<%
+	email_title = "Comment+Posted"
+	extra_params = @comment.user.email
+%>
+
+<%== get_img_html(email_title, extra_params) %>

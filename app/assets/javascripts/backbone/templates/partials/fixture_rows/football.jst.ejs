@@ -1,0 +1,30 @@
+<% if (awayTeam) { %>
+<p class="team-left">
+	<img class="circle" src="<%= awayTeamImg %>" alt="<%= awayTeam.get("name") %>"/>
+	<span><%= awayTeam.get("name") %></span>
+</p>
+<% } else { %>
+<p class="tbc team-left">TBC</p>
+<% } %>
+
+<div class="informations">
+ 	<span class="versus">
+	<% if (title && !awayTeam && !homeTeam) { %>
+		<%- title %>
+	<% }else if(!isInFuture && homeResultStr !== null && awayResultStr !== null){ %>
+		<span class="results-away"><%= awayResultStr %></span> @ <span class="results-home"><%= homeResultStr %></span> 
+	<% } else {%>
+		@
+	<% } %>
+	</span>
+</div>
+
+<% if (homeTeam) { %>
+<p class="team-right">
+	<span><%= homeTeam.get("name") %></span>
+	<img class="circle" src="<%= homeTeamImg %>" alt="<%= homeTeam.get("name") %>"/>
+</p>
+
+<% } else { %>
+	<p class="team-right tbc">TBC</p>
+<% } %>

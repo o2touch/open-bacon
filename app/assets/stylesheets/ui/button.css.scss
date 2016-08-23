@@ -1,0 +1,108 @@
+// BLUEFIELDS BUTTON REWRITTING
+button, .button{
+	outline:none;
+	border-width:1px;
+	border-style:solid;
+	display: inline-block;
+	margin: 0;
+	line-height: normal;
+	text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
+	padding: relative;
+	text-decoration: none;
+	position: relative;
+	@include radius($bluefields-radius);
+	@include no-selection();
+	@include button-basic($bluefields-blue);
+	
+	/*  State  */
+	&:hover{
+		cursor:pointer;
+		text-decoration: none;
+	}
+	/* disabled translation as makes some parts of buttons unclickable */
+	/* @include transform(translateY(0px));
+	&:active{
+		@include transform(translateY(1px));
+	} */
+	
+	&[disabled=disabled], &:disabled{
+		text-shadow:none!important;
+		box-shadow: none;
+		cursor:default;
+		/* &:hover, &:active, &:focus{
+			@include transform(translateY(0px));
+		} */	
+	
+	}
+	
+	/*  Size  */
+	font-size: 14px;
+	padding : 8px 14px;
+	font-weight: 500;
+	
+	&.large{
+		font-size: 16px;
+		padding: 9px 16px;
+	}
+	
+	&.small{
+		font-size: 12px;
+		padding: 5px 10px;
+	}
+	
+	&.tiny{
+		font-size: 11px; 
+		padding: 5px 8px;
+	}
+	
+	&.full-width{
+		width: 100%;
+		text-align: center;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	
+	&.centered{
+		margin: 0 auto;
+		float: none;
+		display: block;
+	}
+	
+	/*  Color  */
+	&.grey, &.secondary { @include button-basic($bluefields-grey); }
+	&.alert { @include button-basic($bluefields-red); }
+	&.success{ @include button-basic($bluefields-green); }
+	&.orange{ @include button-basic($bluefields-orange); }
+	&.twitter{ @include button-basic($twitter-blue); }
+	&.orange{ @include button-basic($bluefields-orange); }
+
+	&.white{ @include button-basic($bluefields-white); }
+	
+	&.android{ @include button-basic(#A4C739); }
+	&.apple{ @include button-basic(#111); }
+	&.facebook{ @include button-basic($facebook-blue); }
+	&.google-plus{ @include button-basic($google-red); }
+	
+	/*  Color  */
+	&:after{
+		content: "";
+		display: inline-block;
+		clear: both;
+	}
+	
+	.spinner{
+		float:right;
+		width: 20px;
+		margin-left: $bluefields-margin;
+	
+		.spinner-animation{
+			top:48%!important;
+			left:88%!important;
+		}
+	}
+}
+
+/*  link button fix  */
+a.button{
+	font-weight: 600;
+}

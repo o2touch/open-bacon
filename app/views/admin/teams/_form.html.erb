@@ -1,0 +1,68 @@
+<%= form_for([:admin, @team]) do |f| %>
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul>
+      <% @team.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :sport %><br />
+    <%= f.text_field :sport %>
+  </div>
+  <div class="field">
+    <%= f.label :demo_mode %><br />
+    <%= f.text_field :demo_mode %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
+
+<%= form_for([:admin, @team.profile]) do |f| %>
+  <% if @team.profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.profile.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul>
+      <% @team.profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :colour1 %><br />
+    <%= f.text_field :colour1 %>
+  </div>
+  <div class="field">
+    <%= f.label :colour2 %><br />
+    <%= f.text_field :colour2 %>
+  </div>
+  <div class="field">
+    <%= f.label :age_group %><br />
+    <%= f.text_field :age_group %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile_picture %><br />
+    <%= f.file_field :profile_picture %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

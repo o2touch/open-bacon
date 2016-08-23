@@ -1,0 +1,37 @@
+<% if (canViewActivity) { %>
+<li id="nav-activity" class="three columns mobile-three">
+  <a href="#activity">
+    <i class="bf-icon list"></i>
+    <span>
+      Activity
+    </span>
+  </a>
+</li>
+<% } %>
+<li id="nav-schedule" class="three columns mobile-three">
+  <a href="#schedule">
+    <i class="bf-icon calendar"></i>
+    <span>
+      Schedule
+    </span>
+  </a>
+</li>
+<li id="nav-results" class="three columns mobile-three">
+  <a href="#results">
+    <i class="bf-icon trophy"></i>
+    <span>
+      Recent events
+    </span>
+  </a>
+</li>
+<% if (canSeeTeamTab) { %>
+<li id="nav-squad" class="three columns mobile-three">
+  <a href="#squad">
+    <i class="bf-icon users"></i>
+    <span>
+      Team
+    </span>
+  </a>
+</li>
+<% } %>
+

@@ -1,0 +1,77 @@
+<div id="r-navigation"><div>
+  <div id="main-navigation">
+    <div class="row">
+      <div class="dropdown-group"></div>
+      <a class="bluefields-logo"><img src="<%= asset_path 'identity/logo/logo_dark_grey_200' %>"></a>
+      <div class="user-block">
+        <a id="btn-show-login" class="login" href="#" style="display:none"><span>Login</span></a>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="row download-page">
+  <div class="twelve columns centered top">
+    <div class="download-content six columns">
+      <% if !@team.nil? && !current_user.nil? %>
+      <h1><%=current_user.first_name%>, Now download our app to get updates to your phone</h1>
+      <p>Never miss an update about your team. Download our app to receive the latest on:</p>
+      <% else %>
+      <h1>Receive important team updates on-the-go</h1>
+      <p>Never miss an update about your team. Download our app to receive the latest on:</p>
+      <% end %>
+      
+      <ul>
+        <li class="text-center">Upcoming fixtures</li>
+        <li class="text-center">League position</li>
+        <li class="text-center">Recent results</li>
+      </ul>
+    </div>
+    <div class="six columns screenshots">
+      <img width="152" class="device-screenshoot" src="<%= asset_path 'store/screenshot/iphone_result.png' %>">
+      <img width="180" class="device-screenshoot" src="<%= asset_path 'store/screenshot/android_result.png' %>" style="margin-left: 49px;">
+    </div>
+  </div>  
+  <div class="twelve columns centered bottom">
+
+    <div class="six columns offset-by-six">
+      <div class="app-store-badge">
+        <a target="_blank" href="<%=itunes_url%>" onClick="trackDownloadLink(this, 'iOS');">
+          <img class="cta-store" src="<%= asset_path 'store/app_store_badge.svg' %>"/>
+        </a>
+      </div>
+      <div class="play-store-badge">
+        <a target="_blank" href="<%=play_store_url%>" onClick="trackDownloadLink(this, 'Play Store');">
+          <img class="cta-store" src="<%= asset_path 'store/get_it_on_google_play.svg' %>"/>
+        </a>
+      </div>  
+    </div>
+
+  </div>
+  <div class="ten centered columns web-link text-center">
+    <p>Don't have an iPhone or Android device? View our <a href="http://mitoo.co">mobile site</a></p>
+  </div>
+</div>
+
+<script>
+  /*
+    Detext device and display different screenshot/button depending
+    on the device (ios/android).
+  */
+  var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+  var ua = navigator.userAgent.toLowerCase();
+  var android = ua.indexOf("android") > -1;
+  if(iOS){
+    $(".play-store-badge").addClass("hide");
+    $(".app-store-badge").removeClass("six").addClass("twelve");
+  } else if(android) {
+    $(".play-store-badge").removeClass("six").addClass("twelve");
+    $(".app-store-badge").addClass("hide");
+  }
+</script>
+<script>
+  /* Analytics */
+  analytics.track('Viewed App Download Page', {
+    'isLoggedIn': <%=current_user.nil?%>
+  });
+</script>

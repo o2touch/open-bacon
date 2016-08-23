@@ -1,0 +1,21 @@
+<h2>Your account has been confirmed</h2>
+
+<% if !@tenant.nil? && @tenant.id == TenantEnum::MITOO %>
+
+<p>Hi <%= @user.first_name.titleize %>, you can now login to Mitoo on the web or on the Mitoo mobile app with your email <strong><%= @user.email %></strong> and your password. Nice one!</p>
+
+<p>Why not try our mobile app? Download now to get updates about games and results on the go.</p>
+
+<% else %>
+
+<p>Hi <%= @user.first_name.titleize %>, you can now login with your email <strong><%= @user.email %></strong> and your password. Nice one!</p>
+
+<% end %>
+
+<a class="button green" href="<%= root_url() %>">Login</a>
+
+<%
+  email_title = "User+Registered"
+  extra_params = @user.email + "&UserId=" + @user.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

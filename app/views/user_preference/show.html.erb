@@ -1,0 +1,9 @@
+<% unless @is_follower %>
+  <h1> You are a person who is not a follower of this team.</h1>
+<% else %>
+  <h1>Unfollow your team and stop receieving notifications.</h1>
+  <p>Name: <%= @user.name %></p>
+  <p>Team: <%= @team.name %></p>
+
+  <p>send this require to unfollow: DELETE /api/v1/team_roles with params 'id' => <%= @follow_team_role_id %>
+<% end %>

@@ -1,0 +1,222 @@
+/**
+ * Google map on the Team page, Edit Schedule area
+ * AND also on the Event page, in the edit location popup
+ */
+BFApp.Views.LocationEditMap = BFApp.Views.Map.extend({
+
+  customInit: function() {
+    var inputId = this.options.inputId || "edit-location";
+    this.input = document.getElementById(inputId);
+
+    if (this.options.mapWithPins) {
+      this.pins = [];
+      this.bounds = new google.maps.LatLngBounds();
+      this.setupDragStartListener();
+    }
+
+    this.setupDragListener();
+    this.setupPlacesAutocomplete();
+    this.setupInputListeners();
+    this.setupPrevLocationListener();
+
+    // click off to close info windows
+    /*google.maps.event.addListener(this.map, 'click', function() {
+      if (that.infoWindow) {
+        that.infoWindow.close();
+      }
+    });*/
+  },
+
+  setupPrevLocationListener: function() {
+    var that = this;
+
+    // listen for selection from locations dropdown, and update map
+    var locationDropdown = document.getElementById('prev-locations');
+    if (locationDropdown) {
+      google.maps.event.addDomListener(locationDropdown, "change", function(e) {
+        var dropdownValue = $(locationDropdown).val();
+        if (dropdownValue !== "-1") {
+          var i = parseInt(dropdownValue, 10);
+          var loc = that.options.locations.at(i);
+          if (loc.hasExactLocation()) {
+            var geoData = that.getGeoData(loc);
+            that.geocoder.geocode(geoData, function(results, status) {
+              that.handleGeocodeResults(geoData, results, status);
+            });
+          } else {
+            that.showDefault();
+          }
+        } else {
+          that.showDefault();
+        }
+      });
+    }
+  },
+
+  setupInputListeners: function() {
+    var that = this;
+
+    // reset map when input empty
+    google.maps.event.addDomListener(this.input, 'keyup', function() {
+      if ($(that.input).val().trim().length == 0) {
+        that.showDefault();
+      }
+    });
+
+    // prevent hitting enter on autocomplete result from submitting form
+    // Update: we MUST do this for inputs that need to be submitted both as a manual text string and a google places result as otherwise hitting enter on a places result would trigger both events (display the place, and do a manual text search)
+    google.maps.event.addDomListener(this.input, 'keydown', function(e) {
+      // TODO: seems like you should be able to check $('.pac-selected:visible').length
+      // and only preventDefault in that case, but it doesnt work - seems this is being
+      // fired twice - once after the autocomplete suggestions are no longer visible
+      if (e.keyCode == 13) {
+        e.preventDefault();
+      }
+    });
+  },
+
+  setupPlacesAutocomplete: function() {
+    var that = this;
+
+    // listen for selection on google places autocomplete, and update map
+    var autocomplete = new google.maps.places.Autocomplete(this.input);
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+      if (place.geometry) {
+        // set location model attrs based on what info is returned
+        that.updateLocationModel(place, $(that.input).val());
+
+        that.updateMarker(place);
+        if (!that.options.mapWithPins) {
+          that.setMapGeometry(place);
+        }
+        // this will trigger a search (only do this if we have a latlng)
+        that.trigger("geocoded:location", true);
+      }
+    });
+  },
+
+  setupDragListener: function() {
+    var that = this;
+
+    // listen for dragging the pin, and sync address to the input
+    google.maps.event.addListener(this.marker, 'drag', function() {
+      // when you drag the marker, all it knows is the latlng, so you have to geocode to get the address
+      var data = {
+        latLng: that.marker.getPosition()
+      };
+      that.geocoder.geocode(data, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK && results && results[0]) {
+          var place = results[0];
+          // keep the exact latlng of the marker position (not that of the geocoded address)
+          place.geometry.location = data.latLng;
+          // 3rd arg is onlyLatLng i.e. if we're editing a location model, on drag event only update latlng
+          that.updateLocationModel(place, "", that.options.isEditLocation);
+          if (!that.options.isEditLocation) {
+            // blur() the input to fix bug where submitting the form reverted the location
+            $(that.input).val(place.formatted_address).blur();
+          }
+          // event page: ensure save button is not disabled after this change
+          $(that.input).closest("form").find("button[name='save']").prop("disabled", false);
+        }
+      });
+    });
+  },
+
+  setupDragStartListener: function() {
+    var that = this;
+
+    // listen for start dragging the pin, and clear previous results/pins
+    google.maps.event.addListener(this.marker, 'dragstart', function() {
+      that.trigger("drag:start");
+      that.clearPins();
+    });
+  },
+
+  // this is called from ScheduleEditEvent, when the user changes mode
+  // between selecting an old address and finding a new one
+  toggleMarker: function(isDraggable) {
+    this.marker.setDraggable(isDraggable);
+    if (isDraggable) {
+      this.marker.setIcon(this.draggerIcon);
+    } else {
+      this.marker.setIcon(this.markerIcon);
+    }
+  },
+
+  clearPins: function() {
+    _.each(this.pins, function(pin) {
+      google.maps.event.clearListeners(pin, 'mouseover');
+      google.maps.event.clearListeners(pin, 'mouseout');
+      pin.setMap(null);
+      pin = null;
+    });
+    this.pins = [];
+  },
+
+  resetBounds: function() {
+    // reset the bounds object
+    this.bounds = new google.maps.LatLngBounds();
+    this.bounds.extend(this.marker.getPosition());
+  },
+
+  showPin: function(location, number) {
+    var that = this;
+
+    var pinType = (this.options.context == "league") ? "-league-" : "";
+    var latlng = new google.maps.LatLng(location.get("lat"), location.get("lng"));
+    var pin = new google.maps.Marker({
+      position: latlng,
+      map: this.map,
+      icon: {
+        url: getMapPinIcon(this.options.tenant, "pin" + pinType + number),
+        scaledSize: new google.maps.Size(30, 36)
+      },
+      zIndex: 2, // appear above main draggable marker
+      optimized: false // required for zIndex to work
+      //animation: google.maps.Animation.DROP // unfortunately this was causing some markers not to appear. maybe need to preload?
+    });
+    this.pins.push(pin);
+    // update our bounds, which we will use to pan/zoom the map to show all markers at the end
+    this.bounds.extend(latlng);
+
+    // listen for a hover event to highlight corresponding result in list
+    google.maps.event.addListener(pin, 'mouseover', function() {
+      that.trigger("pin:hover", number);
+      /*if (that.infoWindow) {
+        that.infoWindow.close();
+      }
+      that.infoWindow = new google.maps.InfoWindow({
+        content: location.get("address")
+      });
+      that.infoWindow.open(that.map, pin);*/
+    });
+
+    google.maps.event.addListener(pin, 'mouseout', function() {
+      that.trigger("pin:unhover", number);
+    });
+  },
+
+  hoverPin: function(number) {
+    var pinType = (this.options.context == "league") ? "-league-" : "";
+    var pinIcon = {
+      url: getMapPinIcon(this.options.tenant, "pin" + pinType + number + "-active"),
+      scaledSize: new google.maps.Size(30, 36)
+    };
+    this.pins[number - 1].setIcon(pinIcon);
+  },
+
+  unhoverPin: function(number) {
+    var pinType = (this.options.context == "league") ? "-league-" : "";
+    var pinIcon = {
+      url: getMapPinIcon(this.options.tenant, "pin" + pinType + number),
+      scaledSize: new google.maps.Size(30, 36)
+    };
+    this.pins[number - 1].setIcon(pinIcon);
+  },
+
+  updateBounds: function() {
+    this.map.fitBounds(this.bounds);
+  }
+
+});

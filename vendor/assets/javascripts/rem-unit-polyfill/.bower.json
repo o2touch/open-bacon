@@ -1,0 +1,33 @@
+{
+  "name": "REM-unit-polyfill",
+  "version": "1.1.0",
+  "homepage": "https://github.com/chuckcarpenter/REM-unit-polyfill",
+  "authors": [
+    "Chuck Carpenter <chuck.carpenter@me.com>",
+    "Lucas Serven <lserven@gmail.com>"
+  ],
+  "description": "A polyfill to parse CSS links and rewrite pixel equivalents into head for non supporting browsers",
+  "main": "rem.js",
+  "keywords": [
+    "polyfill",
+    "rem",
+    "css"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "be42e7e7cfddfb6331032a82ae3d9de79bb149c9"
+  },
+  "_source": "git://github.com/chuckcarpenter/REM-unit-polyfill.git",
+  "_target": "1.1.0",
+  "_originalSource": "rem-unit-polyfill"
+}

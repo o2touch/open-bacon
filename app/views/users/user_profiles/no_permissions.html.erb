@@ -1,0 +1,53 @@
+<script>
+
+/* ActiveApp data */
+var ActiveApp = TeamProfileApp;
+
+var userJSON = [];
+var teamsJSON = [];
+var leaguesJSON = [];
+<% if !current_user.nil? %>
+	userJSON = <%= safe_js_string(@user_json) %>;
+	teamsJSON = <%= safe_js_string(@teams_json) %>;
+	leaguesJSON = <%= safe_js_string(@leagues_json) %>;
+<% end %>
+
+ActiveApp.init();
+ActiveApp.ProfileUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@profile_user_json) %>, {parse: true});
+ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(userJSON, {parse: true});
+ActiveApp.CurrentUserTeams = new App.Collections.Teams(teamsJSON);
+ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(leaguesJSON);
+
+ActiveApp.pageType="private-page";
+
+// user data
+var user_meta = <%= safe_js_string @profile_user_meta_json %>
+
+/* Define & Start app */
+$(function() {
+	var options = {
+		context:"user"
+	};
+
+	BFApp.on("start", function(){
+		BFApp.rootController.startPrivateProfileModule(options);
+	});
+
+	BFApp.start(options);	
+	var root = "users/<%= @user.id %>";
+});
+</script>
+
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+<div id="main-content">
+
+	<noscript>
+		<p>This is a private user profile</p>
+	</noscript>
+</div>

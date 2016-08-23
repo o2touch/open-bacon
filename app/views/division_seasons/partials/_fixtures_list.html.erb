@@ -1,0 +1,18 @@
+<div class="fixtures-list">
+	<% formated_fixtures.each do |date_str, fixtures| %>
+	<% date = Date.parse(date_str)%>
+		<div class="fixtures-group">
+			<div class="date-block">
+				<div class="inner-date">
+					<span class="day"><%=date.day%></span>
+					<span class="month"><%=date.strftime("%^b")%></span>
+				</div>	
+			</div>
+			<div class="fixtures-container">
+			<% fixtures.each do |fg| %>
+				<%= render :partial => "division_seasons/partials/fixture_extended", :locals => { :fixture => fg, :date => date } %>
+			<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>

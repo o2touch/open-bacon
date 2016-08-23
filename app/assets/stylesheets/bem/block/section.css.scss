@@ -1,0 +1,51 @@
+/*------------------------------------*\
+	CONTENT - SECTION
+\*------------------------------------*/
+.b-section {
+	padding-bottom: $section-space;
+	margin-bottom: $section-space;
+	position: relative;
+	width: 100%;
+	border-bottom: 1px solid #eee;
+
+	&:first-child {
+		padding-top: 0;
+	}
+
+	&:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+
+	&__title {
+		width: $section-title-width;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		h1 {
+			@include font-size(1.2);
+			color: #ADADAD;
+			font-style: italic;
+			padding-right: $bluefields-margin;
+			text-transform: uppercase;
+		}
+
+		@include respond-to(handhelds) {
+			width: 100%;
+			text-align: center;
+			position: relative;
+			margin-bottom: $bluefields-margin;
+		}
+	}
+
+	&__content {
+		width: 100%; 
+		padding-left: $section-title-width+$bluefields-margin;
+
+		@include respond-to(handhelds) {
+			padding-left: 0;
+		}
+	}
+}

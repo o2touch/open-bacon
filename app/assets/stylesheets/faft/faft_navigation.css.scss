@@ -1,0 +1,86 @@
+.content-sticky-navigation {
+  position: absolute;
+  z-index: 30;
+  width: 100%;
+  max-width: 745px;
+  bottom: 100%;
+  &.fixed {
+    position: fixed;
+    top: $navigation-height;
+    width: inherit;
+    .content-navigation {
+      @include calc(width, "100% - 5px");
+      @include respond-to(handhelds) {
+        width: 100%;
+      }
+    }
+  }
+  &.bottom {
+    position: absolute;
+    bottom: 100px;
+    width: inherit;
+  }
+}
+
+.content-navigation {
+  height: 35px;
+  line-height: 35px;
+  background: #ddd;
+  &.with-no-table {
+    ul li a {
+      @include respond-to(handhelds) {
+        width: 32% !important;
+      }
+    }
+  }
+  ul {
+    li {
+      display: inline;
+      &.season-information {
+        color: #444;
+        padding-right: $bluefields-margin;
+      }
+      a {
+        display: inline-block;
+        vertical-align: top;
+        text-transform: uppercase;
+        padding-left: $bluefields-margin;
+        padding-right: $bluefields-margin;
+        @include geogrotesque(600);
+        @include font-size(1, false);
+        text-decoration: none;
+        position: relative;
+        height: 35px;
+        line-height: 37px;
+        color: #444;
+        @include respond-to(handhelds) {
+          padding-left: $bluefields-margin / 2;
+          padding-right: $bluefields-margin / 2;
+          width: 24%;
+          @include font-size(0.9);
+          line-height: 37px;
+          text-align: center;
+        }
+
+        &:hover {
+          background: darken(#dddddd, 5%);
+        }
+        &.selected, &.selected:hover {
+          background: darken(#dddddd, 5%);
+          @include arrow($side: "bottom", $align: "bottom", $color: $bluefields-white, $size: 9px, $borderColor: none, $borderSize: 0);
+          &:after {
+            border-top-color: darken(#dddddd, 5%);
+            left: 50%;
+            @include calc(left, "50% - 9px");
+            top: 100%;
+            -webkit-transform: rotate(0.05deg);
+            -moz-transform: scale(1.1);
+            -o-transform: rotate(0.05deg);
+            /* Didn't check Opera yet */
+            transform: rotate(0.05deg);
+          }
+        }
+      }
+    }
+  }
+}

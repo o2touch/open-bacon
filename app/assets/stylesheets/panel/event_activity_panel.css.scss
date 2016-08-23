@@ -1,0 +1,25 @@
+.panel.event-activity{
+	.event-activity-title{
+		font-weight: 100;
+		text-transform: uppercase;
+		margin-top: $bluefields-margin;
+		margin-bottom: $bluefields-margin/2;
+		@include font-size(1);
+		&:first-child{
+			margin-top:0;
+		}
+	}
+
+	.link-black {
+		margin-top: 12px;
+		font-size: 0.8rem;
+		color: #666;
+		@include font-size(0.8);
+	}
+	.event-row  {
+		.event-title, .event-details {
+			@include ellipsis();
+		}
+	}
+
+}

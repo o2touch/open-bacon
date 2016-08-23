@@ -1,0 +1,46 @@
+.league-team-table, .league-members-table {
+	margin-bottom: $bluefields-margin*2;
+	margin-top: $bluefields-margin;
+	h2 {
+		text-transform: uppercase;
+		@include font-size(1.2);
+		color: #555;
+		font-weight: bold;
+		margin-bottom: 12px;
+		line-height: 27px;
+	}
+
+	&.empty-table {
+		.empty-message {
+			i {
+				@include font-size(2);
+				color: rgba(0,0,0,0.2);
+				line-height:0;
+			}
+			h3 {
+				@include font-size(1.4);
+				text-transform: uppercase;
+				color: rgba(0,0,0,0.2);
+				margin-top: 0;
+			}
+			p {
+				color: #999;
+			}
+
+			.add-new-team {
+				margin-top: $bluefields-margin;
+			}
+		}
+	}
+}
+.registration-view {
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  margin-top: 50px;
+}
+.registration-view h2 {
+  font-size: 1.6em;
+}
+.registration-view p {
+  color: rgb(153, 153, 153);
+}

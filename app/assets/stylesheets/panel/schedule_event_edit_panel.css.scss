@@ -1,0 +1,129 @@
+.event-edit-detail{
+	.game-cancel{
+		margin-bottom: $bluefields-margin/2;
+	}
+	.game-cancel, button[title="enable event"]{
+		position: relative;
+		z-index: 9;
+	}
+
+	button[title="enable event"]{
+		margin-bottom: $bluefields-margin;
+	}
+	
+	hr{
+		margin: 12px -12px;
+		border: none;
+		border-bottom: 1px solid #eee;
+	}
+
+
+	.add-event-header{
+		#edit-event-type{
+			margin: 0;
+			margin-left: 9px;
+			margin-top: 3px;
+		}
+	}
+	.time{
+		margin-bottom: $bluefields-margin;
+		position: relative;
+		input, select{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+		}
+
+		#edit-event-date{
+			cursor: pointer;
+			width: 43%;
+		}
+
+		#edit-event-hours, #edit-event-minutes, #edit-event-ampm{
+			width: 17%;
+		}
+	}
+
+
+
+	.location-field {
+		#prev-locations {
+			margin-bottom: 4px;
+		}
+		.text-right {
+			text-align: right;
+		}		
+	}
+
+	.date-picker-hide{
+		width: 100%;
+		height: 100%;
+		background: $bluefields-white;
+		position: absolute;
+		@include opacity(0.8);
+		top: 0;
+		left: 0;
+		z-index: 8;
+	}
+
+
+	.event-response{
+		background: $bluefields-white;
+		padding: $bluefields-margin/2;
+		margin-bottom: $bluefields-margin;
+		border-radius:$bluefields-radius;
+	}
+
+
+
+	.repeat{
+		margin-bottom: $bluefields-margin;
+
+		.show-repeat{
+			height:28px;
+		}
+
+		.repeat-form{
+			height:28px;
+			background: $bluefields-white;
+			padding: 5px $bluefields-margin/2;
+			border-radius: $bluefields-radius;
+
+			#repeat-type,
+			.label-repeat,
+			.label-for,
+			#repeat-number,
+			.label-type{
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0;
+				width: auto;
+				margin-right: $bluefields-margin/2;
+			}
+
+			.cancel-repeat{
+				float: right;
+				margin: 0;
+				margin-top: $bluefields-margin/4;
+				color: #666;
+				cursor: pointer;
+			}
+		}
+	}
+
+	button[title="cancel event"]{
+		float: left;
+		margin-top: 8px;
+	}
+
+
+
+	hr{
+		border-bottom: 1px solid $bluefields-white;
+		border-top: 1px solid #eee;
+	}
+
+	.danger-link{
+		font-size: 12px;
+	}
+}	

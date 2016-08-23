@@ -1,0 +1,47 @@
+/*------------------------------------*\
+	SIDEBAR & PANEL LAYOUT
+\*------------------------------------*/
+.b-sidebar {
+	padding-top: $bluefields-margin;
+
+	.b-panel {
+		margin-top: $bluefields-margin;
+		margin-bottom: $bluefields-margin;
+	}
+
+
+	// SIDEBAR RIGHT
+	&--right {
+		.b-panel__content {
+			border-top-right-radius: $bluefields-radius;
+			border-bottom-right-radius: $bluefields-radius;
+			@include respond-to(handhelds) {border-radius: $bluefields-radius;}
+			&--outline {
+				@include respond-to(medium-screens) {border-left: none;}
+				@include respond-to(wide-screens) {border-left: none;}
+			}
+		}
+
+		.b-panel__title {
+			padding-left: $bluefields-margin;
+			text-align: left;
+		}
+	}
+
+	// SIDEBAR LEFT
+	&--left {
+		.b-panel__content {
+			border-top-left-radius: $bluefields-radius;
+			border-bottom-left-radius: $bluefields-radius;
+			@include respond-to(handhelds) {border-radius: $bluefields-radius;}
+			&--outline {
+				@include respond-to(medium-screens) {border-right: none;}
+				@include respond-to(wide-screens) {border-right: none;}
+			}
+		}
+		.b-panel__title {
+			padding-right: $bluefields-margin;
+			text-align: right;
+		}
+	}
+}

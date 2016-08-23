@@ -1,0 +1,591 @@
+/**********************
+  GENERAL  
+***********************/
+html, body{
+	font-smooth:always;
+	-webkit-font-smoothing:antialiased;
+}
+
+body{
+	width:100% !important; 
+  min-width: 100%;
+  -webkit-text-size-adjust:100%; 
+  -ms-text-size-adjust:100%; 
+  margin:0; 
+  padding:0;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 14px; 
+	line-height: 1.35em;
+}
+
+img { 
+  outline:none; 
+  text-decoration:none; 
+  -ms-interpolation-mode: bicubic;
+  width: auto;
+  max-width: 100%;
+}
+
+center {
+  width: 100%;  
+}
+
+td { 
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+table, tr, td {
+  padding: 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+table.body {
+  height: 100%;
+  width: 100%;
+  background-color: #fefefe;
+  
+}
+
+table.container {
+  width: 420px;
+  margin: 0 auto;
+  text-align: inherit;
+}
+
+/**********************
+  TYPOGRAPHY  
+***********************/
+body, table.body, h1, h2, h3, h4, h5, h6, p, td { 
+  color: #222222;
+  font-family: "Helvetica", "Arial", sans-serif; 
+  font-weight: normal; 
+  padding:0; 
+  margin: 0;
+  text-align: left; 
+  line-height: 1.3;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  word-break: normal;
+  font-weight: bold;
+}
+
+h1 {font-size: 40px;}
+h2 {font-size: 36px;}
+h3 {font-size: 32px;}
+h4 {font-size: 28px;}
+h5 {font-size: 24px;}
+h6 {font-size: 20px;}
+body, table.body, p, td {font-size: 14px;line-height:19px;}
+
+
+p { 
+  margin-bottom: 10px;
+}
+
+small {
+  font-size: 10px;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #4fade3;
+}
+
+a img {
+	border: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: right;
+}
+
+.align-top {
+	vertical-align: top;
+}
+
+.align-middle {
+	vertical-align: middle;
+}
+
+.align-bottom {
+	vertical-align: bottom;
+}
+
+/**********************
+  HEADER  
+***********************/
+
+
+/* Team header */
+.team-header {
+	border-bottom: 3px solid #4fade3;
+}
+
+.team-header .team-pic{
+	width: 45px;
+	max-height:160px;
+}
+
+.team-header .team-name {
+	text-decoration:none;
+}
+
+.team-header .team-name h1 {
+	margin: 0;
+	color:#ffffff;
+	font-size: 22px;
+}
+
+/* League header */
+#league-header {
+	background-color: #fefefe;
+}
+
+#league-header .league-logo {
+	max-width: 120px;
+	max-height: 120px;
+}
+
+#league-header .league-name {
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-decoration: none;
+  margin-top: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+
+/**********************
+  MAIN  
+***********************/
+
+#main {
+	border-bottom: 1px solid #F1F1F1;
+	border-top: 1px solid #F1F1F1;
+	background-color: #ffffff;
+	padding: 24px;
+}
+
+
+/**********************
+  FOOTER  
+***********************/
+
+#footer p {
+	margin-top: 12px;
+	padding: 0;
+	color: #a1a1a1;
+	font-size: 12px;
+}
+
+#footer a, #footer i {
+	color:#a1a1a1;
+}
+
+#footer i {
+	text-decoration: none;
+}
+
+.watermark a {
+	text-decoration: none;
+	width: 90px;
+}
+
+.watermark small {
+	width: 90px;
+	color: #777777;
+	font-size: 11px;
+	margin-bottom: 2px;
+}
+
+.watermark .mitoo-logo-watermark {
+	width: 90px;
+}
+
+.watermark {
+	margin-top: 12px;
+	opacity: 0.5;
+}
+
+
+/**********************
+  UI - button  
+***********************/
+.button {
+	margin-top: 12px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-decoration: none;
+	display: block;
+	padding: 11px;
+	background: #4fade3;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
+}
+
+.button.small {font-size:14px;}
+
+.button.green {background:#5da423;}
+.button.red {background:#d63632;}
+.button.grey {background:#aaaaaa;}
+
+.availability-button {
+	margin-top: 5px;
+	margin-bottom: 12px;
+}
+
+
+/**********************
+  UI - FIXTURE  
+***********************/
+.fixture .team-left{
+	text-align:left;
+	color: #555555;
+	font-size:14px;
+	padding-left: 5px;
+	color: #777777;
+}
+
+.fixture .score{
+	text-align: center;
+	font-size:16px;
+	border-left: none;
+	border-right: none;
+	color: #444444;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.fixture .team-right{
+	text-align:right;
+	color: #555555;
+	font-size:14px;
+	padding-right: 5px;
+	color: #777777;
+}
+
+
+/**********************
+  UNORDERED CSS  
+***********************/
+h1 {font-size: 18px; line-height:24px;}
+h2 {font-size: 22px; line-height:1em; text-align: center; color:#666666;}
+a{color: #444444;text-decoration:underline;}
+p{margin:0;padding: 6px;line-height:1.4em; font-size:14px; color: #555555;}
+ul{font-size:14px; color: #555555;}
+
+ul.bullets li {
+	list-style-type: disc;
+	margin-left:20px;
+}
+
+.origanal-comment{
+	background: #b1b1b1;
+	padding: 12px 18px;
+}
+
+.grey-comment{
+	background: #f1f1f1;
+	padding: 12px 18px;
+}
+
+.grey-comment .comment{
+	color: #444444;
+	margin-bottom: 0;
+	padding: 0;
+	font-size: 16px;
+}
+
+.grey-comment .time-stamp{
+	color:#888888;
+	margin-top: 4px;
+}
+
+.cancelled{
+	background: #d63632;
+	color: white;
+	font-weight: bold;
+	border-radius: 3px;
+	padding: 3px 12px;
+	width: 91%;
+	font-size: 12px;
+	text-align: center;
+}
+
+.postponed{
+	background: #f9c638;
+	color: white;
+	font-weight: bold;
+	border-radius: 3px;
+	padding: 3px 12px;
+	width: 91%;
+	font-size: 12px;
+	text-align: center;
+}
+
+.reactivated{
+	margin-bottom: 0;
+	font-size: 13px;
+}
+
+.game .date {color:#b1b1b1; background: #4e4e4e; width:35px;}
+.game { margin:10px 0px; }
+.game .information {color:#b1b1b1; background:#404040; padding:4px 4px 4px 8px;}
+.game .title {color:#b1b1b1; background:#404040; padding:4px 4px 4px 8px; text-transform: uppercase; font-weight:bold;}
+
+.practice .date {color:#999999; background: #f3f3f3; width:35px;}
+.practice { margin:10px 0px; }
+.practice .information {color:#474747; background:#e6e6e6; padding:4px 4px 4px 8px;}
+.practice .title {color:#474747; background:#e6e6e6; padding:4px 4px 4px 8px; text-transform: uppercase; font-weight:bold;}
+
+.center { text-align: center;}
+
+.link { color:#ffffff; background:#00b008; font-size:13px; padding:4px 4px 4px 8px; text-transform: uppercase; font-weight:bold; text-align: center; text-decoration: none;}
+
+
+.availability-status, .event-update{
+	background: #f8f8f8;
+	border: 1px solid #eeeeee;
+	border:1px solid #eeeeee;
+	margin-top: 3px;
+	margin-bottom: 12px;
+}
+.event-update{
+	padding: 6px;
+}
+
+.event-row{
+	background:#f1f1f1;
+	margin:6px 0;
+	padding: none;
+	border-collapse: collapse;
+}
+
+
+.event-row .information{
+	padding-left:10px
+}
+
+.event-row .day {
+	display:block;color:white;font-size:20px;
+}
+.event-row .month {
+	display:block;color:white;font-size:12px;text-transform:uppercase;
+}
+
+
+.event-row.game-type-game .date {
+	background: #4fade3;
+}
+.event-row.game-type-event .date {
+	background: #666666;
+}
+.event-row.game-type-practice .date {
+	background: #999999;
+}
+
+.event-row.game-type-game .title {
+	color: #4fade3;
+}
+.event-row.game-type-event .title {
+	color: #666666;
+}
+.event-row.game-type-practice .title {
+	color: #999999;
+}
+
+
+
+.date{
+	text-align: center;
+	line-height: 0.8em;
+	color:#f1f1f1;
+	width: 37px;
+	height: 50px;
+}
+
+.date .day{
+	font-size: 20px;
+	margin-top: 3px;
+	margin-bottom:3px;
+	font-weight: 500;
+	display: block;
+	line-height: 15px;
+	margin-bottom: 3px;
+}
+
+.date .month {
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #f6f6f6;
+}
+
+
+.event-row .title {
+	font-weight: normal;
+	font-style: normal;
+	font-size: 16px;
+	line-height: 20px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.event-row .status {
+	
+}
+.event-row .meta {
+	display:block;
+	font-size:12px;
+	color:#666666;
+	line-height:16px;
+}
+
+.event-row .meta small{
+	color:#777777;
+	font-size:11px;
+}
+
+
+
+.event-update p{
+	padding: 3px;
+}
+
+.availability-status.available{
+	background: #C2E6A4;	
+	border: 1px #5da423 solid;
+}
+
+.availability-status.unavailable{
+	background: #F8DDDC;	
+	border: 1px #D63632 solid;
+}
+
+
+.availability-status .available {
+  margin-bottom: 0;
+	color: #5da423;
+	font-size: 18px;
+	padding:3px;
+}
+
+.availability-status .unavailable {
+  margin-bottom: 0;
+	color: #d63632;
+	font-size: 18px;
+	padding:3px;
+}
+
+
+.availability-status a{
+	color: #4fade3;
+	font-size: 12px;
+}
+.message-title{
+	margin-bottom: 12px;
+}
+
+.message-title h2{
+	text-align: left;
+	margin-bottom: 6px;
+}
+
+img.circle {
+	border-radius: 100%;
+}
+
+.circle.availability-pic{
+	width: 30px;
+	height: 30px;
+}
+
+.inner-content{
+	padding: 24px;
+}
+
+.fixture-content{
+
+}
+
+.team-left, .score, .team-right{
+	background-color: #fdfdfd;
+	border: 1px solid #f1f1f1;
+	padding: 3px;
+}
+
+
+.fixture .time-and-date{
+	width: 10%;
+	text-align: center;
+	color: #888888;
+	font-size:12px;
+	float:left;
+	border-right: none;
+}
+
+
+
+.fixture-date{
+	background-color: #4fade3!important;
+	color: white;
+	padding-top: 3px;
+	padding-bottom	:3px;
+	text-align: center;
+	width: 30px;
+}
+
+.fixture-date .day{
+	font-size: 20px;
+	margin-top: 3px;
+	margin-bottom:3px;
+	font-weight: 500;
+	display: block;
+	line-height: 15px;
+	margin-bottom: 3px;
+}
+
+.fixture-date .month {
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #f6f6f6;
+}
+
+ul {
+	padding: 6px;
+	margin: 0;
+	list-style: none;
+}
+
+ul li {
+	margin-bottom: 12px;
+	list-style: none;
+}
+
+
+.get-the-app { padding-top: 12px;}
+.get-the-app-img .store-link img{  width:100%; }
+.get-the-app-img .img_hide { opacity: 0;}
+.get-the-app-copy { margin-left:12px; background: #4fade3; border-radius:3px;}
+.get-the-app-copy h1, .get-the-app-copy p, .get-the-app-copy a  { color: white; }
+.get-the-app-copy h1 { margin: 0; padding:6px 6px 0px 6px; font-size: 24px; text-transform: uppercase;}

@@ -1,0 +1,153 @@
+<style>
+.donut {
+  height:150px;
+}
+</style>
+<div class="page-title">  
+  <div class="row">
+    <div class="col-md-7 col-sm-6">
+      <h3>Rewards &amp; Recognition: Detailed Points</h3>
+    </div>
+    <div class="col-md-5 col-sm-6">
+      <select id="month-data" class="float:right;">
+
+      </select>
+    </div>
+  </div>
+</div>
+
+<div id="container">
+
+  <table class="table" id="drilldown">
+
+    <thead>
+      <th>Pos</th>
+      <th>Club</th>
+      <th>Region</th>
+      <th>Check-ins</th>
+      <th>New Players</th>
+      <th>Retention</th>
+      <th>Points</th>
+      <th></th>
+    </thead>
+
+    <tbody>
+    
+    <% @points.each do |k,t| %>
+      <tr>
+        <td></td>
+        <td><%=t[:team]%> - <a href="<%=team_path t[:team_id]%>" target="_blank">View <i class="bf-icon arrow-right"/></a></td>
+        <td><%=t[:region]%></td>
+        <td><%=t[:check_ins]%></td>
+        <td><%=t[:new_players]%></td>
+        <td><%=t[:retention]%></td>
+        <td><%=t[:points]%></td>
+        <td><a href="attendance.csv?team_id=<%=t[:team_id]%>&amp;date=<%=@date.strftime("%Y-%m-%d")%>">Player Attendance</a></td>
+      </tr>
+    <% end %>
+
+    </tbody>
+
+  </table>
+
+  <div class="points-info">
+    <h3>How points are calculated</h3>
+    <table>
+    <tr>
+      <td>Check-in</td>
+      <td>2 points</td>
+    </tr>
+    <tr>
+      <td>New Players</td>
+      <td>3 points / player</td>
+    </tr>
+    <tr>
+      <td>Retention</td>
+      <td>
+        <ul>
+          <li>0 points for 0-24%</li>
+          <li>2 points for 25-49%</li>
+          <li>5 points for 50-74%</li>
+          <li>10 points for 75-99%</li>
+          <li>20 points for 100%</li>
+        </ul>
+      </td>
+    </table>
+  </div>
+
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+
+  /* User team & league (navigation information) */
+  window.ActiveApp = {
+    page: "dashboard",
+    Tenant: new Backbone.Model(<%= safe_js_string(@tenant_json) %>)
+  };
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+  var selectedMonth = new Date('<%= @date.strftime("%b %d, %Y")%>');
+  console.log(selectedMonth.getMonth());
+
+  BFApp.start();
+
+  var now = new Date(Date.now());
+  var monthNames = [ "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December" ];
+  var monthsOfYear = [];
+  for (var d = new Date(2014, 5, 1); d <= now; d.setMonth(d.getMonth() + 1)) {
+      monthsOfYear.push(new Date(d));
+  }
+
+  var monthDropdown = $("#month-data");
+  $.each(monthsOfYear, function() {
+
+      var option = $("<option />").val((this.getMonth() + 1) + "-" + this.getFullYear()).text(monthNames[this.getMonth()] + " " + this.getFullYear());
+
+      if(option.val() == ((selectedMonth.getMonth() + 1) + "-" + selectedMonth.getFullYear()) ){
+        option.attr('selected', true);
+      }
+
+      monthDropdown.prepend(option);
+  });
+
+  monthDropdown.change(function(){
+    var month_year = $(this).val().split("-");
+    loadPointsDrilldownTable(ActiveApp.Tenant.get("subdomain"), month_year[0], month_year[1]);
+  });
+
+  // var table = $('#drilldown').DataTable();
+
+  var tableApi = $('#drilldown').dataTable({
+    "bPaginate": false,
+    "aaSorting": [[ 6, "desc" ]],
+    "fnDrawCallback": function ( oSettings ) {
+      /* Need to redo the counters if filtered or sorted */
+      if ( oSettings.bSorted || oSettings.bFiltered )
+      {
+        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+        {
+          $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+        }
+      }
+    },
+  });
+  // tableApi.order([[4,'desc']]);
+
+
+  var filterDiv = $("#drilldown_filter");
+  var select = $('<select><option value=""></option><option value="South">South</option><option value="North">North</option><option value="Midlands">Midlands</option><option value="No Region">No Region</option></select>')
+      .prependTo( filterDiv )
+      .on( 'change', function () {
+          var val = $(this).val();
+
+          tableApi.fnFilter(val, 2);
+      });
+});
+
+function loadPointsDrilldownTable(tenant_name, month, year) {
+  window.location = "/tenants/" + tenant_name + "/rewards/drilldown?date=" + year + "-" + month + "-01";
+}
+</script>

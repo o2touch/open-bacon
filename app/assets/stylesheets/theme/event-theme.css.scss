@@ -1,0 +1,63 @@
+$sameColor:false;
+@if $colour2 == $colour1 {
+  $sameColor:true;
+}
+$teamLinkColor: $colour2;
+@if $sameColor != false { 
+  $teamLinkColor: lighten($colour2, 10%);
+}
+
+.event-page {
+	.header{
+	  background-color: $colour1;
+	  border-bottom: 5px $colour2 solid;
+	}
+	
+	/* Event card */
+	.event-card{
+
+	  .team-link {
+	    background: $colour2;
+	    
+	    @if lightness($colour2) > 80% {
+	      span{
+	        color: $bluefields-black;
+	      }
+	    }
+	    
+	    &:hover{
+	      background: lighten($colour2, 5%);
+	    }
+
+	    &:after{
+	      border-top-color: darken($colour2, 10%);
+	    }
+	  }
+
+	  &.game{
+	    background: $colour1;
+	    &:after{
+	      border-top-color : $colour1;
+	    }
+	    .team-link {
+	      background: $teamLinkColor;
+	      &:hover{
+	        background: lighten($teamLinkColor, 5%);
+	      }
+
+	      &:after{
+	        border-top-color: darken($teamLinkColor, 30%);
+	      }
+	    }
+	  }
+	}
+	.event-type-game .date-block {
+		background: $colour1!important;
+	}
+
+	.event-type-game {
+		.event-title {
+			color: $colour1!important;
+		}
+	}
+}

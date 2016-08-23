@@ -1,0 +1,27 @@
+<div class="date-block" <% if(color) { %>style="background:#<%= color %>;"<% } %>>
+	<div class="inner-date">
+	  <span class="day"><%= date %></span>
+  	<span class="month"><%= month %></span>
+	</div>
+</div>
+
+<div class="informations">
+	<a class="event-title" href="<%= href %>" <% if(linkNewTab) { %>target="_blank"<% } %> <% if(color) { %>style="color:#<%= color %>;"<% } %>><%- title %></a>
+	<p class="event-details">
+		<span class="time"><%= time %></span>
+		<% if(location){ %><span class="location"> at <%- location %></span><% } %>
+	</p>
+	<% if (extraEventDetails) { %>
+	<p class="event-details"><%= extraEventDetails %></p>
+	<% } %>
+</div>
+
+<% if(!cancelled && !postponed && score.home && score.away) { %>
+	<h5 class="event-score"><%= score.home %>-<%= score.away %></h6>
+<% } %>
+
+<% if(postponed) { %>
+<div class="game-status-label game-postponed">Event postponed</div>
+<% } else if(cancelled) { %>
+<div class="game-status-label game-cancelled">Event cancelled</div>
+<% } %>

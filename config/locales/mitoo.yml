@@ -1,0 +1,20 @@
+mitoo:
+  general:
+    # nb. Jack I changed this to app_name as I think it's more descriptive eg.
+    #      in the situation of the alien tenant
+    app_name: "Mitoo"
+    availability:
+      available: "available"
+      awaiting: "invited"
+      unavailable: "unavailable"
+    game_display_name: "Game"
+  event:
+    page_title: "Your event"
+  team:
+    page_title: "Your team"
+  division:
+    page_title: "Your division"
+  league:
+    page_title: "Your league"
+  user:
+    page_title: "Your user"

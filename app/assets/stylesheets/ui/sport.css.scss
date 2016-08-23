@@ -1,0 +1,98 @@
+/***
+ICON
+****/
+.sport-icon {
+  background-image: image-url('sport_image/icon/default/badge.png');
+  background-repeat: no-repeat;
+  background-position: 95% 100%;
+  background-size: auto 100%;
+  position: relative;
+
+  $icon-available:
+    "baseball",
+    "basketball",
+    "bowling",
+    "cheerleading",
+    "cricket",
+    "curling",
+    "cycling",
+    "dodgeball",
+    "football_american",
+    "football_soccer",
+    "hockey",
+    "kickball",
+    "lacrosse",
+    "laser_tag",
+    "badge",
+    "paintball",
+    "rowing",
+    "rugby",
+    "softball",
+    "surfing",
+    "swimming",
+    "tennis",
+    "ultimate_frisbee",
+    "volleyball",
+    "water_polo";
+    
+    @each $icon in $icon-available {
+      &.#{$icon}-icon{
+        background-image: image-url("sport_image/icon/sport/#{$icon}.png");
+      }
+    }
+
+}
+
+/****
+COVER
+****/
+.sport-cover {
+  // Cover settings
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  // default
+  background-image: image-url('sport_image/cover/default/cover_team.jpg');
+  &.club-cover { background-image: image-url('sport_image/cover/default/cover_club.jpg'); }
+  &.division-cover { background-image: image-url('sport_image/cover/default/cover_division.jpg'); }
+  &.league-cover { background-image: image-url('sport_image/cover/default/cover_league.jpg'); }
+  
+  // sport
+  $cover-available: "football_soccer", "rugby";
+  @each $cover in $cover-available {
+    &.#{$cover}-cover{
+      background-image: image-url("sport_image/cover/sport/#{$cover}/cover_team.jpg");
+      &.club-cover { background-image: image-url('sport_image/cover/sport/#{$cover}/cover_club.jpg'); }
+      &.division-cover { background-image: image-url('sport_image/cover/sport/#{$cover}/cover_division.jpg'); }
+      &.league-cover { background-image: image-url('sport_image/cover/sport/#{$cover}/cover_league.jpg'); }
+    }
+  }
+}
+
+/*********
+BACKGROUND
+*********/
+$background-available: 
+  "golf",
+  "swimming",
+  "basketball",
+  "running",
+  "tennis",
+  "cycling",
+  "bowling",
+  "baseball",
+  "football_american",
+  "cricket",
+  "volleyball",
+  "rowing",
+  "curling";
+
+.sport-background {
+  background-image: image-url("sport_image/background/default/default.jpg");
+  @each $item in $background-available {
+    &.#{$item}-background{
+      background-image: image-url("sport_image/background/sport/#{$item}.jpg");
+    }
+  }
+}

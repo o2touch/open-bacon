@@ -1,0 +1,46 @@
+<header>
+	<%= htmlPic %>
+	<h2><%= userName %></h2>
+</header>
+
+<div class="panel-content">
+	<p>
+		<i class="bf-icon user"></i>
+		<span>
+		<% if (userBio){ %> <%- userBio %>
+		<% } else if(currentUserIsSelf){ %><em> Your profile is incomplete. Please update your profile.</em>
+		<% } else { %> There's currently no public information to share about this user.
+		<% } %>
+		</span>
+	</p>
+	
+	<% if (isJunior && userCanReadDetails || isJunior && isMyChildren){ %>
+	<fieldset class="parents-informations">
+	<legend>Parents</legend>
+	<% _.each(parents.models, function(parent, index){ %>
+			<% if(index==1){ %>
+			<hr>
+			<% } %>
+			<p><i class="bf-icon user"></i> <span><%= parent.get("name") %></span></p>
+			<p><i class="bf-icon mail"></i> <span><%= parent.get("email") %></span></p>
+			<% if(parent.get("mobile_phone")){ %>
+			<p><i class="bf-icon phone"></i> <span><%= parent.get("mobile_phone") %></span></p>
+			<% } %>
+			<p><a href="<%= parent.getHref() %>"><i class="bf-icon eye"></i> <span>View profile</span></a>
+	<% }); %>
+	</fieldset>
+	<% } else if(userCanReadDetails){ %>
+		<% if(userEmail){ %>
+		<p><i class="bf-icon mail"></i> <span><%= userEmail %></span></p>
+		<% } %>
+		<% if(userMobile){ %>
+		<p><i class="bf-icon phone"></i> <span><%= userMobile %></span></p>
+		<% } %>
+	<% } %>
+</div>
+
+<% if(currentUserIsSelf && !fbConnect){ %>
+<!-- 	<hr/>
+<a href="/users/auth/facebook" class="facebook button tiny">Connect with Facebook</a>
+<p class="text-center"><em>Share games &amp; results with your friends</em></p> -->
+<% }%>

@@ -1,0 +1,23 @@
+<h2><%= @event.game_type_string.titleize %> Updated</h2>
+
+<p><%= @user.first_name.titleize %>,
+	details about the <%= @event.game_type_string(false) %> have changed.</p>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<h2>Changes made:</h2>
+
+<div class="event-update">
+	<% @updates.each do |key, value| %>
+		<p><strong><%= key.to_s %></strong> updated to '<%= value %>'</p>
+	<% end %> 
+</div>
+<%= render :partial => "user_mailer/event_response", :locals => {:teamsheet_entry => @teamsheet_entry} %>
+
+<a class="button grey small" href="<%= event_url(@event) %>">View Game Details</a>
+
+<%
+email_title = "Event+Updated"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

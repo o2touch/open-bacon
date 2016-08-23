@@ -1,0 +1,38 @@
+<% 
+time_zone_mismatch = @timezone != event.time_zone
+location = event.location.nil? ? "an undecided location." : event.location.title
+timezone = "(#{event.bftime.pp_time_zone})" if time_zone_mismatch && !event.time_tbc?
+%>
+
+<% if event.was_reactivated?  && event.status != 3%>
+<p class="reactivated">This event was reactivated:</p>
+<% end %>
+
+<a href="<%= event_url(event)%>" style="width:100%;display:block;">
+  <div><!-- This div is here because putting a table inside a link doesn't work -->
+    <table class="event-row game-type-<%= event.game_type_string %>" width="100%">
+        <tr>
+            <td class="date" style="vertical-align:middle;">
+              <span class="day"><%= event.bftime.day %></span>
+              <span class="month"><%= event.bftime.month %></span>
+            </td>
+
+            <td  class="information"  style="vertical-align:middle;">
+              <span class="title"><%= event.title %></span>
+              <% if event.status == 1 %>
+              <p class="cancelled status">Cancelled</p>
+              <% elsif event.status == 3 %>
+              <p class="postponed status">postponed</p>
+              <% else %>
+              <span class="meta" >
+                <%= event.bftime.twelve_hour_time %><% if location %> at <%= location %> <% end %>
+                <small>
+                  <%= timezone %>
+                </small>
+              </span>
+              <% end %>
+            </td>
+        </tr>
+    </table>
+  </div>
+</a>

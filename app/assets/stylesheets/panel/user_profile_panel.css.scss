@@ -1,0 +1,78 @@
+.panel.user-profile {
+  header {
+    padding: $bluefields-margin;
+    background: $bluefields-white;
+    background: #f8f8f8;
+    border-radius: $bluefields-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    h2 {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0;
+      font-size: 30px;
+      font-weight: 500;
+      color: #444;
+      margin-left: $bluefields-margin / 2;
+      @include calc(width, "100% - 70px");
+      text-transform: uppercase;
+      line-height: 26px;
+    }
+    .circle {
+      width: 40px;
+      height: 40px;
+    }
+    .edit-user-profile {
+      position: absolute;
+      top: $bluefields-margin / 2;
+      right: $bluefields-margin / 2;
+      color: #777;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+  hr {
+    margin: $bluefields-margin / 2;
+    margin-left: -$bluefields-margin / 2;
+    margin-right: -$bluefields-margin / 2;
+  }
+  .panel-content {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    p {
+      font-size: 14px;
+      color: #444;
+      margin-top: $bluefields-margin / 2;
+      margin-bottom: $bluefields-margin / 2;
+      @include clearfix;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:first-child {
+        margin-top: 0;
+      }
+      i {
+        color: #999;
+        display: inline-block;
+        width: 28px;
+        float: left;
+        text-align: left;
+      }
+      span {
+        display: inline-block;
+        @include calc(width, "100% - 35px");
+        vertical-align: top;
+      }
+    }
+    fieldset {
+      p {
+        margin: 0;
+      }
+    }
+  }
+  footer {
+    a.facebook {
+      margin: 0;
+    }
+  }
+}

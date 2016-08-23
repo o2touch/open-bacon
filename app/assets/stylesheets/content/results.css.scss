@@ -1,0 +1,35 @@
+.main-content .past-games{
+	h4{
+		text-align: center;
+		border-bottom: 1px solid #ddd;
+		margin-bottom: 10px;
+	
+		span{
+			padding: 5px;
+			background: $bluefields-white;
+			position: relative;
+			top: 11px;
+		}
+	}
+}
+
+#r-results-controls{
+	.results-navigation{
+		padding: $bluefields-margin/2;
+		input{
+			margin-bottom: 0;
+		}
+		.results-search{
+			@include grid-columns(5);
+		}
+	}
+}
+
+#r-results-event-list{
+	.schedule-date{
+		.event-list{
+			margin-top: $bluefields-margin;
+			.event-row{}
+		}
+	}
+}

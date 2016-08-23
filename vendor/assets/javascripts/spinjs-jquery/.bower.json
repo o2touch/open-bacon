@@ -1,0 +1,12 @@
+{
+  "name": "spinjs-jquery",
+  "_release": "f3336b2858",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f3336b285830d8de8a2f0c944fc70ddfcae97d3d"
+  },
+  "_source": "git://gist.github.com/1290439.git",
+  "_target": "*",
+  "_originalSource": "spinjs-jquery"
+}

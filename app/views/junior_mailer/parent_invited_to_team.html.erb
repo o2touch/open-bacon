@@ -1,0 +1,12 @@
+<h2>Join the team</h2>
+<p><%=@parent.name %></p>
+<p><%=@organiser.name.titleize%> is now organising <%=@team.name.titleize%> on Mitoo and has added you as a parent of <%= @juniors.map(&:first_name).to_sentence %>.</p>
+<p>Create a login on Mitoo to see up-to-date details about <%=@team.name%>'s games &amp; events and keep track of child availability!</p>
+
+<a class="button" href="<%= team_invite_link_url(:token => @team_invite_token, :only_path => false )%>"> Create your Login</a>
+
+<%
+email_title = "Team+Invite"
+extra_params = @parent.email + "&TeamId=" + @team.id.to_s + "&relation=parent"
+%>
+<%==get_img_html(email_title, extra_params) %>

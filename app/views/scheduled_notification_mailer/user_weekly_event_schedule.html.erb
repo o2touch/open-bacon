@@ -1,0 +1,19 @@
+<h2>Upcoming Games &amp; Events</h2>
+
+<p>
+	<%= @recipient.first_name.titleize %>, here are this week's upcoming games &amp; events for the teams you follow or are a part of.
+	<% if @signup %>
+		We'll send you one of these emails every Monday morning, so you're always prepared for the week ahead.
+	<% end %>
+</p>
+
+<%= render :partial => "user_mailer/schedule_event_list", :locals => {:events => @events, :timezone => @recipient.time_zone} %>
+
+<% if @token %>
+  <p>See the whole schedule online</p>
+  <a class="button" href="<%= power_token_url(:token => @token, :only_path => false )%>">View all upcoming games &amp; events</a>
+<% else %>
+  <a class="button" href="<%= user_url(@recipient, :only_path => false )%>">View all upcoming games &amp; events</a>
+<% end %>
+
+<%==track_email(@recipient.email, "User+Weekly+Schedule+Email", {}) %>

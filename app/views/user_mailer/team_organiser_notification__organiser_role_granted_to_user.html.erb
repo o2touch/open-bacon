@@ -1,0 +1,4 @@
+<h2><%= @user.first_name.titleize %> is now an Organizer</h2>
+<p>Hi <%= @organiser.name %>, <%=@user.name%> has been made an organizer on Mitoo.</p>
+
+<a class="button" href="<%= team_url(@team, :only_path => false )%>">View your team on Mitoo</a>

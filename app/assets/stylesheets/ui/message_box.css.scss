@@ -1,0 +1,201 @@
+form.post-message{
+	header{
+		.circle{margin-right: $bluefields-margin/2;margin-left:5px;}
+		.user-name{
+			font-weight: bold;
+			color: #444;
+			font-size: 14px;
+			vertical-align: middle;
+		}
+	}
+	
+	.alert-box{
+		position: absolute;
+		top: -30px;
+		z-index: 40!important;
+		width: 100%;
+		&.error-handler{
+			@include calc(width, "100% - #{$bluefields-margin*2}");
+			top:9px;
+		}
+		
+	}
+
+	.msg-content{
+		position: relative;
+		margin-top: 12px;
+		z-index: 32;
+		@include arrow($side:"top", $align:"left", $size:7px, $color:#ffffff, $borderColor: #e7e7e7, $borderSize:2px);
+		&:after{
+			top:-12px;
+		}
+		
+		
+		&:before{
+			@include transit(all, 0s);
+			top:-16px;
+		}
+		
+		textarea, .mirroredText{
+			resize:none;
+			font-size: 14px;
+			min-height: 50px;
+			line-height: 20px;
+			margin-bottom: 0;
+			margin-top: 0;
+			line-height: 18px;
+			padding-right: 20px;
+			@include transit(border, 0s);
+			@include transit(min-height, 0.5s);
+			@include box();
+		}
+		
+		.highlight-star{
+			position: absolute;
+			top:1px;
+			right:1px;
+			padding: 3px;
+			display: none;
+		}
+	}
+	
+	footer{
+		position: relative;
+		margin-top: -33px;
+		padding-right: 2px;
+		@include transit(margin-top, 0.2s);
+		ul.msg-groups{
+			margin: 0;
+			display: inline-block;
+			position: relative;
+			margin-right: 7px;
+			margin-top: 2px;
+			.show-groups-dropdown{
+				width: 25px;
+				line-height: 1.4em;
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+				height: 23px;
+				color: #bbb;
+				z-index: 31;
+				font-size: 16px;
+				border: 1px solid transparent;
+				&:hover{
+					color: #999;
+				}
+			}
+			
+			>li{
+				
+				ul.groups-dropdown{
+					border: 1px #D4D4D4 solid;
+					background: white;
+					position: absolute;
+					text-align: left;
+					z-index: 30;
+					margin: 0;
+					top: 22px;
+					font-size: 13px;
+					width: 170px;
+					right: 0px;
+					
+					li{
+						padding: $bluefields-margin/3 $bluefields-margin/2;
+					
+						&.group-of-players{
+							color: #444;
+							position: relative;
+							cursor: pointer;
+							&.all{
+								border-bottom: 1px solid #eee;
+								border-top: 1px solid #eee;
+								.users{
+									color: $bluefields-blue;
+								}
+							}
+							
+							&.available{
+								.users{
+									color: $bluefields-green;
+								}
+							}
+							
+							&.awaiting{
+								.users{
+									color: $bluefields-orange;
+								}
+							}
+							
+							&.unavailable{
+								.users{
+									color: $bluefields-red;
+								}
+							}
+							
+							&.selected{
+								background: #f9f9f9;
+								&:after{
+									font-family: "bluefields-icon";									
+									content: "\f111";
+									position: absolute;
+									right: 6px;
+									top: 4px;
+									color: #888;
+								}
+							}
+							
+							&:hover{
+								background: #f1f1f1;
+							}
+						}
+					}
+				}
+			}
+		}
+		button{}
+	}
+	
+	&.active{
+		.msg-content{
+			.highlight-star{ display: inline; }
+			
+			textarea, .mirroredText{
+				min-height: 70px;
+			}
+		}
+		
+		footer{
+			margin-top:3px;
+			ul.msg-groups{
+				>li.open{
+					color: #777;
+					background: white;
+					border: 1px #D4D4D4 solid;
+					border-bottom: none;
+				}
+			}
+		}
+	}
+	
+	&.textarea-focus{
+		.msg-content{
+			&:before{
+				border-bottom-color: $bluefields-blue;
+			}
+		}
+	}
+	
+	&.textarea-disabled{
+		.msg-content{
+			&:before{
+				border-bottom-color: #aaa;
+			}
+			
+			&:after{
+				border-bottom-color: #eee;
+			}
+		}
+	}
+}

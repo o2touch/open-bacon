@@ -1,0 +1,103 @@
+<% if (status == 1) { %>
+	<div class="alert-box alert game-cancel plain">This game has been cancelled</div>
+	<button type="button" class="button full-width" name="re-enable" data-disabled="Enabling">Enable fixture</div></button>
+<% } %>
+
+<form>
+
+	<div class="alert-box hide"></div>
+		
+
+	<label for="edit-fixture-title">Title <i class="bf-icon info" original-title="Only displayed if no teams are selected"></i></label>
+	<input name="name" id="edit-fixture-title" type="text" value="<%= title %>" placeholder="Title">
+
+	<label for="edit-fixture-home-team">Teams</label>
+
+	<select class="five columns" id="edit-fixture-home-team" <%= (homeTeamEditable) ? "" : "disabled" %>>
+		<option value="-1">TBC</option>
+		<% _.each(teams.models, function(team, i) { %>
+			<option value="<%= team.get('id') %>" <% if (team.get("id") == homeTeamId) { %>selected<% } %>><%= team.get("name") %></option>
+		<% }); %>
+	</select>
+	
+	<label for="edit-fixture-away-team" class="two columns text-center">Vs</label>
+	<select class="five columns" id="edit-fixture-away-team" <%= (awayTeamEditable) ? "" : "disabled" %>>
+		<option value="-1">TBC</option>
+		<% _.each(teams.models, function(team, i) { %>
+			<option value="<%= team.get('id') %>" <% if (team.get("id") == awayTeamId) { %>selected<% } %>><%= team.get("name") %></option>
+		<% }); %>
+	</select>
+
+
+	<label for="edit-fixture-date">Date & Time</label>
+	<div class="inline-input time">
+		<input placeholder="date" id="edit-fixture-date" gldp-id="mydate" type="text" value="<%= date %>" readonly="">
+		<div gldp-el="mydate" style="width:320px; height:200px; position:absolute; top:27px; left:0px; z-index:1000;"></div>
+
+		<select id="edit-fixture-hours">
+			<option value="-1">hh</option>
+			<% _.each(_.range(1, 13), function(hour) { %>
+				<option value="<%= hour %>" <% if (hour==time.hours) { %>selected<% } %>><%= hour %></option>
+			<% }); %>
+		</select>
+			
+		<select id="edit-fixture-minutes">
+			<option value="-1">mm</option>
+			<% _.each(_.range(0, 60, 5), function(minute) { %>
+				<%
+					var minuteDisplay = minute;
+					if (minute<10) {minuteDisplay = "0"+minute;}
+				%>
+			<option value="<%= minute %>" <% if (minute==time.minutes) { %>selected<% } %>><%= minuteDisplay %></option>
+			<% }); %>
+		</select>
+			
+		<select id="edit-fixture-ampm">
+			<option value="-1">am/pm</option>
+			<option value="am" <% if (time.ampm=="am") {%>selected<% } %>>am</option>
+			<option value="pm" <% if (time.ampm=="pm") {%>selected<% } %>>pm</option>
+		</select>
+	</div>
+
+
+
+	<div class="location-field">
+		<label for="edit-location">Location</label>
+		<div class="location-input-group <%= (locations.length) ? 'hide' : '' %>">
+			<input name="location" id="edit-location" type="text" placeholder="Address" value="<%= (location) ? location.get('title') : '' %>">
+			<button type="button" name="location-search" class="grey"><i class="bf-icon search"></i></button>
+		</div>
+
+		<% if (locations.length) { %>
+			<select id="prev-locations">
+				<option value="-1">Select location</option>
+				<% _.each(locations.models, function(loc, i) { %>
+					<option value="<%= i %>" <% if (loc.equals(location)) { %>selected<% } %>><%= loc.get("title") %></option>
+				<% }); %>
+			</select>
+			<div class="text-right"><a href="#" id="toggle-location-mode">Add new location</a></div>
+		<% } %>
+		<div id="mapwrapper"></div>
+	</div>
+
+
+
+	<div class="inline-input text-right">
+		<a href="#" class="cancel-link" name="cancel-edit">Cancel changes</a>
+		<button type="submit" class="button medium" title="save" name="save-fixture" data-disabled="Saving">Save</button>
+		<% if (!isNewFixture) { %>
+			<button type="button" class="button alert tiny" data-disabled="Cancelling" title="cancel fixture" name="cancel-fixture">Cancel game</button>
+		<% } %>
+	</div>
+
+</form>
+
+
+<% if (!isNewFixture && isDeletable) { %>
+	<hr>
+	<div class="twelve columns danger-zone clearfix">
+		<a href="#" name="delete-fixture" title="delete fixture" class="remove-event error right no-underline"><span class="underline-hover">Delete game</span> <i class="bf-icon x"></i></a>
+	</div>
+<% } %>
+
+<% if (status == 1) { %><div class="edit-cancelled-overlay"></div><% } %>

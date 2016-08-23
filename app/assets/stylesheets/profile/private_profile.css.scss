@@ -1,0 +1,71 @@
+body.private{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+
+	.footer{
+		display: none;
+		p{
+			color: #eee;
+		}
+	}
+	
+	.event-list{
+		margin-top: $bluefields-margin;
+		h2{
+			color: white;
+			text-shadow: 0 1px 0 black;
+			font-size: 28px;
+			margin-bottom: $bluefields-margin/2;
+			margin-top: $bluefields-margin;
+			font-weight: 500;
+		}
+		
+		.event-row{
+			@include box-shadow();
+		}
+	}
+}
+
+.team-page-private{
+	padding: $bluefields-margin*4 0;
+	.user-actions{
+		margin-top: $bluefields-margin;
+	}
+}
+
+
+.private-cta{
+	h2{
+		font-size: 26px;
+		color: #6C6C6C;
+		text-align: center;
+		line-height: 32px;
+		margin: 0;
+	}
+	p{
+		font-size: 14px;
+		color: #444;
+		line-height: 1.4em;
+		margin-bottom: $bluefields-margin/2;
+		a{
+			font-size: 15px;
+		}
+	}
+			
+	hr{
+		margin: $bluefields-margin (-$bluefields-margin);
+	}
+			
+	.hint{
+		text-align: center;
+		margin-top: 6px;
+		color: #888;
+		margin-bottom: 0;
+	}
+			
+	.button{
+		margin-top: $bluefields-margin/2;
+	}
+}

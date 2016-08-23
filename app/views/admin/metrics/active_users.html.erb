@@ -1,0 +1,115 @@
+<div class="columns twelve no-gutter">
+  <form id="filters" action="" method="GET">
+    User Segment:
+    <%= select_tag(:filter, options_for_select(@user_filters, @user_filter)) %>
+
+    Metric:
+    <%= select_tag(:metric, options_for_select(@metrics, @metric)) %>
+
+    Period:
+    <%= select_tag(:interval, options_for_select(@intervals, @interval)) %>
+
+    <button id="go" type="submit" value="Go">
+  </form>
+</div>
+<script>
+$("form#filters select").change(function(){
+  console.log("test");
+  $("form#filters").submit()
+})
+</script>
+
+<div class="columns twelve no-gutter">
+  <h1>Active Users - <%=@metric_name%></h1>
+  <p><%=raw @metric_desc%></p>
+
+  <div class="columns five no-gutter">
+    <h2>Growth</h2>
+    <table class="metrics">
+      <tr>
+        <td><%=@interval_type%></td>
+        <td>Active</td>
+        <td></td>
+        <td>Growth Rate</td>
+        <td>Invite Ratio</td>
+        <td>% accepting</td>
+      </tr>
+
+      <% @active_users_summary.each do |week| %>
+      <tr class="<%=week['future']%>">
+        <td><%=week['week']%></td>
+        <td class="<%=week['mood']%>"><%=week['active']%></td>
+        <td class="<%=week['mood']%>"><%=week['diff']%></td>
+        <td class="<%=week['mood']%>"><%='%.1f' % week['wow_rate'].to_f %>%</td>
+        <td><%='%.2f' % week['invite_ratio'].to_f %></td>
+        <td><%='%.1f' % ((week['accepting_users'].size.to_f / week['invited'].to_f) * 100.0) %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <% unless @active_users_cohorted.nil? %>
+  <div class="columns five">
+    <h2>Retention</h2>
+    <p><b>New users</b> in <%=@interval_type%> who are <b>strictly active</b> x <%=@interval_type%> later.</p>
+    <table class="metrics">
+      <tr>
+        <td>New Users</td>
+        <td>People</td>
+        <% (1..@active_users_cohorted.first[1][:periods_later].size).each do |w| %>
+          <td><%=w %></td>
+        <% end %>
+      </tr>
+
+      <% @active_users_cohorted.each do |key, week| %>
+      <tr>
+        <td style="min-width:100px;"><%=key%></td>
+        <td><%=week[:people].size%></td>
+
+        <% (1..week[:periods_later].size).each do |w| %>
+          <% next if week[:periods_later][w].nil? %>
+          <% percent_level = (1 - (week[:periods_later][w].size / week[:people].size.to_f)) * 100.0%>
+          <% color = percent_level > 70 ? "#000" : "#FFF" %>
+          <% percent = (week[:periods_later][w].size / week[:people].size.to_f) * 100.0 %>
+          <td style="min-width:25px; height:35px; background-color:hsla(208, 56.2753%, <%='%.0f' % percent_level.to_f%>%, 1.0000); color: <%=color%>; font-weight: bold; vertical-align: middle; text-align: center;"><%='%.0f' % percent.to_f %>%</td>
+        <% end %>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
+
+  <% unless @users_invited_cohorted.nil? %>
+  <div class="columns five">
+    <h2>User Reach</h2>
+    <p>Users who <b>signed-up</b> in <%=@interval_type%>, and <b>invited users</b> x <%=@interval_type%> later.</p>
+    <table class="metrics">
+      <tr>
+        <td>Signed-up <%=@interval_type%></td>
+        <td>People</td>
+        <% (1..@users_invited_cohorted.first[1][:periods_later].size).each do |w| %>
+          <td><%=w %></td>
+        <% end %>
+      </tr>
+
+      <% @users_invited_cohorted.each do |key, week| %>
+      <tr>
+        <td style="min-width:100px;"><%=key%></td>
+        <td><%=week[:people].size%></td>
+
+        <% (1..week[:periods_later].size).each do |w| %>
+          <% next if week[:periods_later][w].nil? %>
+          <% normalised = (week[:periods_later][w] / week[:people].size.to_f) %>
+          <% percent_level = (1 - (normalised / 5)) * 100.0%>
+          <% color = percent_level >= 70 ? "#000" : "#FFF" %>
+          <td style="min-width:25px; height:35px; background-color:hsla(208, 56.2753%, <%='%.0f' % percent_level.to_f%>%, 1.0000); color: <%=color%>; font-weight: bold; vertical-align: middle; text-align: center;"><%='%.2f' % normalised %></td>
+        <% end %>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
+
+</div>

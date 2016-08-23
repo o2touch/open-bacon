@@ -1,0 +1,5 @@
+<%= BFApp.renderHtml("backbone/templates/popups/notification_settings/setting", {setting:allSetting, allSetting:allSetting.val}) %>
+
+<% _.each(settings, function(setting) { %>
+	<%= BFApp.renderHtml("backbone/templates/popups/notification_settings/setting", {setting:setting, allSetting:allSetting.val}) %>
+<% }); %>

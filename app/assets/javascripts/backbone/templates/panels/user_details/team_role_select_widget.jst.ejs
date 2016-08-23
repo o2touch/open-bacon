@@ -1,0 +1,12 @@
+<span class="team-name"><%= htmlPic %> <strong><%= team %></strong></span>
+<span class="team-role">
+<%= currentRoleName %> 
+<select class="team-role-selecter">
+  <% _.each(roleMigrations, function(key, value) { %>
+    <option value="<%= value %>"> <%= key %></option>
+  <% }); %>
+</select></span>
+<span class="team-action">
+  <a class="change-team-role-link no-underline" href="#"><i class="bf-icon pen"></i> <span class="underline-hover">Edit</a>
+  <a class="cancel-team-role-link no-underline" href="#"><i class="bf-icon x"></i> <span class="underline-hover">Cancel</a>
+</span>

@@ -1,0 +1,9 @@
+{
+  "name": "HTML5-Progress-polyfill",
+  "version": "0.0.0",
+  "commit": "6f8202c28c0c0b70550fac378ebc5339ede6b668",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeaVerou/HTML5-Progress-polyfill.git"
+  }
+}

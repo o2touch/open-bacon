@@ -1,0 +1,22 @@
+<%= htmlPic %>
+
+<div class="team-info vertical-align">
+  <h1><%- name %></h1>
+
+	<% if(leagueModel || leagueName){ %>
+	<h2 class="league">
+	<% if(leagueModel){ %>
+		<a href="<%= leagueModel.getHref() %><% if(division){ %>/divisions/<%= division.id %><% } %>">
+  		<%- leagueModel.get("title") %>
+  		<% if(division){ %><span class="division"> - <%- division.title %><% } %></span>
+  	</a>
+	<% } else if(leagueName){ %>
+		<%- leagueName %>
+	<% } %>
+	</h2>
+	<% } %>
+
+	 <% if(canUpdateTeam) {%>
+	<a href="#" id="btn-edit-profile" class="bf-icon cog no-underline"></a>
+	<% } %>
+</div>

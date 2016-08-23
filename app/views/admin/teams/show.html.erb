@@ -1,0 +1,145 @@
+<div class="columns ten centered">
+  <p id="notice"><%= notice %></p>
+
+  
+  <div class="columns two">
+    
+  </div>
+
+  <div class="columns ten">
+    <h1><%= @team.name %></h1>
+    <p><%=link_to 'Edit Team', edit_admin_team_path(@team) %> | <%=link_to 'View Public Team', team_path(@team) %></p>
+
+    <ul class="kpis clearfix">
+      <li>
+        <%=@active_players.size %>
+        <span class="desc">Active</span>
+      </li>
+      <li>
+        <%=@team.followers.size %>
+        <span class="desc">Followers</span>
+      </li>
+      <li>
+        <%=@percent_active.to_s%>
+        <span class="desc">&#37; Active</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="columns six">
+    <div class="columns twelve">
+      <h2>Members (<%=@team.members.size%>)</h2>
+      
+      <ul class="team-members">
+      <% @team.members.each do |p| %>
+
+        <% if !p.is_a?(DemoUser) %>
+        <li class="clearfix">
+          <div class="user"><%=link_to p.name, admin_user_path(p) %> <%=p.email%></div>
+          <div class="actions"><%=p.is_registered? ? "Registered | " : "" %><%=link_to 'Remove Player', admin_team_remove_player_path(:team_id => @team.id, :user_id => p.id), :confirm => "Are you sure?" %> | <% if p.is_organiser? %><%=link_to 'Remove Organiser Role', admin_team_remove_organiser_role_path(:team_id => @team.id, :user_id => p.id), :confirm => "Are you sure?" %><% end %>
+          </div>
+        </li>
+        <% else %>
+          <li class="clearfix">
+            <div class="user"><%=p.name %> (Demo User) - <%=link_to 'Remove Player', admin_team_remove_player_path(:team_id => @team.id, :user_id => p.id), :confirm => "Are you sure?" %></div>
+          </li>
+        <% end %>
+
+
+      <% end %>
+      </ul>
+
+      <ul>
+        <li><%=link_to 'Refresh Team Roles Cache', admin_team_rtrc_path(@team) %></li>
+      </ul>
+
+    </div>
+
+    <div class="columns twelve">
+      <h2>Followers (<%=@team.followers.size%>)</h2>
+      
+      <ul class="team-members">
+      <% @team.followers.each do |p| %>
+
+        <% if !p.is_a?(DemoUser) %>
+        <li class="clearfix">
+          <div class="user"><%=link_to p.name, admin_user_path(p) %> <%=p.email%></div>
+          <div class="actions"><%=p.is_registered? ? "Registered | " : "" %></div>
+        </li>
+        <% else %>
+          <li class="clearfix">
+            <div class="user"><%=p.name %> (Demo User) - <%=link_to 'Remove Player', admin_team_remove_player_path(:team_id => @team.id, :user_id => p.id), :confirm => "Are you sure?" %></div>
+          </li>
+        <% end %>
+
+
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="columns twelve">
+      <h2>Events</h2>
+      
+      <ul>
+      <% @team.events.each do |e| %>
+        <li><%=link_to e.title, event_path(e) %></li>
+      <% end %>
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="columns six">
+    <h2>Team details</h2>
+   <table>  
+      <% unless @team.founder.nil? %>
+      <tr>
+        <td>Founder</td>
+        <td><%=link_to @team.founder.name, admin_user_path(@team.founder) %></td>
+      </tr>
+      <% end %>
+      <% unless @team.source_id.nil? %>
+      <tr>
+        <td>FAFT Id</td>
+        <td><%=link_to @team.source_id, "" %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td>Created</td>
+        <td><%=@team.created_at%></td>
+      </tr>
+      <tr>
+        <td>Team Roles Cache LU</td>
+        <td><%=@team.team_roles_last_updated_at%></td>
+      </tr>
+      <tr>
+        <td>Rabl Cache Key</td>
+        <td><%=@team.rabl_cache_key%></td>
+      </tr>
+      <tr>
+        <td>Events LU</td>
+        <td><%=@team.events_last_updated_at%></td>
+      </tr>
+      <tr>
+        <td>Open Invite Link</td>
+        <td><%=@team.open_invite_link%></td>
+      </tr>
+
+    </table>
+  </div>
+
+  <% if @team.divisions.size > 0 %>
+  <div class="columns six">
+    <h2>League Config</h2>
+   <table>
+      <% @team.divisions.first.league.league_config.each do |o| %>
+        <tr>
+          <td><%=o[0]%></td>
+          <td><%=o[1]%></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
+
+</div>

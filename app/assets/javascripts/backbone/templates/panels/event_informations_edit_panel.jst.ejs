@@ -1,0 +1,22 @@
+<label for="event-type">Event Type</label>
+<select id="event-type">
+	<option value="0" <% if(0==gameType){ %>selected<% } %>><%= gameDisplayName %></option>
+  <option value="1" <% if(1==gameType){ %>selected<% } %>>Practice</option>
+  <option value="2" <% if(2==gameType){ %>selected<% } %>>Other</option>
+</select>
+
+<label for="eventTitle">Title</label>
+<input type="text" id="eventTitle" placeholder="Title" value="<%= title %>" <% if(gameType==1){ %>disabled<% } %>>
+
+<% _.each(extraFields, function(field) { %>
+  <label for="event-<%= field.name %>"><%= field.label %></label>
+  <% if (field.element == "input") { %>
+    <input type="<%= field.type %>" name="<%= field.name %>" placeholder="<%= field.placeholder %>" id="event-<%= field.name %>" value="<%= getExtraFieldValue(field.name) %>">
+  <% } %>
+<% }); %>
+
+<div class="inline-input text-right">
+	<a href="#" class="close-panel cancel-link">Cancel changes</a>
+	<button type="submit" class="small save-event right" data-disabled="Saving">Save</button>
+</div>
+<i class="bf-icon x close-panel"></i>

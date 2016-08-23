@@ -1,0 +1,19 @@
+<h2>You have <%=@teamsheet_entries.size%> events <%= @day_of_week.nil? ? "" : @day_of_week %></h2>
+
+<p><%=@user.first_name%>, you have <%=@teamsheet_entries.size%> events coming up. Can you still make it? Change your RSVP if you can't.</p>
+
+<% @teamsheet_entries.each do |tse| %>
+<% @event = tse.event %>
+<% @teamsheet_entry = tse %>
+
+  <%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+  <%= render :partial => "user_mailer/event_response", :locals => {:teamsheet_entry => tse} %>
+
+  <!-- <a class="button grey small" href="<%= invite_link_url(:token => tse.token, :only_path => false )%>">View <%= tse.event.game_type_string %> Details</a> -->
+<% end %>
+
+<%
+email_title = "Event+Reminder"
+extra_params = @user.email
+%>
+<%==get_img_html(email_title, extra_params) %>

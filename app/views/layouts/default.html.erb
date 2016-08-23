@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="apple-itunes-app" content="app-id=704514289">
+		
+		<%= display_meta_tags :site => 'Mitoo' %>
+	
+		<%= render :partial => 'layouts/common_head' %>
+
+		<%= stylesheet_link_tag "default", :media => "all" %>
+		<%= javascript_include_tag "default" %>
+
+		<script type="text/javascript">
+			function trackDownloadLink(link, type) { 
+				try { 
+				_gaq.push(['_trackEvent', 'Download Link', 'Download App', type]); 
+				} catch(err){}
+			}
+		</script>
+	</head>
+
+	<body style="padding: 0px;" id="texture" class="default">
+
+		<% 
+		status = "logged_out"
+		if current_user
+			if current_user.role?("Invited")
+				status = "invited"		      	
+			elsif !current_user.role?("Guest")
+				status = "logged_in"
+			end
+			#status = "logged_in"
+		end
+		%>
+		
+		<%= yield %>
+
+	</body>
+</html>

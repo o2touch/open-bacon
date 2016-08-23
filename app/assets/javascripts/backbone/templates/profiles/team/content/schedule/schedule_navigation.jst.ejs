@@ -1,0 +1,19 @@
+<div class="view-mode">
+	<% if (showSearch) { %>
+	<input name="search" type="text" class="schedule-search" placeholder="Search for an event"/>
+	<% } %>
+
+	<% if (canManageTeam) { %>
+	<button type="button" class="small schedule-edit right">
+		<i class="bf-icon pen"></i> <%= (emptySchedule) ? "Add" : "Edit" %> schedule
+	</button>
+	<% } %>
+</div>
+
+<% if (canManageTeam) { %>
+<div class="edit-mode hide">
+	<div class="schedule-actions">
+		<button type="button" class="small success schedule-view" ><i class="bf-icon check"></i> Finished editing</i></button>
+	</div>
+</div>
+<% } %>

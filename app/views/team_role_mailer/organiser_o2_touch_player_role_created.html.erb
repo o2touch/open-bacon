@@ -1,0 +1,9 @@
+<p>Hi <%= @recipient.first_name.titleize %>,</p>
+
+<p><%= @player.name.titleize %> has just joined <%= @event.title %> for <%= @team.name %>.</p>
+
+<p>You can <a href="<%= user_url(@player, only_path: false) %>">view their details</a> 
+or 
+<a href="<%= event_url(@event, only_path: false)%>">view the event</a> on <%= I18n.t("general.app_name", locale: @tenant.i18n) %>.</p>
+
+<a class="button" href="<%= event_url(@event, only_path: false) %>">View the event</a>

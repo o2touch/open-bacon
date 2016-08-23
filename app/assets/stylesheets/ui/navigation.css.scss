@@ -1,0 +1,57 @@
+ul.content-navi {
+  background: #f7f7f7;
+		li {
+		  &:last-child{border-right: none;}
+			a{
+		    padding:10px;
+		    display:block;
+		    padding-top: 7px;
+		    color: #aaa;
+		    text-align:center;
+		    line-height: 22px;
+		    font-size:17px;
+		    @include geogrotesque(500, normal);
+				text-decoration: none;
+				
+		    	.bf-icon{
+		    		cursor: pointer;
+		    		margin-right: 7px;
+		    		font-size: 16px;
+		    		display: inline-block;
+		    		vertical-align: middle;
+		    	}
+		    	
+		    	span{
+		    line-height: 18px;
+		    vertical-align: bottom;
+		    display: inline-block;
+		    	@include respond-to(handhelds) {
+				    	display: none;
+			    	}
+		    	}
+	
+		  	}
+
+		  
+		 &:hover{
+	   	background-color:rgba(0, 0, 0, 0.1);
+	   	a{color: #777;}
+	 	}
+	}
+	
+
+		
+	li.selected{
+		background-color: $bluefields-white;
+		border-bottom: none;
+		a{color: #555;}
+		
+		&:first-child{
+    		border-left:none;
+		}
+		
+		&:nth-child(4){
+    		border-right:none;
+		}
+	}
+}

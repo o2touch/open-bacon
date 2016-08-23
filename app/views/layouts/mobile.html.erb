@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mitoo</title>
+		
+		<script>		
+		if(typeof(console) === 'undefined') {
+    		var console = {}
+    		console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+		}
+		</script>
+				
+		<script src="//ajax.cdnjs.com/ajax/libs/underscore.js/1.3.2/underscore-min.js"></script>
+		<script type="text/javascript" src="//use.typekit.com/tsk1uqu.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		<%= include_gon %>
+		<%= javascript_include_tag "default" %>
+		<%= csrf_meta_tags %>
+		  
+		<%= analytics_init if Rails.env.production? %>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="icon" href="/assets/favicon.ico" />
+
+		
+<style>
+	.navbar.navbar-mobile {
+		padding: 0;
+		text-align: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+	.navbar.navbar-mobile a img {
+		height: 38px;
+	}
+	.navbar.navbar-mobile a {
+		display:block;
+		padding: 15px 0;
+		background: #fff;
+		color: #353535;
+		border-bottom: 1px solid #ddd;
+		margin: 0;
+	}
+	.navbar.navbar-mobile a p {
+		font-style: italic;
+		text-align: center;
+		color: #666;
+	}
+	.actions {
+		display: block;
+		border-top: 1px solid #fff;
+		opacity: 0.8;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+	.actions li {
+		width: 50%;
+		border-right: 1px solid #fff;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		float: left;
+		display: block;
+	}
+	.actions li:last-of-type {
+		border-right: 0;
+	}
+	.actions a.button {
+		padding: 15px 0;
+		background: #000;
+		color: #fff;
+	}
+	#login {
+		margin-left: -141px !important;
+		
+	}
+	.facebook-connect {
+		padding: 16px !important;
+	}
+	.content.container {
+		padding: 0;
+		background: url('<%= image_path "to_be_sorted/m_sport1.jpg" %>') 50% 112px;
+	}
+	ul.mobile-features {
+/*		background: #333;*/
+	}
+	.mobile-features li {
+		opacity: 0.92;
+		background: #000;
+		color: #ddd;
+		display: block;
+		clear: both;
+		min-height:64px;
+		padding: 5px;
+		margin-bottom: 10px;
+	}
+	.mobile-features h3 {
+		color: #fff;
+		padding: 10px 0 0;
+	}
+	.mobile-features img {
+		float: left;
+		margin-right: 8px;
+		margin-bottom: 8px;
+	}
+	
+	.screen {
+		background: url('<%= image_path "to_be_sorted/m_sport1.jpg" %>') 50% 100%;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.screen > img {
+		position: absolute;
+		height: 480px;
+		max-width: 480px !important;
+		left: 50%;
+		margin-top: -60px;
+		margin-left: -240px;
+	}
+	
+	.arrow {
+		position: absolute;
+		bottom: 0px;
+		left:50%;
+		margin-left:-10px;
+		color: #fff;
+	}
+	
+	.mobile-form {
+		padding: 10px;
+		background: #000;
+		color: #fff;
+	}
+	
+	.mobile-form h4 {
+		color: #fff;
+	}
+	
+	#time-all {
+		position: relative;
+		top: -20px;
+	}
+</style>
+<script>
+	$(function() {
+		var top = $(".navbar").height() + 30 + "px";
+		$(".screen").css("width", $(window).width() + "px").css("height", $(window).height() + "px").css("padding-top", top);
+		$(window).scrollTop($(window).scrollTop() + 480);
+		$("a.login").click(function() {
+			$('#login').reveal({
+				animation: 'fade',
+				dismissmodalclass: 'close-reveal-modal'
+			}).css({
+				width : 'auto',
+				'margin-left' : function() {
+					return -($(this).width() / 2 +40)
+				},
+				left: '50%'
+			});
+		});
+		function runit() {
+			$(".slides").css("opacity","1");
+	      $('.slides:last').animate({"opacity":"0"},5000, function() {
+	      	$(this).prev().animate({"opacity":"0"},5000, function() {
+		      	$(this).prev().animate({"opacity":"0"},5000, function() {
+			      	$(".slides:last").animate({"opacity":"1"},5000);
+			      	$(this).prev().animate({"opacity":"0"},5000, function() {
+		      		runit();
+			      	});
+		      	});
+	      	});
+	      });
+	   }
+	   runit();
+	
+	});
+	
+</script>
+</head>
+<body style="padding: 0px;" id="texture">
+<%= render :partial => 'home/form' %>
+<% 
+status = "logged_out"
+if current_user
+	if current_user.role?("Invited")
+		status = "invited"		      	
+	elsif !current_user.role?("Guest")
+		status = "logged_in"
+	end
+	#status = "logged_in"
+end
+%>
+<div class="screen">
+	<%= image_tag "to_be_sorted/m_sport1.jpg", :class=>"slides" %>
+	<%= image_tag "to_be_sorted/m_sport2.jpg", :class=>"slides" %>
+	<%= image_tag "to_be_sorted/m_sport3.jpg", :class=>"slides" %>
+	<%= image_tag "to_be_sorted/m_sport4.jpg", :class=>"slides" %>
+	<div class="navbar navbar-mobile">
+	<a href="/m">
+		<%= image_tag 'marker/marker.png', :alt => "Mitoo"%>&nbsp;&nbsp;
+		<%= image_tag 'identity/logo/logo_dark_grey_200.png', :alt => "Mitoo"%>
+	<p>Your online sports center</p>
+	</a>
+	</div>
+<!-- 	<div class="container content">		
+		<%= yield %>
+	</div> -->
+	<ul class="actions">
+		<li><a class="button login" href="#">Login</a></li>
+		<li><a class="button signup" href="/signup">Signup</a></li>
+	</ul>
+</div>
+</body>
+</html>

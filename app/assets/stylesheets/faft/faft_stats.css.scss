@@ -1,0 +1,35 @@
+.team-stats {
+	.stat{
+		background: #f6f6f6;
+		text-align: center;
+		padding-top: $bluefields-margin;
+		padding-bottom: $bluefields-margin;
+		outline: 3px solid $bluefields-white;
+		
+		&:first-child{
+			border-left: none;
+		}
+		
+		&:last-child{
+			border-right: none;
+		}
+		
+		h5, span{ text-transform: uppercase;}
+		
+		h5{
+			@include font-size(2, false);
+			font-weight: 500;
+		}
+		span{
+			color: #555;
+			@include font-size(0.8, false);
+		}
+	}
+	
+	.stats-link {
+		margin-top: $bluefields-margin/2;
+		a span {
+			vertical-align: middle;
+		}
+	}
+}

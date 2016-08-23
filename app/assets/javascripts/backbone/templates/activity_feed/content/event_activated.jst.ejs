@@ -1,0 +1,8 @@
+<p class="comment-type">
+  <a href="<%= user.getHref() %>"><%= user.get("name") %></a> 
+  re-enabled the event<%= (isEventPage) ? "." : " " %>
+  <% if (!isEventPage) { %>
+    <a href="<%= event.getHref() %>"><%= event.get("title") %></a>.
+  <% } %>
+  The event is back on!
+</p>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+<meta charset="utf-8" />
+<title>Admin Dashboard - Mitoo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+
+<%= stylesheet_link_tag	"app-admin", :media => "all" %>
+
+<!-- BEGIN CORE JS FRAMEWORK--> 
+<%= javascript_include_tag "app-admin" %>
+
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body class="">
+
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse "> 
+  <!-- BEGIN TOP NAVIGATION BAR -->
+  <div class="navbar-inner">
+	<div class="header-seperation"> 
+		<ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
+		 <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" > <div class="iconset top-menu-toggle-white"></div> </a> </li>		 
+		</ul>
+      <!-- BEGIN LOGO -->	
+      <a href="/admin/index"><%= image_tag 'identity/logo/logo_dark_grey_200.png', :class => "logo", :alt => "Mitoo"%></a>
+      <!-- END LOGO --> 
+      </div>
+      <!-- END RESPONSIVE MENU TOGGLER --> 
+      <div class="header-quick-nav" > 
+	 <!-- BEGIN CHAT TOGGLER -->
+      <div class="pull-right"> 
+		<div class="chat-toggler">	
+				<a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom" 
+						   data-content='
+						<div style="width:300px" class="scroller" data-height="100px">
+						  <div class="notification-messages info">
+									<div class="user-profile">
+										<img src="/images/webarch/img/profiles/d.jpg" data-src="/images/webarch/img/profiles/d.jpg" data-src-retina="/images/webarch/img/profiles/d2x.jpg" width="35" height="35">
+									</div>
+									<div class="message-wrapper">
+										<div class="heading">
+											David Nester - Commented on your wall
+										</div>
+										<div class="description">
+											Meeting postponed to tomorrow
+										</div>
+										<div class="date pull-left">
+										A min ago
+										</div>										
+									</div>
+									<div class="clearfix"></div>									
+								</div>	
+							<div class="notification-messages danger">
+								<div class="iconholder">
+									<i class="icon-warning-sign"></i>
+								</div>
+								<div class="message-wrapper">
+									<div class="heading">
+										Server load limited
+									</div>
+									<div class="description">
+										Database server has reached its daily capicity
+									</div>
+									<div class="date pull-left">
+									2 mins ago
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>	
+							<div class="notification-messages success">
+								<div class="user-profile">
+									<img src="/images/webarch/img/profiles/h.jpg" data-src="/images/webarch/img/profiles/h.jpg" data-src-retina="/images/webarch/img/profiles/h2x.jpg" width="35" height="35">
+								</div>
+								<div class="message-wrapper">
+									<div class="heading">
+										You haveve got 150 messages
+									</div>
+									<div class="description">
+										150 newly unread messages in your inbox
+									</div>
+									<div class="date pull-left">
+									An hour ago
+									</div>									
+								</div>
+								<div class="clearfix"></div>
+							</div>							
+						</div>' data-toggle="dropdown" data-original-title="Notifications">
+					<div class="user-details"> 
+						<div class="username">
+							<%= link_to current_user.name, user_path(current_user) %>
+						</div>						
+					</div> 
+					<div class="iconset top-down-arrow"></div>
+				</a>						
+				<div class="profile-pic"> 
+
+					<img alt="" src="<%= current_user.profile.profile_picture_medium_url %>" data-src="<%= current_user.profile.profile_picture_medium_url %>" data-src-retina="/images/webarch/img/profiles/avatar_small2x.jpg" width="35" height="35" /> 
+				</div>       			
+			</div>
+      </div>
+	   <!-- END CHAT TOGGLER -->
+      </div> 
+      <!-- END TOP NAVIGATION MENU --> 
+   
+  </div>
+  <!-- END TOP NAVIGATION BAR --> 
+</div>
+</div>
+<!-- END HEADER --> 
+<!-- BEGIN CONTAINER -->
+<div class="page-container row"> 
+  <!-- BEGIN SIDEBAR -->
+  <div class="page-sidebar" id="main-menu"> 
+  <!-- BEGIN MINI-PROFILE -->
+   <div class="user-info-wrapper">	
+	<div class="profile-wrapper">
+		<img src="<%= current_user.profile.profile_picture_medium_url %>" data-src="<%= current_user.profile.profile_picture_medium_url %>" data-src-retina="<%= current_user.profile.profile_picture_medium_url %>" width="50" height="50" />
+	</div>
+    <div class="user-info">
+      <div class="greeting">Welcome</div>
+      <div class="username"><%=current_user.name%></div>
+      <div class="status">Status<a href="#"><div class="status-icon green"></div>Online</a></div>
+    </div>
+   </div>
+  <!-- END MINI-PROFILE -->
+  
+  <!-- BEGIN MINI-WIGETS -->
+
+   <!-- END MINI-WIGETS -->
+   
+   <!-- BEGIN SIDEBAR MENU -->	
+	<p class="menu-title">METRICS</p>
+    <ul>	
+      <li class="start"> <a href="/admin/metrics/"> <i class="icon-custom-chart"></i> <span class="title">Overview</span></a></li>
+	  <li class=""> <a href="/admin/metrics/teams/all"> <i class="icon-custom-chart"></i> <span class="title">Active Teams</span> </a> </li>
+	  <li class=""> <a href="/admin/metrics/users/active"> <i class="icon-custom-chart"></i> <span class="title">Active Users</span> </a> </li>
+	  <li class=""> <a href="/admin/metrics/followers"> <i class="icon-custom-chart"></i> <span class="title">Followers</span> </a> </li>
+	  <li class=""> <a href="/admin/metrics/users/retention"> <i class="icon-custom-chart"></i> <span class="title">User Retention</span> </a> </li>
+	</ul>
+
+	<p class="menu-title">FAFT</p>
+    <ul>	
+      <li class="start"> <a href="/admin/metrics/faft"> <i class="icon-custom-chart"></i> <span class="title">Follow Funnel</span></a></li>
+	</ul>
+
+	<p class="menu-title">TESTS</p>
+    <ul>	
+      <li class="start"> <a href="/admin/split"> <i class="icon-custom-chart"></i> <span class="title">A/B Split</span></a></li>
+	</ul>
+
+	<p class="menu-title">OTHER METRICS</p>
+    <ul>
+      <li class="start"> <a href="/admin/metrics/features"> <i class="icon-custom-chart"></i> <span class="title">Feature Usage</span></a></li>
+	</ul>
+
+	<p class="menu-title">MARKETING</p>
+    <ul>
+      <li class="start"> <a href="/admin/marketing/clubs-to-tweet"> <i class="icon-custom-chart"></i> <span class="title">Clubs to Tweet</span></a></li>
+	</ul>
+
+	<p class="menu-title">USERS</p>
+    <ul>	
+      <li class="start"> <a href="/admin/users/"> <i class="icon-custom-chart"></i> <span class="title">All</span></a></li>
+      <li class="start"> <a href="/admin/users/active"> <i class="icon-custom-chart"></i> <span class="title">Active</span></a></li>
+      <li class="start"> <a href="/admin/users?filter=mobile"> <i class="icon-custom-chart"></i> <span class="title">Mobile</span> </a></li>
+      <li class="start"> <a href="admin/metrics/user_growth.csv"> <i class="icon-custom-chart"></i> <span class="title">Growth</span> </a></li>
+       <li class="start"> <a href="admin/metrics/user_growth.csv?growth_30_day=true"> <i class="icon-custom-chart"></i> <span class="title">Growth (30 day)</span> </a></li>
+	</ul>
+
+	<p class="menu-title">TEAMS</p>
+    <ul>	
+      <li class="start"> <a href="/admin/teams/"> <i class="icon-custom-chart"></i> <span class="title">All</span> </a></li>
+      <li class="start"> <a href="/admin/teams/follows"> <i class="icon-custom-chart"></i> <span class="title">Follows</span> </a></li>
+	</ul>
+
+	<p class="menu-title">EVENTS</p>
+    <ul>	
+      <li class="start"> <a href="/admin/events/"> <i class="icon-custom-chart"></i> <span class="title">All</span> </a></li>
+	</ul>
+	
+	<p class="menu-title">LEAGUES</p>
+    <ul>	
+      <li class="start"> <a href="/admin/leagues/"> <i class="icon-custom-chart"></i> <span class="title">All</span> </a></li>
+      <li class="start"> <a href="/admin/leagues?filter=other"> <i class="icon-custom-chart"></i> <span class="title">FAFT</span> </a></li>
+      <li class="start"> <a href="/admin/leagues?filter=other"> <i class="icon-custom-chart"></i> <span class="title">Other</span> </a></li>
+	</ul>
+
+	<p class="menu-title">TOOLS</p>
+    <ul>	
+      <li class="start"> <a href="/sidekiq/"> <i class="icon-custom-chart"></i> <span class="title">Sidekiq</span> </a></li>
+	</ul>
+
+	<div class="clearfix"></div>
+    <!-- END SIDEBAR MENU --> 
+  </div>
+   
+  <!-- END SIDEBAR --> 
+  <!-- BEGIN PAGE CONTAINER-->
+  <div class="page-content"> 
+  	<div class="content">
+     <%= yield %>
+	</div>
+</div>
+
+<!-- END CONTAINER --> 
+
+<!-- END CORE TEMPLATE JS -->
+</body>
+</html>

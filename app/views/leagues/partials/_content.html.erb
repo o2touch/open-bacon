@@ -1,0 +1,29 @@
+<% if @league.display_details? %>
+  <section class="b-section b-section__details">
+    <%= render :partial => "leagues/partials/content/details" %>
+  </section>
+<% end %>
+
+<!-- <section class="b-section b-section__statistics">
+   <% #= render :partial => "leagues/partials/content/statistics" %>
+</section> -->
+
+<% if !@league.location.nil? %>
+  <section class="b-section b-section__location">
+    <%= render :partial => "leagues/partials/content/location" %>
+  </section>
+<% elsif @league.display_claim_actions? %>
+  <section class="b-section b-section__location">
+  <%= render :partial => "leagues/partials/content/location_cta" %>
+  </section>
+<% end %>
+
+<% if !@league.divisions.empty? %>
+  <section class="b-section b-section__division-list">
+    <%= render :partial => "leagues/partials/content/divisions_list" %>
+  </section>
+<% end %>
+
+<!-- <section class="b-section b-section__contact">
+  <% #= render :partial => "leagues/partials/content/contact" %>
+</section> -->

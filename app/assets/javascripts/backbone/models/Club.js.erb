@@ -1,0 +1,19 @@
+App.Modelss.Club = Backbone.Model.extend({
+
+  defaults: {
+    "profile_picture_thumb_url": "<%= asset_path 'profile_pic/team/generic_team_thumb.png' %>",
+    "profile_picture_small_url": "<%= asset_path 'profile_pic/team/generic_team_small.png' %>",
+    "profile_picture_medium_url": "<%= asset_path 'profile_pic/team/generic_team_medium.png' %>"
+  },
+
+  url: function() {
+    return "/api/v1/clubs" + (this.get("id") ? ("/" + this.get("id")) : "");
+  },
+
+  toJSON: function() {
+    return {
+      club: _.clone(this.attributes)
+    }
+  }
+
+});

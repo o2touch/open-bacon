@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="columns twelve">
+		<h1>User: <%=@user.name%></h1>
+		<p>User has invited <%=@user.users_invited.length %> users</p>
+		<p><a href="/admin/become/<%=@user.id%>">Login as user</a></p>
+	</div>
+</div>
+<div class="row">
+	<div class="columns seven dashboard">
+
+		<h2>Events</h2>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>type</td>
+				<td>When</td>
+				<td>Invited</td>
+				<td>Invites Sent</td>
+				<td>Responses</td>
+				<td>Created</td>
+				<td></td>
+			</tr>
+			<%
+				@user.events.each do |event|
+			
+				summary = event.availability_summary
+			%>
+			<tr>
+				<td><%=link_to event.title, event_path(event) %></a></td>
+				<td><%=event.game_type %></td>
+				<td><%=l(event.time) %></td>
+				<td><%=event.teamsheet_entries.length %></td>
+				<td><%=event.teamsheet_entries.length %></td>
+				
+				<td>A: <%=summary[:available] %>, U: <%=summary[:unavailable] %>, N: <%=summary[:awaiting] %></td>
+				
+				<td><%=l(event.created_at) %></td>
+				<td><%=link_to "Delete", admin_event_path(event), :confirm => "Sure?", :method => :delete %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+
+	<div class="columns five dashboard">
+
+		<h2>Teams</h2>
+		<table>
+			<tr>
+				<td>Name</td>
+			</tr>
+			<%
+				@user.teams.each do |t|
+			%>
+			<tr>
+				<td><%=link_to t.name, team_path(t) %></a></td>
+			</tr>
+			<% end %>
+		</table>
+
+		<div>
+			<%=link_to "CAUTION: Nuke this User?", admin_user_path(@user), :confirm => "Sure?", :method => :delete %>
+		</div>
+
+	</div>
+
+</div>

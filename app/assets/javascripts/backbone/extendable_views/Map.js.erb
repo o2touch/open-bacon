@@ -1,0 +1,236 @@
+/**
+ * This is just a simple google map for display purposes.
+ * It is used on the Event page for the header map, and the sidebar display map
+ * It is extended in LocationEditMap
+ */
+BFApp.Views.Map = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/content/map",
+
+  className: "map_canvas",
+
+  initialize: function(options) {
+    // defaults to the place called Bluefields
+    this.defaultLocation = options.defaultLocation || {
+      lat: 12.011786,
+      lng: -83.766031,
+      zoom: 8,
+      colour: false
+    };
+  },
+
+  showMap: function() {
+    var that = this;
+
+    if (!this.options.customHeight) {
+      this.$el.height("200px");
+    }
+
+    // If Google maps is not available for any reason, degrade gracefully
+    if (typeof google == "undefined") {
+      return;
+    }
+
+    var mapOptions = {
+      mapTypeControl: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      overviewMapControl: false,
+      panControl: false,
+      scaleControl: false,
+      scrollwheel: false,
+      streetViewControl: false,
+      zoomControl: true
+    };
+
+    if (this.options.staticMode) {
+      mapOptions.draggable = false;
+      mapOptions.zoomControl = false;
+      mapOptions.disableDoubleClickZoom = true;
+    }
+
+    this.map = new google.maps.Map(this.el, mapOptions);
+    this.geocoder = new google.maps.Geocoder();
+
+    if (!this.options.disableMarker) {
+      // keep these variables as attributes on "this"
+      // as they are accessed in LocationEditMap.js
+      this.markerIcon = {
+        url: getMapPinIcon(this.options.tenant),
+        scaledSize: new google.maps.Size(40, 47)
+      };
+      this.draggerIcon = {
+        url: getMapPinIcon(this.options.tenant, "grab"),
+        scaledSize: new google.maps.Size(40, 47)
+      };
+
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        icon: (this.options.isDraggable) ? this.draggerIcon : this.markerIcon,
+        draggable: this.options.isDraggable,
+        zIndex: 1, // appear below other pins
+        optimized: false // required for zIndex to work
+      });
+    }
+
+    // disable points of interest
+    var disablePOIStyle = {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [{
+        visibility: "off"
+      }]
+    };
+    var greyMapStyles = [{
+        stylers: [{
+          "saturation": -100
+        }, {
+          "lightness": 62
+        }, {
+          "visibility": "simplified"
+        }]
+      },
+      disablePOIStyle
+    ];
+    var colourMapStyles = [{
+        stylers: [{
+          "saturation": 0
+        }, {
+          "lightness": 0
+        }, {
+          "visibility": "on"
+        }]
+      },
+      disablePOIStyle
+    ];
+
+    this.greyMap = new google.maps.StyledMapType(greyMapStyles, {
+      name: "Grey"
+    });
+    this.colourMap = new google.maps.StyledMapType(colourMapStyles, {
+      name: "Colour"
+    });
+
+    this.showLocation();
+    this.customInit();
+  },
+
+  showLocation: function() {
+    // set initial map position - note we still geocode here as we need
+    // google to tell us the zoom level
+    var location = this.model.get("location");
+    if (location && location.hasExactLocation()) {
+      var geoData = this.getGeoData(location);
+      // if the model already has an ID, we just want to display it, not update it
+      var preventUpdateModel = !location.isNew();
+      this.performGeocode(geoData, this.options.mapWithPins, preventUpdateModel);
+    } else {
+      this.showDefault();
+    }
+  },
+
+  customInit: function() {
+    // override me
+  },
+
+  performGeocode: function(geoData, preventMapUpdate, preventUpdateModel) {
+    var that = this;
+
+    this.geocoder.geocode(geoData, function(results, status) {
+      var success = that.handleGeocodeResults(geoData, results, status, preventMapUpdate);
+      if (success && !preventUpdateModel) {
+        that.updateLocationModel(results[0], that.model.get("location").get("title"));
+      }
+      that.trigger("geocoded:location", success);
+    });
+  },
+
+  updateLocationModel: function(place, title, onlyLatLng) {
+    var attrs = {
+      // if we're updating a location model, we must reset the ID, else the BE will ignore the changes
+      id: null,
+      lat: (place.geometry) ? place.geometry.location.lat() : null,
+      lng: (place.geometry) ? place.geometry.location.lng() : null,
+    };
+    if (!onlyLatLng) {
+      attrs.title = title || place.formatted_address;
+      attrs.address = place.formatted_address || title;
+    }
+    this.model.get("location").set(attrs);
+  },
+
+  // give priority to latlng first, as it is the most precise
+  getGeoData: function(loc) {
+    if (loc.hasLatLng()) {
+      return {
+        latLng: new google.maps.LatLng(loc.get("lat"), loc.get("lng"))
+      };
+    } else if (loc.get("address")) {
+      return {
+        address: loc.get("address")
+      };
+    } else {
+      return false;
+    }
+  },
+
+  handleGeocodeResults: function(geoData, results, status, preventMapUpdate) {
+    if (status == google.maps.GeocoderStatus.OK && results && results[0]) {
+      // if the geocode was based on a latlng, preserve it
+      if (geoData && geoData.latLng) {
+        results[0].geometry.location = geoData.latLng;
+      }
+      this.updateMarker(results[0]);
+      if (!preventMapUpdate) {
+        this.setMapGeometry(results[0]);
+      }
+      return true;
+    } else {
+      this.showDefault();
+      return false;
+    }
+  },
+
+  showDefault: function() {
+    this.map.setCenter(new google.maps.LatLng(this.defaultLocation.lat, this.defaultLocation.lng));
+    this.map.setZoom(this.defaultLocation.zoom);
+    // grey out
+    this.setColour(this.defaultLocation.colour);
+    // hide marker
+    if (!this.options.disableMarker) {
+      this.marker.setVisible(false);
+    }
+    this.clearPins();
+  },
+
+  clearPins: function() {
+    // override me
+  },
+
+  updateMarker: function(place) {
+    if (!this.options.disableMarker) {
+      this.marker.setPosition(place.geometry.location);
+      this.marker.setVisible(true);
+    }
+  },
+
+  setMapGeometry: function(place) {
+    if (place.geometry.viewport) {
+      this.map.fitBounds(place.geometry.viewport);
+    } else {
+      this.map.setZoom(15);
+    }
+    this.map.setCenter(place.geometry.location);
+    this.setColour(true);
+  },
+
+  setColour: function(showColourMap) {
+    if (showColourMap) {
+      this.map.mapTypes.set('ColourMap', this.colourMap);
+      this.map.setMapTypeId('ColourMap');
+    } else {
+      this.map.mapTypes.set('GreyMap', this.greyMap);
+      this.map.setMapTypeId('GreyMap');
+    }
+  }
+
+});

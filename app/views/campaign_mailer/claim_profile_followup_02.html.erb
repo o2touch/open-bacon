@@ -1,0 +1,14 @@
+<% fullname = @profile.contact_name.titleize.split(' ') %>
+<p>Hi <%= fullname[0] %>,</p>
+<p class="text">Did you receieve my email a few days ago about setting up your <%= @profile.sport%> team on Bluefields?</p>
+
+<p>You haven’t yet setup <a href="http://bluefields.com/p/<%= @profile.slug %>"><%= @profile.name%></a> yet for the upcoming season. <a href="http://bluefields.com/p/<%= @profile.slug %>">Set it up now</a>.</p>
+
+<p>If you have any questions please get in touch.</p>
+
+<p>Regards,<br/>Andrew</p>
+<%
+email_title = "Claim+Profile+Follow+Up+Campaign"
+extra_params = "&EmailId=" + "CPFU02"
+%>
+<% if Rails.env.production? %><img src="http://trk.kissmetrics.com/e?_k=3ad62edda1e56fdd473b316d92be8a6a8f57389f&_n=Viewed+E-mail+<%=email_title%>&_p=<%=@profile.contact_email%><%=extra_params%>"/><% end %>

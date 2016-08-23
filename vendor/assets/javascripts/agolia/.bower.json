@@ -1,0 +1,14 @@
+{
+  "name": "agolia",
+  "homepage": "https://github.com/algolia/algoliasearch-client-js",
+  "version": "2.4.7",
+  "_release": "2.4.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.4.7",
+    "commit": "ff81e934c00bb7f16bbf39c1cb79360b7dd80e3a"
+  },
+  "_source": "https://github.com/algolia/algoliasearch-client-js.git",
+  "_target": "2.4.7",
+  "_originalSource": "https://github.com/algolia/algoliasearch-client-js.git"
+}

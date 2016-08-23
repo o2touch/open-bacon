@@ -1,0 +1,32 @@
+<% if @teamsheet_entry %>
+  <% if @teamsheet_entry.response_status==InviteResponseEnum::NOT_RESPONDED %>
+  <a class="availability-button button green" style="margin-bottom:6px" href="<%= invite_link_url(:token => @teamsheet_entry.token, :response => 'yes', :only_path => false )%>">Yes, <% if @junior %><%=@junior.first_name.titleize%> is<% else %>I am<% end %> <%= I18n.t "general.availability.available", locale: @tenant.i18n %></a>
+  <a class="availability-button button red" style="margin-top:0" href="<%= invite_link_url(:token => @teamsheet_entry.token, :response => 'no', :only_path => false )%>">No, <% if @junior %><%=@junior.first_name.titleize%> is<% else %>I am<% end %> <%= I18n.t "general.availability.unavailable", locale: @tenant.i18n %></a>
+  <% else %>
+
+  <table class="availability-status <% if @teamsheet_entry.response_status==InviteResponseEnum::AVAILABLE %>available<% else %>unavailable<% end %>" border="0" width="100%" height="100%" cellpadding="0" cellspacing="6">
+    <tr>
+        <td valign="middle" align="center">
+          <img class="circle availability-pic" src="<%= paperclip_url(@teamsheet_entry.user.profile.profile_picture_small_url) %>">
+        </td>
+        <td valign="middle" align="center">
+          <% if @teamsheet_entry.response_status==InviteResponseEnum::AVAILABLE %>
+          <p class="available"><% if @junior %><%=@junior.first_name.titleize%> is<% else %>You are<% end %> <%= I18n.t "general.availability.available", locale: @tenant.i18n %></p>
+          <% else %>
+          <p class="unavailable"><% if @junior %><%=@junior.first_name.titleize%> is<% else %>You are<% end %> <%= I18n.t "general.availability.unavailable", locale: @tenant.i18n %></p>
+          <% end %>
+        </td>
+        <td>
+          <% if @teamsheet_entry.response_status==InviteResponseEnum::AVAILABLE %>
+          <a href="<%= invite_link_url(:token => @teamsheet_entry.token, :response => 'no', :only_path => false )%>" >change status</a>
+          <% else %>
+          <a href="<%= invite_link_url(:token => @teamsheet_entry.token, :response => 'yes', :only_path => false )%>" >change status</a>
+          <% end %>
+        </td>
+    </tr>
+  </table>
+  <% end %>
+<% end %>
+
+
+

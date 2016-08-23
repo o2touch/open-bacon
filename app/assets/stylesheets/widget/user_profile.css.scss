@@ -1,0 +1,102 @@
+.user-profile-details {  
+	position: relative;
+	.profile-header{
+		margin-bottom: $bluefields-margin;
+		.user-info{
+			line-height: 60px;
+			display: inline-block;
+			width: 64%;
+			margin-left: $bluefields-margin;
+			h2{
+				display: inline-block;
+				vertical-align: middle;
+				line-height: 0.9;
+				margin: 0;
+				font-size: 30px;
+				font-weight: 500;
+			}
+		}
+	}
+
+	
+	.user-information{
+		font-size: 14px;
+		p.bf-icon, a.bf-icon{
+			margin-bottom: $bluefields-margin/2;
+			margin-left: 30px;
+			font-size: 13px;
+			&:before{
+				margin-right: $bluefields-margin;
+				margin-left: -29px;
+			}
+			
+		}
+		.parents-informations{
+			padding: $bluefields-margin;
+			margin-bottom: 0;
+			p.bf-icon, a.bf-icon{
+				&:before{
+					margin-right: $bluefields-margin;
+					margin-left: -27px;
+				}
+			}
+		}
+		
+		a.bf-icon{
+		}
+	}
+  
+  #btn-edit-profile{
+  	position: absolute;
+  	top: $bluefields-margin/2;
+  	right: $bluefields-margin/2;
+  	color: #777;
+  	margin: 0;
+  	font-size: 0.8em;
+  }
+    
+  
+  .connect-fb {
+  	text-align: center;
+  	margin-top: $bluefields-margin;
+  	border-top: 1px solid #ddd;
+  	padding-top: $bluefields-margin;
+  
+  	p {
+  		font-size: $sidebar-text-font;
+  		margin-top: 2px;
+   		color: #666;
+  	}
+  
+  
+  	a.fb-button {
+  		color: #FFF;
+  		display: inline-block;
+  		text-decoration: none;
+  	}
+  
+  	a.fb-button {
+  		background: #5F78AB;
+  		background-image: url('http://static.ak.fbcdn.net/rsrc.php/v2/yf/r/S-DbSHszr4D.png');
+  		background-repeat: no-repeat;
+  		background-position: -1px -81px;
+  		border-top: 1px solid #29447E;
+  		border-right: 1px solid #29447E;
+  		border-bottom: 1px solid #1A356E;
+  		border-left: 1px solid #29447E;
+  		-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8A9CC2;
+  		-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+  		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8A9CC2;
+  		cursor: pointer;
+  		font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+  		font-size: 13px;
+  		font-weight: bold;
+  		height: 23px;
+  		line-height: 23px;
+  		padding: 0px 5px 0px 30px;
+  		text-align: left;
+  	}
+  
+  }
+
+}

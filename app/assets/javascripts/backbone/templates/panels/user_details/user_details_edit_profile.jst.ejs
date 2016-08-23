@@ -1,0 +1,70 @@
+<h2>User settings</h2>
+
+<div class="six columns">
+  <label>Profile Picture</label>
+  <div class="pfl-pic-section clearfix">
+    <%= profilePicHtml %>
+    <button type="button" class="grey" name="upload-button" title="upload-button" data-disabled="Uploading">
+      <span class="text">Upload Picture</span>
+      <input type="file" name="user-profile-picture">
+    </button>
+  </div>
+
+  <label>Name</label>
+  <input type="text" value="<%= name %>" placeholder="Joe Bloggs" id="user-name" title="userName">
+
+  <label for="date-of-birth-input">Date of birth (dd/mm/yyyy)</label>
+  <input type="text" name="dob" placeholder="15/04/1987" id="date-of-birth-input" value="<%= dob %>">
+
+  <label>Gender</label>
+  <div class="radio-group">
+    <div class="inline-input male-input">
+      <input id="male-input" name="gender" value="m" type="radio">
+      <label for="male-input">Male</label>
+    </div>
+    <div class="inline-input">
+      <input id="female-input" name="gender" value="f" type="radio">
+      <label for="female-input">Female</label>
+    </div>
+  </div>
+
+  <% if(!junior){%> 
+    <label><i class="bf-icon mail"></i> Email Address</label>
+    <input type="text" value="<%= email %>" id="user-email" placeholder="joe@example.com">
+
+    <label><i class="bf-icon phone"></i> Mobile Phone Number</label>
+    <input type="tel" id="user-mobile-number" class="phone-input" value="<%= mobile %>">
+  <%}%>
+</div>
+
+
+<div class="six columns">
+
+  <label><i class="bf-icon clock"></i> Time Zone</label>
+  <select id="user-time-zone" name="user-time-zone">
+    <%
+    _.each(timeZoneList, function(tz_name, tz_number) {
+      tz_number = tz_number.split(',')[0] / 60;
+      var selected;
+      (tz_name == timeZoneUser) ? selected = "selected='selected'" : selected = "";
+    %>  
+    <option value="<%= tz_name %>" <%= selected %>><%= tz_name %> (UTC <%= tz_number %>)</option>
+    <% }); %>
+  </select>
+
+  <label>Biography</label>
+  <div class="bio-text">
+    <textarea id="user-profile-bio" placeholder="I love sports!"><%= bio %></textarea>
+    <p class="limit hide"></p>
+  </div>
+
+  <label>Username</label>
+  <input type="text" value="<%= userName %>" id="user-username" placeholder="jbloggs"> 
+</div>
+
+<div class="twelve columns">
+  <div class="inline-input text-right">
+    <a href="#" class="link-cancel">Cancel</a>
+    <button type="submit" class="small" title="save" data-disabled="Saving">Save</button>
+  </div>
+</div>

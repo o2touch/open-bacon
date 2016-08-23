@@ -1,0 +1,18 @@
+<div class="b-panel">
+  <h3 class="b-panel__title">Officers</h3>
+  <div class="b-panel__content b-panel__content--white">
+    <ul class="b-user-list">
+      <% @contacts.each do |c| %>
+        <% if !c.name.nil? %>
+        <li class="b-user-list__item">
+  <img class="b-user-list__item__pic circle user-pic thumb-pic"  src="<%= asset_path 'profile_pic/user/generic_user_thumb.png'%>"  alt="Profile picture of <%= c.name %>" title="<%= c.name %>" />
+          <div class="b-user-list__item__info">
+            <span class="b-user-list__item__info__name"><%= c.name %></span>
+            <span class="b-user-list__item__info__role"><%= !c.position.nil? ? c.position : "" %></span>
+          </div>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

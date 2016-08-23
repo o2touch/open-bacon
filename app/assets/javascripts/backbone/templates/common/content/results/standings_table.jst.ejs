@@ -1,0 +1,92 @@
+<% if (standings && _.size(standings)) { %>
+  <div class="league-table-section">
+    <h4>League Table</h4>
+
+    <table class="standings">
+      <thead>
+        <tr>
+          <td>#</td>
+          <th>Teams <span class="team-number"></span></th>
+          <% _.each(cols, function(val, key) { %>
+            <td><%= capitaliseFirstLetter(key) %></td>
+          <% }); %>
+        </tr>
+      </thead>
+      <tbody>
+        <%
+          _.each(series, function(v, i) {
+
+            var team = teams.get(v);
+            var row = standings[v];
+        %>
+        <tr>
+          <td><%= ""+(i+1) %></td>
+          <th>
+            <img class="circle" src="<%= team.get('profile_picture_thumb_url') %>">
+            <a href="<%= team.getHref() %>"><%= team.get("name") %></a>
+          </th>
+          <% _.each(row, function(val, key) { %>
+            <td class="<%= key %>"><%= val %></td>
+          <% }); %>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <button type="button" class="full-width grey tiny expand-table" data-show="Show All" data-hide="Show less">
+      Show All
+    </button>
+
+  </div>
+
+  <% if (hasAdjustments || isAdmin) { %>
+    <h4>Points Adjustments</h4>
+  <% } %>
+
+  <% if (hasAdjustments) { %>
+    <table class="adjustments">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th>Description</th>
+          <th>Points Adjustment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%
+        _.each(adjustments, function(adjustment) {
+          var team = teams.get(adjustment['team_id']);
+        %>
+        <tr>
+          <td><%= team.get("name") %></td>
+          <td><%= adjustment['desc'] %></td>
+          <td><%= adjustment['adjustment'] %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (isAdmin) { %>
+    <form class="classic inline-input adjustement-form">
+      <div class="three columns">
+        <select name="team">
+        <% _.each(teams.models, function(team) { %>
+          <option value="<%= team.get('id') %>"><%= team.get('name') %></option>
+        <% }); %>
+      </select>
+      </div>
+      <div class="three columns">
+        <input type="text" name="desc" placeholder="Description">
+      </div>
+      <div class="three columns">
+        <input type="text" name="amount" placeholder="Amount">
+      </div>
+      <div class="three columns">
+        <button type="submit" name="save" class="small full-width">Enter adjustment</button>
+      </div>
+    </form>
+  <% } %>
+
+<% } %>
+

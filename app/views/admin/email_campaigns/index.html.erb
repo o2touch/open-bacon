@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="columns twelve">
+    <h1>Email Campaigns</h1>
+    <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns eight dashboard">
+    <table>
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Submitted</td>
+          <td>Delivered</td>
+          <td>Opened</td>
+          <td>Clicked</td>
+          <td>Bounced</td>
+          <td>Complained</td>
+          <td>Claimed</td>
+          <td></td>
+        </tr>
+      </thead>
+      <% @campaigns.each do |c| %>
+      <tr>
+        <td><%=c['campaign_id'] %></td>
+        <td><%=c['submitted_count'] %></td>
+        <td><%=c['delivered_count'] %></td>
+        <td><%=c['opened_count'] %></td>
+        <td><%=c['bounced_count'] %></td>
+        <td><%=c['complained_count'] %></td>
+        <td></td>
+        <td><%=link_to 'View', ['admin', c] %></td>
+      </tr>
+      <% end %>
+    </table>
+    <br />
+  </div>
+</div>
+
+  </form>
+</div>

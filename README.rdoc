@@ -1,0 +1,3 @@
+=== Bacon Documentation
+
+Bacon is a League/Team organization webapp created with Rails.

@@ -1,0 +1,27 @@
+<div class="b-footer__left">
+  <a class="b-footer__left__link" href="http://more.mitoo.co/leagues-clubs-and-sports-facilities/">
+    <img src="<%= logoImg %>">
+    <p>The Social Network for your Club or League</p>
+  </a>
+</div>
+
+<div class="b-footer__right">
+  <ul class="b-footer__right__list">
+    <li class="b-footer__right__list__item">
+      &copy; 2014 Bluefields Inc. All rights reserved.
+    </li>
+    <% if(showDownloadLinks) { %>
+      <li class="b-footer__right__list__item">
+        Download our <a target="_blank" href="<%= appstoreLink %>" alt="Download our iPhone app">iPhone</a> or <a target="_blank" href="<%= androidLink %>" alt="Download our android app">Android</a> app
+      </li>
+    <% } %>
+    <li class="b-footer__right__list__item">
+      <a href="/terms">Terms, Privacy &amp; Cookies</a>.
+    </li>
+    <% if (showO2TouchTerms) { %>
+      <li class="b-footer__right__list__item">
+        <a href="http://www.rfu.com/takingpart/o2touchtermsandconditions" target="_blank">O2 Touch Terms &amp; Conditions</a>.
+      </li>
+    <% } %>
+  </ul>
+</div>

@@ -1,0 +1,14 @@
+<% if @league.cover_image_url != "default.png" %>
+	<div class="b-cover" style="background-image: url(<%= asset_path @league.cover_image_url  %>);"></div>
+<% else %>
+	<% if !@league.display_claim_actions? %>
+	<div class="b-cover b-cover--default sport-cover league-cover"></div>
+	<% else %>
+		<div class="b-cover">
+			<div class="b-cover__cta js-addLeagueDetails" data-track-join="cover" >
+				<img class="b-cover__cta__icon" src="<%= asset_path "cover_images/add-a-cover.png" %> ">
+				<span class="b-cover__cta__text">Add a cover</span>
+			</div>
+		</div>
+	<% end %>
+<% end %>

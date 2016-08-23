@@ -1,0 +1,44 @@
+<%
+	claimURL = unclaimed_team_profile_url(profile, :sport => profile.sport, :league_slug => profile.league_name.titleize.gsub(/ /,"").underscore, :only_path => false) + "?kme=Clicked+Claim+Profile+Campaign&kmi=" + profile.contact_email
+%>
+<br />
+<% fullname = profile.contact_name.titleize.split(' ') %>
+<p>Hi <%= fullname[0] %>,</p>
+<p>You haven’t setup <a href="<%=claimURL%>"><%= profile.name%>’s profile</a> on Bluefields for the upcoming season. <a href="<%=claimURL%>">Setup your team now</a>.</p>
+
+<table width="90%" cellpadding="0" cellspacing="0" class="team_block" align="center">
+	<tbody>
+
+		<tr>
+			<td width="60" valign="top"><img src="<%= image_path("generic_team_small.png") %>"></td>
+			<td valign="top"> <%= image_tag "unclaimed_tag.png", :class=> "tag"%> <strong><%= profile.name %></strong>
+			<br />
+			<span class="dummy"><%= [profile.sport.titleize,profile.league_name].delete_if{|a|a.nil?}.join(" | ")%></span>
+			<br />
+			<p><%= profile.location%></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a href="<%=claimURL%>" class="cta large" style="<% if !profile.colour1.nil? %>background: #<%= profile.colour1 %><% end %>">SETUP TEAM</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Save time managing your <%= profile.sport %> team with Bluefields for free:</p>
+
+<ul>
+	<li>Automate text and email reminders</li>
+	<li>Give a place for players to talk about the game</li>
+	<li>Great team website which we keep up-to-date for you</li>
+	<li>and more...</li>
+</ul>
+
+<p>See how we're strengthening the global amateur sports network and <a href="<%=claimURL%>">setup your profile</a>.</p>
+
+<p>Regards,<br/>Andrew</p>
+
+<%
+email_title = "Claim+Profile+Campaign"
+extra_params = "&EmailId=CP0002"
+%>
+<% if Rails.env.production? %><img src="http://trk.kissmetrics.com/e?_k=3ad62edda1e56fdd473b316d92be8a6a8f57389f&_n=Viewed+E-mail+<%=email_title%>&_p=<%=profile.contact_email%><%=extra_params%>"/><% end %>

@@ -1,0 +1,61 @@
+<link href="/default/theme.css" media="all" rel="stylesheet" type="text/css"/>
+
+
+<div id="r-navigation"><div>
+  <div id="main-navigation">
+    <div class="row">
+      <div class="five columns mobile-four"></div>
+      <div class="two columns mobile-four"><a class="navigation-logo" href="/"></a></div>
+      <div class="five columns mobile-four"></div>      
+    </div>
+  </div>
+  </div>
+</div>
+<div class="row download-content text-center">
+  <div class="seven columns centered">
+    <div class="store-screenshot">
+      <div class="screnshot-container iphone-container">
+        <img src="<%= asset_path 'store/screenshot/iphone_result.png' %>">
+      </div>
+      <div class="screnshot-container android-container">
+        <img src="<%= asset_path 'store/screenshot/android_result.png' %>">
+      </div>
+  	</div>
+    <h1>Always in the know, wherever you are</h1>
+  	<h2>Mitoo takes the team information that you want and puts it right in your hand</h2>
+  </div>
+  <div class="button-container">
+  	<div class="app-store-badge">
+  	  <a target="_blank" href="<%=itunes_url%>" onClick="trackDownloadLink(this, 'iOS');">
+  	    <img class="cta-store" src="<%= asset_path 'store/app_store_badge.svg' %>"/>
+  	  </a>
+  	</div>
+  	<div class="play-store-badge">
+  	  <a target="_blank" href="<%=play_store_url%>" onClick="trackDownloadLink(this, 'Play Store');">
+  	    <img class="cta-store" src="<%= asset_path 'store/get_it_on_google_play.svg' %>"/>
+  	  </a>
+  	</div> 
+  </div>
+</div>
+
+<script>
+	$("body").addClass("download-page");
+  /*
+    Detext device and display different screenshot/button depending
+    on the device (ios/android).
+  */
+  var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+  var ua = navigator.userAgent.toLowerCase();
+  var android = ua.indexOf("android") > -1;
+  if(iOS){
+    $(".play-store-badge, .android-container ").addClass("hide");
+  } else if(android) {
+    $(".app-store-badge, .iphone-container").addClass("hide");
+  }
+</script>
+<script>
+  /* Analytics */
+  analytics.track('Viewed App Download Page', {
+    'isLoggedIn': false
+  });
+</script>

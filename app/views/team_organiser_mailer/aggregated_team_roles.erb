@@ -1,0 +1,16 @@
+<h2>Hi <%= @organiser.name %>, there have been some team membership changes...</h2>
+
+<%= render :partial => "team_organiser_mailer/user_listing", 
+  :locals => {:title => "The following team members have been made organisers:", :users => @created_organisers} unless @created_organisers.empty? %>
+
+<%= render :partial => "team_organiser_mailer/user_listing", 
+  :locals => {:title => "The following players have been removed:", :users => @removed_players} unless @removed_players.empty? %>
+
+<%= render :partial => "team_organiser_mailer/user_listing", 
+  :locals => {:title => "The following team members are no longer organisers:", :users => @removed_organisers} unless @removed_organisers.empty? %>
+
+<%= render :partial => "team_organiser_mailer/user_listing", 
+  :locals => {:title => "The following players have been invited:", :users => @invited_players} unless @invited_players.empty? %>
+
+<a class="button" href="<%= team_url(@team, :only_path => false )%>">View your team on Mitoo</a>
+

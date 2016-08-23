@@ -1,0 +1,93 @@
+App.Modelss.League = Backbone.RelationalModel.extend({
+
+  defaults: {
+    "logo_thumb_url": "<%= asset_path 'profile_pic/league/generic_league_thumb.png' %>",
+    "logo_small_url": "<%= asset_path 'profile_pic/league/generic_league_small.png' %>",
+    "logo_medium_url": "<%= asset_path 'profile_pic/league/generic_league_medium.png' %>",
+    "logo_large_url": "<%= asset_path 'profile_pic/league/generic_league_large.png' %>"
+  },
+
+  relations: [{
+    type: Backbone.HasMany,
+    key: 'divisions',
+    collectionType: 'App.Collections.Divisions',
+    relatedModel: 'App.Modelss.Division'
+  }, {
+    type: Backbone.HasOne,
+    key: 'location',
+    relatedModel: 'App.Modelss.Location' // league search results have a location
+  }],
+
+  toJSON: function() {
+    return {
+      league: _.omit(this.attributes, "divisions")
+    };
+  },
+
+  parse: function(response) {
+    // league search results have a location
+    if (response._geoloc) {
+      response.location = {
+        distance: Math.floor(response._rankingInfo.geoDistance / BFApp.constants.metresInMile),
+        address: response.address,
+        lat: response._geoloc.lat,
+        lng: response._geoloc.lng
+      };
+      delete response._geoloc;
+      delete response.address;
+    }
+
+    return response;
+  },
+
+  url: function() {
+    return '/api/v1/leagues' + (this.get("id") ? ("/" + this.get("id")) : "");
+  },
+
+  getAttributes: function() {
+    // don't bother storing this extra junk
+    var attrs = _.omit(this.attributes, "divisions", "changed", "location");
+    // must clone location object sperately to avoid just having a link to the object
+    var location = this.get("location");
+    if (location) {
+      // ignore id as it gets wiped if the user makes a change
+      attrs.location = _.clone(location.attributes);
+    }
+    return attrs;
+  },
+
+  // store a copy of the league, so we can restore it later e.g. on cancel edit league
+  store: function() {
+    this.storedAttributes = this.getAttributes();
+  },
+
+  removeStore: function() {
+    this.storedAttributes = null;
+  },
+
+  restore: function() {
+    // we must reset the current (this) object before re-applying the stored attributes
+    // else stored value of null/missing will not override a current value
+    this.set("location", null, {
+      silent: true
+    });
+    this.set(this.storedAttributes);
+  },
+
+  getPictureHtml: function(size) {
+    var htmlPic = BFApp.renderProfilePicture({
+      src: this.get("logo_" + size + "_url"),
+      srcDefault: this.defaults["logo_" + size + "_url"],
+      size: size,
+      type: "league",
+      title: this.get("title")
+    });
+    return htmlPic;
+  },
+
+  getHref: function() {
+    var id = this.get("slug") || this.get("id");
+    return "/leagues/" + id;
+  }
+
+});

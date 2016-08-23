@@ -1,0 +1,76 @@
+<% content_for :head do %>
+
+	<% if !@event.team_id.nil? %>
+		<link href="/event/<%= @event.id %>/theme.css" media="all" rel="stylesheet" type="text/css" class="css-reload team-theme"/>
+	<% end %>
+
+	<script>
+	// here App is already defined - from app_files/App.js
+	var App;
+	// App is deprecated
+	var ActiveApp = App;
+	var userJSON = [];
+	var teamsJSON = [];
+	var leaguesJSON = [];
+
+	// Tenant for this event
+	ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+	// If the current logged in user is not nil
+	<% if (!current_or_guest_user.nil?)
+			@user = current_or_guest_user
+			@user.create_profile_if_not_exist %>
+
+		// Current user's teams
+		<% if !current_user.nil? %>
+		teamsJSON = <%= safe_js_string(@teams_json) %>;
+		leaguesJSON = <%= safe_js_string(@leagues_json) %>;
+		<% end %>
+
+		// Current user
+		userJSON = <%= safe_js_string(@user_json) %>;
+
+	<% end %>
+
+	// Show Download Links
+	<% download_the_app = current_user.nil? ? $rollout.active?(:faft_follow_team) : $rollout.active?(:faft_follow_team, current_user) %>
+	ActiveApp.FaftFollowTeam = {
+		showDownloadLinks: <%= show_app_download_link? %>,
+		itunesUrl: "<%= itunes_url('sidebar_download').html_safe %>",
+		playStoreUrl: "<%= play_store_url('sidebar_download').html_safe %>"
+	};
+
+	// Current user
+	ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(userJSON, {parse: true});
+	ActiveApp.CurrentUserTeams = new App.Collections.Teams(teamsJSON);
+	ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(leaguesJSON);
+
+	// Event
+	ActiveApp.Event = App.Modelss.Event.findOrCreate(<%= safe_js_string(@event_json) %>, {parse: true});
+	ActiveApp.pageType = "<%= @page_type %>";// Used in StandardSignup.js
+
+	$(function() {
+
+		if(ActiveApp.pageType == "open-invite" || ActiveApp.pageType == "public-intro"){
+			root = window.location.pathname;
+		} else{
+			root = "events/<%= @event.id %>";
+		}
+
+		// Start BF App
+		BFApp.start();
+		BFApp.rootController.startEventModule();
+
+		$(".bftip").tipsy({live: true, gravity: 'w'});
+
+	});
+	</script>
+<% end %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+

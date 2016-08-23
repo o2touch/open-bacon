@@ -1,0 +1,47 @@
+table {
+	border: none;
+	thead tr td, thead tr th {
+		background: #ddd;
+		border: none;
+		color: #666;
+		@include font-size(0.9);
+		font-weight: 400;
+		padding: 6px 10px;
+	}
+
+	tbody a {
+		text-transform: none;
+		text-decoration: none;
+		color: #4A494A!important;
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+
+	tbody{
+		border: 1px solid #f6f6f6;
+	}
+
+	tbody tr {
+		background: #f6f6f6;
+		color: #555;
+
+		&:hover{
+			background: $bluefields-white;
+		}
+
+		td, th{
+			border: none;
+			text-transform: none;
+			color: #555;
+			padding: 9px 10px;
+			font-weight: 500;
+		}
+
+		&.current_team {
+			td, th{
+				background: $bluefields-white;
+			}
+		}
+	}
+}

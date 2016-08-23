@@ -1,0 +1,31 @@
+<% if (isOpen) { %>
+  <p><a href="#" class="edit-event-information no-underline"><i class="bf-icon pen"></i> <span class="underline-hover" >Change details</span></a></p>
+  <div class="information-edit-container"></div>
+
+  <% if (showChangeDateButton) { %>
+    <p><a href="#" class="edit-event-schedule no-underline"><i class="bf-icon clock"></i> <span class="underline-hover" >Change date/time</span></a></p>
+    <div class="schedule-edit-container"></div>
+  <% } %>
+
+  <p><a href="#" class="edit-event-location no-underline"><i class="bf-icon pin"></i> <span class="underline-hover" >Change location</span></a></p>
+  <div class="location-edit-container"></div>
+  <hr>
+<% } %>
+
+<!-- 
+<% if (false) { %>
+<p><a href="#" class="btn-email"><i class="bf-icon mail"></i> Email invitation</a></p>
+<p><a href="#" class="btn-facebook"><i class="bf-icon facebook"></i> Share on Facebook</a></p>
+<p><a href="#" class="btn-twitter"><i class="bf-icon twitter"></i> Share on Twitter</a></p>
+<hr>
+<% } %>
+-->
+ 
+<% if (showRescheduleButton) { %>
+  <p><a href="#" class="postpone-event no-underline"><i class="bf-icon calendar"></i> <span class="underline-hover" >Postpone/Reschedule</span></a></p>
+  <div class="schedule-postpone-container"></div>
+
+  <p><a href="#" class="cancel-event error no-underline"><i class="bf-icon x"></i> <span class="underline-hover" >Cancel event</span></a></p>
+<% } else { %>
+  <p><a href="#" class="enable-event no-underline"><i class="bf-icon check"></i> <span class="underline-hover" >Re-enable event</span></a></p>
+<% } %>

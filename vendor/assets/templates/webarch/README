@@ -1,0 +1,15 @@
+===
+* WEB ARCH TEMPLATE
+* Installed by Piers Rollinson
+* Downloaded from http://themeforest.com
+===
+
+
+=====
+RAILS SETUP
+=====
+
+Adjustments made to support Rails 3 asset pipeline:
+
+- Added index.css
+- Added index.js

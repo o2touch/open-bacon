@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="columns six">
+		<h1>Clubs (<%=@clubs.size%>)</h1>
+		<br />
+	</div>
+</div>
+<div class="columns six">
+	<h2>Create one club</h2>
+	<%= render 'form' %>
+</div>
+<div class="columns six">
+	<h2>Upload csv, innit</h2>
+	<%= form_tag(admin_club_upload_path, :multipart => true) do %>
+		<div class="field">
+			<label>CSV</label>
+		  <%= file_field_tag 'csv' %>
+		  <%= submit_tag "upload" %>
+		 </div>
+	<% end %>
+</div>
+<div class="row">
+	<div class="columns twelve dashboard">
+		<table>
+			<thead>
+				<tr>
+					<td>Badge</td>
+					<td>ID</td>
+					<td>Name</td>
+					<td>Teams</td>
+					<td>Followers</td>
+					<td>Sport</td>
+					<td>Colour 1</td>
+					<td>Colour 2</td>
+					<td>Ground</td>
+					<td>Address</td>
+					<td></td>
+				</tr>
+			</thead>
+			<% 
+				@clubs.each do |club|
+
+					follow_count = 0
+					club.teams.each do |t|
+						follow_count += t.associates.count
+					end
+			%>
+			<tr>
+				<td><img src="<%= club.profile.profile_picture_small_url %>" /></td>
+				<td><%= club.id %></td>
+				<td><%= link_to club.name, admin_club_path(club) %></td>
+				<td><%= club.teams.count %></td>
+				<td><%= follow_count %></td>
+				<td><%= club.profile.sport %></td>
+				<td><span style="background-color:#<%= club.profile.colour1 %>;"><%= club.profile.colour1 %></td>
+				<td><span style="background-color:#<%= club.profile.colour2 %>;"><%= club.profile.colour2 %></td>
+				<td><%= club.location.title %></td>
+				<td><%= club.location.address %></td>
+				<td>
+					<%=link_to "Edit", edit_admin_club_path(club) %>
+			  	<%=link_to "Delete", admin_club_path(club), :confirm => "Sure?", :method => :delete %>
+			  	<%=link_to "Public View", club_path(club) %>
+				</td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+
+</div>

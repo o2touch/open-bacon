@@ -1,0 +1,24 @@
+<h1>New to mitoo?</h1>
+<h2>Here's a quick introduction</h2>
+<ul class="twelve columns no-gutter">
+  <li class="four columns">
+    <img src="<%= img1 %>">
+    <h3>We Track Team & League Data</h3>
+    <p>Full details on results, upcoming games & tables</p>
+  </li>
+  <li class="four columns">
+    <img src="<%= img2 %>">
+    <h3>You Receive Personalised Updates</h3>
+    <p>Get notified on your smartphone, or via email or text</p>
+  </li>
+  <li class="four columns">
+    <img src="<%= img3 %>">
+    <h3>You’re Always in the Know</h3>
+    <p>Never miss a beat, wherever you are</p>
+  </li>
+</ul>
+<% if (isFollowing){ %>
+<a href="/download-app" class="button large orange got-it-button store-link" data-button-type="inline" data-track="download-page" data-track-type="onboarding-godbar" >Download the app</a>
+<% } else { %>
+<button class="button large orange got-it-button follow-form" data-button-type="onboarding-godbar">Follow</a>
+<% } %>

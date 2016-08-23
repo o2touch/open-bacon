@@ -1,0 +1,15 @@
+<div class="columns ten centered csv-upload-area">
+	<h3><%= title.capitalize %> - <%= all.count %> (of which <%= pergatory.count %> <%= pergatory.count == 1 ? "is" : "are" %> in pergatory, and <%= invalid.count %> <%= invalid.count == 1 ? "is" : "are" %> invalid)</h3>
+	<%= render 'upload_form', league_id: @league.id, model_type: title.chomp('s') %>
+
+	<% if invalid.count > 0 %>
+		<p>The <%= invalid.count %> invalid row<%= invalid.count == 1 ? " is" : "s are" %> as follows.</p>
+		<%= render 'table', data: invalid %>
+	<% else %>
+		<p>There are no invalid <%= title %>. BRAP.
+	<% end %>
+	<% if !existing.nil? && existing.count > 0 %>
+		<p><strong>NOTE: There are <%= existing.count %> rows that represent existing <%= title %> in our database. This is valid, and the importer will add these <%= title %> to the league as appropriate. If you do not want this delete these rows of data below (this will not touch the existing <%= title %>).</strong></p>
+		<%= render 'table', data: existing %>
+	<% end %>
+</div>

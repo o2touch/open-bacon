@@ -1,0 +1,32 @@
+<!-- Fixture -->
+<div class="fixture-extended-test" >
+
+	<!-- Time -->
+	<div class="time">
+		<span class="hours"><%= fixture.bftime.twelve_hour_time %></span>
+	</div>
+
+	<!-- Fixture information -->
+	<div class="fixture-content">
+
+		<!-- Left team -->
+		<p class="team-left">
+			<%= link_to fixture.home_team.name, default_team_path(fixture.home_team) if !fixture.home_team.nil? %>
+		</p>
+
+		<!-- Score or VS -->
+		<div class="informations">
+			<% if !fixture.result.nil? %>
+				<span class="result"><%=fixture.result.home_final_score_str unless fixture.result.home_score.nil?%> : <%=fixture.result.away_final_score_str unless fixture.result.away_score.nil?%></span>
+			<% elsif %>
+				<span class="versus">VS</span>
+			<% end %>
+		</div>
+
+		<!-- Right team -->  
+		<p class="team-right">
+			<%= link_to fixture.away_team.name, default_team_path(fixture.away_team) if !fixture.away_team.nil? %>
+		</p>
+	</div>
+
+</div>

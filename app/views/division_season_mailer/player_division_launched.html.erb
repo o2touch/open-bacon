@@ -1,0 +1,24 @@
+<h2>Welcome to <%= @league.title %> on Mitoo</h2>
+
+<p>Hi <%= @user.first_name.titleize %>, 
+
+<p><em><%= @league.title %></em> is now using Mitoo to provide all the information you need to get to the game.</p>
+
+<p>Mitoo makes it really easy to:</p>
+<ul>
+	<li>Message your teammates</li>
+	<li>Indicate your availability for games</li>
+	<li>Keep up-to-date with the schedule and standings</li>
+</ul>
+
+<p>Check out <a href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">your team</a>, it's set up and good to go!</p>
+
+<a class="button" href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">Join your team</a>  
+
+<p>Have any questions? Get in touch with us at <a href="http://help.mitoo.co">help.mitoo.co</a> or email <a href="mailto:help@mitoo.co?subject=Question for Mitoo"/>help@mitoo.co</a></p>
+
+<%
+email_title = "Team+Invite"
+extra_params = @user.email + "&TeamId=" + @team.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

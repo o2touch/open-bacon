@@ -1,0 +1,45 @@
+/* Change progress bar theme to team color */
+progress {color-color: $colour1; }
+progress::-moz-progress-bar { background-color: $colour1;	}
+progress::-webkit-progress-value {background-color: $colour1; }
+
+[data-team-color-2~="text"] {
+	color: $colour1!important;
+}
+
+[data-team-color~="background"] {
+	background-color: $colour1!important;
+}
+
+[data-team-color~="border"] {
+	border-color: $colour1!important;
+}
+
+[data-team-color~="button"] {
+	@include button-basic($colour1);
+}
+
+[data-team-color~="link"] {
+	@include link_creator($colour1);
+}
+
+
+[data-team-color-2~="text"] {
+	color: $colour2!important;
+}
+
+[data-team-color-2~="background"] {
+	background-color: $colour2!important;
+}
+
+[data-team-color-2~="border"] {
+	border-color: $colour2!important;
+}
+
+[data-team-color-2~="button"] {
+	@include button-basic($colour2);
+}
+
+[data-team-color-2~="link"] {
+	@include link_creator($colour2);
+}

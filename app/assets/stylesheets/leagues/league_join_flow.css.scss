@@ -1,0 +1,38 @@
+.join-league-flow {
+
+	.join-text-help{
+		margin-bottom: $bluefields-margin;
+		h1 {
+			text-transform: uppercase;
+			color: #666;
+		}
+		
+		p {
+			color: #777;
+		}
+	}
+
+
+	&.join-league-create-team {}
+	&.join-league-signup-view {}
+
+
+	&.join-league-pending-view {
+		.spinner-container {
+			min-height: 35px;
+			display: block;
+			.spinner {
+				left: 50%!important;
+				top: 25px!important;
+			}
+		}
+
+		.success-message {
+			button {
+				margin-top: 12px;
+			}
+		}
+	}
+
+	
+}

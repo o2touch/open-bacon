@@ -1,0 +1,83 @@
+<div class="club-create-signup">
+  <p class="text-center hide-after-click">Want Mitoo for your club? <a class="show-create-club-form-link" href="#">Request here</a></p>
+  <div class="club-create-hidden hide">
+    <p>Submit this form and we'll get to it!</p>
+    <form class="club-form">
+      <div class="message-confirmation alert-box success hide">
+        Thanks, we'll be in touch soon!
+      </div>    
+      <input name="club" type="text" placeholder="Club">
+      <input name="user-name" type="text" placeholder="Name">
+      <input name="user-email" type="text" placeholder="Email">
+      <input name="club-position" type="text" placeholder="Role (eg. Match Secretary)">
+      <div class="inline-input text-center">
+        <input type="checkbox" name="email-me" id="email-me" checked><label for="email-me">Yes, Mitoo can email me</label>
+      </div>
+      <button type="submit" class="full-width">Submit</button>
+    </form>
+    <small>By clicking submit, you confirm that you have read our <a href="/terms">Terms & Privacy policy</a>. (Don't worry, we won't ever share your data)</small>
+  </div>
+</div>
+<script>
+  $(".club-form input[name='email-me']").change(function() {
+    if($(this).is(":checked")) {
+      enableButton($(".club-form button"));        
+    } else {
+      disableButton($(".club-form button"), false);
+    }
+  });
+
+  $(".show-create-club-form-link").click(function(e) {
+    e.preventDefault();
+    $(".hide-after-click").addClass("hide");
+    $(".club-create-hidden").removeClass("hide");
+  });
+
+  $(".club-form").submit(function(e) {
+    
+    e.preventDefault();
+    
+    var data = {
+      club: $(".club-form input[name='club']").val(),
+      user: $(".club-form input[name='user-name']").val(),
+      email: $(".club-form input[name='user-email']").val(),
+      position: $(".club-form input[name='club-position']").val(),
+      emailMe: $(".club-form input[name='email-me']").is(":checked")
+    }
+  
+    var club = ($(".club-form input[name='club']").val().length > 4);
+    
+    var email = BFApp.validation.isEmail({
+      htmlObject: $(".club-form input[name='user-email']")
+    });
+    
+    var name = BFApp.validation.isName({
+      htmlObject: $(".club-form input[name='user-name']")
+    });
+    
+    if (club && email && name) {
+  
+     disableButton($(".club-form button"));
+    
+      $.ajax({
+        type: "post",
+        url: "/contact_requests/create",
+        dataType: 'json',
+        data: data,
+    
+        success: function(data) {
+          $(".message-confirmation").removeClass("hide");
+          $(".club-form input").val("").text("");
+          enableButton($(".club-form button"));
+        },
+        error: function(data) {
+          errorHandler({
+            button: $(".club-form button")
+          });
+        }
+      });
+      
+    }
+  
+  });
+</script>

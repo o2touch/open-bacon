@@ -1,0 +1,112 @@
+<div class="row">
+	<div class="columns twelve">
+		<h1>Campaign: Claim Profile</h1>
+		<br />
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns eight dashboard">
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Submitted</td>
+					<td>Delivered</td>
+					<td>Opened</td>
+					<td>Clicked</td>
+					<td>Bounced</td>
+					<td>Complained</td>
+					<td>Claimed</td>
+				</tr>
+			</thead>
+			<% @campaigns.each do |c| %>
+			<tr>
+				<td><%=c['name'] %></td>
+				<td><%=c['submitted_count'] %></td>
+				<td><%=c['delivered_count'] %></td>
+				<td><%=c['opened_count'] %></td>
+				<td><%=c['bounced_count'] %></td>
+				<td><%=c['complained_count'] %></td>
+				<td></td>
+			</tr>
+			<% end %>
+		</table>
+		<br />
+	</div>
+</div>
+
+<div class="row">
+	<form action="/admin/claim_profile_campaign" method="post">
+	<div class="columns nine dashboard">
+	
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Sport</td>
+					<td>League</td>
+					<td>Contact</td>
+					<td>Created</td>
+					<td>Emailed</td>
+					<td>Follow-up</td>
+					<td>Claimed</td>
+					<td></td>
+				</tr>
+			</thead>
+			<% @teams.each do |team| %>
+			<%
+				sport = "sport"
+				sport = team.sport unless team.sport.nil?
+				
+				league = "league"
+				league = team.league_name unless team.league_name.nil?
+			%>
+			<tr>
+				<td><%=team.name # unclaimed_team_profile_url(team, :sport => sport, :league_slug => league.titleize.gsub(/ /,"").underscore)
+				%></td>
+				<td><%=team.sport %></td>
+				<td><%=team.league_name %></td>
+				<td><%=team.contact_name %>, <%=team.contact_email %></td>
+				<td><%=l(team.created_at) if(!team.created_at.nil?) %></td>
+				<td><%= "Y" if team.has_emailed? %></td>
+				<td></td>
+				<td><%= "Y" + team.team_id unless team.team_id.nil? %></td>
+				<td><% if !team.has_emailed? %><input type="checkbox" name="profiles[]" value="<%=team.id%>" /><% end %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+	
+	<div class="columns three dashboard">
+		<h3>Send Emails</h3>
+		<div class="select-emails">
+			<input id="select-num-emails" type="text" value="100" width="4"/>
+			<input class="check" type="button" value="Check" />
+			<input class="uncheck" type="button" value="Uncheck" />
+			<script type="text/javascript">
+				$('.select-emails input.check').click(function(){
+					$('input').each(function(i,e){
+						if(i<$('#select-num-emails').val()){
+							$(e).attr('checked', true);
+						}
+					})
+				})
+				$('.select-emails input.uncheck').click(function(){
+					$('input').each(function(i,e){
+						if(i<$('#select-num-emails').val()){
+							$(e).attr('checked', false);
+						}
+					})
+				})
+			</script>
+		</div>
+		<div id="send-campaign">
+			<label for="campaign_id">Tag to Campaign</label>
+			<%= select_tag("campaign_id", options_for_select(@campaigns.map { |h| [h['name'], h['id']] })) %>
+			<br />
+			<input type="submit" value="send" />
+		</div>
+	</div>
+	</form>
+</div>

@@ -1,0 +1,26 @@
+<li class="three columns mobile-four" id="nav-activity">
+  <a href="#user/<%= id %>/activity">
+    <i class="bf-icon overview"></i>
+    <span>
+      Overview
+    </span>
+  </a>
+</li>
+<% if (showSchedule) { %>
+<li class="three columns mobile-four" id="nav-schedule">
+  <a href="#user/<%= id %>/schedule">
+    <i class="bf-icon calendar"></i>
+    <span>
+      Schedule
+    </span>
+  </a>
+</li>
+<li class="three columns mobile-four" id="nav-results">
+  <a href="#user/<%= id %>/results">
+    <i class="bf-icon trophy"></i>
+    <span>
+      Past Games
+    </span>
+  </a>
+</li>
+<% } %>

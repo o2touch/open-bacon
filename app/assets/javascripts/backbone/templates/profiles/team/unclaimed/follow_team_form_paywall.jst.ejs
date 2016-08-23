@@ -1,0 +1,29 @@
+<% if (followVersusDownloadTest && followVersusDownloadTest.alternative == "download") { %> 
+<a href="/download-app" class="button full-width dowload-app-redirect">Continue</a>
+<% } else { %>
+
+	<% if (teams && teams.models.length) { %>
+		<div class="select-ui-container">
+			<button type="button" name="team-name" class="select-ui grey bf-icon arrow-bottom-r"><%= teams.models[0].get("name") %></button>
+			<select name="team">
+		    <% _.each(teams.models, function(team) { %>
+		      <option value="<%= team.get('id') %>"><%= team.get('name') %></option>
+		    <% }); %>
+		  </select>
+		</div>
+	<% } %>
+
+	<div class="facebook-signup">
+	  <button type="button" class="facebook radius full-width" name="facebook"><i class="bf-icon facebook"></i> <span class="text">Continue With Facebook</span></button>
+	</div>
+	<span class="or-choice-line">or</span>
+
+	<div class="manual-signup">
+		<div class="input-with-button">
+			<div class="input-container">
+				<input name="email" type="email" placeholder="Email">
+			</div>
+			<button type="submit" name="follow" class="follow-team small">Continue</button>
+		</div>
+	</div>
+<% } %>

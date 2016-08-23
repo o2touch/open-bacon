@@ -1,0 +1,25 @@
+<section class="footer-copy follow-state-item">
+  <div class="nine columns">
+    <h1>Team News Always At Your Fingertips</h1>
+    <p>We keep track of the teams you follow or play for. So you always have the latest information in your hand. Simply follow your team to get started.</p>
+  </div>
+  <div class="three columns">
+    <button type="button" class="small full-width follow-form" data-button-type="footer">Follow <%= @team.name %></button>
+  </div>
+</section>
+<section class="footer-copy download-state-item">
+  <div class="nine columns">
+    <h1>Team News Always At Your Fingertips</h1>
+    <p>Download the app for the latest <%= @team.name %> information and for notifications to your phone.</p>
+  </div>
+  <div class="three columns">
+    <div class="download-the-app-footer">
+      <a target="_blank" href="<%=itunes_url%>" class="store-link" data-track="iOS" data-track-type="footer">
+        <img class="cta-store apple-store-image" src="<%= asset_path 'store/app_store_badge.svg' %>"/>
+      </a>
+      <a target="_blank" href="<%=play_store_url%>" class="store-link" data-track="Play Store" data-track-type="footer">
+        <img class="cta-store" src="<%= asset_path 'store/get_it_on_google_play.svg' %>"/>
+      </a>
+    </div>
+  </div>
+</section>

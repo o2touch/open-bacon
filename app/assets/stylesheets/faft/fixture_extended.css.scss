@@ -1,0 +1,66 @@
+.fixtures-group {
+  margin-top: $bluefields-margin * 2;
+}
+
+.fixture-extended-test {
+  background: #eee;
+  padding: 9px $bluefields-margin / 2;
+  &:nth-child(odd) {
+    background: #f4f4f4;
+  }
+  &:hover {
+    background: $bluefields-white;
+  }
+  .fixture-content, .time, .team-left, .informations, .team-right {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  &.with-date {
+    padding: 0;
+    .fixture-content {
+      @include calc(width, "100% - 44px");
+    }
+  }
+  .time {
+    width: 60px;
+    color: #444;
+    font-weight: bold;
+    text-align: left;
+  }
+  .fixture-content {
+    width: 82%;
+    @include calc(width, "100% - 65px");
+    .team-left, .team-right {
+      width: 35%;
+      @include calc(width, "50% - 30px");
+      margin: 0;
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    .team-left {
+      text-align: right;
+    }
+    .tbc {
+      font-style: italic;
+      color: #999;
+    }
+    .informations {
+      width: 50px;
+      text-align: center;
+      .versus {
+        @include font-size(1, false);
+        font-weight: 300;
+        color: #999;
+      }
+      .result {
+        @include font-size(1.2, false);
+        font-weight: bold;
+        color: #666;
+      }
+    }
+    .team-right {
+      text-align: left;
+    }
+  }
+}

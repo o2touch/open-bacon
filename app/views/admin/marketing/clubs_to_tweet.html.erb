@@ -1,0 +1,62 @@
+<div class="page-title">  
+  <h3>Clubs to Tweet</h3>
+  <h4></h4>
+</div>
+
+  <div id="container">
+
+    <div class="row spacing-bottom 2col"> 
+  
+      <div class="col-md-12 spacing-bottom-sm"> 
+        <div class="grid simple ">
+          <div class="grid-title">
+            <h4>Results</h4>
+            <div class="tools">
+              <a href="/admin/marketing/clubs-to-tweet.csv?from=<%=params[:from]%>"><i class="icon-download-alt"></i></a>
+              <a href="javascript:;" class="collapse"></a>
+            </div>
+          </div>
+          <div class="grid-body">
+            <table id="results" class="table">
+              <thead>
+                <th>Date</th>
+                <th>Team</th>
+                <th>League</th>
+                <th>Club Twitter</th>
+                <th>Type</th>
+                <th>Result</th>
+                <th>Against</th>
+                <th>URL</th>
+              </thead>
+              <tbody>
+                <% @tweets.each do |f| %>
+                  <tr>
+                    <td><%=f[:date].strftime("%d/%m/%Y")%></td>
+                    <td><%=f[:team_name]%></td>
+                    <td><%=f[:league_name]%></td>
+                    <td><a target="_blank" href="http://twitter.com/<%=f[:club_twitter]%>"><%=f[:club_twitter]%></a></td>
+                    <td><%=f[:result_type]%></td>
+                    <td><%=f[:result]%></td>
+                    <td><%=f[:against]%></td>
+                    <td><%=f[:team_url]%></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+$(document).ready(function() {
+    $('#results').dataTable({
+      "aaSorting": [[ 0, "desc" ]],
+      "bLengthChange": false,
+      "bPaginate": false,
+      "bSearchable": false
+    });
+} );
+</script>

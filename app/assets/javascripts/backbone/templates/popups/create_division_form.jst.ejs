@@ -1,0 +1,33 @@
+<h2 class="text-center">Create Division</h2>
+
+<label for="title-input">Title</label>
+<input type="text" name="title" placeholder="My Division" id="title-input">
+
+<div class="date-input">
+  <label>Start date</label>
+  <input readonly type="text" name="start" gldp-id="startdate" placeholder="Sat Jul 6th 2014">
+  <div gldp-el="startdate" style="width:320px; height:200px; position:absolute; z-index:1000;"></div>
+</div>
+
+<div class="date-input">
+  <label>End date</label>
+  <input readonly type="text" name="end" gldp-id="enddate" placeholder="Sat Jul 6th 2014">
+  <div gldp-el="enddate" style="width:320px; height:200px; position:absolute; z-index:1000;"></div>
+</div>
+
+<div class="inline-input age-group">
+  <input type="radio" name="age_group" id="age-adult" value="99" checked>
+  <label for="age-adult">Adult team</label>
+</div>
+<div class="inline-input age-group">
+  <input type="radio" name="age_group" id="age-junior" value="14">
+  <label for="age-junior">Junior team (U14-U18)</label>
+</div>
+<div class="inline-input age-group">
+  <input type="radio" name="age_group" id="age-junior-kids" value="9">
+  <label for="age-junior-kids">Junior team (U13)</label>
+</div>
+
+<div class="inline-input text-right">
+  <button type="submit" name="submit">Submit</button>
+</div>

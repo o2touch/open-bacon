@@ -1,0 +1,38 @@
+<div class="time">
+	<% if (time) { %>
+		<span class="hours"><%= time.hours %>:<%= time.minutes %></span>
+		<span class="ampm"><%= time.ampm %></span>
+	<% } else { %>
+		<span>
+			<i class="bf-icon clock"></i><br/>TBC
+		</span>
+	<% } %>
+</div>
+
+<div class="fixture-content">
+
+	<div class="sport-specific-content"></div>
+
+	<% if (isCancelled) { %>
+		<div class="alert-box alert game-cancel plain">Game cancelled</div>
+	<% } %>
+
+	<% if (isEdited) { %>
+		<p class="alert-box success game-status plain">To be published</p>
+	<% } %>
+
+	<% if (!isInFuture && !hasPoints) { %>
+		<p class="alert-box warning game-status plain">No points set</p>
+	<% } %>
+
+</div>
+
+
+<% if (showEditButton) { %>
+	<div class="fixture-action bf-background">
+		<p name="edit-fixture" class="edit">
+			<i class="bf-icon pen"></i>
+		</p>
+	</div>
+<% } %>
+

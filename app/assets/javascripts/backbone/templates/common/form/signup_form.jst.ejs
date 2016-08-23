@@ -1,0 +1,33 @@
+<div class="signup-form">
+	<% if (title) { %><h3><%= title %></h3><% } %>
+
+	<% if (showFacebook) { %>
+	<a href="/users/auth/facebook?<%= fbParams %>" class="button facebook full-width">
+		<i class="bf-icon facebook"></i> <%= fbButtonText %>
+	</a>
+	<span class="or-choice-line">or</span>
+	<% } %>
+	
+	<div class="alert-box hide signup-error-alert"></div>
+	<form>
+		<% if (showLabels) { %><label for="user-name">Name</label><% } %>
+		<input id="user-name" name="name" type="text" value="<%= name %>" placeholder="<%= namePlaceholder %>">
+		
+		<% if (showLabels) { %><label for="user-email">Email</label><% } %>
+		<input id="user-email" name="email" type="text" value="<%= email %>" placeholder="<%= emailPlaceholder %>">
+		
+		<% if (showLabels) { %><label for="user-password">Password</label><% } %>
+		<input id="user-password" name="password" type="password" placeholder="<%= passwordPlaceholder %>">
+	
+		<% if (showTermsLink) { %>
+		<div class="inline-input">
+			<label for="terms-input"><input type="checkbox" name="terms" id="terms-input">Tick here to confirm you have read and agreed to our <a href="http://www.rfu.com/takingpart/o2touchtermsandconditions" target="_blank">Terms and Conditions</a>.</label>
+		</div>
+		<% } %>
+		
+		<div class="actions clearfix">
+			<button type="submit" title="signup" name="signup" class="<%= submitClasses %>" data-disabled="Registering"><%= submitButtonText %></button>
+			<% if (showLogin) { %><a href="#" title="login" name="login">Login</a><% } %>
+		</div>
+	</form>
+</div>

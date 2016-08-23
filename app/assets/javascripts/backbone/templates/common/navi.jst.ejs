@@ -1,0 +1,160 @@
+<div id="main-navigation">
+	<div class="row">
+
+		<div class="five columns mobile-four">
+
+			<% if (isLoggedIn && (userTeams.length !== 0 || UserLeagues.length !== 0 || userTenants.length !== 0)) { %>
+				<ul class="navigation-dropdown team columns six">
+					<li class="navigation-dropdown-title bf-icon arrow-bottom-r">
+						<i class="bf-icon list"/><span>Navigation</span>
+					</li>
+					<li class="navigation-dropdown-list">
+
+						<!-- Tenants -->
+						<% if (userTenants.length !== 0) { %>
+						<ul>
+							<li class="list-header">Dashboard Admin</li>
+							<% $.each(userTenants, function(i,t) { %>
+							<li>
+							<%
+								// MAJOR HORRIBLE HACK - PR
+								var url = "/tenants/" + t.tenant_id;
+								if(t.tenant_id==2){
+									url = "/tenants/o2touch";
+								}
+							%>
+								<a class="no-underline" href="<%=url%>">
+									<span class="navigation-item-title">Dashboard</span>
+								</a>
+							</li>
+							<% }); %>
+						</ul>
+						<% } %>
+
+						<!-- Leagues -->
+						<% if (UserLeagues.length !== 0) { %>
+						<ul>
+							<li class="list-header">Leagues</li>
+							<% UserLeagues.each(function(league) { %>
+							<li>
+								<a class="no-underline" href="<%= league.getHref() %>">
+									<%= league.getPictureHtml("thumb") %>
+									<span class="navigation-item-title"><%- league.get("title") %></span>
+								</a>
+							</li>
+							<% }); %>
+						</ul>
+						<% } %>
+
+						<!-- Teams -->
+						<% if (userTeams.length !== 0) { %>
+						<ul>
+							<li class="list-header">Teams</li>
+						<% userTeams.each(function(otherTeam) { %>
+							<li <% if (teamContext && otherTeam.id == teamContext.id) { %>class="current-team"<% } %>>
+								<a class="no-underline" href="<%= otherTeam.getHref() %>" name="team">
+									<%= otherTeam.getPictureHtml("thumb") %>
+									<span class="navigation-item-title"><%- otherTeam.get("name") %></span>
+									<% if (!isInLimbo) { %>
+									<span class="navigation-right-icon" name="notifications" data-team-id="<%= otherTeam.get("id") %>">
+										<i class="bf-icon bell"></i>
+									</span>
+									<% } %>
+								</a>
+								
+							</li>
+							<% }); %>
+						</ul>
+						<% } %>
+
+					</li>
+				</ul>
+			<% } %>
+
+		</div>
+
+		<!-- Mitoo logo -->
+		<div class="two columns mobile-four text-center">
+			<a class="navigation-logo" href="/"></a>
+		</div>
+
+		<!-- User links -->
+		<div class="five columns mobile-four text-right">
+
+			<!-- Help link -->
+			<a class="nav-link no-underline hide-for-small" href="#" name="help">
+				<i class="bf-icon info navigation-left-icon"></i>
+				<span class="hide-for-small hide-for-medium">Help &amp; Feedback</span>
+			</a>
+
+
+			<%  if (isLoggedIn) { %>
+
+				<!-- User link -->
+				<ul class="navigation-dropdown user-dropdown text-left">
+					<li class="navigation-dropdown-title bf-icon arrow-bottom-r">
+							<%= userPic %>
+						 	<span class="navigation-item-title hide-for-small"><%= name %></span>
+					</li>
+					<li class="navigation-dropdown-list">
+						<ul>
+							
+							<li>
+								<a class="no-underline user-link" href="<%= urlHref %>" name="user">
+									<i class="bf-icon home navigation-left-icon"></i>
+								 	<span class="navigation-item-title">Profile</span>
+								</a>
+							</li>
+
+							<!-- Edit profile -->
+							<% if (!isInLimbo) { %>
+							<li>
+								<a class="no-underline" href="#" name="settings" >
+									<i class="bf-icon pen navigation-left-icon"></i>
+									<span class="navigation-item-title">Edit profile</span>
+								</a>
+							</li>
+							<% } %>
+
+							<% if (!isInLimbo) { %>
+								<li>
+									<a class="no-underline" href="#" name="team-roles" >
+										<i class="bf-icon users navigation-left-icon"></i>
+									 	<span class="navigation-item-title">Team roles</span>
+									</a>
+								</li>
+							<% } %>
+
+							<!-- Logout link -->
+							<li>
+								 <a class="no-underline" href="/logout" name="logout">
+									 <i class="bf-icon logout navigation-left-icon"></i>
+									 <span class="navigation-item-title">Logout</span>
+								 </a>
+							</li>
+
+						</ul>
+					</li>
+				</ul>
+
+				
+			<% } else  { %>
+
+				<!-- Login link -->
+				<a class="nav-link no-underline login-link" href="#" name="login" >
+					<i class="bf-icon login navigation-left-icon"></i>
+					<span class="hide-for-small">Login</span>
+				</a>
+
+			<% } %>
+
+			<!-- Powered link -->
+			<a class="nav-link no-underline powered-by-mitoo hide-for-small" href="http://mitoo.co/" >
+				<small>Powered by</small>
+				<img src="<%= logoPath %>">
+			</a>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,106 @@
+<!-- Theme -->
+<% content_for :head_css do %>
+  <link href="/league_theme/<%= @league.id %>/theme.css" media="all" rel="stylesheet" type="text/css"/>
+<% end %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+
+<!-- Page -->
+<div id="r-module" class="b-profile">
+  <!-- <div class="open-close-onboarding"><i class="bf-icon arrow-bottom"></i> How Mitoo Works</div> -->
+
+  <%= render :partial => "leagues/partials/cover" %>
+  <%= render :partial => "leagues/partials/header" %>
+
+  <div class="b-layout b-layout--league">
+
+    <div class="b-layout__main">
+      <div class="b-main-content">
+        <%= render :partial => "leagues/partials/content" %>
+      </div>
+    </div>
+
+    <div class="b-layout__sidebar b-layout__sidebar--right">
+      <div class="b-sidebar b-sidebar--right">
+        <%= render :partial => "leagues/partials/sidebar/officers" unless !@display_officers %>
+        <%= render :partial => "leagues/partials/sidebar/claim_cta" if @league.display_claim_actions? %>
+      </div>
+    </div>
+
+  </div>
+    
+</div>
+<!-- ./Page -->
+
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+
+<%= javascript_include_tag "app-public" %>
+
+<script>
+  window.ActiveApp = {
+    profileType: "league"
+  };
+
+  ActiveApp.FaftFollowTeam = {
+    showDownloadLinks: <%= show_app_download_link? %>,
+    itunesUrl: "<%= itunes_url('faft_league').html_safe %>",
+    playStoreUrl: "<%= play_store_url('faft_league').html_safe %>"
+  };
+
+  // this is used all over the place for tracking events
+  window.analyticsObject = {
+    league: {
+      id: <%= @league.id %>,
+      claimable: <%= @league.is_claimable? %>,
+      claimed: <%= @league.claimed? %>,
+      country: "<%= @league.get_country %>"
+    },
+    page_type: "league",
+    session_id: $.cookie("js_sid"),
+    permanent_tracker: $.cookie("js_pid")
+  };
+
+  // Tenant for this event
+  ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+  // League object - this is currently used to get the address to display the map
+  ActiveApp.ProfileLeague = App.Modelss.League.findOrCreate(<%= safe_js_string(@league_json) %>);
+  
+  // Current logged in user and their teams
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+  
+  BFApp.start();
+  BFApp.module("FaftProfile").start();
+
+  // avoid more globals using a IIFE
+  (function() {
+    var pageAnalytics = {
+      keen: {
+        // hack to force keen's URL parser (to interpret utm vars) for anon users
+        // see https://github.com/segmentio/analytics.js-integrations/issues/402
+        addons: [{
+          name: "keen:url_parser",
+          input: {
+            url: "url"
+          },
+          output: "parsed_page_url"
+        }],
+        <% if !@league.location.nil? && @league.location.has_coordinates? %>
+        location: {
+          coordinates: [<%= @league.location.lng %>, <%= @league.location.lat %>]
+        }
+        <% end %>
+      }
+    };
+    _.extend(pageAnalytics, analyticsObject);
+    // use analytics.page because it auto sends any utm vars, as well as the page title and url
+    analytics.page("League Profile", pageAnalytics);
+  })();
+</script>
+
+
+<%= render :partial => "partials/olark" %>

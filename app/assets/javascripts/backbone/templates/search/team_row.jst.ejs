@@ -1,0 +1,9 @@
+<a href="/teams/<%=id%>" class="no-underline">
+  <%= htmlPic %>
+  <div class="team-information">
+    <h4><%= htmlTeamName %></h4>
+    <% if (htmlLeagueName) { %>
+      <p><%= htmlLeagueName %> - <%= htmlDivisionName %></p>
+    <% } %>
+  </div>
+</a>

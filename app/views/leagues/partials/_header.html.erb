@@ -1,0 +1,23 @@
+<header class="b-header" >
+  <div class="row row--relative">
+
+    <!-- LEAGUE LOGO -->
+    <div class="b-header__logo">
+      <%= league_logo_helper(@league, 'large')  %>
+    </div>
+
+    <!-- LEAGUE INFO  -->
+    <div class="b-header__information">
+      <h1 class="b-header__information__title"><%= @league.title %></h1>
+      <p class="b-header__information__sport"><%= @league.sport %> league</p>
+    </div>
+
+    <!-- CALL TO ACTION 
+    <div class="b-header__cta">
+      <button class="b-header__cta__button white">Contact</button>
+      <button class="b-header__cta__button white">Follow</button>
+    </div>
+    -->
+    
+  </div>
+</header>

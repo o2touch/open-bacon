@@ -1,0 +1,27 @@
+.points-panel{
+
+  label{
+    margin-top: $bluefields-margin/2!important;
+  }
+  
+  input{
+    @include calc(width, " 33.33333% - 3px");
+    float:left;
+    &:first-of-type{
+      margin-right: $bluefields-margin/2;
+    }
+  }
+
+}
+
+.results-layout{
+  &.fixed{
+    position: fixed;
+    top: 45px;
+  }
+      
+  &.bottom{
+    position: absolute;
+    bottom:12px;
+  }
+}

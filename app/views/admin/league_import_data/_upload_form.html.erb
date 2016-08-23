@@ -1,0 +1,7 @@
+<div>
+	<%= form_tag(admin_import_upload_path(league_id), :multipart => true) do %>
+		<%= hidden_field_tag(:model_type, model_type) %>
+	  <%= file_field_tag 'csv' %>
+	  <%= submit_tag %>
+	<% end %>
+</div>

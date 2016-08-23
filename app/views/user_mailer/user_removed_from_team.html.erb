@@ -1,0 +1,9 @@
+<h2>You're no longer in the team</h2>
+
+<p><%= @user.first_name.titleize %>, you're <b>no longer</b> in <%= @team.name %>'s team on Mitoo.</p>
+
+<%
+email_title = "User+Removed+From+Team"
+extra_params = @user.email
+%>
+<%==get_img_html(email_title, extra_params) %>

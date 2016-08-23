@@ -1,0 +1,38 @@
+.users-list{
+	margin-left: -$bluefields-margin;
+	margin-right: -$bluefields-margin;
+	margin-bottom: 0;
+	.title{
+		padding-left: $bluefields-margin;
+	}
+
+	.circle{
+		width: 25px;
+		height: 25px;
+	}
+
+	a, .user-row {
+		padding: $bluefields-margin/4 $bluefields-margin;
+		display: block;
+		text-decoration: none;
+		span{
+			color: #555;
+			font-size: 12px;
+			margin-left: 6px;
+		}
+
+		&:hover{
+			background: #f1f1f1;
+		}
+	}
+
+	
+}
+
+
+.panel.teammates{
+	.empty{
+		color: #999;
+		font-size: 12px;
+	}
+}

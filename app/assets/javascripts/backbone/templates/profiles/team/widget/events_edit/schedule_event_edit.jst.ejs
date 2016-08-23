@@ -1,0 +1,155 @@
+<header>
+	<h3><i class="panel-icon bf-icon <% if (isNewEvent) { %>plus<% } else { %>pen<% } %>"></i>
+	<% if (isNewEvent) { %>Add a new event<% } else { %>Edit <%= title %><% } %></h3>
+</header>
+
+<div class="panel-content">
+
+
+
+<% if(status==1){ %>
+<div class="alert-box alert game-cancel plain">This game has been cancelled</div>
+<button type="button" class="full-width" title="enable event"  data-disabled="Enabling">Re-enable event</button>
+<% } else if(status==3){ %>
+	<div class="alert-box alert game-cancel plain warning">This event has been postponed</div>
+	<button type="button" class="full-width postpone-event" data-disabled="Enabling">Re-schedule event</button>
+
+<% } %>
+<form>
+	<label for="edit-event-type">Event Type</label>
+	<select name="type" id="edit-event-type">
+		<option value="0" <% if(type=="0"){%> selected<% } %>><%= gameDisplayName %></option>
+		<option value="1" <% if(type=="1"){%> selected<% } %>>Practice</option>
+		<option value="2" <% if(type=="2"){%> selected<% } %>>Other</option>
+	</select>
+
+
+<div class="alert-box hide"></div>
+	
+<label for="edit-event-title">Title</label>
+<input name="name" id="edit-event-title" type="text" placeholder="Title" value="<%= title %>" <% if(type=="1"){%>disabled<% } %>>
+
+<% _.each(extraFields, function(field) { %>
+	<label for="event-<%= field.name %>"><%= field.label %></label>
+	<% if (field.element == "input") { %>
+		<input type="<%= field.type %>" name="<%= field.name %>" placeholder="<%= field.placeholder %>" id="event-<%= field.name %>" value="<%= getExtraFieldValue(field.name) %>">
+	<% } %>
+<% }); %>
+
+<label for="edit-event-date">Date & Time</label>
+
+<div class="inline-input time">
+	
+<input placeholder="date" id="edit-event-date" gldp-id="mydate" type="text" value="<%= date %>" readonly>
+<div gldp-el="mydate" style="width:320px; height:200px; position:absolute;top:30px;left:0px;z-index:1000;"></div>
+
+<select id="edit-event-hours">
+	<% _.each(_.range(1, 13), function(hour){%>
+		<option value="<%= hour %>" <%if (hour==hours){ %> selected<% } %>><%= hour %></option>
+	<% }); %>
+</select>
+	
+<select id="edit-event-minutes">
+	<% _.each(_.range(0, 60, 5), function(minute) { %>
+		<%
+			var minuteDisplay = minute;
+			if(minute<10){minuteDisplay = "0"+minute;}
+		%>
+	<option value="<%= minute %>" <%if (minute==minutes){ %> selected<% } %>><%= minuteDisplay %></option>
+	<% }); %>
+</select>
+	
+<select id="edit-event-ampm">
+	<option value="am" <% if(ampm=="am"){%> selected<% } %>>am</option>
+	<option value="pm" <% if(ampm=="pm"){%> selected<% } %>>pm</option>
+</select>
+
+</div>
+
+
+<% if (isNewEvent) { %>
+<div class="repeat">
+
+	<button type="button" name="repeat" name="repeat" class="small button radius grey full-width show-repeat">Repeat?</button>
+
+
+	<div class="hide repeat-form">
+		<label class="label-repeat">Repeat: </label>
+
+		<select id="repeat-type">
+			<option value="w">Weekly</option>
+			<option value="m">Monthly</option>
+		</select>
+
+		<label class="label-for" for="repeat-number">for</label>
+
+		<select id="repeat-number">
+			<% _.each(_.range(1, 13, 1), function(repeat) { %>
+				<option value="<%= repeat %>" <%= (repeat==2) ? "selected" : "" %>><%= repeat %></option>
+			<% }); %>
+		</select>
+
+		<label class="label-type" for="repeat-type">week</label>
+		<i class="bf-icon x cancel-repeat"></i>
+	</div>
+</div>
+<% } %>
+
+
+<div class="location-field">
+	<label for="edit-location">Location</label>
+
+	<div class="location-field-options">
+		<div class="location-input-group <%= (locations.length) ? 'hide' : '' %>">
+			<input name="location" id="edit-location" type="text" placeholder="Address" value="<%= (location) ? location.get('title') : '' %>">
+			<button type="button" name="location-search" class="grey"><i class="bf-icon search"></i></button>
+		</div>
+
+		<% if (locations.length) { %>
+			<select id="prev-locations">
+				<option value="-1">Select location</option>
+				<% _.each(locations.models, function(loc, i) { %>
+					<option value="<%= i %>" <% if(loc.equals(location)){ %>selected<% } %>><%= loc.get("title") %></option>
+				<% }); %>
+			</select>
+			<div class="text-right"><a href="#" id="toggle-location-mode">Add new location</a></div>
+		<% } %>
+	</div>
+	<div id="mapwrapper"></div>
+</div>
+
+<% if (!isNewEvent) { %>
+<p><a href="#" class="postpone-event"><i class="bf-icon login"></i> Postpone event</a></p>
+<div class="schedule-postpone-container"></div>
+<% } %>
+
+
+<!-- <div class="event-response inline-input hide">
+	<input name="response-required" type="checkbox" id="edit-event-response-required" <% if(false){ %>checked<% } %>>
+	<label for="edit-event-response-required">RSVP required</label>
+	<a class="right" target="_blank "href="http://help.mitoo.co/customer/portal/articles/1136177-turning-off-required-rsvp-disabling-text-notifications-">Learn more</a>
+</div> -->
+
+
+<div class="inline-input text-right">
+	<a href="#" class="cancel-link">Cancel changes</a>
+	<button type="submit" class="button medium" title="save" data-disabled="Saving">Save</button>
+	<% if (!isNewEvent) { %>
+	<button type="button" class="button alert small" data-disabled="Cancelling" title="cancel event" >Cancel <%= typeString %></button>
+	<% } %>
+</div>
+
+</form>
+
+<% if (!isNewEvent) { %>
+<hr>
+<div class="twelve columns danger-zone clearfix">
+	<a href="#" title="delete event" class="remove-event error right no-underline"><span class="underline-hover">Delete <%= typeString %></span> <i class="bf-icon x"></i></a>
+</div>
+<% } %>
+
+
+<% if(status==1 || status==3){ %><div class="edit-cancelled-overlay"></div><% } %>
+
+
+</div>

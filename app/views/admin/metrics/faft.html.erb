@@ -1,0 +1,348 @@
+<div class="page-title">  
+  <h3>Visitors to Followers</h3>
+  <h4>How well are public team/division pages converting followers?</h4>
+</div>
+
+<div id="container">
+
+  <div class="row spacing-bottom 2col"> 
+    
+    <div class="col-md-6 col-sm-12 spacing-bottom-sm"> 
+      <div class="grid simple ">
+        <div class="grid-title">
+          <h4>From Landing to Following Funnel</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body">
+          <table id="week-history" class="table">
+            <thead>
+              <tr>
+                <th rowspan="2">WK</th>
+                <th rowspan="2">Begin</th>
+                <th rowspan="2">Landed</th>
+                <th colspan="2">Followed</th>
+                <th colspan="2">Installs</th>
+                <th colspan="2">Invited</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>#</th>
+                <th>%</th>
+                <th>#</th>
+                <th>%</th>
+                <th>#</th>
+                <th>%</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @followed_users_summary.each do |week| %>
+              <tr>
+                <td><%=week['week']%></td>
+                <td><%= week['date'] %></td>
+                <td><%=week['land']%></td>
+
+                <td><%=week['follow']%></td>
+                <td class="percent"><%='%.1f' % week['pc_follow'].to_f%>%</td>
+
+                <td><%=week['download']%></td>
+                <td class="percent"><%='%.1f' % week['pc_download'].to_f%>%</td>
+
+                <td><%=week['invited']%></td>
+                <td class="percent"><%='%.1f' % week['pc_invited'].to_f%>%</td>
+
+                <td><a href="<%=@url%>?week=<%=week['week'].split('-').second%>">Go</a></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-6 col-sm-12 spacing-bottom-sm"> 
+      <h3><a href="<%=@url%>?week=<%=(@current_week - 1) %>"><i class="icon-custom-left"></i></a><span>Week <%=@current_week%></span><a href="<%=@url%>?week=<%=(@current_week + 1) %>"><i class="icon-custom-right"></i></a></h3>
+    </div>
+          
+
+    <div class="col-md-6 col-sm-12 spacing-bottom-sm"> 
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Summary</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <div class="row">
+
+            <div class="col-md-3 col-sm-3 spacing-bottom-sm"> 
+              <div title="" class="tiles blue added-margin">
+                <div class="tiles-body">    
+                  <div class="tiles-title">LANDED</div>
+                  <div class="heading">
+                    <span class="animate-number" data-value="0" data-animation-duration="1200">0</span>          
+                  </div>
+                </div>  
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-3 spacing-bottom-sm"> 
+              <div title="" class="tiles blue added-margin">
+                <div class="tiles-body">    
+                  <div class="tiles-title">FOLLOWED</div>
+                  <div class="heading">
+                    <span class="animate-number" data-value="<%=@followers.size %>" data-animation-duration="1200"><%=@followers.size %></span>          
+                  </div>
+                </div>  
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-3 spacing-bottom-sm"> 
+              <div title="" class="tiles blue added-margin">
+                <div class="tiles-body">    
+                  <div class="tiles-title">INSTALLS</div>
+                  <div class="heading">
+                    <span class="animate-number" data-value="<%=@downloads.size %>" data-animation-duration="1200"><%=@downloads.size %></span>          
+                  </div>
+                </div>  
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-3 spacing-bottom-sm"> 
+              <div title="" class="tiles blue added-margin">
+                <div class="tiles-body">    
+                  <div class="tiles-title">INVITED</div>
+                  <div class="heading">
+                    <span class="animate-number" data-value="<%=@invited.size %>" data-animation-duration="1200"><%=@invited.size %></span>          
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Breakdown by Day</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+            <table class="table">
+              <tr>
+                <td>Day</td>
+                <td>Landed</td>
+                <td colspan="2">Followed</td>
+                <td colspan="2">Installs</td>
+                <td colspan="2">Invited 5+</td>
+              </tr>
+
+              <% @followed_users_breakdown_data[:day_by_day_data][:series].each do |k| %>
+              <%
+                bd = @followed_users_breakdown_data[:day_by_day_data][:values][k]
+
+                faft_landings = bd[:faft_landings]
+                user_follows = bd[:user_follows].size
+                user_installs = bd[:user_downloaded].size
+                user_invited = bd[:user_invited].size
+                
+                pc_user_follows, pc_user_installs, pc_user_invited = 0
+
+
+                pc_user_follows = user_follows / faft_landings.to_f * 100.0 if faft_landings > 0
+
+                pc_user_installs = user_installs / user_follows.to_f * 100.0 if user_follows > 0
+
+                pc_user_invited = user_invited / user_installs.to_f * 100.0 if user_invited > 0
+
+              %>
+                <tr>
+                  <td><%=k%></td>
+                  <td><%=bd[:faft_landings]%></td>
+                  <td><%=user_follows %></td>
+                  <td><%='%.1f' % pc_user_follows.to_f %>%</td>
+                  <td><%=user_installs%></td>
+                  <td><%='%.1f' % pc_user_installs.to_f %>%</td>
+                  <td><%=user_invited%></td>
+                  <td><%='%.1f' % pc_user_invited.to_f %>%</td>
+                </tr>
+              <% end %>
+
+            </table>
+        </div>
+      </div>
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Breakdown by Source</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table">
+            <tr>
+                <td>Day</td>
+                <td>Landed</td>
+                <td colspan="2">Followed</td>
+                <td colspan="2">Installs</td>
+                <td colspan="2">Invited 5+</td>
+            </tr>
+
+            <% series = @followed_users_breakdown_data[:data][:series][0] %>
+            <% @followed_users_breakdown_data[:data][:values].each do |k,bd| %>
+            <%
+
+              faft_landings = bd[series][:faft_landings]
+              user_follows = bd[series][:user_follows].size
+              user_installs = bd[series][:user_downloaded].size
+              user_invited = bd[series][:user_invited].size
+              
+              pc_user_follows, pc_user_installs, pc_user_invited = 0
+
+
+              pc_user_follows = user_follows / faft_landings.to_f * 100.0 if faft_landings > 0
+
+              pc_user_installs = user_installs / user_follows.to_f * 100.0 if user_follows > 0
+
+              pc_user_invited = user_invited / user_installs.to_f * 100.0 if user_invited > 0
+
+            %>
+              <tr>
+                <td><%=k%></td>
+                <td><%=bd[series][:faft_landings]%></td>
+                <td><%=user_follows %></td>
+                <td><%='%.1f' % pc_user_follows.to_f %>%</td>
+                <td><%=user_installs%></td>
+                <td><%='%.1f' % pc_user_installs.to_f %>%</td>
+                <td><%=user_invited%></td>
+                <td><%='%.1f' % pc_user_invited.to_f %>%</td>
+              </tr>
+            <% end %>
+
+          </table>
+        </div>
+      </div>
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Followers</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table">
+            <thead>
+            <tr>
+              <td>Name</td>
+              <td>Source</td>
+              <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <% @followers.each do |user| %>
+            <% active = false %>
+            <tr class="<%=active ? 'active' : ''%>">
+              <td><%=link_to user.name, user_path(user)%></td>
+              <td><%=user.invited_by_source%></td>
+              <td><%=link_to "Admin", admin_user_path(user)%></td>
+            </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Installs</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table">
+            <thead>
+            <tr>
+              <td>Name</td>
+              <td>Source</td>
+              <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <% @downloads.each do |user| %>
+            <% active = false %>
+            <tr class="<%=active ? 'active' : ''%>">
+              <td><%=link_to user.name, user_path(user)%></td>
+              <td><%=user.invited_by_source%></td>
+              <td><%=link_to "Admin", admin_user_path(user)%></td>
+            </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Invited</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table">
+            <thead>
+            <tr>
+              <td>Name</td>
+              <td>Source</td>
+              <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <% @invited.each do |user| %>
+            <% active = false %>
+            <tr class="<%=active ? 'active' : ''%>">
+              <td><%=link_to user.name, user_path(user)%></td>
+              <td><%=user.invited_by_source%></td>
+              <td><%=link_to "Admin", admin_user_path(user)%></td>
+            </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+<script>
+
+  
+$(document).ready(function() {
+    $('#week-history').dataTable({
+      "aaSorting": [[ 1, "desc" ]],
+      "bLengthChange": false,
+      "bPaginate": false,
+      "bSearchable": false
+    });
+} );
+
+
+</script>

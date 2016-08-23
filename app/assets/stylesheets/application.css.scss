@@ -1,0 +1,112 @@
+//= require tipsy/src/stylesheets/tipsy
+//= require glDatePicker/styles/glDatePicker.flatwhite
+//= require intl-tel-input/build/css/intlTelInput
+//= require_self
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/27e112");
+
+/* Mixin & Variable */
+@import "bourbon";
+
+@import "_variables";
+@import "_mixin";
+@import "_globals";
+
+/* Plugin */
+@import "owl-carousel/owl.carousel";
+@import "owl-carousel/owl.theme";
+
+/* Fonts */
+@import "typography/bluefields-icon/bluefields-icon";
+@import "typography/geogrotesque/geogrotesque";
+@import "typography/typography";
+
+/* Bluefields UI */
+@import "ui/grid";
+@import "ui/form";
+@import "ui/date";
+@import "ui/alert_box";
+@import "ui/button_mixin";
+@import "ui/button";
+@import "ui/popup";
+@import "ui/progress-bar";
+@import "ui/godbar";
+@import "ui/navigation";
+@import "ui/main_navigation";
+@import "ui/event_card";
+@import "ui/card";
+@import "ui/link";
+@import "ui/activity_indicator";
+@import "ui/event_row";
+@import "ui/message_box";
+@import "ui/profile_pic";
+@import "ui/shame";
+@import "ui/toggle-switch";
+@import "ui/tooltip";
+@import "ui/table";
+@import "ui/plugin-overrides";
+@import "ui/sport";
+
+/* Bluefields content  */
+@import "content/activity";
+@import "content/results";
+@import "content/schedule";
+@import "content/squad";
+
+/* Panel (sidebar) */
+@import "panel/panel";
+@import "panel/share_panel";
+@import "panel/event_activity_panel";
+@import "panel/event_results_panel";
+@import "panel/informations_panel";
+@import "panel/reminders_panel";
+@import "panel/team_list_panel";
+@import "panel/schedule_edit_panel";
+@import "panel/teamsheet_panel";
+@import "panel/game_status_panel";
+@import "panel/response_panel";
+@import "panel/invite_player_panel";
+@import "panel/goals_panel";
+@import "panel/user_list_panel";
+@import "panel/user_profile_panel";
+@import "panel/event_action_panel";
+@import "panel/schedule_event_edit_panel";
+@import "panel/fixture_edit_panel";
+@import "panel/ride_box";
+@import "panel/league_results_panel";
+@import "panel/points_panel";
+@import "panel/club_information_panel";
+
+
+/* Leagues css => Need to be sorted */
+@import "leagues/league_layout";
+@import "leagues/league_header";
+@import "leagues/league_schedule";
+@import "leagues/league_branding";
+@import "leagues/league_team_list";
+@import "leagues/league_join_flow";
+
+
+/* Profile layout */
+@import "profile/club_profile";
+@import "profile/signup_profile";
+@import "profile/user_profile";
+@import "profile/team_profile";
+@import "profile/event_profile";
+@import "profile/private_profile";
+@import "profile/common_profile";
+@import "search/search_page";
+@import "profile/search_profile";
+
+@import "page/login";
+
+/* Faft profile */
+@import "faft/faft_profile";
+
+
+
+/*------------------------------------*\
+	NEW CSS BEM ARCHITECTURE
+\*------------------------------------*/
+@import "bem/main";

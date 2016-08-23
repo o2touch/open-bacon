@@ -1,0 +1,27 @@
+<% 
+@to_user = User.find_by_email(@_message.to) 
+if @to_user && @to_user.id
+  @unsubcribe_token = PowerToken.generate_token("/unsubscribe", @to_user)
+  if @team && @team.id
+    @unsubcribe_token = PowerToken.generate_token("/users/#{@to_user.id}#team-roles", @to_user)
+    @edit_notification_token = PowerToken.generate_token("/teams/#{@team.id}#notifications", @to_user)                              
+  end
+end 
+%>
+
+<!-- Footer information -->
+<% if @to_user && @to_user.id %>
+  <% if @team && @team.id %>
+    <p>This message was sent to <a href="mailto:<%= @to_user.email %>" target="_blank"><%= @to_user.email %></a>. You can <%= link_to 'update your notification settings', power_token_url(@edit_notification_token) %> or <%= link_to 'unfollow this team', power_token_url(@unsubcribe_token) %>.</p>
+  <% else %>
+    <p>This message was sent to <i><%= @to_user.email %></i> because you have signed-up to <a href="<%= root_url %>" target="_blank">Mitoo</a>.</p>
+  <% end %>
+<% end %>
+
+<!-- Bluefields address -->
+<p>Bluefields, Inc. 444 Castro Street, Suite 1200 Mountain View, CA 94041</p>
+
+<% if !@unsubcribe_token.nil? %>
+  <!-- Unsuscribe link -->
+  <p>To stop receiving these emails, simply <%= link_to 'unsubscribe', power_token_url(@unsubcribe_token) %>.</p>
+<% end %>

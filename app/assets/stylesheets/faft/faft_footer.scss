@@ -1,0 +1,28 @@
+.footer-copy {
+  padding: 12px 9px;
+  position: relative;
+  background: #f8f8f8;
+  @include clearfix;
+  @include respond-to(handhelds) {
+    display: none;
+  }
+
+  .download-the-app-footer {
+    max-width: 110px;
+    float: right;
+    .apple-store-image {
+      margin-bottom: 4px;
+    }
+  }
+  h1 {
+    text-transform: uppercase;
+    font-weight: 500;
+    @include font-size(1, false);
+    color: #555;
+    margin-bottom: $bluefields-margin / 4;
+  }
+  p {
+    @include font-size(0.8);
+    color: #666;
+  }
+}

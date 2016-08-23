@@ -1,0 +1,565 @@
+<!-- Theme -->
+<% content_for :head_css do %>
+  <link href="<%= team_stylesheet_path(@team)%>" media="all" rel="stylesheet">
+  <link href="/tim.css" media="all" rel="stylesheet">
+  <link rel="canonical" href="<%=default_team_path(@team, :only_path => false)%>" />
+<% end %>
+
+<% content_for :head do %>
+  <!-- tell fb which img to use when you share a link to this page -->
+  <meta property="og:image" content="<%= @team.profile.profile_picture(:original) %>">
+<% end %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+
+<!-- Page-->
+<div id="r-module" class="unclaimed-faft-page unclaimed-faft-team-page">
+  
+  <!-- Trigger-->
+  <% if @tenant.config.team_followable %>
+    <div class="open-close-onboarding"><i class="bf-icon arrow-bottom"></i> How Mitoo Works</div>
+  <% end %>
+
+  <!-- Header  -->
+  <header class="team-header sport-cover <%= @team.profile.sport.gsub(/ /, '_').gsub(/[\(\)]/, '').downcase %>-cover">
+    <div class="row sport-icon <%= @team.profile.sport.gsub(/ /, '_').gsub(/[\(\)]/, '').downcase %>-icon">
+      <div class="seven columns offset-by-two no-gutter">
+        <%= profile_picture_helper(@team, :large_original_ratio) %>
+        <div class="team-information">
+
+          <h1><%= @team.name%></h1>
+
+          <% if !@division.nil? %>
+            <h2>
+              <% if !@division.league.nil? %>
+              <a href="<%= league_path @division.league %>" title="<%= @division.league.title %>">
+                <%= @division.league.title %>
+              </a>
+              -
+              <% end %>
+              <a href="<%= default_division_path @division %>" title="<%= @division.title %>">
+                <%= @division.title %>
+              </a>
+            </h2>
+          <% else %>
+              <h2><%= @team.profile.league_name %></h2>
+          <% end %>
+
+          <% if !@bf_club_teams.nil? %>
+            <a class="view-club" href="/clubs/<%= @bf_club_teams.first.club.id %>">View club</a></h3>
+          <% end %>
+
+          <% if @tenant.config.team_followable %>
+            <% if @user_following %>
+            <button type="button" class="follow-form grey" disabled>Following</button>
+            <% else %>
+            <button type="button" class="large follow-form" data-button-type="header">Follow</button>
+            <% end %>
+          <% end %>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Body  -->
+  <div class="content row mobile-no-padding">
+    
+    <!-- Navigation - left  -->
+    <nav class="two columns no-gutter hide-for-small">
+
+
+      
+      <!-- Search -->
+      <% if @tenant.config.show_search %>
+      <div class="nav-group">
+        <h3>Search</h3>
+        <form class="team-search-form">
+          <input name="search-team" type="text" placeholder="Search for your team">
+        </form>
+      </div>
+      <% end %>
+      
+
+      <!-- Current division navigation  -->
+      <% if @team.divisions.size > 0 %>
+      <div class="nav-group team-in-division">
+        <h3>Current Division</h3>
+        <ul>
+          <% @team.divisions.each do |division| %>
+          <li>
+            <a <%= 'class=current-team' unless division.id != @division.id %> href="<%= default_team_path(@team, division: division) %>">
+              <% unless division.league.nil? %>
+                <small><%= division.league.title %></small>
+              <% end %>
+              <h3><%= division.title %></h3>
+            </a>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+
+      <!-- Team in division list  -->
+      <% unless @division.nil? %>
+        <div class="nav-group team-in-division">
+          <% unless @division.league.nil? %>
+            <!--           
+            <small><a href="<%= league_path @division.league %>" title="<%= @division.league.title %>" ><%= @division.league.title %></a></small>
+            -->
+          <% end %>
+          <!--           
+          <h3><a href="<%= default_division_path @division %>" title="<%= @division.title %>">Teams in division</a></h3> 
+          -->
+          <h3>
+            Teams in division
+          </h3>
+
+          <ul>
+            <% @division_presenter.teams.each do |team| %>
+              <li><a <%= 'class=current-team' unless team.id != @team.id %> href="<%= default_team_path team %>"><%= team.name %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      
+      <!-- Share -->
+      <% if @tenant.config.show_team_page_share_options %>
+        <div class="nav-group share-option">
+          <h3>Share with your team</h3>
+          <% @mail_content = team_email_content(@team, @division) %>
+          <% @twitter_url = team_twitter_url(@team, request.original_url) %>
+          <%= render :partial => "partials/share_options" %>
+        </div>
+      <% end %>
+      
+      <!-- Team in clubs -->
+      <% if !@bf_club_teams.nil? %>
+      <div class="nav-group team-in-club">
+        <small>Club</small>
+        <h3><a href="/clubs/<%= @bf_club_teams.first.club.id %>"><%= @bf_club_teams.first.club.name %></a></h3>
+        <ul>
+          <% @bf_club_teams.order(:name).each do |team| %>
+            <li><a href="<%= default_team_path(team) %>"><%= team.name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+
+      
+      <!-- Search -->
+      <div class="nav-group">
+        <h3>Options</h3>
+        <ul>
+          <li class="feedback"><a href="<%= @tenant.config.feedback_url %>">Feedback</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+    <!-- Main content  -->
+    <div role="main" class="seven columns no-gutter">
+
+      <!-- Content navigation  -->
+      <div class="content-sticky-navigation">
+        <nav class="content-navigation twelve columns no-gutter <% if @division.nil? || @division_presenter.show_standings? == false  %>with-no-table<% end  %>">
+          <ul>
+            <li><a href="#" title="Overview" class="selected">Overview</a></li>
+            <% if @show_results_section %><li><a href="#" title="Results" >Results</a></li><% end %>
+            <% if @show_results_section %><li><a href="#" title="Games" >Games</a></li><% end %>
+            <% unless @division.nil? || @division_presenter.show_standings? == false  %>
+            <li><a href="#" title="Table" >Table</a></li>
+            <% end  %>
+            <% unless @division.nil? %>
+            <li class="season-information right hide-for-small"><%= @division.season_name %></li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Content  -->
+      <div class="main-content twelve columns no-gutter">
+
+        <!-- Location -->
+        <div class="tab-content">
+          <% if !@team.club.nil? && !@team.club.location.nil? %>
+          <section class="team location-module">
+            <h1>Location</h1>
+            <%= render :partial => "partials/location", :locals => {:title => @team.club.location.title, :address => @team.club.location.address} %>
+          </section> 
+          <% end %>
+        </div>
+
+        <!-- Overview -->
+        <div class="tab-content clearfix overview">
+
+          <!-- Last game -->
+          <% if @past_events.size > 0 %>
+            <% @last_game = @past_events.first %>
+            <% unless @past_events.first.fixture.nil? %>
+              <% title = @last_game.fixture.nil? ? "Last game" : "Last result" %>
+              <section class="team">
+                <%= render :partial => "fixtures/fixture_public_large", :locals => {:event => @last_game, :title => title} %>
+              </section>
+            <% end %>
+          <% end %>
+
+          <!-- Next game -->
+          <% if @future_events.size > 0 %>
+            <% unless @future_events.first.fixture.nil? %>
+              <section class="team">
+                <%= render :partial => "fixtures/fixture_public_large", :locals => {:event => @future_events.first, :title => 'Next game'} %>
+              </section>
+            <% end %>
+          <% end %>
+  
+          <div class="twelve columns no-gutter">
+
+            <!-- Statistic -->
+            <% if !@division.nil? && @division_presenter.show_standings? == true%>
+            <%= render :partial => "teams/partials/stats" %>
+            <% end %>
+            
+             <!-- Location -->
+            <% if !@location.nil? && !@location.address.nil? %>
+              <section class="team location-module six columns">
+                <h1>Location</h1>
+                <%= render :partial => "partials/location", :locals => {:title => @location.title, :address => @location.address} %>
+              </section> 
+            <% end %>
+          </div>
+        </div>
+        <!-- ./Overview -->
+        
+        <!-- Results -->
+        <% if @show_results_section %>
+        <div class="tab-content clearfix">
+          <% cache(@past_events_cache) do %>
+            <% if !@past_events.empty? %>
+              <section class="team">
+                <h1>Results</h1>
+                <ul class="fixtures-list">
+                  <%= render :partial => "events/event_public", :collection => @past_events, :as => :event %>
+                </ul>
+                <% if @show_download_app_marketing %>
+                  <p class="copy follow-state-item">Receive results straight to your phone... <a href="#" class="follow-form" data-button-type="inline">follow the team</a>.</p>
+                  <p class="copy download-state-item">Your team’s results at your fingertips... <a href="/download-app" class="store-link" data-button-type="inline" data-track="download-page" data-track-type="under-content" >Download the app</a>.</p>
+                <% end %>
+              </section>          
+            <% else %>
+              <section class="team empty">
+                <h1>Results</h1>
+                <i class="bf-icon trophy"></i>
+                <p>There are no past results <%= !@division.nil? ? "in #{division.title}" : "" %></p>
+              </section>
+            <% end %>
+          <% end %>
+        </div>
+        <% end %>
+        <!-- ./Results -->
+
+        <!-- Upcoming game -->
+        <div class="tab-content clearfix">
+          <% cache(@future_events_cache) do %>
+            <% if !@future_events.empty? %>
+              <section class="team">
+                <h1>Upcoming Games</h1>
+                <ul class="fixtures-list">
+                  <%= render :partial => "events/event_public", :collection => @future_events, :as => :event %>
+                </ul>
+                <% if @show_download_app_marketing %>
+                  <p class="copy follow-state-item">Want these games on your phone? <a href="#" class="follow-form" data-button-type="inline">Sign-up &amp; follow</a> the team for instant updates.</p>
+                  <p class="copy download-state-item">Want to know first if a game is postponed? <a href="/download-app" class="store-link" data-button-type="inline" data-track="download-page" data-track-type="under-content" >Download the app</a> for instant cancellation updates.</p>
+                <% end %>
+              </section>          
+            <% else %>
+              <section class="team empty">
+              <h1>Upcoming Games</h1>
+                <i class="bf-icon calendar"></i>
+                <p>There are no upcoming games <%= !@division.nil? ? "in #{@division.title}" : "" %></p>
+              </section>
+            <% end %>
+          <% end %>
+        </div>
+        <!-- ./Upcoming game -->
+        
+        
+        <!-- Table -->
+        <% unless @division.nil? || @division_presenter.show_standings? == false  %>
+        <div class="tab-content clearfix">
+          <section class="team">
+            <h1><%= @division.title %> Table</h1>
+              <% cache("division/#{@division.id}-#{@division.updated_at}/table/#{@division.fixtures.past.size}-#{@division.fixtures.past.maximum(:updated_at).to_i}") do %>
+                <%= render :partial => "teams/partials/table", :locals => { :division_presenter => @division_presenter } %>
+              <% end %>
+          </section>
+        </div>
+        <% end %>
+        <!-- ./Table -->
+        
+      </div>
+      <!-- ./Content -->
+      
+      <!-- Content footer  -->
+      <div class="twelve columns no-gutter">
+        
+        <!-- Breadcrumb  -->
+        <% unless @division.nil? %>
+        <ul class="content-breadcrump">
+          <% unless @division.league.nil? %>
+          <li>
+            <a href="<%= league_path(@division.league) %>" title="<%= @division.league.title %>">
+              <%= @division.league.title %>
+            </a>
+          </li>
+          <% end %>
+          <li>
+            <a href="<%= default_division_path(@division) %>" title="<%= @division.title %>">
+              <%= @division.title %> 
+            </a>
+          </li>
+          <li class="current-team">
+            <a href="<%= default_team_path(@team) %>" title="<%= @team.name %>" data-team-color="link">
+              <%= @team.name %>
+            </a>
+          </li>
+        </ul>
+        <% end %>
+
+      </div>
+      
+      <% if @show_download_app_marketing %>
+        <%= render :partial => "teams/partials/footer_copy" %>
+      <% end %>
+      
+    </div>
+    <!-- ./Content footer -->
+
+    <!-- Right sidebar -->
+    <div class="three columns">
+      <div role="complementary"  id="right-sidebar"></div>
+      <p class="feedback-text-link">
+        Got some feedback? <a href="<%= @tenant.config.feedback_url %>">Click here</a>
+      </p>
+    </div>
+  </div>
+  
+  
+
+  <div class="follow-state-item faft-footer-mobile row follow-form hide-for-medium hide-for-large">
+    <%= profile_picture_helper(@team, :large_original_ratio) %>
+    <div class="footer-information">
+      <h5>Follow <%= @team.name%></h5>
+      <p>Get result and game updates</p>
+    </div>
+    <button type="button" class="small follow-form" data-button-type="header">Follow</button>
+  </div>
+  
+  <% if @show_download_app_marketing %>
+  <div class="download-state-item faft-footer-mobile row  hide-for-medium hide-for-large">
+    <img class="left-img" src="<%= asset_path 'faft/app_icon.png' %>">
+    <div class="footer-information">
+      <h5>Download the App!</h5>
+      <p>Get results on iPhone or Android</p>
+    </div>
+    <a href="/download-app" class="button small orange download-app store-link" data-track="download-page" data-track-type="smartphone-footer">View</a>
+  </div>
+  <% end %>
+</div>
+
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+
+
+
+
+<%= javascript_include_tag "app-public" %>
+
+<script>
+var analyticsObject = {
+  'team_id': <%= @team.id %>,
+  <%= @division.nil? ? "" : "division_season_id: #{@division.id}," %>
+  'page_type': "team"
+};
+
+<% @fb_content = team_facebook_content(@team, @division) %>
+var facebookUIShare = {
+  method: 'feed',
+  display: "popup",
+  name: '<%= @fb_content[:title] %>',
+  link: '<%= @fb_content[:url] %>',
+  picture: '<%= @fb_content[:pic] %>',
+  description: '<%= @fb_content[:summary] %>'
+};
+
+var facebookStatShare = {
+  method: 'feed',
+  display: "popup",
+  name: '<%= @fb_content[:title] %>',
+  link: '<%= @fb_content[:url] %>',
+  picture: '<%= @fb_content[:pic] %>',
+  <% unless @division.nil? %>
+  description: "Currently <%= @team_position %>. Played <%= @division_presenter.games_played(@team) %>. Form: <%= @division_presenter.form_guide(@team)%>. Check out <%= @team.name %> on Mitoo. #Fixtures #Games #Results #Standings"
+  <% end %>
+};
+
+
+var twitterUrl = "<%= @twitter_url %>";
+var twitterUrlSecond = "<%= @stats_tweet_url.html_safe unless @stats_tweet_url.nil? %>";
+
+
+
+var ActiveApp = {};
+ActiveApp.profileType = "team";
+
+// Tenant for this team
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+ActiveApp.FaftFollowTeam = {
+  showDownloadLinks: <%= @download_the_app %>,
+  itunesUrl: "<%= itunes_url('faft_team').html_safe %>",
+  playStoreUrl: "<%= play_store_url('faft_team').html_safe %>"
+};
+
+  analytics.track("Viewed Public Team Page", {
+    'team_id': <%=@team.id%>,
+    <%= @division.nil? ? "" : "division_id: #{@division.id}" %>
+  });
+
+  ActiveApp.ProfileTeam = new App.Modelss.Team({
+    id: <%= @team.id %>,
+    name: "<%= @team.name %>",
+    address: "<%= @team.club.nil? || @team.club.location.nil? ? '' : @team.club.location.address.squish %>",
+    'is_faft_team': true
+  });
+
+  <% unless @division.nil? %>
+  ActiveApp.ProfileDivision = new App.Modelss.Division({
+    id: <%= @division.id %>,
+    name: "<%= @division.title %>",
+    divisionSlug: "default_division_path(@division) %>",
+    <% unless @division.league.nil? %>
+    leagueName: "<%= @division.league.title %>",
+    leagueSlug: "<%= league_path(@division.league) %>"
+    <% else %>
+    leagueName: "",
+    leagueSlug: ""
+    <% end %>
+  });
+
+  ActiveApp.ProfileTeam.division = ActiveApp.ProfileDivision
+  <% end %>
+
+  //*****
+  // PUBLIC TEAM PROFILE TEST
+  //*****
+  ActiveApp.MobileSplashData = {}
+
+  <% unless @future_events.empty? %>
+  <%
+    f = @future_events.first.fixture
+
+    if f.nil?
+      home_away_str = @future_events.first.home_or_away
+      team_obj = @future_events.first.team
+      date = @future_events.first.bftime
+      result = nil
+    else
+      home = f.home_team?(@team)
+      home_away_str = home ? "Home" : "Away"
+      team_obj = home ? f.home_team : f.away_team
+      date = f.bftime
+    end
+  %>
+  
+  ActiveApp.MobileSplashData.nextGame = {
+      teamName: "<%= team_obj.name %>",
+      date: "<%=date.pp_time %>",
+      home_away: "<%=home_away_str%>"
+    }
+  <% end %>
+
+  <% unless @past_events.empty? %>
+  <%
+    f = @past_events.first.fixture
+
+    if f.nil?
+      home_away_str = @past_events.first.home_or_away
+      team_obj = @past_events.first.team
+      date = @past_events.first.bftime
+      result = nil
+    else
+      home = f.home_team?(@team)
+      home_away_str = home ? "Home" : "Away"
+      team_obj = home ? f.home_team : f.away_team
+      date = f.bftime
+      result = ResultPresenter.new(f.result)
+    end
+  %>
+  ActiveApp.MobileSplashData.lastResult = {
+      teamName: "<%= team_obj.name %>",
+      date: "<%=date.day + ' ' + date.month%>",
+      <% unless result.nil? %>
+      result: "<%=result.result_for_team(team_obj)%>",
+      score: "<%=result.final_score %>",
+      <% end %>
+      home_away: "<%=home_away_str%>"
+    }
+  <% end %>
+  //*****
+  // END
+  //*****
+
+  // for marketing popup team dropdown
+  ActiveApp.DivisionTeams = new App.Collections.Teams(<%= @teams_json %>);
+
+  // Current logged in user and their teams
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+  ActiveApp.CurrentUser.isFollowingFaftTeam = <%= @user_following %>;
+  ActiveApp.CurrentUser.hasDownloadedTheApp = <%= @current_user_has_downloaded_app %>;
+
+  
+  window.followFormOptions = {
+    isTeam: true,
+    team: ActiveApp.ProfileTeam,
+    division: ActiveApp.ProfileDivision, // this will only be set on league teams
+    isFollowing: <%= @user_following %>,
+ 
+    /* 
+      Ab test - show FB signup or not, do not use classic
+      abtest stuff, because:
+        1. it's shit
+          A. paywall & normal signup form are too different, 
+             therefor testing generally apply to one or another.
+          B. You can't start two test without experiencing
+             pain in the ass.
+        2. this particular test only apply on paywall
+
+
+    start test in => unclaimed/team_controller.rb:180
+    end test in   => followTeamFormPaywall.js:71
+    
+    */
+    showFacebook: false
+  };
+
+  profileOptions = {
+    mobileDevice: <%=is_mobile_device?%>
+  };
+
+  BFApp.start();
+  BFApp.module("FaftProfile").start(profileOptions);
+
+
+  // disabled for now
+  /*$('.team-cards').owlCarousel({
+    singleItem:true
+  });*/
+</script>

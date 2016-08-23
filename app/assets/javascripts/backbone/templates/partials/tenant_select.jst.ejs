@@ -1,0 +1,6 @@
+<label for="team-tenant">Team type</label>
+<select id="team-tenant" name="tenant">
+<% _.each(tenants, function(tenant) { %>
+	<option value="<%= tenant.id %>"><%= tenant.name %></option>
+<% }); %>
+</select>

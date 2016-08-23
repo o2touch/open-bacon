@@ -1,0 +1,23 @@
+//= require webarch/index
+
+.page-sidebar {
+  margin-top:0;
+}
+.page-content .content {
+  padding-top: 30px;
+}
+
+table tr.percent {
+	opacity: 0.75;
+}
+
+table.table {
+  border: none;
+}
+table.table thead tr th, table thead tr td {
+  border-right:none;
+}
+table tr td a{
+  text-transform: none;
+  color:inherit;
+}

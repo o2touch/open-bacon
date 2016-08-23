@@ -1,0 +1,69 @@
+<div class="pfl-pic-section clearfix">
+	<label>Team Logo</label>
+	<div class="team-logo-content">
+		<img name="thumb" class="circle profile-pic small-pic" src="<%- profile_pic_thumb %>" alt="<%= name %>" />
+		<button type="button" title="upload" name="upload" class="grey upload" data-disabled="Uploading">
+			<span class="text">Upload badge</span>
+			<input type="file" name="team-profile-picture">
+		</button>
+	</div>
+</div>
+
+<label for="team-name">Team Name</label>
+<input type="text" value="<%= name %>" id="team-name" />
+
+<label for="team-sport">Team Sport</label>
+<select name="[team]sport" id="team-sport">
+	<%  _.each(sportsList, function(sportsItem){ %>
+		<option value="<%= sportsItem %>" <%  if(sportsItem==sport){ %> selected="selected"<% } %>><%= sportsItem %></option>
+	<% }); %>
+</select>
+
+
+<div class="inline-input">
+	<input type="radio" name="age_group" id="age-adult" value="99" checked><label for="age-adult">Adult team</label>
+</div>
+<div class="inline-input">
+	<input type="radio" name="age_group" id="age-junior" value="14"><label for="age-junior">Junior team (U14-U18)</label>
+</div>
+<div class="inline-input">
+	<input type="radio" name="age_group" id="age-junior-kids" value="9"><label for="age-junior-kids">Junior team (U13)</label>
+</div>
+
+
+<% if(showLeagueInput) {%>
+
+<label for="league-name">League Name</label>
+<input type="text" value="<%= league %>" id="league-name" />
+<% } %>
+
+
+
+<label>Team Primary Color</label>
+<ul class="colour-selector">
+	<% for(i=0;i<colours.length;i++) {%>
+	<li style="background:#<%=colours[i]%>" <% if(colours[i] == colour1) {%>class="showChecked"<%}%> >
+		<label>
+			<i class="bf-icon check"></i>
+			<input type="radio" value="<%=colours[i]%>" name="primary" <% if(colours[i] == colour1) {%>checked<%}%> /></label>
+	</li>
+	<% } %>
+</ul>
+
+<label>Team Secondary Color</label>
+<ul class="colour-selector">
+	<% for(i=0;i<colours.length;i++) {%>
+	<li style="background:#<%=colours[i]%>" <% if(colours[i] == colour2) {%>class="showChecked"<%}%>>
+		<label>
+			<i class="bf-icon check"></i>
+			<input type="radio" value="<%=colours[i]%>" name="secondary" <% if(colours[i] == colour2) {%>checked<%}%> /></label>
+	</li>
+	<% } %>
+</ul>
+
+<div class="inline-input text-right">
+	<a href="#" class="cancel-link" >Cancel</a>
+	<button type="submit" class="small save" title="save" data-disabled="Saving" data-team-color="button">Save</button>
+</div>
+
+</form>

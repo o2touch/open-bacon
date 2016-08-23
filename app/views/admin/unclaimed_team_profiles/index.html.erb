@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="columns twelve">
+		<h1>Unclaimed Team Profiles (<%=@teams.size%>)</h1>
+		<br />
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns twelve">
+		<p>Claimed Profiles: <%=@claimed_teams.size%> (<%= sprintf '%.1f', (@claimed_teams.size.to_f / @teams.size.to_f)*100 %>%)</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns eight dashboard">
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Sport</td>
+					<td>League</td>
+					<td>Claimed?</td>
+					<td>Contact</td>
+					<td>Created</td>
+					<td>Emailed</td>
+					<td>Follow-up</td>
+				</tr>
+			</thead>
+			<% @teams.each do |team| %>
+			<%
+					userDetails = UserFullContactDetails.find_by_email(team.contact_email)
+				 %>
+			<tr>
+				<td><%=link_to team.name, team_path(team) %></td>
+				<td><%=team.sport %></td>
+				<td><%=team.league_name %></td>
+				<td><%=team.team_id %></td>
+				<td><% if !userDetails.nil? && !userDetails.photo_url.nil? %><img width="30" src="<%=userDetails.photo_url %>" /><% end %><%=team.contact_name %>, <%=team.contact_email %></td>
+				<td><%=l(team.created_at) if(!team.created_at.nil?) %></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

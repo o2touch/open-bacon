@@ -1,0 +1,95 @@
+BFApp.Views.FollowTeamPopupSMS = Marionette.ItemView.extend({
+
+  template: "backbone/templates/popups/follow_team_sms",
+
+  className: "paywall-popup-flow-sms",
+
+  ui: {
+    "mobileInput": "input[name='mobile']",
+    "submitButton": "button[name='send']"
+  },
+
+  events: {
+    "click .skip": "closePopup",
+    "submit form": "sendNumber",
+    "click .store-link": "clickedStoreLink"
+  },
+
+  clickedStoreLink: function(e) {
+    var platform = $(e.currentTarget).closest("a").attr("data-track");
+    this.downloadMetrics("Clicked app store icon link", platform);
+  },
+
+  onShow: function() {
+    this.ui.mobileInput.intlTelInput(getIntlTelInputOptions("gb"));
+
+    analytics.track("Viewed FAFT Team Paywall SMS", {});
+  },
+
+  serializeData: function() {
+    return {
+      appStoreButtonPath: "<%= asset_path 'store/app_store_badge.svg' %>",
+      playStoreButtonPath: "<%= asset_path 'store/get_it_on_google_play.svg' %>"
+    };
+  },
+
+  closePopup: function(e) {
+    $("body").removeClass("paywall");
+    BFApp.vent.trigger("popup:close");
+  },
+
+  validateForm: function() {
+    var isValidMobile = BFApp.validation.isMobile({
+      htmlObject: this.ui.mobileInput,
+      require: true,
+      errorOnForm: true
+    });
+
+    return isValidMobile;
+  },
+
+  downloadMetrics: function(type, platform) {
+    var data = {
+      context: "FAFT Team Paywall Popup",
+      type: type
+    };
+    if (platform) {
+      data.platform = platform;
+    }
+    analytics.track("Clicked download action", data);
+  },
+
+  sendNumber: function(e) {
+    var that = this;
+    e.preventDefault();
+
+    if (this.validateForm()) {
+      disableButton(this.ui.submitButton);
+
+      $.ajax({
+        url: "/download/send-link",
+        type: "post",
+        dataType: 'json',
+        data: {
+          to: that.ui.mobileInput.intlTelInput("getCleanNumber")
+        },
+        success: function() {
+          analytics.track("Successfully submitted FAFT Team Paywall SMS", {});
+          enableButton(that.ui.submitButton);
+          that.ui.submitButton.addClass("success").text("Message sent!");
+          setTimeout(function() {
+            that.closePopup();
+          }, 2000);
+        },
+        error: function() {
+          errorHandler({
+            button: that.ui.submitButton
+          });
+        }
+      });
+
+      this.downloadMetrics("Text me a link");
+    }
+  }
+
+});

@@ -1,0 +1,20 @@
+<div class="<%= (disable) ? 'white-out' : '' %>">
+
+  <h2>Send a Team Invitation</h2>
+  <p>A private link to invite your team members. Send however you like.</p>
+
+  <div class="state-one">
+    <div class="eight columns centered">
+      <button type="button" <%= (disable) ? 'disabled="disabled"' : '' %> class="show-open-invite-link button small full-width"><i class="bf-icon eye"></i> Show link</button> 
+    </div>
+  </div>
+
+  <div class="state-two hide">
+    <input name="team-open-invite" type="text" readonly="readonly" value="<%= openInviteLink %>">
+    <ul class="bullets">
+      <li>No need for you to enter everyone's details</li>
+      <li>Members will need to register before receiving updates (but it’s really easy)</li>
+    </ul>
+  </div>
+
+</div>

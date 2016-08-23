@@ -1,0 +1,25 @@
+<header>
+  <h3><i class="panel-icon bf-icon trophy"></i> Results</h3>
+</header>
+<div class="panel-content clearfix">
+  <div class="result_card">
+    <div class="left-team">
+      <img class="circle" src="<%= awayTeamImg %>">
+      <span class=""><%= awayTeamName %></span>
+      <input name="away_score" type="text" value="<%= (scoreAttr in awayScore) ? awayScore[scoreAttr] : '' %>">
+    </div>
+  
+    <div class="right-team">
+      <span class=""><%= homeTeamName %></span>
+      <img class="circle" src="<%= homeTeamImg %>">
+      <input name="home_score" type="text" value="<%= (scoreAttr in homeScore) ? homeScore[scoreAttr] : '' %>">
+    </div>
+  </div>
+  
+  <div class="inline-input text-right">
+    <a href="#" class="cancel-link" name="cancel">Cancel</a>
+    <button class="save-button small" name="save">Save</button>
+  </div>
+</div>
+
+

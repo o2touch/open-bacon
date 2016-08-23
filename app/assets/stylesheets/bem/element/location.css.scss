@@ -1,0 +1,52 @@
+/*------------------------------------*\
+	LOCATION DISPLAY
+\*------------------------------------*/
+
+$mapHeight: 175px;
+$google_info_heigth: 25px;
+
+.b-location {
+  position: relative;
+  
+  &__container {
+    height: $mapHeight;
+    overflow: hidden;
+
+    &__map {
+    	height: $mapHeight + $google_info_heigth;
+	    width: 100%;
+	    background: #F4F3F0;
+    }
+  }
+
+  &__info-block {
+  	border-radius: $bluefields-radius;
+    background: #4A4A4A;
+    width: 80%;
+    padding: $bluefields-margin / 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translateX(-50%) translateY(-50%));
+    @include arrow($side: "bottom", $color: #4a4a4a, $size: 13px);
+    &:after {
+      bottom: -25px;
+    }
+
+    &__title {
+    	color: $bluefields-white;
+      text-transform: uppercase;
+      font-weight: 600;
+      @include font-size(1.4, false)
+    }
+
+    &__address {
+    	color: rgba($bluefields-white, 0.8);
+	    @include font-size(1, true);
+	    font-weight: 200;
+    	&__link {
+	      color: inherit;
+    	}
+    }
+  }
+}

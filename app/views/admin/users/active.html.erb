@@ -1,0 +1,14 @@
+<h2>Active Organisers (<%=@activeUsers.size%>) <a href="/admin/users">View all</a></h2>
+<table class="users">
+  <% @activeUsers.each do |user| %>
+    <% next if user.role?("Guest")%>
+  <tr>
+    <td><%=link_to user.name, admin_user_path(user) %></td>
+    <td><%= user.email.nil? ? "" : link_to(user.email, "mailto:" + user.email) %></td>
+    <td><%=user.events_created.length %></td>
+    <td><%=l(user.created_at) %></td>
+    <td><%=if user.was_invited then "Y (" + user.invited_by_source_user_id.to_s + ")" else "N" end %></td>
+    <td><%=link_to "Delete", admin_user_path(user), :confirm => "Sure?", :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>

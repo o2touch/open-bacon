@@ -1,0 +1,34 @@
+<% if (formTitle) { %>
+<div class="text-center join-text-help">
+	<h1><%= formTitle %></h1>
+</div>
+<% } %>
+
+<div class="team-form">
+	<% if (isEdit) { %>
+	<label>League logo</label>
+	<div class="pfl-pic-section clearfix">
+		<%= htmlPic %>
+		<span class="grey button" name="upload-button" title="Upload Badge" data-disabled="Uploading">
+			<span class="text">Upload logo</span>
+			<input type="file" name="logo">
+		</span>
+	</div>
+	<% } %>
+
+	<label for="lf-title">Title</label>
+	<input id="lf-title" class="team-name" type="text" name="title" placeholder="My League" value="<%= title %>">
+
+	<div class="location-field">
+		<label for="edit-location">Location</label>
+		<div class="location-input-group">
+			<input name="location" id="edit-location" type="text" placeholder="Sports Center, Summers Lane, United Kingdom" value="<%= locationTitle %>">
+			<button type="button" name="location-search" class="grey"><i class="bf-icon search"></i></button>
+		</div>
+		<div id="mapwrapper"></div>
+	</div>
+
+	<div class="inline-input text-right">
+		<button name="save" type="submit" class="small" data-disabled="Saving">Save</button>
+	</div>
+</div>

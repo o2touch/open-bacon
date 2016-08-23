@@ -1,0 +1,10 @@
+<table id="league-header" width="100%" cellspacing="24">
+  <tr>
+    <td valign="top" align="center" class="text-center">
+			<% unless @league.logo_medium_url == "/assets/generic_league_medium.png" %>
+      <img class="league-logo" src="<%= paperclip_url(@league.logo_medium_url) %>">
+      <% end %>
+    	<h1 class="league-name"><%= @league.title %></h1>
+    </td>
+  </tr>
+</table>

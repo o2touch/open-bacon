@@ -1,0 +1,13 @@
+<h2>Hello there</h2>
+
+<% if(context == "team"){%>
+	<p><strong><%= who %></strong> is using Mitoo to manage the team&rsquo;s schedule and communicate around games.</p>
+	<p><a class="login-link" href="#">Already a member of the team? Login</a></p>
+<% } else if(context == "user"){ %>
+	<p><strong><%= who %></strong> is a part of a team on Mitoo.</p>
+<% } %>
+
+<hr/>
+<p><b>Have a team of your own?</b> Set up your team on <a href="/">Mitoo</a> for free and find out how easy it is to manage your team...</p>
+<a href="/signup" class="button full-width orange medium">Set up your team on Mitoo</a>
+<p class="hint"><em>It's free and really easy to get started!</em></p>

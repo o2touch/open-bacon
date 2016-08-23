@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>  <html class="ie ie6 lte9 lte8 lte7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if IE 7]>     <html class="ie ie7 lte9 lte8 lte7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if IE 8]>     <html class="ie ie8 lte9 lte8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if IE 9]>     <html class="ie ie9 lte9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if gt IE 9]>  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml"> <![endif]-->
+<!--[if !IE]><!--> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml">             <!--<![endif]-->
+  <head <%== @fb_headprefix if !@fb_headprefix.nil?%>>
+    
+    <!-- Meta & information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-itunes-app" content="app-id=704514289">
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ddccmacejnnlmjlldabpndpjnljkjjpe">
+
+    <!-- Twitter info -->
+    <meta property="twitter:account_id" content="4503599630883709" />
+    <%= display_meta_tags :site => 'Mitoo', :reverse => true %>
+    
+    <%= stylesheet_link_tag "application", :media => "all", :type => "text/css" %>
+    <%= content_for :head_css %>
+
+    <!-- IE fix & Polyfill -->
+    <!--[if lte IE 8]>
+      <%= javascript_include_tag "fix/ie8.js" %>
+    <![endif]-->
+
+    <%= yield :after_head %>
+
+    <%= render :partial => 'layouts/common_head' %> 
+    
+    <!-- deprecated gmaps api code: use layouts/google_maps (requires big refactor) -->
+    <%
+      mapsDomain = request.ssl? ? "//maps-api-ssl" : "//maps"
+      mapsURI = mapsDomain + ".google.com/maps/api/js?key=AIzaSyDfYDEux84tIAGaVSsq8VW5K6qHTI_GqBE&sensor=false&libraries=places"
+    %>
+    <%= javascript_include_tag mapsURI if !Rails.env.test? %>
+  
+    <%= javascript_include_tag "application" %>
+    
+    <%= content_for :head %>
+  </head>
+  <body>
+    <%= render :partial => 'layouts/facebook' %>
+    
+    <%= yield %>
+
+    <%= render :partial => 'layouts/google_remarketing' %>
+    <%= render :partial => 'layouts/common_end_body' %>
+  </body>
+</html>

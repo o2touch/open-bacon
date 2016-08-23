@@ -1,0 +1,30 @@
+<script>
+var page = 'Change Password Page';
+var properties = {};
+analytics.track('Viewed ' + page, properties);
+</script>
+<div class="row">
+	<div class="columns six centered">
+<br /><br />
+			<h2>Change your password</h2>
+
+			<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :id => "new_password" }) do |f| %>
+			<%= devise_error_messages! %>
+			<%= f.hidden_field :reset_password_token %>
+
+			<br />
+			
+			<div class="input-group">
+				<%= f.label :password, "New Password"%>
+				<%= f.password_field :password, :placeholder => "New password" %>
+				<%= f.label :password, "Confirm New Password"%>
+				<%= f.password_field :password_confirmation, :placeholder => "Confirm new password" %>
+			</div>
+			<div class="alert-box error hide"></div>
+			<div>
+				<%= f.submit "Change password", :class => "button big radius nice "%>
+			</div>
+			<% end %>
+
+	</div>
+</div>

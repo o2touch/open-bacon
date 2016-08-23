@@ -1,0 +1,22 @@
+.league-svsl{
+	.team-profile-details{
+		padding-right: $bluefields-margin;
+		margin-top: $bluefields-margin*2;
+	}
+	.team-detail-view{
+		.circle{
+			height: 100px;
+			width: 100px;
+			@include radius(0);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			border: 2px solid $bluefields-white;
+		}
+		.team-info{
+			height: 98px;
+			h2{
+				font-size: 28px;
+			}
+		}
+	}
+}

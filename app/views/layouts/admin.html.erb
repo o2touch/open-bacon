@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml">
+<head <%== @fb_headprefix if !@fb_headprefix.nil?%>>
+	<title>Admin - Mitoo</title>
+	
+	<%= include_gon %>
+	  
+	<script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.3.2/underscore-min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+	<script src="http://cdn.jquerytools.org/1.2.6/jquery.tools.min.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+	
+	<%= stylesheet_link_tag	"application", :media => "all" %>
+	
+	<style>
+		body {
+		  font-size:12px;
+		  background-image:none;
+		  background-color: rgba(0, 0, 0, 0.02);
+		}
+		
+		h1{
+		  font-size:28px;
+		  margin-bottom: 0;
+		}
+		h1 + p {
+			margin-bottom:18px !important;
+		}
+		
+		.content{
+			background-color:#fff;
+			color: #333;
+			padding: 12px 12px;
+			border: 1px solid rgba(0,0,0,0.05);
+			border-right:none;
+			min-height: 600px;
+		}
+		
+		h2 {
+			font-size: 18px;
+			font-weight: 600;
+			margin-bottom: 0;
+			color: #666;
+			text-transform: uppercase;
+		}
+		table + h2 {
+			margin-bottom: 0;
+		}
+		h2 a {
+			margin-right: 6px;
+			margin-left: 6px;
+			color: #999;
+		}
+
+		h3 {
+			font-size: 18px;
+			padding-top: 15px;
+			color: #666;
+			margin-bottom: 0;
+			margin-top: 24px;
+		}
+
+		p {
+			color:#666;
+			line-height:1.2em;
+		}
+
+		#filters {
+			margin-bottom: 24px;
+			background-color: #f8f8f8;
+			padding:6px;
+		}
+		#filters select {
+		width: 100px;
+		margin: 0;
+		}
+
+		table{
+			width: 100%;
+			background: #F9F9F9;
+			margin-top:0px;
+			margin-bottom:12px;
+		}
+		table.metrics{
+			background:none;
+			border:none;
+			border-collapse: collapse;
+		}
+		table.metrics tbody tr td {
+			font-size:12px;
+			border:none;
+			border-bottom: 1px solid #eee;
+		}
+		table.metrics tr:nth-child(even) {
+			background: rgba(0,0,0,0.01);
+		}
+		table.metrics tbody tr:nth-child(odd):hover {
+			background: rgba(0,0,0,0.02);
+		}
+		table.metrics tbody tr:nth-child(even):hover {
+			background: rgba(0,0,0,0.03);
+		}
+		table.metrics tbody tr.active td {
+			font-weight:bold;
+		}
+		table.metrics tbody tr.good.past td {
+			color:green;
+		}
+		table.metrics tbody tr.almost.past td {
+			color:orange;
+		}
+		table.metrics tbody tr.bad.past td {
+			color:red;
+		}
+		table.metrics tbody td.good {
+			color:green;
+		}
+		table.metrics tbody td.almost{
+			color:orange;
+		}
+		table.metrics tbody td.bad{
+			color:red;
+		}
+		table.metrics tbody tr.future td {
+			color:#666;
+		}
+		
+		table tbody tr td {
+		  word-wrap:break-word;
+		  max-width:190px;
+		  font-size:11px;
+			color: #333;
+			padding: 2px 5px;
+			vertical-align: top;
+			border: none;
+			border-right: 1px solid #EEE;
+		}
+		.row {
+			max-width:100%;
+		}
+		.adminbar {
+			padding:0;
+		}
+		.adminbar ul li{
+			float: left;
+			width:100%;
+			padding: 0;
+		}
+		.adminbar ul li.heading{
+			background-color: rgba(0, 0, 0, 0.02);
+			color:#999;
+			padding: 3px 6px;
+			font-family: "geogrotesque", Arial, Helvetica, sans-serif;
+			font-size: 12px;
+			text-transform: uppercase;
+			font-weight: 600;
+			margin-top: 12px;
+			border-top: 1px solid rgba(0,0,0,0.05);
+		}
+		.adminbar ul li a{
+			color:#999;
+			width: 100%;
+			padding: 1px;
+			display: block;
+			font-family: font-family: "geogrotesque", Arial, Helvetica, sans-serif;
+			font-size: 13px;
+		}
+		.adminbar ul li a.large{
+			padding:12px;
+			border-bottom: 1px solid rgba(0,0,0,0.04);
+			background-color: rgba(255,255,255,0.9);
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		.adminbar ul li a:hover{
+			background:#999;
+			color:#fff;
+		}
+		.adminbar ul ul{
+			margin-left:0;
+		}
+		.adminbar ul ul li a{
+			padding-left:12px;
+		}
+		.dashboard{
+			margin-bottom: 20px;
+		}
+		.navbar{
+			background-image:none;
+		}
+		.navbar a {
+			padding: 12px 0px;
+			display: block;
+			font-size: 14px;
+			color: #ccc;
+		}
+		.navbar a:hover{
+			color:#333;
+		}
+		.navbar a.selected{
+			background-color: rgba(0,0,0,0.8);
+		}
+		.navbar a.logo{
+			background: url(<%= asset_path 'identity/logo/logo_black_200.png' %>);
+			background-size: cover;
+			width: 93px;
+			height: 29px;
+			display: block;
+			margin: 5px auto;
+		}
+		.navbar a span{
+			color:#fff;
+			text-shadow:none;
+		}
+		ul.kpis li{
+			width: 100px;
+			float: left;
+			font-size: 40px;
+			font-weight: bold;
+			text-align: center;
+			min-height: 85px;
+			margin-right: 5px;
+			border: 1px solid #ddd;
+			margin-top: 12px;
+			float: left;
+			overflow: hidden;
+			line-height: 1em;
+			padding: 6px;
+			padding-bottom:3px;
+			color: rgba(0,0,0,0.7);
+		}
+		ul.kpis li.medium{
+			font-size:24px;
+		}
+		ul.kpis li.divider {
+			margin-left: 20px;
+		}
+		ul.kpis li span.change{
+			font-size: 10px;
+			display: block;
+			margin: 0;
+			padding: 0;
+			line-height: 1em;
+			color: #666;
+		}
+		ul.kpis li span.desc{
+			font-size: 12px;
+			display: block;
+			line-height: 14px;
+			color: rgba(0,0,0,0.4);
+			border-top: 1px solid #eee;
+			padding-top: 3px;
+			margin-top: 6px;
+		}
+		table th {
+			font-size: 11px;
+		}
+		table td a {
+			color:#333;
+		}
+		.csv-upload-area{
+			background-color: #eee;
+			border: 1px solid #ccc;
+			margin-bottom: 24px;
+			clear: both;
+			padding:12px !important;
+		}
+		.csv-upload-area h3 {
+			font-size: 16px;
+			color: #333;
+		}
+
+		ul.team-members {
+		}
+		ul.team-members li {
+			margin-bottom:6px;
+		}
+		ul.team-members li div{
+			float:left;
+		}
+		ul.team-members li div.user a{
+			font-weight: bold;
+		}
+		ul.team-members li div.actions {
+			color:#666;
+			clear:left;
+		}
+		ul.team-members li div.actions a {
+			color:#666;
+			text-decoration:underline;
+		}
+
+		.page-nav ul li {
+			float:left;
+			padding:0 5px;
+		}
+	</style>
+	
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>  
+							
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/assets/favicon.ico" />
+	
+	<%== @fb_objects if !@fb_objects.nil? %>
+</head>
+<body class="admin">
+
+	<div class="columns twelve navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+	    	<div class="row">      
+	      	<div class="columns five">
+	      		<%= link_to "Go to site", root_path %>
+	      	</div>      
+	      	<div class="columns two">
+	      		<a class="logo" href="/home"></a>
+	      	</div>		
+			  	<div class="columns five">
+			    	<div class="username right"><%= link_to current_user.name, user_path(current_user) %></div>			
+			  	</div>
+		  </div>
+	    </div>
+	  </div>
+	</div>
+
+<% if current_user.role?("Admin") %>
+	<div class=" columns one adminbar">
+		<ul class="clearfix">
+			<li class="heading">Metrics</li>
+			<li>
+				<ul>
+					<li><a class="large" href="/admin/metrics/">Overview</a></li>
+					<li><a class="large" href="/admin/metrics/teams/all">Active Teams</a></li>
+					<li><a class="large" href="/admin/metrics/users/active">Active Users</a></li>
+				</ul>
+			</li>
+			<li class="heading">FAFT</li>
+			<li>
+				<ul>
+					<li><a class="large" href="/admin/metrics/faft">Follow Funnel</a></li>
+				</ul>
+			</li>
+			<li class="heading">Tests</li>
+			<li>
+				<ul>
+					<li><a href="/admin/split">A/B Split</a></li>
+				</ul>
+			</li>
+			<li class="heading">Other Metrics</li>
+			<li>
+				<ul>
+					<li><a href="/admin/metrics/features">Feature Usage</a></li>
+				</ul>
+			</li>
+			<li class="heading">Users</li>
+			<li>
+				<ul>
+					<li><a href="/admin/users">All</a></li>
+					<li><a href="/admin/users/active">Active</a></li>
+					<li><a href="/admin/users?filter=mobile">Mobile</a></li>
+					
+				</ul>
+			</li>
+			<li class="heading">Teams</li>
+			<li>
+				<ul>
+					<li><a href="/admin/teams">All</a></li>
+				</ul>
+			</li>
+			<li class="heading">Events</li>
+			<li>
+				<ul>
+					<li><a href="/admin/events">All</a></li>
+				</ul>
+			</li>
+			<li class="heading">Leagues</li>
+			<li>
+				<ul>
+					<li><a href="/admin/leagues">All</a></li>
+					<li><a href="/admin/leagues?filter=faft">FAFT</a></li>
+					<li><a href="/admin/leagues?filter=other">Other</a></li>
+				</ul>
+			</li>
+			<% if current_user.id == 435 && false %>
+			<li><a href="/admin/unclaimed_team_profiles">Unclaimed Team Profiles</a></li>
+			<li><a href="/admin/claim_profile_campaign">Claim Profile Campaign</a></li>
+			<li><a href="/admin/email_campaigns">Email Campaigns</a></li>
+			<li><a href="/admin/email">Email Previews</a></li>
+			<% end %>
+			<li class="heading">Tools</li>
+			<li>
+				<ul>
+					<li><a href="/sidekiq">Sidekiq</a></li>
+				</ul>
+			</li>
+		</ul>	
+	</div>
+<% end %>
+
+	<div class="columns eleven container content">		
+		<%= yield %>
+	</div>
+		
+	<div class="columns twelve footer">
+		<div class="columns twelve">
+		
+		<p class="credit" style="margin:15px;">
+		
+		
+		<a href="http://mitoo.co" target="_blank">Mitoo</a> • 
+		<a href="http://sotb.bluefields.com" target="_blank">SOTB Blog</a>
+		<br>
+		© 2010-2013 Bluefields Inc. All rights reserved
+		
+		</p>
+		</div>
+	</div>
+	
+<div id="popup" class="reveal-modal" style="opacity: 1; visibility: hidden; top: 100px; width: auto; margin-left: -200px; left: 50%;"></div>
+<div id="fb-root"></div>
+<script>
+  // window.fbAsyncInit = function() {
+  //   FB.init({
+  //   	version    : 'v2.0',
+  //     appId      : '<%=#Facebook::APP_ID.to_s%>', // App ID
+  //     //channelUrl : 'http://piers.showoff.io/channel.html', // Channel File
+  //     status     : true, // check login status
+  //     cookie     : true, // enable cookies to allow the server to access the session
+  //     xfbml      : true,  // parse XFBML
+  //     frictionlessRequests : true
+  //   });
+  // };
+
+  // // Load the SDK Asynchronously
+  // (function(d){
+  //    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+  //    if (d.getElementById(id)) {return;}
+  //    js = d.createElement('script'); js.id = id; js.async = true;
+  //    js.src = "//connect.facebook.net/en_US/sdk.js";
+  //    ref.parentNode.insertBefore(js, ref);
+  //  }(document));
+</script>
+</body>
+</html>

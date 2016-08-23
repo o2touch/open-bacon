@@ -1,0 +1,750 @@
+.paywall-popup-flow-facebook-share {
+	margin: -12px;
+	border-radius: 3px;
+	overflow: hidden;
+	background-position: center;
+  background-repeat: no-repeat;
+  background-image: image-url('faft/facebook_wall_2.jpg');
+  @include cover(image-path('faft/facebook_wall_2.jpg'));
+
+	button.facebook {
+		width: 30%;
+		margin-right: 12px;
+	}
+
+
+  .fb-face-block {
+	  line-height: 1.7rem;
+	  margin-bottom: 12px;
+	  font-size: 1.7em;
+	  text-align: center;
+	  padding: 78px 30px;
+	  p {
+	  	text-shadow: 1px 1px 0 white;
+	  }
+	}
+
+	.text-right {
+		margin-bottom: $bluefields-margin;
+	}
+  .skip {
+  	margin-right: $bluefields-margin;
+  }
+}
+
+
+
+.follow-steps-popup {
+	overflow: hidden;
+	background: $bluefields-blue;
+	color: $bluefields-white;
+	border-radius: $bluefields-radius;
+	
+	h1{
+		text-transform: uppercase;
+		font-weight: 600;
+		@include font-size(1.8, $as-text:false);
+	}
+	
+	h2{
+		text-transform: uppercase;
+		font-weight: 400;
+		@include font-size(1.4, $as-text:false);
+	}
+	
+	.slider{
+		width: 300%;
+		.slide-1, .slide-2, .slide-3{
+			width: 33%;
+			display: inline-block;
+			vertical-align: top;
+			padding: $bluefields-margin;
+		}
+		
+		@include transform(translateX(0));
+		@include transition(all 0.3s);
+		&.step-1{
+			@include transform(translateX(0));
+		}
+		
+		&.step-2{
+			@include transform(translateX(-33%));
+		}
+		
+		&.step-3{
+			@include transform(translateX(-66%));
+		}
+	}
+	
+	.steps {
+		padding: 9px 0;
+		@include font-size(1);
+		background: rgba(255,255,255,0.1);
+		color: darken($bluefields-white,5%);
+		.step-text {
+			&.complete {
+				color: darken($bluefields-white,15%);
+				text-decoration: line-through;
+			}
+			
+			&.current {
+				font-weight: bold;
+				color:$bluefields-white;
+			}
+		}
+	}
+}
+
+.invite-player-step {
+	.invite-player-row{
+		margin-bottom: $bluefields-margin/2;
+		button {
+			height: 30px;
+		}
+	}
+	
+	.alert-box{
+		position: absolute;
+		bottom: 100%;
+		@include font-size(0.7);
+		padding: 0 3px;
+		left: 31%;
+		@include calc(left, "50% - 50px");		
+	}
+	
+	.invite-copy, .invite-form {
+		margin-top: $bluefields-margin;
+	}
+	.invite-more{
+		font-weight: bold;
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	
+	.skip {
+		@include font-size(0.8);
+		position: absolute;
+		bottom: 11px;
+		&:hover{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+	}
+	.done{
+		margin-bottom: 24px;
+	}
+}
+
+.download-the-app-step {
+	h1{
+		margin-bottom: $bluefields-margin*2;
+	}
+	ul{
+		margin-top: $bluefields-margin;
+		margin-bottom: $bluefields-margin*2;
+		li{
+			i{
+				display: block;
+				@include font-size(1);
+			} 
+		}
+	}
+	.download-section {
+		width: 49%;
+		display: inline-block;
+		vertical-align: bottom;
+		
+		@include respond-to(handhelds){
+			width: 100%;
+		}
+		a.store-button {
+			img {
+				height: 40px;
+			}
+		}
+		.phone-container {
+			@include respond-to(handhelds){
+				display: none;
+			}
+			padding: 0;
+			padding-left: $bluefields-margin*2;
+			margin-bottom: -12px;
+			max-width: none;
+			text-align: center;
+			img{
+				width: 49%;
+				max-width: 140px;
+				vertical-align: bottom;
+			}
+		}
+	}
+}
+
+// 
+// 
+// .follow-confirmation-flow{
+
+// 
+// 	&.download-app-popup {
+// 		background: $bluefields-blue;
+// 		color: $bluefields-white;
+// 		padding: $bluefields-margin;
+// 		ul{
+// 			margin-top: $bluefields-margin;
+// 			margin-bottom: $bluefields-margin*2;
+// 			li{
+// 				i{
+// 					display: block;
+// 					@include font-size(1);
+// 				} 
+// 			}
+// 		}
+// 
+// 		.download-section {
+// 			width: 49%;
+// 			display: inline-block;
+// 			vertical-align: bottom;
+// 
+// 			@include respond-to(handhelds){
+// 				width: 100%;
+// 			}
+// 			a.store-button {
+// 				img {
+// 					height: 40px;
+// 				}
+// 			}
+// 
+// 			.phone-container {
+// 
+// 				@include respond-to(handhelds){
+// 					display: none;
+// 				}
+// 				padding: 0;
+// 				padding-left: $bluefields-margin*2;
+// 				margin-bottom: -12px;
+// 				max-width: none;
+// 				img{
+// 					width: 49%;
+// 					vertical-align: bottom;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// paywall
+body.paywall {
+	.grey-overlay{
+		@include opacity(0.8);
+	}
+	
+	.grey-overlay{
+		background: $bluefields-white;
+	}
+	
+	.why-follow, .sub-navi{
+		background: $bluefields-white;
+		@include box-shadow(0 0 5px 5px $bluefields-white);
+		border: 1px solid $bluefields-white;
+	}
+	
+	
+	&.paywall-black {
+		.grey-overlay{
+			background: $bluefields-black;
+		}
+		
+		.why-follow, .sub-navi{
+			background: none;
+			box-shadow: none;
+			border: none;
+			color: $bluefields-white;
+		}
+		
+	}
+	
+	&.paywall-team-color{
+		.grey-overlay{
+			background: #eee;
+		}
+		.why-follow, .sub-navi{
+			background: #eee;
+			@include box-shadow(0 0 5px 5px #eee);
+			border: 1px solid #eee;
+		}
+	}
+
+	.popup {
+    overflow: visible;
+		box-shadow: 0px 0px 10px 4px rgba(25, 30, 35, 0.1)
+	}
+	
+}
+
+
+
+.paywall-popup-flow {
+	padding: $bluefields-margin;
+	border: 1px solid #ccc;
+	border-radius: $bluefields-radius;
+
+	h1{
+		@include font-size(1.4, false);
+		margin-bottom: $bluefields-margin;
+		color: #666;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+
+
+	.input-with-button {
+		button, input {
+			height: 40px;
+		}
+	}
+
+	/* Step 1 -  Signup */
+	.paywall-popup-flow-signup {
+		.follow-team-form{
+			text-align: center;
+			margin-top: $bluefields-margin;
+			margin-bottom: $bluefields-margin;
+		}
+
+		.store-link {
+			max-width: 120px;
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 $bluefields-margin;
+		}
+
+		.fb-dropoff-text {
+			color: $bluefields-orange;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.facebook-signup, .manual-signup, .or-choice-line{
+			vertical-align: middle;
+			display: inline-block;
+		}
+
+		.select-ui-container {
+			width: 80%;
+			margin: 0 auto;
+			margin-bottom: 12px;
+		}
+
+		.no-facebook-signup {
+			.facebook-signup, .or-choice-line {
+				display: none;
+			}
+			.manual-signup {
+				width: 80%;
+				margin: 0 auto;
+			}
+		}
+		
+		button.facebook {
+			&.focus {
+				box-shadow: 0 0 2px 2px #4264aa, 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+				-webkit-box-shadow: 0 0 2px 2px #4264aa, 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+			}
+		}
+		
+		.facebook-signup, .manual-signup {
+			width: 45%;
+		}
+		
+
+
+		.or-choice-line{
+			width: 6%;
+			color: #777;
+		}
+		
+		@media only screen and (min-width: 1000px) {
+			.or-choice-line{
+				&:after, &:before {
+					content: none;
+					border: none;
+				}
+			}
+		}
+		
+		@include respond-to(handhelds){
+			.facebook-signup, .manual-signup, .or-choice-line {
+				width: 100%;
+			}
+		}
+		
+		@media only screen and (max-width: 1000px) {
+			.facebook-signup, .manual-signup, .or-choice-line {
+				width: 100%;
+			}
+		}
+
+		small {
+			@include font-size(0.7);
+			margin-top: $bluefields-margin;
+			text-align: center;
+			display: block;
+			color: #aaa;
+			a {
+				color: inherit;
+			}
+		}
+		.why-follow, .sub-navi{
+			background: $bluefields-white;
+			@include box-shadow(0 0 5px 5px $bluefields-white);
+			border: 1px solid $bluefields-white;
+			@include font-size(0.8);
+			padding: $bluefields-margin/2;
+		}
+		.why-follow {
+			position: absolute;
+			bottom: 108%;
+			@include calc(bottom, "100% + 30px");
+			width: 100%;
+			left: 0;
+		}
+		
+		.sub-navi{
+			position: absolute;
+			top: 108%;
+			@include calc(top, "100% + 30px");
+			text-align: center;
+			width: 100%;
+			left: 0;
+
+			li{
+				margin: 0 12px;
+				display: inline-block;
+			}
+		}
+	}
+
+	/* Step 2 -  Set password */
+	.paywall-popup-flow-password {
+		
+		.toggle-edit {
+			text-decoration: none;
+		}
+		
+		p {
+			color: #666;
+		}
+
+    .password {
+      font-weight: bold;
+      color: $bluefields-orange;
+    }
+
+    .skip {
+      @include font-size(0.8);
+      position: absolute;
+      bottom: 11px;
+      right: 30px;
+      &:hover{
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+		
+		.password-copy {
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			@include font-size(1);
+			color: #555;
+		}
+		
+		form[name="change-password"] {
+			margin-top: $bluefields-margin;
+			input {
+				margin-bottom: 0;
+				min-height: 48px;
+				@include font-size(1);
+				padding-left: $bluefields-margin;
+			}
+			button {
+				margin-top: $bluefields-margin;
+			}
+			a {
+				margin-top: 15px;
+				position: absolute;
+				right: -30px;
+				top: 0;
+			}
+		}
+
+    .password-actions {
+      text-align: center;
+    }
+	}
+
+	/* Step 3 -  SMS to download the app */
+	.paywall-popup-flow-sms {
+		p {
+			margin-top: $bluefields-margin/2;
+			color: #666;
+		}
+		.input-with-button {	
+			width: 80%;
+			margin: 0 auto;
+			margin-top: $bluefields-margin;
+		}
+		.cta-store {
+			height: 35px;
+			margin: 0 $bluefields-margin;
+			opacity: 0.7;
+			&:hover {
+				opacity: 1;
+			}
+
+		}
+	}
+}
+
+/*****/
+// ADDED FOR PUBLIC TEAM PROFILE - DOWNLOAD TEST 1 */
+// By people who cannot code css
+/*****/
+.popup.full-screen {
+  position: absolute;
+  padding:0;
+  top:0;
+  left:0;
+  width: 100%!important;
+  border-radius: 0;
+  max-height:none;
+  box-shadow:none;
+}
+#r-popup row {
+  padding:0;
+}
+
+.popup.download-test {
+
+  background-image: image-url('faft/bg_1.jpg');
+  background-position: 0 0;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+
+  &:after {
+  	content:none;
+  }
+
+  .team-header {
+
+    padding:24px 0 0;
+    text-align:center;
+
+    img {
+      display: none;
+      width:25px;
+    }
+    h3 {
+      display: block;
+      padding-left:3px;
+      margin-top:2px;
+      font-size: 19px;
+      line-height:17px;
+      text-transform: uppercase;
+      text-align: center;
+      color: rgba(50,50,50,0.9);
+      font-weight: 600;
+      vertical-align: middle;
+
+    }
+    h4 {
+      font-size: 13px;
+      padding: 9px 0 0;
+      text-align: center;
+      //background-color: rgba(0,0,0,0.7);
+      color: #333;
+
+      a {
+        color: #333;
+        display: block;
+        padding: 0;
+        margin: 0 auto;
+        line-height: 1.2em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 90%;
+      }
+    }
+  }
+
+  .team-info {
+    margin: 12px 0 12px;
+  }
+
+  ul.team-cards {
+    li {
+      height: auto;
+      padding:12px;
+      margin:6px 12px;
+      background-color:#fff;
+      box-shadow: -1px -1px 10px rgba(0,0,0,0.1);
+      //border:1px solid rgba(0,0,0,0.1);
+
+      header {
+
+        h3 {
+          font-size: 14px;
+          text-transform: uppercase;
+          text-align: center;
+          font-weight: 600;
+          color: rgba(0,0,0,0.6);
+        }
+      }
+
+      .fixture-team-information {
+
+        padding: 12px;
+
+        h1 {
+          font-size: 20px;
+          text-align: center;
+        }
+
+        .date {
+          text-align:center;
+          font-size: 12px;
+          color: rgba(0,0,0,0.8);
+        }
+        .home_away {
+          text-align:center;
+          font-size: 12px;
+          color: rgba(0,0,0,0.8);
+        }
+        .result {
+          text-align:center;
+          font-size: 12px;
+          color: rgba(0,0,0,0.8);
+        }
+      }
+    }
+  }
+
+  .download-app-main {
+    padding: 0 10px 0 10px;
+    //background-color: #4fade3;
+    //border: 1px solid rgba(0,0,0,0.1);
+    color: #fff;
+    margin: 12px 6px 0;
+
+    h3 {
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 1.2em;
+    }
+  }
+
+  .download-app-main button{
+    position: relative;
+    z-index: 150;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: auto;
+    min-width: 70%;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(top,#fff,#ddd);
+    background-image: -moz-linear-gradient(top,#fff,#ddd);
+    background-image: -ms-linear-gradient(top,#fff,#ddd);
+    background-image: -o-linear-gradient(top,#fff,#ddd);
+    background-image: linear-gradient(top,#fff,#ddd);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.5em;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.0);
+    -webkit-background-clip: padding-box;
+
+    -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,.7);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.7);
+
+    border-color:rgba(0,0,0,0.4);
+    background-color: #5cabdc;
+    background-image: -webkit-linear-gradient(top,#5cabdc,#337faf);
+    color: rgba(255,255,255,.8);
+    text-shadow: 0 -1px 0 rgba(0,0,0,.35);
+  }
+
+  .download-mobile-image {
+	width: 220px;
+	margin: 6px auto 0;
+  }
+
+
+  // OLD
+  .main {
+    background-color: #fff;
+    padding: 12px;
+    margin: 12px 6px;
+    width: 96%;
+    border: 1px solid rgba(0,0,0,0.1);
+
+    h3 {
+
+    }
+  }
+
+  .team-information h3 {
+    font-size: 28px;
+    text-transform: uppercase; 
+    padding: 0px 10px;
+    font-weight: 600;
+  }
+  .team-information h4{
+    font-size: 18px; 
+    padding: 5px 10px;
+    text-transform: uppercase;
+  }
+
+  .information-center{
+    padding: 8px 0;
+  }
+
+  .download-cta-container{
+  padding:20px;
+  }
+
+}
+
+.popup.download-test.flat {
+  
+  .team-info {
+    background-color: #fff;
+    margin:0;
+  }
+
+  ul.team-cards li {
+    border:none;
+  }
+
+  .download-app-main {
+    margin:0;
+    border:none;
+  }
+
+}
+/*****/
+// END PUBLIC TEAM PROFILE - DOWNLOAD TEST 1 */
+/*****/

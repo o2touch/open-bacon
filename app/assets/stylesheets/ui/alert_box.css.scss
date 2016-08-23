@@ -1,0 +1,83 @@
+@mixin alert-box($color, $plain:false) {
+	$background-color: lighten($color, 30%);
+	$text-color: darken($color, 20%);
+	
+	border: 1px solid lighten($color, 20%);
+	position: relative;
+	
+	@if $plain == true {
+		$background-color:$color;
+		$text-color: $bluefields-white;
+		$border-color: lighten($color, 30%);
+		border: 2px solid lighten($color, 30%);
+	}
+	
+	color: $text-color;
+	border-radius:2px;
+	font-weight:500;
+	padding: $bluefields-margin/2;
+	background: $background-color;
+	
+	p, i, h1, h2, h3, h4, h5, h6, span, a{
+		text-shadow:none;
+		color: $text-color;
+	}
+	p {
+		line-height:1.4em;
+	}
+	
+	a{
+		color: $text-color;
+		text-decoration: underline;
+	}
+}
+
+.alert-box{
+	@include alert-box($bluefields-blue);
+
+	&.plain{
+		@include alert-box($bluefields-blue, true);
+	}
+
+	&.error, &.alert{
+		@include alert-box($bluefields-red);
+		&.plain{
+			@include alert-box($bluefields-red, true);
+		}
+	}
+
+	&.success{
+		@include alert-box($bluefields-green);
+		&.plain{
+			@include alert-box($bluefields-green, true);
+		}
+	}
+
+	&.warning{
+		@include alert-box($bluefields-yellow);
+		&.plain{
+			@include alert-box($bluefields-yellow, true);
+		}
+	}
+	
+	&.orange-warning{
+		@include alert-box($bluefields-orange);
+		&.plain{
+			@include alert-box($bluefields-orange, true);
+		}
+	}
+	
+	
+	&.post-it{
+		@include alert-box($bluefields-orange);
+		@include box-shadow(3px 3px 3px rgba(0,0,0,0.1));
+		@include rotate(-3deg);
+		background-color: #F9EFAF;
+		border:none;
+		
+	}
+	
+	&.big{
+		padding: $bluefields-margin 20px;
+	}
+}

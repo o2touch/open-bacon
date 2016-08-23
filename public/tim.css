@@ -1,0 +1,434 @@
+/* This file is the control room of the bluefields css */
+/* BF Color */
+/* Other Color */
+/* UI settings */
+/* Grid setings */
+/* Responsive settings */
+/* Animation settings */
+/* line 1, ../../../../app/assets/stylesheets/theme/partial/navigation.css.scss */
+#main-navigation {
+  background: #141c48;
+}
+/* line 5, ../../../../app/assets/stylesheets/theme/partial/navigation.css.scss */
+#main-navigation .navigation-dropdown:hover .navigation-dropdown-title {
+  background: #0f1434 !important;
+}
+/* line 8, ../../../../app/assets/stylesheets/theme/partial/navigation.css.scss */
+#main-navigation .navigation-dropdown:hover .navigation-dropdown-list {
+  background: #0f1434 !important;
+}
+/* line 12, ../../../../app/assets/stylesheets/theme/partial/navigation.css.scss */
+#main-navigation .navigation-dropdown .navigation-dropdown-list a:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Change progress bar theme to team color */
+/* line 2, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+progress {
+  color-color: #1A245C;
+}
+
+/* line 3, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+progress::-moz-progress-bar {
+  background-color: #1A245C;
+}
+
+/* line 4, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+progress::-webkit-progress-value {
+  background-color: #1A245C;
+}
+
+/* line 6, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="text"] {
+  color: #1A245C !important;
+}
+
+/* line 10, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color~="background"] {
+  background-color: #1A245C !important;
+}
+
+/* line 14, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color~="border"] {
+  border-color: #1A245C !important;
+}
+
+/* line 18, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color~="button"] {
+  border-color: #11183c #080b1c black #080b1c;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  background-color: #1d2968;
+  background-image: -moz-linear-gradient(#1d2968, #1A245C);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1d2968), to(#1A245C));
+  background-image: -webkit-linear-gradient(#1d2968, #1A245C);
+  background-image: -o-linear-gradient(#1d2968, #1A245C);
+  background-image: linear-gradient(#1d2968, #1A245C);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+}
+/* line 5, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color~="button"]:visited {
+  color: white;
+}
+/* line 22, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color~="button"]:hover {
+  color: white;
+  border-color: #161e4c #11183c #0d112c #11183c;
+  background-color: #23307c;
+  background-image: -moz-linear-gradient(#23307c, #1e2a6c);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#23307c), to(#1e2a6c));
+  background-image: -webkit-linear-gradient(#23307c, #1e2a6c);
+  background-image: -o-linear-gradient(#23307c, #1e2a6c);
+  background-image: linear-gradient(#23307c, #1e2a6c);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+}
+/* line 37, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color~="button"]:active {
+  border-color: #141c48 #0f1434 #090d20 #0f1434;
+  color: white;
+  background-color: #23307c;
+  background-image: -moz-linear-gradient(#23307c, #182154);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#23307c), to(#182154));
+  background-image: -webkit-linear-gradient(#23307c, #182154);
+  background-image: -o-linear-gradient(#23307c, #182154);
+  background-image: linear-gradient(#23307c, #182154);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+  box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+}
+/* line 52, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color~="button"]:focus, [data-team-color~="button"].focus {
+  color: white;
+  -webkit-box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  -moz-box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+/* line 62, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color~="button"][disabled=disabled], [data-team-color~="button"]:disabled {
+  filter: alpha(opactiy=30);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+}
+
+/* line 22, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color~="link"] {
+  color: #1A245C;
+}
+/* line 230, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color~="link"]:hover {
+  color: #253484;
+}
+/* line 233, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color~="link"]:active {
+  color: #0f1434;
+}
+/* line 236, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color~="link"]:visited {
+  color: #141c48;
+}
+
+/* line 27, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="text"] {
+  color: #900f29 !important;
+}
+
+/* line 31, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="background"] {
+  background-color: #900f29 !important;
+}
+
+/* line 35, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="border"] {
+  border-color: #900f29 !important;
+}
+
+/* line 39, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="button"] {
+  border-color: #6b0b1e #460714 #180207 #460714;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  background-color: #9e102d;
+  background-image: -moz-linear-gradient(#9e102d, #900f29);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9e102d), to(#900f29));
+  background-image: -webkit-linear-gradient(#9e102d, #900f29);
+  background-image: -o-linear-gradient(#9e102d, #900f29);
+  background-image: linear-gradient(#9e102d, #900f29);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(107, 11, 30, 0.1), 0px 1px 0px 0px rgba(61, 6, 17, 0.1), inset 1px 0px 1px 0px rgba(235, 62, 97, 0.1), inset 0px 1px 1px 0px rgba(235, 62, 97, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(107, 11, 30, 0.1), 0px 1px 0px 0px rgba(61, 6, 17, 0.1), inset 1px 0px 1px 0px rgba(235, 62, 97, 0.1), inset 0px 1px 1px 0px rgba(235, 62, 97, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(107, 11, 30, 0.1), 0px 1px 0px 0px rgba(61, 6, 17, 0.1), inset 1px 0px 1px 0px rgba(235, 62, 97, 0.1), inset 0px 1px 1px 0px rgba(235, 62, 97, 0.3);
+}
+/* line 5, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color-2~="button"]:visited {
+  color: white;
+}
+/* line 22, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color-2~="button"]:hover {
+  color: white;
+  border-color: #7e0d24 #6b0b1e #590919 #6b0b1e;
+  background-color: #b51334;
+  background-image: -moz-linear-gradient(#b51334, #a2112e);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b51334), to(#a2112e));
+  background-image: -webkit-linear-gradient(#b51334, #a2112e);
+  background-image: -o-linear-gradient(#b51334, #a2112e);
+  background-image: linear-gradient(#b51334, #a2112e);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(121, 13, 34, 0.1), 0px 1px 0px 0px rgba(75, 8, 21, 0.1), inset 1px 0px 1px 0px rgba(232, 29, 70, 0.1), inset 0px 1px 1px 0px rgba(232, 29, 70, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(121, 13, 34, 0.1), 0px 1px 0px 0px rgba(75, 8, 21, 0.1), inset 1px 0px 1px 0px rgba(232, 29, 70, 0.1), inset 0px 1px 1px 0px rgba(232, 29, 70, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(121, 13, 34, 0.1), 0px 1px 0px 0px rgba(75, 8, 21, 0.1), inset 1px 0px 1px 0px rgba(232, 29, 70, 0.1), inset 0px 1px 1px 0px rgba(232, 29, 70, 0.3);
+}
+/* line 37, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color-2~="button"]:active {
+  border-color: #790d22 #620a1c #4b0815 #620a1c;
+  color: white;
+  background-color: #b51334;
+  background-image: -moz-linear-gradient(#b51334, #870e26);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b51334), to(#870e26));
+  background-image: -webkit-linear-gradient(#b51334, #870e26);
+  background-image: -o-linear-gradient(#b51334, #870e26);
+  background-image: linear-gradient(#b51334, #870e26);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(167, 17, 48, 0.1), 0px 1px 0px 0px rgba(218, 23, 62, 0.1), inset 1px 0px 1px 0px rgba(121, 13, 34, 0.1), inset 0px 1px 1px 0px rgba(139, 15, 40, 0.1);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(167, 17, 48, 0.1), 0px 1px 0px 0px rgba(218, 23, 62, 0.1), inset 1px 0px 1px 0px rgba(121, 13, 34, 0.1), inset 0px 1px 1px 0px rgba(139, 15, 40, 0.1);
+  box-shadow: 1px 0px 0px 0px rgba(167, 17, 48, 0.1), 0px 1px 0px 0px rgba(218, 23, 62, 0.1), inset 1px 0px 1px 0px rgba(121, 13, 34, 0.1), inset 0px 1px 1px 0px rgba(139, 15, 40, 0.1);
+}
+/* line 52, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color-2~="button"]:focus, [data-team-color-2~="button"].focus {
+  color: white;
+  -webkit-box-shadow: 0 0 3px #a71130, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  -moz-box-shadow: 0 0 3px #a71130, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  box-shadow: 0 0 3px #a71130, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+/* line 62, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+[data-team-color-2~="button"][disabled=disabled], [data-team-color-2~="button"]:disabled {
+  filter: alpha(opactiy=30);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+}
+
+/* line 43, ../../../../app/assets/stylesheets/theme/partial/theme_global.css.scss */
+[data-team-color-2~="link"] {
+  color: #900f29;
+}
+/* line 230, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color-2~="link"]:hover {
+  color: #be1436;
+}
+/* line 233, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color-2~="link"]:active {
+  color: #620a1c;
+}
+/* line 236, ../../../../app/assets/stylesheets/_mixin.css.scss */
+[data-team-color-2~="link"]:visited {
+  color: #790d22;
+}
+
+/* line 15, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.navigation-logo {
+  background-image: url(/assets/identity/02touch/02_white_100.png);
+  background-size: auto 75%;
+}
+
+/* line 19, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+button, .button {
+  border-color: #11183c #080b1c black #080b1c;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  background-color: #1d2968;
+  background-image: -moz-linear-gradient(#1d2968, #1A245C);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1d2968), to(#1A245C));
+  background-image: -webkit-linear-gradient(#1d2968, #1A245C);
+  background-image: -o-linear-gradient(#1d2968, #1A245C);
+  background-image: linear-gradient(#1d2968, #1A245C);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(17, 24, 60, 0.1), 0px 1px 0px 0px rgba(6, 8, 20, 0.1), inset 1px 0px 1px 0px rgba(57, 78, 199, 0.1), inset 0px 1px 1px 0px rgba(57, 78, 199, 0.3);
+}
+/* line 5, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+button:visited, .button:visited {
+  color: white;
+}
+/* line 22, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+button:hover, .button:hover {
+  color: white;
+  border-color: #161e4c #11183c #0d112c #11183c;
+  background-color: #23307c;
+  background-image: -moz-linear-gradient(#23307c, #1e2a6c);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#23307c), to(#1e2a6c));
+  background-image: -webkit-linear-gradient(#23307c, #1e2a6c);
+  background-image: -o-linear-gradient(#23307c, #1e2a6c);
+  background-image: linear-gradient(#23307c, #1e2a6c);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+  box-shadow: 1px 0px 0px 0px rgba(20, 28, 72, 0.1), 0px 1px 0px 0px rgba(9, 13, 32, 0.1), inset 1px 0px 1px 0px rgba(48, 67, 172, 0.1), inset 0px 1px 1px 0px rgba(48, 67, 172, 0.3);
+}
+/* line 37, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+button:active, .button:active {
+  border-color: #141c48 #0f1434 #090d20 #0f1434;
+  color: white;
+  background-color: #23307c;
+  background-image: -moz-linear-gradient(#23307c, #182154);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#23307c), to(#182154));
+  background-image: -webkit-linear-gradient(#23307c, #182154);
+  background-image: -o-linear-gradient(#23307c, #182154);
+  background-image: linear-gradient(#23307c, #182154);
+  -webkit-box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+  -moz-box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+  box-shadow: 1px 0px 0px 0px rgba(32, 44, 112, 0.1), 0px 1px 0px 0px rgba(44, 61, 156, 0.1), inset 1px 0px 1px 0px rgba(20, 28, 72, 0.1), inset 0px 1px 1px 0px rgba(25, 34, 88, 0.1);
+}
+/* line 52, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+button:focus, button.focus, .button:focus, .button.focus {
+  color: white;
+  -webkit-box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  -moz-box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  box-shadow: 0 0 3px #202c70, 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+/* line 62, ../../../../app/assets/stylesheets/ui/button_mixin.css.scss */
+button[disabled=disabled], button:disabled, .button[disabled=disabled], .button:disabled {
+  filter: alpha(opactiy=30);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+}
+
+/* line 23, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.sport-cover {
+  background-image: url(/assets/sport_image/cover/tenant/o2touch/cover_team.jpg) !important;
+}
+/* line 25, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.sport-cover.club-cover {
+  background-image: url(/assets/sport_image/cover/tenant/o2touch/cover_club.jpg) !important;
+}
+/* line 26, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.sport-cover.division-cover {
+  background-image: url(/assets/sport_image/cover/tenant/o2touch/cover_division.jpg) !important;
+}
+/* line 27, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.sport-cover.league-cover {
+  background-image: url(/assets/sport_image/cover/tenant/o2touch/cover_league.jpg) !important;
+}
+
+/* line 30, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.sport-icon {
+  background-image: url(/assets/sport_image/icon/tenant/o2touch.png) !important;
+}
+
+/* line 34, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.popup-branding-container {
+  background-image: url(/assets/identity/02touch/02_white_200.png);
+}
+
+/* line 38, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.powered-by-mitoo {
+  display: inline-block;
+}
+
+/* Public page style */
+/* line 47, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .fixture-faft-test .fixture-information h5 a {
+  color: #1A245C;
+}
+/* line 50, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .date-block {
+  background: #1A245C;
+  color: #fefefe;
+}
+/* line 58, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .nav-group ul li a.current-team {
+  color: #1A245C;
+}
+/* line 63, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .stat h5 {
+  color: #1A245C;
+}
+/* line 69, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .fixture-faft-single-test .fixture-team-information h1.current-team {
+  color: #1A245C;
+}
+/* line 74, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page table tbody tr.current_team td {
+  color: #1A245C;
+}
+/* line 79, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation {
+  background: #1A245C;
+}
+/* line 82, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li.season-information, .unclaimed-faft-team-page .content-navigation ul li a {
+  color: #fefefe;
+}
+/* line 87, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li a.selected {
+  background: #141c48;
+}
+/* line 89, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li a.selected:after {
+  border-top-color: #141c48;
+}
+/* line 92, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li a.selected:hover {
+  background: #141c48;
+}
+/* line 94, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li a.selected:hover:after {
+  border-top-color: #141c48;
+}
+/* line 100, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .content-navigation ul li a:hover {
+  background: #141c48;
+}
+/* line 106, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.unclaimed-faft-team-page .nav-group .team-search-form {
+  background: #1A245C;
+}
+
+/* Private page */
+/* line 114, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page {
+  /* Calendar, button & Progress bar */
+}
+/* line 115, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .header {
+  background-color: #1A245C;
+  border-bottom: 5px #900f29 solid;
+}
+/* line 120, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .bf-background {
+  background-color: #1A245C;
+}
+/* line 125, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .gldp-flatwhite .today {
+  background: #3043ac;
+  border: none;
+}
+/* line 130, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .gldp-flatwhite .selected {
+  background: #1A245C;
+  border-top: none;
+  border: none;
+}
+/* line 136, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .event-type-game .date-block {
+  background: #1A245C !important;
+}
+/* line 141, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .event-type-game .event-title {
+  color: #1A245C !important;
+}
+/* line 146, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page .player-list-item .star.registered {
+  color: #1A245C !important;
+}
+
+/* Private public page style */
+/* line 154, ../../../../app/assets/stylesheets/dynamic/teams/249733_20160128132730.css.scss */
+.team-page-private .card-header {
+  background: #1A245C;
+  border-bottom: 3px solid #900f29;
+}

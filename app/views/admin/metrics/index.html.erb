@@ -1,0 +1,117 @@
+<div class="page-title">	
+	<h3>Overview</h3>
+</div>
+
+<div id="container">
+	<div class="row spacing-bottom 2col">	
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">	
+			<div title="Number of New Users who signed-up (excludes invited users). Analyze by Referrer, Demographics etc." class="tiles blue added-margin">
+			  <div class="tiles-body">		
+				<div class="tiles-title">
+					NEW USERS THIS WEEK
+				</div>	
+				<div class="heading">
+				<span class="animate-number" data-value=" <%=@new_users_week.size%>" data-animation-duration="1200"> <%=@new_users_week.size%></span>
+										
+				</div>				
+				<div class="description"><i class="<%= @new_users_week_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @new_users_week_change%>% <span class="blend">than last week</span></span></div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div title="Number of New Teams added." class="tiles green added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					NEW TEAMS THIS WEEK
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@new_teams_week.size%>" data-animation-duration="1000"><%=@new_teams_week.size%></span>	
+				</div>			
+				<div class="description"><i class="<%= @new_teams_week_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @new_teams_week_change%>% <span class="blend">than last week</span></span></div>	
+			 </div>
+			</div>
+		</div>			
+	</div>
+
+	<div class="row spacing-bottom 2col">
+
+		<div class="col-md-12 spacing-bottom-sm">
+			<h3>User Retention</h3>
+		</div>
+
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">	
+			<div title="Daily count of Unique Users who login at least once during a given day. Analyze by gender, country of origin etc." class="tiles blue added-margin">
+			  <div class="tiles-body">		
+				<div class="tiles-title">
+					DAILY ACTIVE USERS
+				</div>	
+				<div class="heading">
+				<span class="animate-number" data-value="<%=@active_users_dau.size%>" data-animation-duration="1200">0</span>
+										
+				</div>
+				<div class="description"><i class="<%= @active_users_dau_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @active_users_dau_change%>% <span class="blend">than yesterday</span></span></div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div title="Weekly count of Unique Users who login at least once during a given week." class="tiles blue added-margin">
+			 <div class="tiles-body">		
+				<div class="tiles-title">
+					WEEKLY ACTIVE USERS
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@active_users_week.size%>" data-animation-duration="1000">0</span>	
+				</div>
+				<div class="description"><i class="<%= @active_users_week_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @active_users_week_change%>% <span class="blend">than last week</span></span></div>	
+			 </div>
+			</div>
+		</div>	
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div title="Monthly count of Unique Users who login at least once during a given month." class="tiles blue added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					MONTHLY ACTIVE USERS
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@active_users_month.size%>" data-animation-duration="1000">0</span>	
+				</div>
+				<div class="description"><i class="<%= @active_users_month_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @active_users_month_change%>% <span class="blend">than last month</span></span></div>	
+			 </div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div title="DAU Count as a % of MAU counts. A number beyond 25% indicates a high level of daily engagement." class="tiles red added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					ENGAGEMENT
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%='%.1f' % @engagement %>" data-animation-duration="1000">0</span>%
+				</div>
+			 </div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+
+<div class="columns eleven centered"> 
+  <div class="columns three no-gutter">
+  	<h2>User Reach</h2>
+
+	<ul class="kpis clearfix">
+      <li title="Invites Sent per every 100 DAU. More Invites per active user needed to enhance game virality.">
+        <%='%.2f' % @invited_users_per_dau%>
+        <span class="change"><%='%.1f' % @invited_users_per_dau_change%>%</span>
+        <span class="desc">Invited Users</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+$(".tiles").tipsy()
+</script>

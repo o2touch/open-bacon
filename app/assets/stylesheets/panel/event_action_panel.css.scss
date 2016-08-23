@@ -1,0 +1,75 @@
+.panel.action-panel {
+  hr {
+    margin: 6px -12px;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+  .cancel-event {
+    color: $bluefields-red;
+    &:hover {
+      color: ligthen($bluefields-red);
+    }
+  }
+  .enable-event {
+    color: $bluefields-green;
+    &:hover {
+      color: ligthen($bluefields-green);
+    }
+  }
+}
+
+.panel.re-schedule {
+  #edit-event-date-calendar {
+    margin-bottom: $bluefields-margin;
+  }
+  select {
+    @include calc(width, "33% - 5px");
+    margin-left: 6px;
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+  #event-time-ampm {
+    margin-bottom: $bluefields-margin;
+  }
+  .toggle {
+    width: 100%;
+    margin: 0;
+    margin-bottom: $bluefields-margin;
+    .slide-button {
+      background: #4fade3;
+    }
+    span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+.panel.location-edit {
+  .location-map-container {
+    margin-bottom: $bluefields-margin;
+  }
+}
+
+.panel.location-edit, .panel.re-schedule, .panel.informations-edit {
+  position: absolute;
+  width: 100%;
+  right: 102%;
+  top: 0;
+  min-width: 310px;
+  z-index: 500;
+  @include arrow($side: "right", $align: "top", $color: #fcfcfc, $size: 9px, $borderColor: rgba(212, 212, 212, 0.66), $borderSize: 1px);
+  @include respond-to(handhelds) {
+    left: 0;
+    top: 45px;
+    @include arrow($side: "top", $align: "right", $color: #fcfcfc, $size: 9px, $borderColor: rgba(212, 212, 212, 0.66), $borderSize: 1px);
+    &:after, &:before {
+      left: auto;
+    }
+  }
+
+  .panel-content {
+    padding: 0;
+  }
+}

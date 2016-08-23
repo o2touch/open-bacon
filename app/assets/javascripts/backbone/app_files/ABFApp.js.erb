@@ -1,0 +1,163 @@
+var BFApp = new Backbone.Marionette.Application();
+
+// Namespacing
+_.extend(BFApp, {
+  Controllers: {},
+  Models: {},
+  Views: {},
+  Routers: {}
+});
+
+/* Marionette Region Setup */
+BFApp.addRegions({
+  navi: '#r-navigation',
+  godbar: "#r-godbar",
+  content: "#r-module",
+  footer: '#r-footer',
+  popupRegion: "#r-popup",
+  activityIndicator: "#r-activity-indicator"
+});
+
+
+/* BFApp Setup */
+BFApp.addInitializer(function() {
+
+  // this makes cookies work globally instead of just on the page they were set
+  $.cookie.defaults = {
+    path: "/"
+  };
+
+  // Keep track of who you can perform actions on (you and your kids)
+  //console.log("BFApp.uids = %o", BFApp.uids);
+  BFApp.uids = [];
+  if (typeof(ActiveApp.CurrentUser.get("id")) != "undefined") {
+    BFApp.uids.push(ActiveApp.CurrentUser.get("id"));
+    _.each(ActiveApp.CurrentUser.get("child_ids"), function(childId) {
+      BFApp.uids.push(childId);
+    });
+  }
+
+  // Setup Pusher
+  if (typeof Pusher != "undefined") {
+    <% if defined? (PusherFake) %>
+      BFApp.Pusher = <%= PusherFake.javascript %>;
+    <% else %>
+      BFApp.Pusher = new Pusher('<%=Pusher.key%>', {
+        encrypted: true,
+        disableStats: true
+      });
+    <% end %>
+  }
+
+  /* Activity Indicator */
+  jQuery.ajaxSetup({
+    beforeSend: BFApp.showLoader,
+    complete: BFApp.hideLoader
+  });
+
+  /* Demo Mode Setup (0 = off, 1 = on, 2 = final stage) */
+  BFApp.demoMode = 0;
+
+  // Number of teammates required for "activation" - used on team and event pages
+  BFApp.numTeammatesForActivation = 4;
+  BFApp.numEventsForActivation = 4;
+
+  // Main App Controller
+  BFApp.rootController = new BFApp.Controllers.App();
+  BFApp.rootController.startPopupModule();
+  BFApp.rootController.start();
+
+});
+
+
+// after the main app (and all children modules) have finished initializing
+// put things here if they require the child modules (e.g. godbar module) to be ready
+// i.e. all godbar notices etc
+BFApp.on("initialize:after", function() {
+  // Registration prompt
+  var needsPassword = ActiveApp.CurrentUser.needsPassword();
+  if (ActiveApp.CurrentUser.isInLimbo() || needsPassword) {
+    if (!needsPassword && $.cookie('closedRegisterPopup')) {
+      // show in godbar
+      BFApp.rootController.showSignupReminder();
+    } else {
+      // trigger signup popup
+      BFApp.vent.trigger("signup-popup:show", {
+        allowClose: !needsPassword
+      });
+    }
+    // when they close the register popup, we need to re-show the godbar prompt
+    BFApp.vent.on("show:signup:reminder", BFApp.rootController.showSignupReminder);
+  }
+
+  // Keep showing the Bluefields-Mitoo popup until they close it
+  /*if (!$.cookie("closedBluefieldsMitooNotification")) {
+    BFApp.showBluefieldsMitooNotification();
+  }*/
+
+  if (ActiveApp.CurrentUser.isLoggedIn()) {
+    // If on a team page, and URL has #notifications then show notifications settings popup
+    if (ActiveApp.ProfileTeam && window.location.hash == "#notifications") {
+      BFApp.vent.trigger("show:notification:settings", ActiveApp.ProfileTeam.get("id"));
+    }
+    // If on a user page, and URL has #team-roles then show team roles popup
+    if (ActiveApp.ProfileUser && ActiveApp.ProfileUser.isCurrentUser() && window.location.hash == "#team-roles") {
+      BFApp.vent.trigger("show:team:roles");
+    }
+  }
+});
+
+
+/* App function */
+_.extend(BFApp, {
+
+  // provide a jquery object for the container, and the template and data to render into it
+  renderTemplate: function(container, template, data) {
+    var html = this.renderHtml("backbone/templates/" + template, data);
+    container.append(html);
+    return html;
+  },
+
+  // this is used by all the other render functions
+  renderHtml: function(template, data) {
+    if (_.isFunction(template)) template = template();
+    if (!JST[template]) throw "Template '" + template + "' not found!";
+    return JST[template](data);
+  },
+
+  renderProfilePicture: function(data) {
+    if (!data.src) {
+      data.src = data.srcDefault;
+    }
+    return this.renderHtml("backbone/templates/partials/profile_picture", data);
+  },
+
+  /* Loader  */
+  showLoader: function() {
+    BFApp.vent.trigger("activity:started");
+  },
+
+  hideLoader: function() {
+    BFApp.vent.trigger("activity:ended");
+  },
+
+  showBluefieldsMitooNotification: function() {
+    var that = this;
+    // only do this shit on load, so animation is smooth
+    $(window).on('load', function() {
+      var view = new BFApp.Views.BluefieldsMitooNotification();
+      $("body").append(view.render().$el);
+      that.listenTo(view, "close", function() {
+        view.remove();
+        $.cookie("closedBluefieldsMitooNotification", true);
+      });
+    });
+  }
+
+});
+
+/* Marionette Template Setup */
+Marionette.Renderer.render = BFApp.renderHtml;
+
+// dont moan about missing relations e.g. when BE doesn't send all fields
+Backbone.Relational.showWarnings = false;

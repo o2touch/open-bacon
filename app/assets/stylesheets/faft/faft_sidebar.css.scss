@@ -1,0 +1,106 @@
+.download-the-app-panel {
+  margin-top: $bluefields-margin;
+  border-radius: $bluefields-radius;
+  overflow: hidden;
+  .download-content {
+    padding: 12px 9px;
+    position: relative;
+    background: #f8f8f8;
+  }
+  h4 {
+    text-transform: uppercase;
+    font-weight: 500;
+    @include font-size(1, false);
+    color: #555;
+    margin-bottom: $bluefields-margin / 4;
+  }
+  p {
+    @include font-size(0.8);
+    color: #666;
+  }
+  button {
+    small {
+      @include font-size(0.7);
+    }
+  }
+  ul {
+    margin-top: $bluefields-margin;
+    margin-bottom: $bluefields-margin;
+    li {
+      margin-top: $bluefields-margin / 2;
+      margin-bottom: $bluefields-margin / 2;
+      color: #555;
+      i {
+        display: block;
+        @include font-size(1, false);
+        color: #444;
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
+
+.find-your-team-link {
+  color: #777;
+  @include font-size(0.8);
+  margin-top: 12px;
+}
+
+.follow-team-form {
+  margin-top: $bluefields-margin;
+}
+
+.club-create-signup {
+  padding: $bluefields-margin;
+  border: 1px #ddd solid;
+  margin-top: $bluefields-margin;
+  border-radius: 3px;
+  h1 {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #555;
+    @include font-size(1.2, false);
+    text-align: center;
+  }
+  .club-create-hidden {
+    p {
+      margin-bottom: 9px;
+    }
+  }
+  p {
+    color: #777;
+    @include font-size(0.8);
+    text-align: center;
+  }
+  .club-form {
+    input {
+      margin-bottom: 6px;
+    }
+  }
+  small {
+    margin-top: $bluefields-margin;
+    text-align: center;
+    @include font-size(0.7);
+    color: #999;
+    display: block;
+  }
+}
+
+
+
+.o2-touch-team-marketing-panel {
+  text-align: center;
+  h3 {
+    color: #666;
+    text-transform: uppercase;
+    margin-top: 24px;
+    &:first-child {
+      margin-top: 12px;
+    }
+  }
+
+  p {
+    color: #888;
+
+  }
+}

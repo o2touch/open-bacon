@@ -1,0 +1,3 @@
+<% @events.each do |event| %>
+  <%= render :partial => "user_mailer/event_details", :locals => {:event => event, :time_zone_mismatch => false} %>
+<% end %>

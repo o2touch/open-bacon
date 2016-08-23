@@ -1,0 +1,48 @@
+<div class="columns twelve">
+    <h1>Leagues</h1>
+</div>
+
+<div class="columns twelve">
+    <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% end %>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Divisions</th>
+        <th>Sport</th>
+        <th>Created</th>
+<!--         <th>Region</th>
+        <th>Colour 1</th>
+        <th>Colour 2</th> -->
+        <th>FAFT ID</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <!--<th></th>-->
+      </tr>
+
+    <% @leagues.each do |league| %>
+      <tr>
+        <td><%= link_to league.title, admin_league_path(league) %></td>
+        <td><%= league.divisions.size %></td>
+        <td><%= league.sport %></td>
+        <td><%= league.created_at %></td>
+        <!-- <td><%= league.region %></td>
+        <td><div style="display:inline-block;width:15px;height:15px;background-color:#<%= league.colour1 %>"></div><%= league.colour1 %></td>
+        <td><div style="display:inline-block;width:15px;height:15px;background-color:#<%= league.colour2 %>"></div><%= league.colour2 %></td> -->
+        <td><% if league.source_id %><%= link_to league.source_id, "https://www.google.co.uk/search?q=site%3Afull-time.thefa.com+#{league.title.gsub(" ","+")}"%><% end %></td>
+        <td><%= link_to 'Edit', edit_admin_league_path(league) %></td>
+        <td><%= link_to 'Add Organiser', admin_league_add_organiser_form_path(league) %></td>
+        <td><%= link_to 'Import Data', admin_import_path(league.id) %></td>
+        <!--<td><%= link_to 'Destroy', admin_league_path(league), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+    </table>
+
+    <br />
+
+    <%= link_to 'Add a new League', new_admin_league_path, :class => "button small" %>
+</div>

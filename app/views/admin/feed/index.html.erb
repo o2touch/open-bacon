@@ -1,0 +1,44 @@
+<% @user.activities.each do |activity| %>
+	[<%= activity[:when].to_formatted_s(:short) %>]
+	<%= @user.name %>  
+	<% if activity[:type] == "play"%>
+		<% if activity[:response] == 1 %>
+		confirmed playing 
+		<% else %>
+		replied unavailable to 
+		<%end%>
+		"<%= activity[:title] %>" 
+		on <%= activity[:time].to_date %>.<br />
+	
+	<% elsif activity[:type] == "event" %>
+		created a event "<%= activity[:title] %>" on <%= activity[:time].to_date%><br />
+	
+	<% elsif activity[:type] == "message" %>
+		posted a message "<%= truncate(activity[:text], :length => 14) %>" on event "<%= activity[:title]%>"<br />
+	
+	<% end %>
+
+<% end %>
+<br /><br />
+
+<% @ddd.activities.each do |activity| %>
+	[<%= activity[:when].to_formatted_s(:short) %>]
+	<%= @ddd.name %>  
+	<% if activity[:type] == "play"%>
+		<% if activity[:response] == 1 %>
+		confirmed playing 
+		<% else %>
+		replied unavailable to 
+		<%end%>
+		"<%= activity[:title] %>" 
+		on <%= activity[:time].to_date %>.<br />
+	
+	<% elsif activity[:type] == "event" %>
+		created a event "<%= activity[:title] %>" on <%= activity[:time].to_date%><br />
+	
+	<% elsif activity[:type] == "message" %>
+		posted a message "<%= truncate(activity[:text], :length => 14) %>" on event "<%= activity[:title]%>"<br />
+	
+	<% end %>
+
+<% end %>

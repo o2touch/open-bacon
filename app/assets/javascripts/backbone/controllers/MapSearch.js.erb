@@ -1,0 +1,170 @@
+BFApp.Controllers.MapSearch = Marionette.Controller.extend({
+
+  setup: function() {
+    var that = this;
+
+    this.isSetup = false;
+    this.mapsApiReady = false;
+
+    // context defaults to event
+    this.context = (getParameterByName("context") == "league") ? "league" : "event";
+
+    // the location model that's shared between the map and the sidebar
+    this.query = getParameterByName("q");
+    this.location = new App.Modelss.Location({
+      address: this.query
+    });
+
+    // declare global showMap function, which will be called when gmaps api is loaded later
+    // this should be declared early so it's ready 
+    window.showMap = function() {
+      that.mapsApiReady = true;
+      if (that.isSetup) {
+        that.showMap();
+      }
+    };
+
+    // setup the sidebar first, as when we setup the map view it will immediately geocode any address passed in the URL args and then trigger events on the sidebar, so it needs to be ready
+    this.setupSidebar();
+
+    // note: this will geocode any query string, and then trigger a search() on the searchPanel
+    this.setupMap();
+
+    // at this point all our views are setup
+    this.isSetup = true;
+    if (this.mapsApiReady) {
+      this.showMap();
+    }
+  },
+
+  showMap: function() {
+    var that = this;
+
+    BFApp.map.show(this.mapView);
+    this.mapView.showMap();
+
+    // if page not loaded with search query, and browser can handle geolocation
+    if (!this.query && "geolocation" in navigator) {
+      // wait for the map to display else the popup doesn't make sense
+      // NOTE: probably we should be using some map ready callback here
+      setTimeout(function() {
+        if (window.confirm("Use your current location?")) {
+          that.getUsersCurrentLocation();
+        }
+      }, 800);
+    }
+  },
+
+  getUsersCurrentLocation: function() {
+    var that = this;
+
+    // update the form
+    this.searchPanel.ui.searchInput.val("Your location");
+    disableButton(this.searchPanel.ui.submitButton);
+
+    // try and get the user's location automatically
+    navigator.geolocation.getCurrentPosition(function(position) {
+      //console.log(position);
+      that.location.set({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      });
+      that.mapView.showLocation();
+    }, function(error) {
+      that.searchPanel.ui.searchInput.val("");
+      errorHandler({
+        message: "Current location unavailable",
+        button: that.searchPanel.ui.submitButton
+      });
+    }, {
+      // give up after 5s (some old devices seem to just go forever)
+      timeout: 5000
+    });
+  },
+
+  setupSidebar: function() {
+    var that = this;
+
+    this.searchPanel = new BFApp.Views.SearchPanelLayout({
+      context: this.context,
+      location: this.location
+    });
+    BFApp.searchPanel.show(this.searchPanel);
+
+    // change icons on hover
+    this.searchPanel.$el.on("mouseenter", ".event-location-group", function(e) {
+      that.mapView.hoverPin($(this).attr("data-pin"));
+    });
+    this.searchPanel.$el.on("mouseleave", ".event-location-group", function(e) {
+      that.mapView.unhoverPin($(this).attr("data-pin"));
+    });
+    this.listenTo(this.searchPanel, "new:locations", this.updateMapPins);
+    this.listenTo(this.searchPanel, "require:geocode", this.performGeocode);
+  },
+
+  setupMap: function() {
+    var that = this;
+
+    // LocationEditMap needs a wrapper object around the location as in some situations (e.g. on the team schedule tab) the location object can be swapped out for another one, so we need a reference to it instead of just the object itself
+    var eventObj = new App.Modelss.Event({
+      location: this.location
+    });
+    this.mapView = new BFApp.Views.LocationEditMap({
+      model: eventObj,
+      isDraggable: true,
+      tenant: "o2_touch",
+      inputId: "search-input",
+      customHeight: true,
+      // england
+      defaultLocation: {
+        lat: 52.9225301,
+        lng: -1.4746186,
+        zoom: 7,
+        colour: true
+      },
+      mapWithPins: true,
+      context: this.context
+    });
+
+    // when gmaps has geocoded an address (and got the latlng),
+    // we're ready to do the algolia search
+    this.listenTo(this.mapView, "geocoded:location", function(success) {
+      if (success) {
+        that.searchPanel.performSearch();
+      } else {
+        that.searchPanel.geocodeFailed();
+      }
+    });
+    this.listenTo(this.mapView, "pin:hover", function(number) {
+      this.searchPanel.highlightLocation(number);
+    });
+    this.listenTo(this.mapView, "pin:unhover", function(number) {
+      this.searchPanel.unhighlightLocation(number);
+    });
+    this.listenTo(this.mapView, "drag:start", function() {
+      this.searchPanel.removeResults();
+    });
+  },
+
+  updateMapPins: function(locations) {
+    var that = this;
+
+    if (locations.length) {
+      this.mapView.clearPins();
+      this.mapView.resetBounds();
+      _.each(locations, function(location, i) {
+        that.mapView.showPin(location, i + 1);
+      });
+      this.mapView.updateBounds();
+    } else {
+      this.mapView.showDefault();
+    }
+  },
+
+  performGeocode: function() {
+    this.mapView.performGeocode({
+      address: this.searchPanel.ui.searchInput.val()
+    }, true);
+  }
+
+});

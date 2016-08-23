@@ -1,0 +1,349 @@
+#r-navigation {
+  height: $navigation-height;
+  background: darken(#333333, 5%);
+  // background-image: image-url("identity/logo/logo_white_100.png");
+  // background-position: center;
+  // background-repeat: no-repeat;
+}
+
+#main-navigation {
+  background: darken(#333333, 5%);
+  position: fixed;
+  width: 100%;
+  z-index: 7000;
+  top: 0;
+}
+
+// Dropdown Logic
+.navigation-dropdown {
+  .navigation-dropdown-list {
+    display: none;
+  }
+  &:hover {
+    .navigation-dropdown-list {
+      display: block;
+    }
+  }
+}
+
+// Arraoy placement
+.navigation-dropdown {
+  position: relative;
+  height: $navigation-height;
+  line-height: $navigation-height;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom:0;
+  .navigation-dropdown-title:before {
+    position: absolute;
+    right: $bluefields-margin;
+    color: #eee;
+    @include opacity(0.6);
+    @include transform(rotate(0deg));
+  }
+  &:hover .navigation-dropdown-title:before {
+    @include transform(rotate(180deg));
+  }
+  .navigation-dropdown-title {
+    position: relative;
+    padding-right: 36px;
+    width: 100%;
+    vertical-align: top;
+    @include respond-to(handhelds) {
+      padding-right: 12px;
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
+.navigation-dropdown:hover .navigation-dropdown-title {
+  background: #444444 !important;
+}
+
+.navigation-dropdown-list {
+  background: #444;
+  width: 300px;
+  border-radius: 3px;
+  position: absolute;
+  top: 100%;
+  max-height: 310px;
+  overflow: auto;
+  @include scrollbar;
+  li {
+    position: relative;
+
+    &.list-header {
+      padding: 5px 10px;
+      /* background-color: #111; */
+      height: 30px;
+      line-height: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: rgba(255,255,255,0.3);
+    }
+  }
+  a {
+    display: block;
+    padding: 9px 12px;
+    color: #eeeeee !important;
+    @include font-size(0.8, false);
+    overflow: hidden;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+    .navigation-item-title {
+      max-width: 80%;
+      vertical-align: middle;
+      display: inline-block;
+      @include calc(max-width, "100% - 30px");
+      @include ellipsis;
+    }
+    img + .navigation-item-title {
+      padding-left: $bluefields-margin / 2;
+    }
+    &:hover {
+      background: #555;
+    }
+  }
+}
+
+.navigation-dropdown {
+  &.team, &.league {
+    .navigation-dropdown-list {
+      border-top-left-radius: 0;
+    }
+  }
+  &.user-dropdown {
+    .navigation-dropdown-list {
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+// Center logo
+.navigation-logo {
+  width: 100%;
+  height: $navigation-height;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  background-image: image-url("identity/logo/logo_white_100.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+// Right link
+.nav-link, .navigation-dropdown-title {
+  height: $navigation-height;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 $bluefields-margin;
+  @include ellipsis;
+  @include font-size(0.8, false);
+  line-height: $navigation-height;
+  color: #eeeeee !important;
+  span {
+    margin-left: $bluefields-margin / 2;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.navigation-dropdown.user-dropdown {
+  max-width: 55%;
+  @include respond-to(wide-screens) {
+    max-width: 50%;
+  }
+
+  .navigation-dropdown-list {
+    right: 0;
+  }
+}
+
+
+.navigation-left-icon {
+  @include font-size(0.8, false);
+  @include opacity(0.8);
+}
+
+.navigation-right-icon {
+  width: 35px;
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 0px;
+  line-height: 33px;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  i {
+    @include font-size(0.6, false);
+    @include opacity(0.8);
+  }
+}
+
+
+
+
+.edit-settings {
+    .switch-toggle {
+    margin-bottom: 12px;
+  }
+  .alert-error-save {
+    &:after, &:before {
+      border: none !important;
+    }
+    margin-bottom: 12px;
+  }
+  .bio-text {
+    position: relative;
+    #user-profile-bio {
+      height: 159px;
+      padding-bottom: 30px;
+    }
+    .limit {
+      color: $bluefields-green;
+      position: absolute;
+      bottom: 21px;
+      left: 6px;
+      margin: 0;
+      background: $bluefields-white;
+      padding: 3px;
+      &.error {
+        color: $bluefields-red;
+      }
+    }
+  }
+  .inline-input {
+    .link-cancel {
+      margin-right: 6px;
+      margin-top: 6px;
+      display: inline-block;
+    }
+  }
+  .male-input {
+    margin-bottom: 4px;
+  }
+}
+
+.team-roles-settings {
+  p {
+    margin-bottom: $bluefields-margin;
+  }
+  ul {
+    display: table;
+    width: 100%;
+  }
+  .team-role-row {
+    position: relative;
+    margin-top: 3px;
+    display: table-row;
+    width: 100%;
+    &.legend {
+      color: #666;
+      font-style: italic;
+    }
+    .team-name, .team-role, .team-action {
+      display: table-cell;
+      vertical-align: middle;
+      padding: 3px 0;
+    }
+    .team-role {
+      position: relative;
+      .team-role-selecter {
+        width: 90%;
+        position: absolute;
+        top: 8px;
+        left: 0;
+      }
+    }
+  }
+  .tips {
+    font-size: 0.8 !important;
+    line-height: 0.98 !important;
+    color: #888888 !important;
+    margin: 3px 6px;
+    padding-left: 33px;
+  }
+  .inline-input {
+    margin-top: $bluefields-margin !important;
+    .link-cancel {
+      margin-right: 6px;
+      margin-top: 6px;
+      display: inline-block;
+    }
+  }
+}
+
+.notification-settings {
+  .notification-item {
+    margin-bottom: $bluefields-margin / 2;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #CCC;
+    &.disabled {
+      @include opacity(0.5);
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .notification-informations {
+      width: 70%;
+      @include calc(width, "100% - 70px");
+    }
+    .notification-title {
+      display: block;
+      color: #555;
+      @include font-size(1);
+    }
+    .notification-description {
+      display: block;
+      color: #666;
+      @include font-size(0.9);
+    }
+  }
+  .inline-input {
+    margin-top: $bluefields-margin !important;
+    .link-cancel {
+      margin-right: 6px;
+      margin-top: 6px;
+      display: inline-block;
+    }
+  }
+
+  .no-unfollow-text{
+    color: #999;
+    text-align: center;
+    font-style: italic;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 12px;
+  }
+
+  button[name="unfollow"] {
+    margin-top: 18px;
+  }
+}
+
+
+.powered-by-mitoo {
+  width: 80px;
+  padding: 0 6px;
+  line-height: 15px;
+  padding-top: 6px;
+  display: none;
+  @include opacity(0.6);
+  small {
+    font-size: 10px;
+    display: block;
+  }
+}

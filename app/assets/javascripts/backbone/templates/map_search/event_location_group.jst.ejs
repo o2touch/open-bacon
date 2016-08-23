@@ -1,0 +1,14 @@
+<div id='location-group-<%= locationNumber %>' class='event-location-group' data-pin="<%= locationNumber %>">
+	<div class="group-location-information">
+ 		<img src="<%= markerIcon %>">
+ 		<div class="title">
+      <%= addressTitle %>
+      <% if (distance) { %>
+        (<%= distance %> mile<%= (distance != 1) ? "s" : "" %>)
+      <% } %>
+    </div>
+	</div>
+  
+  <ul class="events"></ul>
+  <div class="more hide">Show more</div>
+</div>

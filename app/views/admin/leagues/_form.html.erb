@@ -1,0 +1,67 @@
+<%= form_for([:admin, @league]) do |f| %>
+  <% if @league.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
+
+      <ul>
+      <% @league.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :slug %><br />
+    <%= f.text_field :slug %>
+  </div>
+  <div class="field">
+    <%= f.label :sport %><br />
+    <%= f.text_field :sport %>
+  </div>
+  <div class="field">
+    <%= f.label :region %><br />
+    <%= f.text_field :region %>
+  </div>
+  <div class="field">
+    <%= f.label :time_zone %><br />
+    <%= f.text_field :time_zone %>
+  <div class="field">
+    <%= f.label :colour1 %><br />
+    <%= f.text_field :colour1 %>
+  </div>
+  <div class="field">
+    <%= f.label :colour2 %><br />
+    <%= f.text_field :colour2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :logo %><br />
+    <%= f.file_field :logo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cover_image %><br />
+    <%= f.file_field :cover_image %>
+  </div>
+  
+  <h2>League Config</h2>
+ <table>
+    <% LeagueConfigKeyEnum.each do |enum| %>
+    <% o = @league.league_config[LeagueConfigKeyEnum.const_get(enum)] %>
+      <tr>
+        <td><%=LeagueConfigKeyEnum.const_get(enum)%></td>
+        <td><%=check_box_tag 'league_config['+LeagueConfigKeyEnum.const_get(enum)+']', 'true', o %>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

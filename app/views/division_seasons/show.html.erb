@@ -1,0 +1,266 @@
+<!-- Theme -->
+<% content_for :head_css do %>
+  <link href="/division/<%= @division.id %>/theme.css" media="all" rel="stylesheet" type="text/css"/>
+<% end %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+
+<!-- Page  -->
+<div id="r-module" class="unclaimed-faft-page unclaimed-faft-division-page">
+
+	<!-- Trigger-->
+	<div class="open-close-onboarding"><i class="bf-icon arrow-bottom"></i> How Mitoo Works</div>
+
+	<!-- Header  -->
+	<header class="team-header sport-cover division-cover" >
+		<div class="row">
+			<div class="seven columns offset-by-two no-gutter">
+				<div class="team-information no-picture">
+					<h1><%= @division.title%></h1>
+
+					<% unless @division.league.nil? %>
+					<h2>
+						<a href="<%= league_path @division.league %>" title="<%= @division.league.title %>">
+							<%= @division.league.title %>
+						</a>
+					</h2>
+					<% end %>
+
+					<% if @tenant.config.team_followable %>
+						<button type="button" class="follow-form large" data-button-type="header">Follow</button>
+					<% end %>
+					
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Body  -->
+	<div class="content row mobile-no-padding">
+		
+		<!-- Navigation  -->
+		<nav class="two columns no-gutter hide-for-small">
+			<div class="nav-group team-in-division">
+				<h3>Teams in division</h3>
+				<ul>
+					<% @division_presenter.teams.each do |team| %>
+						<li><a href="<%= default_team_path team %>" ><%= team.name %></a></li>
+					<% end %>
+				</ul>
+			</div>
+
+			<div class="nav-group">
+				<h3>Search</h3>
+				<form class="team-search-form">
+					<input name="search-team" type="text" placeholder="Search for your team">
+				</form>
+			</div>
+
+			<div class="nav-group share-option">
+				<h3>Share with your team</h3>
+				<% @mail_content = division_email_content(@division) %>
+				<% @twitter_url = division_twitter_url(@division, request.original_url) %>
+				<%= render :partial => "partials/share_options", :locals => @share_option%>
+			</div>
+			
+			<% unless @division.league.nil? %>
+			<div class="nav-group team-in-division">
+				<h3>
+					<a href="<%= league_path @division.league %>" title="<%= @division.league.title %>" >
+						<%= @division.league.title %>
+					</a>
+				</h3>
+				<ul>
+					<% @other_divisions.each do |division| %>
+						<li><a <%= 'class=current-team' unless division.title != @division.title %> href="<%= default_division_path division %>" ><%= division.title %></a></li>
+					<% end %>
+				</ul>
+			</div>
+			<% end %>
+						
+		</nav>
+		
+		<!-- Main content  -->
+		<div role="main" class="seven columns no-gutter">
+			
+			<!-- Content navigation  -->
+			<div class="content-sticky-navigation">
+				<nav class="content-navigation twelve columns no-gutter">
+					<ul>
+					<% if @division_presenter.show_standings? %>
+						<li><a href="#" title="League Table" class="selected">Home</a></li>
+					<% end %>
+					<% if @division_presenter.show_standings? %>
+						<li><a href="#" title="League Table" class="selected"><span class="hide-for-small">League </span>Table</a></li>
+					<% end %>
+						<li><a href="#" title="Upcoming Fixtures" ><span class="hide-for-small">Upcoming </span>Fixtures</a></li>
+						<li><a href="#" title="Recent Results" ><span class="hide-for-small">Recent </span>Results</a></li>
+						
+					</ul>
+				</nav>
+			</div>
+
+			<!-- Content  -->
+			<div class="main-content twelve columns no-gutter">
+				
+
+				
+
+				<!-- Home -->
+				<% if @division_presenter.team_registration_enabled? %>
+				<div class="tab-content clearfix">
+					<section class="team">
+						<h1>Registration</h1>
+						<div class="registration-text text-center">
+							<% if @division_presenter.registration_open? %>
+								<p>Registration is open for this division</p>
+								<button type="button" class="button" name="register-team">Register a team</button>
+							<% else %>
+		            <p>Registration is closed for this division</p>
+							<% end %>
+						</div>
+					</section>
+				</div>
+        <% end %>
+
+
+
+        <!-- Table -->
+				<% if @division.show_standings? %>
+				<div class="tab-content clearfix">
+					<section class="team">
+						<h1>League Table</h1>
+						<% cache(@division_presenter.standings_cache_key) do %>
+							<%= render :partial => "teams/partials/table", :locals => { :division_presenter => @division_presenter } %>
+						<% end %>
+					</section>
+				</div>
+				<% end %>
+
+
+				<!-- Upcoming fixture -->
+				<div class="tab-content clearfix">
+				<% if !@division_formatted_fixtures.empty? %>
+					<section class="team">
+						<h1>Upcoming Fixtures</h1>
+						<%= render :partial => "division_seasons/partials/fixtures_list", :locals => { :formated_fixtures => @division_formatted_fixtures } %>
+					</section>
+				<% else %>
+					<section class="team empty">
+            <h1>Upcoming Fixtures</h1>
+            <i class="bf-icon calendar"></i>
+            <p>There are no upcoming fixtures in <%= @division.title %></p>
+          </section>
+        <% end %>
+        </div>
+
+				
+				<!-- Recent result -->
+				<div class="tab-content clearfix">
+				<% if !@division_formatted_results.empty? %>
+					<section class="team">
+						<h1>Recent Results</h1>
+						<%= render :partial => "division_seasons/partials/fixtures_list", :locals => { :formated_fixtures => @division_formatted_results } %>
+					</section>
+				<% else %>
+					<section class="team empty">
+            <h1>Recent Results</h1>
+            <i class="bf-icon trophy"></i>
+            <p>There are no past results in <%= @division.title %></p>
+          </section>
+        <% end %>
+        </div>
+				
+			</div>
+			
+				<!-- Breadcrumb  -->
+				<ul class="content-breadcrump">
+					<% unless @division.league.nil? %>
+					<li>
+						<a href="<%= league_path @division.league %>" title="<%= @division.league.title %>">
+							<%= @division.league.title %>
+						</a>
+					</li>
+					<% end %>
+					<li class="current-team">
+						<a href="<%= default_division_path @division %>" title="<%= @division.title %>">
+							<%= @division.title %>
+						</a>
+					</li>
+				</ul>
+				
+		</div>
+
+		<!-- Right sidebar -->
+		<div role="complementary" class="three columns" id="right-sidebar"></div>
+		
+	</div>
+</div>
+
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+
+
+
+
+
+<%= javascript_include_tag "app-public" %>
+
+<script>
+var analyticsObject = {
+	'division_season_id': <%=@division.id%>,
+	'page_type': "division"
+};
+
+<% facebook_share = division_facebook_content(@division) %>
+var facebookUIShare = {
+	method: 'feed',
+	display: 'popup',
+	name: '<%= facebook_share[:title] %>',
+	link: '<%= facebook_share[:url] %>',
+	picture: '<%= facebook_share[:pic] %>',
+	description: '<%= facebook_share[:summary] %>'
+};
+
+
+var twitterUrl = "<%= @twitter_url %>";
+
+var ActiveApp = {};
+ActiveApp.profileType = "division";
+
+// Tenant for this event
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+ActiveApp.FaftFollowTeam = {
+	showDownloadLinks: <%= show_app_download_link? %>,
+	itunesUrl: "<%= itunes_url('faft_division').html_safe %>",
+	playStoreUrl: "<%= play_store_url('faft_division').html_safe %>"
+};
+
+	analytics.track("Viewed Unclaimed Division Page",{'division_id':<%=@division.id%>});
+	
+	// Current logged in user and their teams
+	ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+	ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+	ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+	ActiveApp.CurrentUser.hasDownloadedTheApp = <%= @current_user_has_downloaded_app %>;
+	
+	var teams = new App.Collections.Teams(<%= @teams_json %>);
+	
+	ActiveApp.ProfileDivision = new App.Modelss.Division({
+		id: <%= @division.id %>,
+		name: "<%= @division.title %>",
+		teams: teams
+	});
+	
+	window.followFormOptions = {
+		isDivision: true,
+		division: ActiveApp.ProfileDivision
+	};
+	
+	BFApp.on("start", function(){
+	  BFApp.module("FaftProfile").start();
+	});
+	BFApp.start();
+</script>

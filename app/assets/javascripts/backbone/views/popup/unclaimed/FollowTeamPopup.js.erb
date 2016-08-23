@@ -1,0 +1,32 @@
+BFApp.Views.FollowTeamPopup = Marionette.Layout.extend({
+  
+  template: "backbone/templates/popups/follow_team_popup",
+
+  className: "follow-team-form-container clearfix follow-team-form-popup",
+  
+  regions: {
+    formRegion: "#form-region"
+  },
+
+  serializeData: function() {
+    var name = Boolean(this.options.team) ? this.options.team.get("name") : this.options.division.get("name");
+    var data = {
+      name: name,
+      trophyImgPath: "<%= asset_path 'faft/trophy_notification.png' %>"
+    };
+    this.customSerializeData(data);
+    return data;
+  },
+
+  customSerializeData: function(data) {
+    data.title = "Receive Important Updates About "+data.name;
+    data.msg = "Sign-up for personalised team notifications so you never miss a result or fixture update again.";
+    data.closeCopy = "";
+  },
+  
+  onShow: function() {
+    var teamForm = new BFApp.Views.FollowTeamForm(this.options);
+    this.formRegion.show(teamForm);
+  }
+
+});

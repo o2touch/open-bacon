@@ -1,0 +1,143 @@
+<div class="page-title">	
+	<div class="row">
+		<div class="col-md-8 col-sm-6">
+			<h3>Notifications</h3>
+		</div>
+	</div>
+</div>
+<style>
+.legend div {font-size:10px;}
+</style>
+
+<div id="container">
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-10 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Email</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-count"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 spacing-bottom-sm">	
+			<div id="email-legend" class="legend"></div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-10 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Push</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-push"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 spacing-bottom-sm">	
+			<div id="push-legend" class="legend"></div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-10 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>SMS</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-sms"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 spacing-bottom-sm">	
+			<div id="sms-legend" class="legend"></div>
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+$(function() {
+
+	chartData = {
+		email: <%==@email_data.to_json%>,
+		push: <%==@push_data.to_json%>,
+		sms: <%==@sms_data.to_json%>
+	};
+
+	window.email = new Morris.Line({
+	  element: 'chart-count',
+	  data: chartData.email,
+	  xkey: 'day',
+	  ykeys: <%==@email_series.to_json%>,
+	  labels: <%==@email_series.to_json%>,
+	  lineWidth: 2,
+	  pointSize: 4,
+	  smooth: false,
+	  hoverCallback: function (index, options, content) {
+		var row = options.data[index];
+		$("#email-legend").html(content)
+		return ""
+	  }
+	});
+
+	window.push = new Morris.Line({
+	  element: 'chart-push',
+	  data: chartData.push,
+	  xkey: 'day',
+	  ykeys: <%==@push_series.to_json%>,
+	  labels: <%==@push_series.to_json%>,
+	  smooth: false,
+	  lineWidth: 2,
+	  pointSize: 4,
+	  hoverCallback: function (index, options, content) {
+		var row = options.data[index];
+		$("#push-legend").html(content)
+		return ""
+	  }
+	});
+
+	window.sms = new Morris.Line({
+	  element: 'chart-sms',
+	  data: chartData.sms,
+	  xkey: 'day',
+	  ykeys: <%==@sms_series.to_json%>,
+	  labels: <%==@sms_series.to_json%>,
+	  smooth: false,
+	  lineWidth: 2,
+	  pointSize: 4,
+	  hoverCallback: function (index, options, content) {
+		var row = options.data[index];
+		$("#sms-legend").html(content)
+		return ""
+	  }
+	});
+
+});
+
+</script>

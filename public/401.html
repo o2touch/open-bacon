@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>You can't access this page (401)</title>
+	<style>
+	.row{
+		width: 400px;
+		margin: 0 auto;
+		font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+		position: absolute;
+		top: 30%;
+		left: 50%;
+		margin-left: -190px;
+	}
+	
+	.row h3{
+		font-size: 18px;
+		color: #444;
+		margin-bottom: 12px;
+	}
+	
+	.row p{
+		color: #666;
+		margin-top:0;
+	}
+	
+	.row a {
+		color: #4fade3;
+	}
+	</style>
+</head>
+<body>
+<div class="row">
+	<h1>
+		<img src="<%= asset_path 'identity/logo/logo_black_200.png' %>" />
+	</h1>
+	<h3>Sorry, this page is private</h3>
+	<p>You can't access this page because it contains private information. Have you tried to logging in? <a href="/login">Login</a></p>
+	<p><a href="javascript:history.back()">Go Back</a></p>
+</div>
+</body>
+</html>

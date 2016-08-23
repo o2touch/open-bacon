@@ -1,0 +1,12 @@
+
+<h2><%=@user.first_name.titleize %>, the <%= @event.game_type_string %> is back on</h2>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<a class="button small" href="<%= team_url(@event.team) %>">View updated schedule</a>
+
+<%
+email_title = "Follower+Event+Activated"
+extra_params = @user.email + "&EventId=" + @event.id.to_s + "&TeamId=" + @event.team.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="columns six dashboard">
+    <h2>Campaign: <%=@campaign.campaign_id%></h2>
+
+    <p>From: <%=@campaign.from%></p>
+    <p>Subject A: <%=@campaign.subject_a%></p>
+    <p>Template A: <%=@campaign.template_a%></p>
+    <p>Subject B: <%=@campaign.subject_b%></p>
+    <p>Template B: <%=@campaign.template_b%></p>
+    <p>Created at: <%=@campaign.created_at%></p>
+
+    <p>
+      <a href="/admin/email_campaigns/<%=@campaign.id%>/preview/a" target="_blank">Preview A</a>
+     <% if @campaign.ab_test? %>
+      | <a href="/admin/email_campaigns/<%=@campaign.id%>/preview/b" target="_blank">Preview B</a>
+     <% end %>
+   </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns six dashboard">
+    <h2>New Recipients (<%=@campaign.recipient_strategy_class_type%>) - Total: <%=@campaign.recipients.size %></h2>
+    <form method="post" action="/admin/email_campaigns/<%=@campaign.id%>/run">
+      <table>
+        <tr>
+          <th>Exclude</th>
+          <th>Recipient</th>
+        </tr>
+        <% @campaign.new_recipients.each do |r| %>
+        <tr>
+          <td><%= check_box_tag 'exclude[]', r[:email] %></td>
+          <td><%= r[:contact_name] %> &lt;<%= r[:email] %>&gt;</td>
+        </tr>
+        <% end %>
+      </table>
+
+      <div class="columns six">
+        <label>Total to send:</labal>
+        <input type="text" value="50" name="number" maxlength="5" />
+        
+      </div>
+      <div class="columns six">
+        <input type="submit" class="button medium" value="Send"/>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="columns six dashboard">
+    <h2>Sent Log (<%=@campaign.email_campaign_sents.size %>)</h2>
+    <table>
+      <% @campaign.email_campaign_sents.each do |r| %>
+      <tr>
+        <td><%=r.email%></td>
+        <td><%=r.template_id%></td>
+        <td><%=r.created_at%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>

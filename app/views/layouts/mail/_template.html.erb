@@ -1,0 +1,67 @@
+<table width="100%" cellspacing="0">
+
+	<% if @tenant.id == TenantEnum::O2_TOUCH_ID %>
+		<!-- Tenant Header -->
+		<tr>
+	    <td class="text-center" valign="top" align="center" >
+				<table width="100%" cellspacing="24">
+				  <tr>
+				    <td valign="top" align="center" class="text-center">
+			      	<img class="touch-logo" src="<%= asset_path 'identity/02touch/02_blue_200.png' %>"/>
+			      </td>
+		      </tr>
+	      </table>
+	    </td>
+	  </tr>
+  <% end %>
+	
+	<% if !@team.blank? %>
+		<!-- Team Header -->
+	  <tr>
+	    <td valign="top" align="center" >
+	      <%= render :partial => "layouts/mail/team_header" %>
+	    </td>
+	  </tr>
+  <% end %>
+
+  <!-- League header -->
+  <% unless @league.title.blank? || !@no_league_header.nil?%>
+    <tr>
+      <td align="top" align="center">
+				<%= render :partial => "layouts/mail/league_header" %>
+      </td>
+    </tr>
+  <% end %>
+
+  <!-- Content -->
+  <tr>
+    <td id="main" valign="top" align="center" >
+      <%= yield %>
+    </td>
+  </tr>
+
+  <!-- Mobile or invite footer -->
+  <tr>
+    <td valign="top" align="center">
+      <%= render :partial => "layouts/mail/mobile_or_invite_footer" %>
+    </td>
+  </tr>
+  
+  <!-- Footer -->
+  <tr>
+    <td id="footer" valign="top" align="left">
+      <%= render :partial => "layouts/mail/footer" %>
+    </td>
+  </tr>
+
+  <!-- watermark -->
+  <tr>
+    <td valign="top" align="right">
+      <%= render :partial => "layouts/mail/watermark" %>
+    </td>
+  </tr>
+
+</table>
+
+
+

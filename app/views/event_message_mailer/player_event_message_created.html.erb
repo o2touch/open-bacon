@@ -1,0 +1,31 @@
+<% @poster = @message.user %>
+
+<table class="message-title" border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+ 	<tr>
+			<td valign="middle" align="center">
+	 			<img class="circle" src="<%= paperclip_url(@poster.profile.profile_picture_small_url) %>">
+			</td>
+			<td valign="middle" align="center">
+	 			<h2><%= @poster.first_name.titleize %> has posted on <%= @event.title %></h2>
+			</td>
+	</tr>
+</table>
+
+<div class="grey-comment">
+	<p class="comment"><%= @message.text.html_safe %></p>
+	<small class="time-stamp">posted at <%= BFTime.new(@message.updated_at, @user.time_zone).pp_time %><small>
+</div>
+
+<p>To respond to the message, just reply to this email, or click below to head over to the <%=@event.game_type_string(false) %> page</p>
+
+<% if @token %>
+	<a class="button" href="<%= power_token_url(:token => @token, :only_path => false )%>">View on <%= @event.game_type_string(false) %> page</a>
+<% else %>
+  <a class="button" href="<%= event_path(@event, :only_path => false )%>">View on <%= @event.game_type_string(false)%> page</a>
+<% end %>
+
+<%
+email_title = "Message+Posted"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

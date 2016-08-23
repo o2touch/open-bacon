@@ -1,0 +1,123 @@
+<!-- Theme -->
+<% content_for :head_css do %>
+  <link href="/user/<%= @user.id %>/theme.css" media="all" rel="stylesheet" type="text/css"/>
+<% end %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+
+<script>
+// this is already defined in UserProfileApp.js
+var UserProfileApp;
+var ActiveApp = UserProfileApp;
+var App;
+
+// Tenant for this team
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+// The profile you originally loaded (ignoring the hash part of the URL)
+ActiveApp.ProfileUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@profile_user_json) %>, {parse: true});
+
+ActiveApp.ProfileUserChildren = new App.Collections.Users(<%= safe_js_string(@user_children_json) %>, {parse: true});
+
+<% if @user.junior? %>
+	ActiveApp.ProfileUserParents = new App.Collections.Users(<%= safe_js_string(@profile_user_parent_json) %>, {parse: true});
+<% end %>
+
+
+ActiveApp.FaftFollowTeam = {
+	showDownloadLinks: <%= show_app_download_link? %>,
+	itunesUrl: "<%= itunes_url('footer_link').html_safe %>",
+	playStoreUrl: "<%= play_store_url('footer_link').html_safe %>"
+};
+
+
+
+// Profile user's events
+ActiveApp.Events = new App.Collections.Event(<%= safe_js_string(@future_events_json) %>, {parse: true});
+ActiveApp.PastEvents = new App.Collections.PastEvents(<%= safe_js_string(@past_events_json) %>, {parse: true});
+
+// Current logged in user and their teams
+var userJSON = [];
+var teamsJSON = [];
+var leaguesJSON = [];
+<% if !current_user.nil? %>
+	userJSON = <%= safe_js_string(@user_json) %>;
+	teamsJSON = <%= safe_js_string(@teams_json) %>;
+	leaguesJSON = <%= safe_js_string(@leagues_json) %>;
+<% end %>
+ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(userJSON, {parse: true});
+ActiveApp.CurrentUserTeams = new App.Collections.Teams(teamsJSON);
+ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(leaguesJSON);
+
+// Current user permissions
+ActiveApp.Permissions = new Backbone.Model({
+	"canEditProfile": 				<%=can? :update, @user %>,
+	"canViewProfileSchedule": <%=can? :read, @user %>,
+	"canReadDetails": 				<%=can? :read, @user %>,
+	"canViewProfileFeed": 		<%=can? :read, @user %>,
+	"canExportCalendar": 			<%=can? :export_calendar, @user %>,
+	"canCreateO2TouchTeam":    <%=can? :create_o2_touch_team, Team.new%>
+});
+
+// The profile user's activity items
+ActiveApp.ProfileActivityItems = new App.Collections.ActivityItems();
+ActiveApp.ProfileActivityItems.context = "user";
+ActiveApp.ProfileActivityItems.add(<%= safe_js_string(@activity_items_json) %>, {parse: true});
+
+$(function(){
+	
+	BFApp.on("start", function(){
+		//console.log("BFApp::onStart");
+		BFApp.rootController.startUserProfileModule({
+    	userId: <%= @user.id %>,
+    	objUser: ActiveApp.ProfileUser
+  	});
+	});
+
+	// Start BF App
+	var options = {};
+	BFApp.start(options);
+
+	var root;
+	if(ActiveApp.ProfileUser.get("username")) {
+		root = ActiveApp.ProfileUser.get("username");
+	} else {
+		root = "users/" + ActiveApp.ProfileUser.get("id");
+	}
+
+	$(".bftip").tipsy({live: true, gravity: 'w'});
+});
+</script>
+
+<noscript>
+	<div class="row">
+		<div class="columns five" id="widgets">
+			<div class="widget">
+				<h2><%= @user.name%></h2>
+				<p><%= @user.profile.bio %></p>
+				<hr />
+				<h4>Teams</h4>
+				<ul class="players-list">
+				<% @user.teams.each do |team| %>
+				<li><%= link_to team.name, team %></li>
+				<% end %>
+				</ul>
+				<hr />
+				<h4>Friends</h4>
+				<ul class="players-list">
+					<% cache @team_mates_cache_key + "_html" do %>
+						<% [].each do |friend| %>
+							<li><%= link_to friend.name, friend %></li>
+						<% end %>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+		<div class="columns seven" id="content"></div>
+	</div>
+</noscript>

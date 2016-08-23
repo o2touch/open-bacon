@@ -1,0 +1,33 @@
+<section class="team <%= "six columns" unless @location.nil? %>">
+  <h1>Team stats</h1>
+  <div class="team-stats clearfix">
+    <div class="<%= @location.nil? ? "six" : "twelve" %> columns no-gutter">
+      <div class="stat six columns no-gutter mobile-six">
+        <h5><%= @division_presenter.standings_position(@team) %></h5>
+        <span>Position</span>
+      </div>
+      <div class="stat six columns no-gutter mobile-six">
+        <h5><%= @division_presenter.form_guide(@team) %></h5>
+        <span>Recent results</span>
+      </div>
+    </div> 
+    <div class="<%= @location.nil? ? "six" : "twelve" %> columns no-gutter">
+      <div class="stat six columns no-gutter mobile-six">
+        <h5><%= @division_presenter.games_played(@team) %></h5>
+        <span>Games played</span>
+      </div>
+      <div class="stat six columns no-gutter mobile-six">
+        <h5><%= @division_presenter.games_won(@team) %></h5>
+        <span>Games won</span>
+      </div>
+    </div> 
+    <div class="twelve columns no-gutter">
+      <div class="stats-link six columns no-gutter mobile-six text-center">
+        <a class="share-link facebook no-underline" data-team-color="link"><i class="bf-icon facebook"></i> <span class="underline-hover">Share on Facebook</span></a>
+      </div> 
+      <div class="stats-link six columns no-gutter mobile-six text-center">
+        <a class="share-link twitter no-underline" data-team-color="link"><i class="bf-icon twitter"></i> <span class="underline-hover">Share on Twitter</span></a>
+      </div> 
+    </div>
+  </div>
+</section>

@@ -1,0 +1,129 @@
+BFApp.Views.NaviView = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/navi",
+
+  className: "main-navigation",
+
+  events: {
+    "click [name='help']": 'showHelp',
+    "click [name='login']": 'showLogin',
+    "click [name='user']": "showUser",
+    "click [name='settings']": 'showSettings',
+    "click [name='team-roles']": 'clickedTeamRoles',
+    "click [name='notifications']": "clickedNotificationSettings"
+  },
+
+  initialize: function() {
+    this.listenTo(ActiveApp.CurrentUser, "change", this.render);
+    this.listenTo(ActiveApp.CurrentUserTeams, "change remove add", this.render);
+    // this is triggered on team pages if the URL contains #notifications
+    this.listenTo(BFApp.vent, "show:notification:settings", this.showNotificationSettings);
+    this.listenTo(BFApp.vent, "show:team:roles", this.showTeamRoles);
+  },
+
+  clickedTeamRoles: function(e) {
+    e.preventDefault();
+    this.showTeamRoles();
+  },
+
+  showTeamRoles: function() {
+    var listView = new BFApp.Views.TeamRoleList({
+      collection: ActiveApp.CurrentUserTeams,
+      itemView: BFApp.Views.TeamRoleSelectWidget,
+      model: ActiveApp.CurrentUser
+    });
+    BFApp.vent.trigger("popup:show", {
+      view: listView,
+      className: "new-popup eight team-role-popup",
+      canClose: true
+    });
+    analytics.track("Navigation - click teamroles link");
+  },
+
+  showSettings: function(e) {
+    e.preventDefault();
+    if (!ActiveApp.CurrentUser.isInLimbo()) {
+      var userDetailsEditProfile = new BFApp.Views.UserDetailsEdit({
+        model: ActiveApp.CurrentUser
+      });
+      BFApp.vent.trigger("popup:show", {
+        view: userDetailsEditProfile,
+        className: "new-popup eight",
+        canClose: true,
+      });
+    }
+    analytics.track("Navigation - click settings link");
+  },
+
+  clickedNotificationSettings: function(e) {
+    e.preventDefault();
+    this.showNotificationSettings($(e.currentTarget).data("team-id"));
+  },
+
+  showNotificationSettings: function(teamId) {
+    var team = ActiveApp.CurrentUserTeams.get(teamId);
+    if (team) {
+      var notificationView = new BFApp.Views.NotificationSettingsLayout({
+        team: team
+      });
+      BFApp.vent.trigger("popup:show", {
+        view: notificationView,
+        className: "new-popup six",
+        canClose: true
+      });
+      notificationView.loadSettings();
+
+      analytics.track("Navigation - click notifications link");
+    }
+  },
+
+  showUser: function() {
+    analytics.track("Navigation - click user link");
+  },
+
+  showHelp: function(e) {
+    e.preventDefault();
+    var popup = new BFApp.Views.HelpPopup();
+    BFApp.vent.trigger("popup:show", {
+      view: popup,
+      className: "new-popup five",
+      canClose: true
+    });
+    analytics.track("Navigation - click help link");
+  },
+
+  showLogin: function(e) {
+    e.preventDefault();
+    BFApp.vent.trigger("login-popup:show");
+  },
+
+  serializeData: function() {
+    var teamContext = (ActiveApp.ProfileTeam) ? ActiveApp.ProfileTeam : false;
+    teamContext = (!teamContext && ActiveApp.Event) ? ActiveApp.Event.get("team") : teamContext;
+
+    var userTeams = [];
+    if (typeof ActiveApp.CurrentUserTeams != "undefined") {
+      userTeams = ActiveApp.CurrentUserTeams;
+    }
+
+    var userTenants = [];
+    if (typeof ActiveApp.CurrentUser.get("tenant_roles") != "undefined") {
+      userTenants = ActiveApp.CurrentUser.get("tenant_roles")
+    }
+
+    return {
+      userPic: ActiveApp.CurrentUser.getPictureHtml("thumb"),
+      urlHref: ActiveApp.CurrentUser.getHref(),
+      name: ActiveApp.CurrentUser.get("name"),
+      isLoggedIn: ActiveApp.CurrentUser.isLoggedIn(),
+      isInLimbo: ActiveApp.CurrentUser.isInLimbo(),
+      teamContext: teamContext,
+      userTeams: userTeams,
+      UserLeagues: ActiveApp.CurrentUserLeagues,
+      userTenants: userTenants,
+      logoPath: "<%= asset_path 'identity/logo/logo_white_100.png' %>",
+      // logoPath: "<%= asset_path 'identity/02touch/02_white_100.png' %>"
+    };
+  }
+
+});

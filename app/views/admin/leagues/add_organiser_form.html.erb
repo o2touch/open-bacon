@@ -1,0 +1,25 @@
+<div class="columns six centered">
+	<% if flash[:notice] %>
+	  <p class="notice"><%= flash[:notice] %></p>
+	<% end %>
+	<div>
+		<p>Add a league oraniser to league <%= @league.id %></p>
+		<%= form_tag(admin_league_add_organiser_path(@league.id)) do %>
+			<p>For an existing user</p>	
+			<%= label_tag :user_id, "User ID" %>
+			<%= text_field_tag :user_id %>
+			<p> or... for a new user </p>
+			<%= label_tag :name, "Name" %>
+			<%= text_field_tag :name %>
+			<%= label_tag :email, "Email" %>
+			<%= text_field_tag :email %>
+			<%= label_tag :mobile_number, "Mobile" %>
+			<%= text_field_tag :mobile_number %>
+			<%= label_tag :time_zone, "Time Zone" %>
+			<%= text_field_tag :time_zone %>
+			<%= label_tag :country, "ISO Country Code" %>
+			<%= text_field_tag :country %>
+		  <%= submit_tag %>
+		<% end %>
+	</div>
+</div>

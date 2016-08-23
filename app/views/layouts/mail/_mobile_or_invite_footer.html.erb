@@ -1,0 +1,7 @@
+<% @user = @recipient if @user.nil? %>
+<% if @team && @user && !@user.is_registered? && !@hide_button_footer %>
+  <% @team_invite = TeamInvite.get_invite(@team, @user) %>
+  <a class="button" href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">Confirm that you are a part of the team</a>
+<% elsif @team && !@hide_button_footer %>
+  <a class="button" href="<%= team_url(@team, :only_path => false )%>#schedule">View the team schedule</a>
+<% end %>

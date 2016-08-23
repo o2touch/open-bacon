@@ -1,0 +1,258 @@
+body.signup-bg{
+	//background: url("img/bg_team.jpg") no-repeat center fixed!important;
+	background-size: cover!important;
+}
+
+
+#signup-flow {
+	width: 900px;
+	margin: 100px auto;
+	background-color: #f9f9f9;
+	border-radius: $bluefields-radius;
+
+	h1 {
+		text-align: center;
+		font-size: 22px;
+		font-weight: bold;
+		line-height: 1em;
+		color: #444;
+		margin-bottom:0;
+	}
+	h1 + p {
+		text-align: center;
+		margin-bottom: 24px;
+	}
+	.steps {
+
+		counter-reset:li; /* Initiate a counter */
+		margin-left:0; /* Remove the default left margin */
+		padding-left:0; /* Remove the default left padding */
+
+		& > li {
+			position:relative; /* Create a positioning context */
+			margin:0 15px 6px 0; /* Give each list item a left margin to make room for the numbers */
+			padding:4px 35px; /* Add some spacing around the content */
+			list-style:none; /* Disable the normal item numbering */
+
+			float:left;
+			color:#ccc;
+			font-size: 12px;
+			text-transform: uppercase;
+			border-right:1px solid #eee;
+
+			&:last-child {
+				border-right:none;
+			}
+
+			&.current {
+				color:#333;
+			}
+
+			&.done {
+				color:#555;
+				text-decoration: line-through;
+			}
+		}
+
+		& > li:before {
+			content:counter(li); /* Use the counter as content */
+			counter-increment:li; /* Increment the counter by 1 */
+			/* Position and style the number */
+			position:absolute;
+			top:0px;
+			left:-2em;
+			-moz-box-sizing:border-box;
+			-webkit-box-sizing:border-box;
+			box-sizing:border-box;
+			width:2em;
+			/* Some space between the number and the content in browsers that support
+				 generated content but not positioning it (Camino 2 is one example) */
+			margin-right:8px;
+			padding:3px;
+			// border-top:2px solid #666;
+			color: $bluefields-white;
+			background:#eee;
+			font-weight:bold;
+			text-align:center;
+
+			border-radius: 20px;
+			margin-left: 27px;
+		}
+
+		& > li.current:before {
+			background:#555;
+		}
+		& > li.done:before {
+			background:green;
+			content:'\2713';
+		}
+	}
+
+	#sf-team {
+		border-radius:$bluefields-radius;
+
+		.team-form{
+			.age-group{
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: $bluefields-margin;
+			}
+
+			.colour-selector-container.secondary{
+				float: right;
+			}
+		}
+
+	}
+
+	#sf-organiser {
+		.line {
+			width: 50%;
+			border-right: 1px #ccc solid;
+			height: 50px;
+		}
+	}
+	#sf-confirmation {
+		height: 220px;
+		border-radius: $bluefields-radius;
+		p, .actions {text-align: center;}
+		p {margin: 20px 0;}
+		button {float: none;}
+
+		.bf-icon{
+			font-size: 26px;
+			margin-top: 13px;
+		}
+
+		.create-team-spinner{
+			position: absolute;
+			top: 145px;
+			left: 50%;
+		}
+
+
+	}
+	#sf-facebook {
+		.sf-content {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+	}
+
+
+	.sf-page {
+		background-color: $bluefields-white;
+		padding: 20px;
+	}
+
+	.bf-context {
+		padding:20px 20px 20px 20px;
+		border-left: 1px solid #eee;
+
+		h2 {
+			font-size: 15px;
+			font-weight: bold;
+			color: #888;
+		}
+
+		& > p {
+			color: #888;
+			font-size: 13px;
+			line-height: 1.3em;
+		}
+
+		ul {
+			margin-left: 15px;
+			margin-top: 15px;
+			li {
+				font-size:13px;
+				line-height: 1.3em;
+				list-style:disc;
+				color:#888;
+			}
+		}
+	}
+
+	.actions {
+		margin-top: 10px;
+	}
+
+	.center-line p {
+		text-align:center;
+		color:#999;
+	}
+
+	blockquote {
+		margin:0;
+		margin-left:-30px;
+
+		padding:0;
+		border-left: 0;
+
+		p {
+			font-size: 16px;
+			background-color: #4fade3;
+			box-shadow: 1px 3px 3px rgba(0,0,0,0.2);
+			color: $bluefields-white;
+			padding: 15px 15px 20px;
+			margin-bottom: 5px;
+			float: left;
+			border-radius: 5px;
+			line-height: 1.2em;
+			font-style: italic;
+		}
+
+		img {
+			width: 70px;
+			float: right;
+			position: relative;
+			margin-top: -40px;
+			margin-right: -10px;
+			border: 2px solid #666;
+			border-radius: 35px;
+		}
+
+		span {
+			font-size:11px;
+			float: right;
+			margin-right: 5px;
+		}
+	}
+}
+
+
+
+.credit{
+	span{
+		text-align: center;
+		color: #eee;
+		font-size:12px;
+		a{
+			color: #eee;
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+		&:first-child{
+			text-align: right;
+		}
+
+		&:last-child{
+			text-align: left;
+		}
+
+		&.logo{
+
+
+			a{
+				//background: url('img/logo/bluefields_logo_white.png') no-repeat center;
+				width: 135px;
+				height: 35px;
+				background-size: 80%;
+				display: inline-block;
+				margin: 0 auto;
+				margin-top: -10px;
+			}
+		}
+	}
+}

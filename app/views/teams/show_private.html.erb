@@ -1,0 +1,93 @@
+<% content_for :head do %>
+
+<link href="<%=team_stylesheet_path(@team)%>" media="all" rel="stylesheet">
+<link href="/tim.css" media="all" rel="stylesheet">
+
+<script>
+var ActiveApp = TeamProfileApp;
+ActiveApp.init();
+
+// Current logged in user and their teams
+ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+// Tenant for this team
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+// Show Download Links
+ActiveApp.FaftFollowTeam = {
+	showDownloadLinks: <%= show_app_download_link? %>,
+	itunesUrl: "<%= itunes_url('sidebar_download').html_safe %>",
+	playStoreUrl: "<%= play_store_url('sidebar_download').html_safe %>"
+};
+
+// The team profile being viewed
+ActiveApp.ProfileTeam = App.Modelss.Team.findOrCreate(<%= safe_js_string(@team_json) %>, {parse: true});
+
+// Open invite link relating to the team
+ActiveApp.ProfileTeam.OpenInviteLink = "<%= @open_invite_link %>";
+
+// Squad
+ActiveApp.Teammates.reset(<%= safe_js_string(@members_json) %>, {parse: true});
+
+// Team events
+ActiveApp.Events = new App.Collections.Event(<%= safe_js_string(@future_events_json) %>, {parse: true});
+ActiveApp.PastEvents = new App.Collections.PastEvents(<%= safe_js_string(@past_events_json) %>, {parse: true});
+
+// Team activity items
+ActiveApp.ProfileActivityItems = new App.Collections.ActivityItems();
+ActiveApp.ProfileActivityItems.context = "team";
+ActiveApp.ProfileActivityItems.add(<%= @activity_items_json %>, {parse: true}); 
+
+// Goals
+ActiveApp.Goals = new App.Collections.Goals(<%= safe_js_string(@goals_json) %>);
+
+// Permissions
+
+ActiveApp.Permissions = new Backbone.Model({
+	"canUpdateTeam": <%=can? :update, @team%>,
+	"canExportCalendar": <%=can? :export_calendar, @team%>,
+	"canViewProfileFeed": <%=can? :read, @team %>,
+	"canViewPrivateDetails": <%=can? :read, @team %>,
+	"canPostMessage": <%=can? :create_message, @team %>,
+	"canManageTeam": <%=can? :manage, @team %>,
+	"canManageRoster": <%=can? :manage_roster, @team %>
+});
+
+$(function() {
+
+	BFApp.on("start", function(){
+		BFApp.rootController.startTeamProfileModule();
+	});
+
+	BFApp.start();
+
+	$(".bftip").tipsy({live: true, gravity: 'w'});
+
+	var root = "teams/<%= @team.id %>";
+});
+</script>
+
+<% end %><%# this is where we end content_for head %>
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+
+<div id="main-content">
+
+	<noscript>
+		<div class="row">
+			<div class="columns five" id="widgets">
+				<div class="widget">
+					<h2><%= @team.name%></h2>
+				</div>
+			</div>
+			<div class="columns seven" id="content"></div>
+		</div>
+	</noscript>
+</div>

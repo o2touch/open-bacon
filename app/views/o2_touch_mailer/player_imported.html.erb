@@ -1,0 +1,14 @@
+<p>Hi there <%=@recipient.first_name.titleize%>,</p>
+
+<p>Welcome to the new O2 Touch web application, powered by Mitoo.</p>
+
+<p>You can now log in to see upcoming events for <%=@team.name%>. If there are currently no events, you’ll be notified once the <%=@team.name%> operator has added some.</p>
+
+<p> If you get stuck you can always head to our <a href="http://help.o2touch.mitoo.co/?b_id=3491">help area</a>.</p>
+
+<p>You'll need to <a href="<%=power_token_url(@token, :only_path => false)%>">activate your account</a>. Simply click the button below and you can get started.</p>
+
+<a class="button" href="<%=power_token_url(@token, :only_path => false)%>">Activate my Account</a>
+
+<p style="margin-top:15px;">Yours in sport,<br />
+Andrew Crump</p>

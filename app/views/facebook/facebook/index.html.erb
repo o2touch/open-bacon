@@ -1,0 +1,128 @@
+<script>var page = 'Facebook Landing';analytics.track('Viewed ' + page, {'Landing Page':'FB001'});</script>
+
+<div id="part-form" class="row">
+	<div class="colums twelve">
+		<h1>Mitoo</h1>
+		<p>Get your sports team together without the hassle</p>
+				
+		<div class="grab">
+			<%= image_tag "bluefields-screenshot.jpg", :alt => "Mitoo"%>
+		</div>
+				
+		<div class="grab-iphone">
+			<%= image_tag "bluefields-iphone.png"%>
+		</div>
+	</div>
+	
+	<div class="cta-panel">
+		<div class="free-tag"></div>
+		<%= render :partial => "signupFormFacebook" %>
+	</div>
+	
+	<div class="clearfix">&nbsp;</div>
+</div>
+
+
+<div class="row over" id="part-flow">
+	<div class="columns four">
+		<i class="icon-chevron-right"></i>
+		<%= image_tag "icon_addgame.png", :alt => "Add a game"%>
+		<h3>Add a Game or Event</h3>
+		<p>In just one step</p>
+	</div>
+	<div class="columns four">
+		<i class="icon-chevron-right"></i>
+		<%= image_tag "icon_whocanplay.png", :alt => "Get responses"%>
+		<h3>We Tell You Who Can Play</h3>
+		<p>No more chasing people!</p>
+	</div>
+	<div class="columns four end">
+		<%= image_tag "icon_savetime.png", :alt => "Confirm Roster"%>
+		<h3>Enjoy Your Free Time</h3>
+		<p>and never have to forfeit a game</p>
+	</div>
+		
+</div>
+
+<div id="testimonial" class="row over">
+	<div class="columns twelve">
+		<%= image_tag "testimonial-kit.png", :alt => "testimonial"%>
+		<blockquote>Mitoo has made it really easy for us to manage player availability!</blockquote>
+		 - Steven Thompson, Old Suttonians FC
+	</div>
+</div>
+
+
+
+<div id="fb-root"></div>
+
+<script>
+//   window.fbAsyncInit = function() {
+//     FB.init({
+//       version    : 'v2.0',
+//       appId      : '<%=#Facebook::APP_ID.to_s%>', // App ID
+//       //channelUrl : 'http://piers.showoff.io/channel.html', // Channel File
+//       status     : true, // check login status
+//       cookie     : true, // enable cookies to allow the server to access the session
+//       xfbml      : true  // parse XFBML
+//     });
+    
+//     // Additional initialization code here
+// // Check if the current user is logged in and has authorized the app
+//       FB.getLoginStatus(checkLoginStatus);
+      
+//       // Login in the current user via Facebook and ask for email permission
+
+// 	FB.Canvas.setSize();
+//   };
+  
+  function checkLoginStatus(response) {
+    if(response && response.status == 'connected') {
+      //alert('User is authorized');
+      
+      // Hide the login button
+      //document.getElementById('loginButton').style.display = 'none';
+      
+      // Now Personalize the User Experience
+      //console.log('Access Token: ' + response.authResponse.accessToken);
+      
+      window.location.href = "/users/auth/facebook/";
+    } else {
+      //alert('User is not authorized');
+    }
+  }
+ 
+  
+   // Check the result of the user status and display login button if necessary
+  function respondLogin(response) {
+    if(response && response.status == 'connected') {
+      //alert('User is authorized');
+      
+      // Now Personalize the User Experience
+      //console.log('Access Token: ' + response.authResponse.accessToken);
+      
+      $.getJSON('/users/auth/facebook', function(json) {
+      	console.log('Connected! Callback complete.');
+        console.log(JSON.stringify(json));
+      });
+      window.location = "/users/auth/facebook"
+    } else {
+      //alert('User is not authorized');
+    }
+  }
+  
+  function authUser() {
+    FB.login(respondLogin, {scope:'email,friends_interests,friends_likes,publish_stream'});
+  }
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+<noscript><div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/965752606/?value=0&amp;label=VFfgCNKd6gMQnu7AzAM&amp;guid=ON&amp;script=0"/></div></noscript>

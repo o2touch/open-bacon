@@ -1,0 +1,132 @@
+.team-page{
+
+	.header{
+		padding-top: $bluefields-margin*2;
+		padding-bottom: $bluefields-margin*2;
+	}
+
+	.post-message {
+		margin-bottom: $bluefields-margin*2;
+	}
+
+	#activity-feed {
+		margin-left: -12px;
+		margin-right: -12px;
+		margin-bottom: -12px;
+	}
+
+
+	.body{
+		margin-top: $bluefields-margin;
+		@include respond-to(wide-screens) {@include flex();}
+		@include respond-to(medium-screens) {@include flex();}
+
+		.content-navi-container {
+			margin-top: -12px;
+			margin-left: -12px;
+			margin-right: -12px;
+			margin-bottom: 12px;
+		}
+
+		div[role=main]{
+			@include grid-columns($columns: 8, $gutter: false);
+			.primary-content{
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		}
+		
+		aside[role='complementary']{
+			@include grid-columns($columns: 4, $gutter: false);
+		}
+		
+		&.animated-content{
+			div[role=main], aside[role='complementary'] {
+				@include transition (width $transition-time $transition-easing);
+			}
+		}
+		
+		
+		&.open{
+			div[role=main]{
+				@include grid-columns($columns: 7, $gutter: false);
+			}
+			aside[role='complementary']{
+				@include grid-columns($columns: 5, $gutter: false);
+			}
+		}
+	}
+}
+
+.team-profile-details {  
+
+	position: relative;
+	.circle{
+		width: 60px;
+		height: 60px;
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.team-info{
+		display: inline-block;
+		position: relative;
+		margin-left: $bluefields-margin;
+		vertical-align: middle;
+
+		@include respond-to(handhelds) {
+			@include calc(width, "100% - 120px")
+		}
+
+		h1{
+			color:$bluefields-white;
+			font-weight: 600;
+			@include font-size(2, false);
+			text-transform: uppercase;
+		}
+
+		.league{
+			color: #f1f1f1;
+			@include font-size(1.7, false);
+			a{
+				font-weight: 500;
+				color:#f1f1f1;
+				&:hover{
+					text-decoration:underline;
+				}
+
+				.division{
+					font-weight: 400;
+				}
+			}
+		}
+	}
+
+
+	#btn-edit-profile{
+		position: absolute;
+		top: -12px;
+		right: -24px;
+		color: #eee;
+		margin: 0;
+		font-size: 0.8em;
+		@include respond-to(handhelds) {
+			display: none;
+		}
+	}
+}
+
+
+
+.team-profile-edit-detail{
+	position: absolute;
+	top: 80px;
+	width: 250px;
+	left: 9px;
+	@include arrow($size:12px, 	$side:"top", $align:"left");
+	&.form-focus{
+		@include arrow(	$size:12px, $side:"top", $align:"left", $color:#f1f1f1);
+	}
+}
+
+ 

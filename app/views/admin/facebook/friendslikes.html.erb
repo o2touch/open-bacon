@@ -1,0 +1,48 @@
+
+<div class="row">
+	<div class="columns twelve">
+	<h3>Friends who have liked something to do with sport</h3>
+	<p>This is <b><%=@friends.length%> out of <%=@total%></b> of your friends </p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns six">
+		<ul>			
+		<% @friends.each do |like| %>
+			<li>
+				<img src="<%=like["picture"]%>" />
+				<%=like["name"]%>
+			</li>
+		<% end %>
+		</ul>
+		
+		<a href="javascript:sendRequestToRecipients()">Invite Friends</a>
+	</div>
+	<div class="columns six">
+		<h4>Like</h4>
+		<% @likes.each do |like| %>
+			<li>
+				<a target="_blank" href="http://facebook.com/<%=like["id"]%>"><%=like["name"]%> (<%=like["category"]%>)</a>
+			</li>
+		<% end %>
+		</ul>	
+	</div>
+</div>
+
+<script>
+
+var friends = '<% @friends.each do |like| %><%=like["id"]+"," if like["name"]=="Andrew Crump"%><% end %>';
+
+function sendRequestToRecipients() {
+  FB.ui({method: 'apprequests',
+    message: 'Check out Mitoo for organising your sports team',
+    to: friends
+  }, requestCallback);
+}
+
+function requestCallback(response) {
+        // Handle callback here
+        console.log(response);
+}
+</script>

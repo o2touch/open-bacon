@@ -1,0 +1,75 @@
+App.Modelss.Team = Backbone.RelationalModel.extend({
+
+  relations: [{
+    type: Backbone.HasOne,
+    key: 'league',
+    relatedModel: 'App.Modelss.League'
+  }],
+
+  defaults: {
+    "profile_picture_thumb_url": "<%= asset_path 'profile_pic/team/generic_team_thumb.png' %>",
+    "profile_picture_small_url": "<%= asset_path 'profile_pic/team/generic_team_small.png' %>",
+    "profile_picture_small_url_original_ratio": "<%= asset_path 'profile_pic/team/generic_team_small_original_ratio.png' %>",
+    "profile_picture_medium_url": "<%= asset_path 'profile_pic/team/generic_team_medium.png' %>",
+    "profile_picture_large_url": "<%= asset_path 'profile_pic/team/generic_team_large.png' %>",
+    "profile_picture_large_url_original_ratio": "<%= asset_path 'profile_pic/team/generic_team_large_original_ratio.png' %>",
+    // these must match colours in BFApp.constants.teamColours
+    "colour1": "333333",
+    "colour2": "4FADE3"
+  },
+
+  toJSON: function() {
+    return {
+      team: _.clone(this.attributes)
+    };
+  },
+
+  url: function() {
+    return '/api/v1/teams' + (this.get("id") ? ("/" + this.get("id")) : "");
+  },
+
+  getPictureHtml: function(size) {
+    var htmlPic = BFApp.renderProfilePicture({
+      src: this.get("profile_picture_" + size + "_url"),
+      srcDefault: this.defaults["profile_picture_" + size + "_url"],
+      size: size,
+      type: "team",
+      title: this.get("name")
+    });
+    return htmlPic;
+  },
+
+  isJuniorTeam: function() {
+    return (this.get("age_group") < 13);
+  },
+
+  getHref: function() {
+    return "/teams/" + this.get("id");
+  },
+
+  // all "messageable" objects need to have this method
+  getTitle: function() {
+    return this.get("name");
+  },
+
+  validateSave: function(teamNameElem, leagueNameElem) {
+    var teamName = BFApp.validation.isTeamName({
+      htmlObject: teamNameElem
+    });
+
+    var leagueName = true;
+    if (leagueNameElem) {
+      leagueName = BFApp.validation.isTitle({
+        htmlObject: leagueNameElem
+      });
+    }
+
+    return teamName && leagueName;
+  },
+
+  saveToDivision: function(divisionId, options) {
+    options.url = "/api/v1/teams?division_id=" + divisionId;
+    this.save({}, options);
+  },
+
+});

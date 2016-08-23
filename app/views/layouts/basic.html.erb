@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <%= display_meta_tags :site => 'Mitoo' %>
+
+    <%= stylesheet_link_tag "default", :media => "all" %>
+
+    <%= render :partial => 'layouts/common_head' %>
+  </head>
+
+  <body style="padding: 0px;">
+    <%= yield %>
+  </body>
+</html>

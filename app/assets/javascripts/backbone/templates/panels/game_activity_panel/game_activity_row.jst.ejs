@@ -1,0 +1,28 @@
+<h4><%= rowTitle %></h4>
+<div class="event-row <% if (eventRealType == "0" && scoreFor){ %>with-result<% }%>">
+	<a class="<%= eventType %> clearfix no-underline" href="<%= href %>">
+			<div class="date-block">
+				<div class="inner-date">
+					<span class="day"><%= date %></span>
+					<span class="month"><%= cutMonth %></span>
+				</div>
+			</div>
+			<div class="informations">
+			 	<h6><%- title %></h6>
+			 	<p>
+					<span class="time"><%= (timeTBC) ? "Time TBC" : time %></span>
+			 	 	<% if(location){ %><span class="location">at <%- location %></span><% } %>
+			 	 </p>
+			</div>
+			
+			<div class="score">
+			<% if(gameStatus==1){%>
+					<div class="alert-box alert game-cancel plain">Cancelled</div>
+			<%} else {%>
+				<% if (eventRealType == "0" && scoreFor){ %>
+					<h6><%= scoreFor %>-<%= scoreAgainst %></h6>
+				<% }%>
+			<% }%>
+		</div>
+	</a>
+</div>

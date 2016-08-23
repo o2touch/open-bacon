@@ -1,0 +1,72 @@
+<% cache("#{event.cache_key}/team/#{@team.id}") do %>
+<% 
+  date = event.bftime
+  fixture = event.fixture
+  home = event.home_or_away == "home"
+  home_away_str = home ? "Home" : "Away"
+
+  unless fixture.nil?
+    opponent = home ? fixture.away_team : fixture.home_team
+  end
+
+  location_str = (!fixture.nil? && !fixture.location.nil?) ? fixture.location.address : ""
+
+  result = nil
+  unless (fixture.nil? || fixture.result.nil?)
+    result = ResultPresenter.new(fixture.result)
+  end
+%>
+
+<li class="fixture-faft-test <%= "with-result" unless fixture.nil? || fixture.result.nil? %>" <%= "itemscope itemtype='http://schema.org/SportsEvent'".html_safe if event.display_structured_data? %>>
+
+  <a itemprop="url" href="<%= !fixture.nil? ? "?fixture=#{fixture.id}" : event_url(event) %>"></a>
+
+  <div class="date-block vertical-align" itemprop="startDate" content="<%= date.utc_time.iso8601 %>">
+    <div class="inner-date">
+    <% if date.tbd?  %>
+      <span class="tbd">TBD</span>
+    <% else %>
+      <span class="day"><%= date.day %></span>
+      <span class="month"><%= date.month %></span>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="fixture-information">
+    <h5>
+      <span itemprop="name">
+        <%= link_to opponent.name, default_team_path(opponent) if !opponent.nil? %>
+        <%= link_to event.title, event_url(event) if opponent.nil? %>
+      </span>
+      
+    </h5>
+    <p class="details">
+      <span class="time"><%= date.twelve_hour_time %></span>
+      -
+      <% if !event.tenanted_attrs[:price].blank? %><span>&pound;<%= event.tenanted_attrs[:price]%></span><% end %>
+      <span itemprop="location" <%= "itemscope itemtype='http://schema.org/Place'".html_safe if event.display_structured_data? %>>
+        <span itemprop="name">
+          <% unless event.home_or_away.nil? %><span class="home-away"><%= event.home_or_away.titleize %></span><% end %>
+          <% unless location_str.blank? %>, <span class="location"><a class="no-underline" target="_blank" href="http://maps.google.com/?q=<%= location_str %>"><%= location_str %></a></span><% end %>
+        </span>
+      </span>
+    </p>
+  </div>
+  
+  <% if event.team.is_o2_touch_team? && event.time > Time.now %>
+    <div class="result-container">
+      <%= link_to "Join", event_url(event) + "?join=true", class: "button" %>
+    </div>
+  <% else %>
+    <div class="result-container">
+      <% if event.display_result? && !result.nil? %>
+        <span class="outcome <%=result.result_for_team(@team) %>"><%= result.result_for_team(@team).upcase %></span>
+        <span class="result"><%= result.final_score %></span>
+      <% elsif event.display_awaiting_result? %>
+        <span class="time"> Awaiting Result</span>
+      <% end %>
+    </div>
+  <% end %>
+
+</li>
+<% end %>

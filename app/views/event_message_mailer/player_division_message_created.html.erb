@@ -1,0 +1,21 @@
+<% @poster = @message.user %>
+
+<table class="message-title" border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+   <tr>
+      <td valign="middle" align="center">
+         <h2 style="text-align:center;">Message from your league</h2>
+      </td>
+  </tr>
+</table>
+
+<div class="grey-comment">
+  <p class="comment"><%= @message.text.html_safe %></p>
+  <small class="time-stamp">posted at <%= BFTime.new(@message.updated_at, @user.time_zone).pp_time %><small>
+</div>
+
+
+<%
+email_title = "league+team+message+posted"
+extra_params = @user.email + "&LeageuId=" + @league.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

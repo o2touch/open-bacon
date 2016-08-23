@@ -1,0 +1,475 @@
+.league-page{
+
+	.header{
+		padding-top: $bluefields-margin*2;
+		padding-bottom: $bluefields-margin*2;
+		.header-content{ 
+			@include grid-row();
+			background-repeat: no-repeat;
+			background-position: 5% 50%, 95% 40%;
+			background-size: auto 80%;
+		}
+	}
+	
+	.body{
+		margin-top: $bluefields-margin;
+		@include respond-to(wide-screens) {@include flex();}
+		@include respond-to(medium-screens) {@include flex();}
+		div[role=main]{
+			@include grid-columns(8);
+		}
+
+		
+	.content-navi-container {
+		margin-left: -5px;
+		margin-right: -5px;
+	}
+
+		.primary-content{
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+		
+		aside[role=complementary]{
+			@include grid-columns($columns: 4, $gutter: false);
+		}
+	}
+}
+
+// FAFT League Page
+.faft {
+	@include grid-row();
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+
+	// @include background-image(linear-gradient(rgba(0,0,0,0.7) 0, rgba(0,0,0,0.3) 100%), url('img/bg_private.jpg'));
+	background: none;
+
+	$header-color: rgba(74,74,74,0.9);
+	.header {
+		padding-top: 60px;
+		padding-bottom: 30px;
+
+		.header-content{
+			padding: 0;
+		}
+	}
+
+	header.team {
+		margin-top: $bluefields-margin*2;
+	}
+
+	.section-header {
+		@include geogrotesque();
+		background-color: $header-color;
+		border-bottom: 2px solid $header-color;
+		color: #fff;
+		font-weight:800;
+		font-size: 20px;
+		text-transform: uppercase;
+		padding: 5px 10px;
+		margin: 0;	
+	}
+
+	.team-font {
+		font-size: 13px;
+		line-height: 1.2em;
+		color:#333;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	div[role=main]{
+		@include grid-columns(8, $gutter:true);
+		padding-left: 0;
+	}
+
+	section {
+		margin-bottom:$bluefields-margin*3;
+		background-color: rgba(255,255,255,0.9);
+		margin-bottom: 18px;
+		border: 1px solid rgba(0,0,0,0.1);
+
+		header {
+			@extend .section-header;
+		}
+	}
+
+	.body {
+		@include grid-columns(8);
+
+		margin: 40px auto;
+		float:none;
+		max-width:1148px;
+
+		#r-schedule-standings {
+			// @include grid-columns($columns:5, $offset: 1);	
+		}
+
+		#r-teams{
+			@include grid-columns($columns:4, $offset: 0, $gutter: true);	
+			padding-right: 0;
+		}
+	}
+
+	header.league {
+		@include grid-columns(12, $gutter: false);
+		
+		margin-top: $bluefields-margin*2;
+		margin-bottom: $bluefields-margin;
+
+		h1 {
+			font-weight: 800;
+			text-transform: uppercase;
+			line-height: 1em;
+			font-size: 36px;
+			color: rgba(74,74,74,0.9);
+			margin:0;
+		}
+		h2 {
+			font-size: 20px;
+			color: rgba(74,74,74,0.9);
+			margin:0;
+		}
+		h3 {
+			color:#fff;
+		}
+	}
+
+	
+
+	.standings-table {
+
+
+
+		background-color: rgba(255,255,255,0.9);
+		font-size:12px;
+		margin-bottom:0;
+
+		table{
+			border:none;
+		}
+
+		tr {
+			background-color: transparent;
+		}
+
+		thead tr td {
+			font-size:12px;
+			color:#333;			
+		}
+		tbody tr td {
+			font-size:12px;
+			color:#333;	
+		}
+		tbody th, td.points {
+			font-weight:bold;
+			font-size:13px;
+			color:#333;
+		}
+
+		
+	}
+
+	.fixtures-list {
+		.fixtures-group {
+			margin-bottom:0;
+			border-bottom: 1px solid rgba(74,74,74,0.05);
+
+			& > .date {
+				position: absolute;
+				background:none;
+				margin:0;
+				max-height:26px;
+				overflow: hidden;
+				font-size:12px;
+				width: 100%;
+
+				font-family: helvetica, arial;
+				text-align: left;
+				color: #333;
+				border-top: 1px solid rgba(74, 74, 74, 0.2);
+
+				.day {
+					display: inline-block;
+					font-size: 12px;
+					line-height: 23px;
+				}
+				.month {
+					display: inline-block;
+					font-size: 12px;
+					line-height: 23px;
+				}
+			}
+		}
+	}
+	.fixture-content {
+
+		@extend .clearfix;
+
+		width: 87%;
+		margin-left: 60px;
+		margin-right: 10px;
+
+		.informations{
+			float:left;
+			width:10%;
+			text-align: center;
+			color:rgba(0,0,0,0.5);
+
+			&.result{
+				color:#333;
+			}
+
+			.versus{
+				vertical-align: middle;
+				display: inline-block;
+				line-height: 25px;
+				font-weight: bold;
+				font-size: 12px;
+			}
+		}
+		.team-left, .team-right{
+			@extend .team-font;
+			float: left;
+			width: 45%;
+			padding: 5px 0;
+
+			a {
+				color:#333;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+		}
+		.team-left {
+			text-align:right;
+			padding-right: 30px;
+		}
+		.team-right {
+			text-align:left;
+			padding-left: 30px;
+		}
+		.home_team_result, .away_team_result{
+			font-size: 14px;
+		}
+		.win {
+			font-weight: bold;
+		}
+	}
+
+	#r-teams {
+		ul {
+			padding: 4px 0;
+			li {
+				@extend .team-font;
+				padding: 4px 12px;
+				a {
+					@include geogrotesque();
+					text-transform: uppercase;
+					font-style: normal;
+					font-weight: 600;
+					font-size: 16px;
+					margin: 0;
+					line-height: 1em;
+					color:#333;
+				}
+				a:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+
+.league-page.faft {
+
+	h2 {
+		font-size: 30px;
+		margin: 0;
+	}
+
+	.divisions {
+		
+		margin-top: 12px;
+
+		li a {
+			float: left;
+			clear: both;
+
+			width: 100%;
+			padding: 10px;
+			background-color: #fff;
+			
+			margin-bottom: 6px;
+			border: 1px solid #ccc;
+			color: #333;
+			text-transform: uppercase;
+			font-family: geogrotesque;
+			font-weight: 600;
+			line-height: 1em;
+		}
+	}
+
+}
+
+.team-page.faft {
+
+	header.team {
+		@include grid-columns(12, $gutter: false);
+		
+		margin-bottom: $bluefields-margin*2;
+		
+		// background-color: rgba(74,74,74,0.9);
+
+		.logo {
+			float: left;
+			background: rgba(74,74,74,0.9);
+			padding: 8px;
+			margin-right: 12px;
+		}
+
+		.info {
+			float:left;
+		}
+
+		h1 {
+			line-height: 1em;
+			font-size: 36px;
+			color:rgba(74,74,74,0.9);
+			margin:0;
+			text-transform: uppercase;
+			font-weight: 800;
+		}
+		h2 {
+			color:#fff;
+			line-height: 1em;
+			font-size: 24px;
+			margin:0;
+
+			a {
+				color:#333;
+				font-size: 20px;
+			}
+		}
+		h3 {
+			font-family: arial;
+			line-height: 1em;
+			font-size: 12px;
+			margin:0;
+			color:#333;
+		}
+	}
+
+	.body {
+		@include grid-columns(11, $gutter:false);
+
+		div[role=main]{
+			@include grid-columns(8, $gutter:true);
+			padding-left: 0;
+		}
+	}
+	.fixture-content {
+		width:100%;
+		margin-left:0;
+		margin-right: 0;
+		padding: 5px 10px;
+
+		.home-away {
+			@extend .team-font;
+			float:left;
+			width: 10%;
+			line-height:25px;
+		}
+		.datetime {
+			@extend .team-font;
+			float:left;
+			line-height:25px;
+			width:20%;
+		}
+		.team-right {
+			@include geogrotesque();
+			width:40%;
+			text-align:left;
+			padding-left: 0;
+			text-transform: uppercase;
+			font-weight:600;
+			font-size: 16px;
+			margin: 0;
+			line-height: 1em;
+		}
+		.venue {
+			@extend .team-font;
+			float:left;
+			line-height:25px;
+			width:30%;
+			font-size:11px;
+		}
+		.informations {
+			width:15%;
+		}
+	}
+
+	div.follow-test {
+		@include grid-columns(4, $gutter:true);
+		
+		header {
+			background-color:#59B2E5;
+			border-bottom: rgba(74,74,74,0.2);
+			padding:12px;
+		}
+
+		p {
+			font-size: 14px;
+			line-height: 1.2em;
+			padding: 12px;
+		}
+
+		form {
+			@extend .clearfix;
+			width:90%;
+			margin: 0 auto;
+			padding-bottom: 12px;
+
+			h2 {
+				text-align: center;
+				font-size: 14px;
+				font-weight: bold;
+				font-family: helvetica, arial, sans-serif;
+				color: #333;
+				margin-bottom: 12px;
+			}
+
+			label, input[type=text] {
+				float:left;
+				margin-bottom: 6px;
+			}
+			label {
+				width:25%;
+				line-height: 28px;
+				font-weight: normal;
+			}
+			input[type=text] {
+				width:75%;
+			}
+		}
+	}
+
+	div.share-panel {
+		@include grid-columns(4, $gutter:true);
+
+		margin-top: 12px;
+
+		h2 {
+			font-size: 20px;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: rgba(0,0,0,0.4);
+			margin-top: 0;
+		}
+	}
+}

@@ -1,0 +1,34 @@
+<% if (!parentSection){ %><h3>Contact</h3><% } %>
+
+<% if (email){ %>
+<div class="contact-detail">
+	<p class="bf-icon mail user-email"><%= email %></p>
+	<% if (!isRegistered && currentUserCanManageTeam){ %>
+	<form name="user-email-form" class="hide">
+		<input name="user-email-input" value="<%= email %>" type="text" placeholder="email" />
+	</form>
+	<a href="#" class="bf-icon pen right icon-action" name="edit-user-email" title="edit user email"></a>
+	<% } %>
+</div>
+<% } %>
+
+<div class="contact-detail">
+	<% if(mobileNumber){ %>
+	<p class="bf-icon phone user-mobile"><%= mobileNumber %></p>
+	<% } else if (currentUserCanManageTeam) { %>
+	<p class="bf-icon phone user-mobile">
+		<a href="#" name="show-mobile-form" title="add mobile">Add mobile</a>
+	</p>
+	<% }%>
+
+	<% if (!isRegistered && currentUserCanManageTeam){ %>
+	<form name="user-mobile-form" class="hide">
+		<input type="tel" id="user-mobile-number" class="phone-input" value="<%= mobileNumber %>" placeholder="mobile">
+	</form>
+	<a href="#" class="bf-icon pen right icon-action" name="edit-user-mobile" title="edit user mobile"></a>
+	<% } %>
+</div>
+
+<div class="contact-detail">
+	<p><a class="bf-icon eye view-player" href="/users/<%= id %>"> View profile</a></p>
+</div>

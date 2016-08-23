@@ -1,0 +1,13 @@
+<h2><%= @event.game_type_string.titleize %> <%= @day_of_week %></h2>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<%= render :partial => "user_mailer/event_response", :locals => {:teamsheet_entry => @teamsheet_entry} %>
+
+<a class="button grey small" href="<%= invite_link_url(:token => @teamsheet_entry.token, :only_path => false )%>">View <%= @event.game_type_string %> Details</a>
+
+<%
+email_title = "Event+Reminder"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

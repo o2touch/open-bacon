@@ -1,0 +1,19 @@
+<%
+var classes = "", disabled = false;
+if (setting.name != 'notifications_enabled') {
+  classes += "regular";
+  if (!allSetting) {
+    classes += " disabled";
+    disabled = true;
+  }
+}
+%>
+<div class="notification-item <%= classes %>" data-setting="<%= setting.name %>">
+	<div class="notification-informations align-middle">
+		<strong class="notification-title"><%= setting.title %></strong>
+    <% if (setting.desc) { %>
+      <span class="notification-description"><%= setting.desc %></span> 
+    <% } %> 
+	</div>
+	<%= BFApp.renderHtml("backbone/templates/partials/ui/switch", {checked: setting.val, disabled: disabled, id: setting.name}) %>
+</div>

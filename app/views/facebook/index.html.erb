@@ -1,0 +1,71 @@
+<script>var page = 'Facebook Index';analytics.track('Viewed ' + page, properties);</script>
+
+<div id="part-form" class="row">
+	<div class="colums twelve">
+		<% if(!@sport.nil?) %>
+			<h1>Easy <%=@adtitle%></h1>
+			<p>Free <%=@sport %> website to Save you Time &amp; Hassle</p>
+		<script>//_kmq.push(['set', {'Sport':'<%=@sport %>'}]);</script>
+		<% else %>
+			<h1>Know Who's available for your game?</h1>
+			<p>Get your sports team together without the hassle</p>
+		<% end %>
+				
+		<div class="grab">
+			<%= image_tag "bluefields-screenshot.jpg", :alt => "Mitoo"%>
+		</div>
+				
+		<div class="grab-iphone">
+			<%= image_tag "bluefields-iphone.png", :alt => "Mitoo-text message"%>
+		</div>
+	</div>
+	
+	<div class="cta-panel">
+		<div class="free-tag"></div>
+		<% lp_cta = 'signupForm' #ab_test(:landingpage_cta) %>
+		<%= render :partial => "organiseFormA" %>
+		<script>//_kmq.push(['set', {'CTA':'<%=lp_cta %>'}]);</script>
+	</div>
+	
+	<div class="clearfix">&nbsp;</div>
+</div>
+
+
+<div class="row over" id="part-flow">
+	<div class="columns four">
+		<i class="icon-chevron-right"></i>
+		<%= image_tag "icon_addgame.png", :alt => "Add a game"%>
+		<h3>Add a Game or Event</h3>
+		<p>In just one step</p>
+	</div>
+	<div class="columns four">
+		<i class="icon-chevron-right"></i>
+		<%= image_tag "icon_whocanplay.png", :alt => "Get responses"%>
+		<h3>We Tell You Who Can Play</h3>
+		<p>No more chasing people!</p>
+	</div>
+	<div class="columns four end">
+		<%= image_tag "icon_savetime.png", :alt => "Confirm Roster"%>
+		<h3>Enjoy Your Free Time</h3>
+		<p>and never have to forfeit a game</p>
+	</div>
+		
+</div>
+
+<div id="testimonial" class="row over">
+	<div class="columns twelve">
+		<%= image_tag "testimonial-kit.png", :alt => "testimonial"%>
+
+		<i class="iconic left_quote"></i> <blockquote>Mitoo has made it really easy for us to manage player availability!</blockquote><i class="iconic right_quote"></i> - Steven Thompson, Old Suttonians FC
+	</div>
+</div>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#version=v2.0&xfbml=1&appId=233968316700199";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

@@ -1,0 +1,102 @@
+.godbar-new {
+	background-color: #eee;
+	position: relative;
+	z-index: 40;
+	padding-top: $bluefields-margin/2;
+	padding-bottom: $bluefields-margin/2;
+
+	&.fixed {
+		position: fixed;
+		top: $navigation-height;
+		z-index: 40;
+		width: 100%;
+
+	}
+
+	&.bluefields-blue {
+		color: $bluefields-white;
+		background-color: $bluefields-blue;
+	}
+
+	&.alert {
+		background: $bluefields-red;
+		color: $bluefields-white;
+	}
+	
+	&.behind-content {
+		@include box-shadow(inset 0px 12px 9px -6px rgba(0,0,0,0.2), inset 0px -12px 9px -6px rgba(0,0,0,0.2))
+	}
+	
+	&.faft-onboarding-background {
+		background: $bluefields-black;
+		color: $bluefields-white;
+	}
+	
+	&.warning {
+		background: $bluefields-orange;
+		color: $bluefields-white;
+	}
+	
+	&.success {
+		background: $bluefields-green;
+		color: $bluefields-white;
+	}
+	
+	&.stripe {
+		background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJ0lEQVQIW2NkQAP///83ZkQWAwswMp6FC8IEQIrAgsgCYEF0AZAgAMm7Ezb0zXrSAAAAAElFTkSuQmCC);
+	}
+	
+	&.chrome{
+		background: rgba(20,20,20,0.8);
+		color: $bluefields-white;
+		padding-top: $bluefields-margin;
+		padding-bottom: $bluefields-margin;
+		
+		button{
+			margin-left: $bluefields-margin;	
+		}
+		
+		.dismiss{
+			cursor: pointer;
+			font-size: 18px;
+			color: #aaa;
+			position: absolute;
+			right: 12px;
+			top: 2px;
+		}
+	}
+}
+
+.team-onboarding-godbar{
+	text-align: center;
+	
+	.onboarding-icon, .onboarding-text,.onboarding-action{
+		display: inline-table;
+		vertical-align: middle;
+		padding: $bluefields-margin/2;
+		color: $bluefields-white;
+	}
+		
+	.onboarding-icon{
+		display:inline-table;
+		.bf-icon{
+			font-size: 32px;
+		}
+	}
+
+	.onboarding-text{
+		text-align: center;
+		h2{
+			margin: 0;
+			font-size: 18px;
+			color: $bluefields-white;
+			text-transform: uppercase;
+			font-weight: 600;
+			line-height: 19px;
+		}
+		p{
+			font-size: 14px;
+			line-height: 15px;
+		}
+	}
+}

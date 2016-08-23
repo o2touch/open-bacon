@@ -1,0 +1,16 @@
+#main-navigation {
+	background: darken($colour1, 5%);
+	.navigation-dropdown {
+		&:hover {
+			.navigation-dropdown-title {
+			  background: darken($colour1, 10%) !important;
+			}
+			.navigation-dropdown-list {
+		    background: darken($colour1, 10%) !important;
+		  }
+		}
+		.navigation-dropdown-list a:hover {
+	    background: rgba(255, 255, 255, 0.2)!important;
+	  }
+	}
+}

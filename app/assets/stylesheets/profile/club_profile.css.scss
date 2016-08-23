@@ -1,0 +1,96 @@
+.unclaimed-faft-club-page{
+  .team-card{
+    margin-bottom: $bluefields-margin*3;
+    &:last-child{
+      margin-bottom: $bluefields-margin*1.5;
+    }
+    .card-header{
+      border-bottom: none;
+      
+      img {
+        max-width: 40px;
+      }
+      
+      h1,h2{
+        a:hover{
+          text-decoration: underline;
+        } 
+      }
+      
+      h1{
+        @include font-size(1.6, false);
+      }
+      
+      h2{
+        @include font-size(1.2, false);
+      }
+    }
+    
+    .follow-form{ 
+      position: absolute;
+      top: $bluefields-margin;
+      right: $bluefields-margin;
+    }
+    
+    .see-more {
+      display: block;
+      background: #eee;
+      text-align: center;
+      padding: 6px;
+      @include font-size(0.8, false);
+      color: #555;
+      &:hover{
+        background: #f1f1f1;
+      }
+    }
+    
+    .fixture, .fixture-content{
+      border: none;
+      .date-block{
+        @include opacity(0.8);
+      }
+      
+      .bold{
+        font-weight: bold;
+      }
+    }
+  }
+  
+  .fixture-content{
+    @include calc(width, "100% - 86px");
+  }
+
+  .card-meta{
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    padding: $bluefields-margin/2;
+    h5 {
+      text-align: center;
+      color: #555;
+      text-transform: uppercase;
+      @include font-size(1, false);
+      margin-bottom: $bluefields-margin/2;
+      margin-top: $bluefields-margin/2;
+      font-weight: 400;
+      color: #999;
+      span{
+        
+        font-weight: 600;
+      }
+    }
+  }
+ .fixture-extended-test {
+    margin-left: 10px;
+    margin-right: 10px;
+    @include respond-to(handhelds){
+      margin-left: 0;
+      margin-right: 0;
+    }
+    background: none!important;
+    border: 1px solid #eee;
+    margin-bottom: $bluefields-margin;
+    .date-block{
+      margin: -1px;
+    }
+  } 
+}

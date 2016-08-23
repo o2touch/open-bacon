@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="columns twelve">
+		<h1>Events</h1>
+		<br />
+	</div>
+</div>
+<div class="row">
+	<div class="columns eight dashboard">
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Type</td>
+					<td>When</td>
+					<td>Players</td>
+					<td>Created</td>
+					<td></td>
+				</tr>
+			</thead>
+			<% @events.each do |event| %>
+			<tr>
+				<td><%=link_to event.title, event_path(event) %></td>
+				<td><%=event.game_type %></td>
+				<td><%=l(event.time) if(!event.time.nil?) %></td>
+				<td><%=event.teamsheet_entries.length %></td>
+				<td><%=l(event.created_at) %></td>
+				<td><%=link_to "Delete", admin_event_path(event), :confirm => "Sure?", :method => :delete %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

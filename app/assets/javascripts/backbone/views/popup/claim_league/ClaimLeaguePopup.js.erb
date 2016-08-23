@@ -1,0 +1,47 @@
+BFApp.Views.ClaimLeaguePopup = Marionette.Layout.extend({
+
+  template: "backbone/templates/popups/claim_league/claim_league_popup",
+
+  className: "follow-team-form-container clearfix follow-team-form-popup",
+
+  ui: {
+    mainContent: ".main-popup-content",
+    successMsg: ".text-confirmation"
+  },
+
+  regions: {
+    form: "#cl-form"
+  },
+
+  serializeData: function() {
+    return {
+      leagueName: ActiveApp.ProfileLeague.get("title"),
+      trophyImgPath: "<%= asset_path 'faft/trophy_notification.png' %>"
+    }
+  },
+
+  onShow: function() {
+    var that = this;
+
+    var formView = new BFApp.Views.SignupForm({
+      className: "follow-team-form", // this makes the ----or---- bit nice and white
+      model: new App.Modelss.User(),
+      noLabels: true,
+      showLogin: false,
+      signupButtonCopy: "Claim my league",
+      facebookButtonCopy: "Claim with Facebook",
+      submitClasses: "orange full-width",
+      signupOptions: {
+        save_type: "USERCLAIMLEAGUE",
+        league_id: ActiveApp.ProfileLeague.get("id")
+      },
+      signupSuccess: function() {
+        that.ui.mainContent.addClass("hide");
+        that.ui.successMsg.removeClass("hide");
+        analytics.track("Submitted claim league form", analyticsObject);
+      }
+    });
+    this.form.show(formView);
+  }
+
+});

@@ -1,0 +1,18 @@
+<div class="alert-box <% if(gameStatus == 1) { %>error<% }else if(gameStatus == 3) { %>warning<% }%> plain">
+	<h4><i class="bf-icon <% if(gameStatus == 1) { %>x<% }else if(gameStatus == 3) { %>login<% }%>"></i>
+	<% if(gameStatus == 1) { %>
+			This event has been cancelled
+	<% }else if(gameStatus == 3) { %>
+			This event has been postponed. Date to be determined.
+	<% }%>
+	
+	</h4>
+	<% if(canEdit){ %>
+	<% if(gameStatus == 1) { %>
+			<a href="#" class="enable-event">Re-enable Event?</a>
+	<% }else if(gameStatus == 3) { %>
+			<a href="#" class="reschedule-event">Reschedule Event?</a>
+	<% }%>
+	
+	<% }%>
+</div>

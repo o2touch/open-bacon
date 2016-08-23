@@ -1,0 +1,20 @@
+{
+  // class names must start with a capital letter (when using "new" keyword)
+  "newcap": true,
+
+  // require curly braces around blocks in loops / conditionals
+  "curly": true,
+
+  // prohibit trailing whitespace
+  "trailing": true,
+
+  "globals": {
+    "BFApp": true,
+    "Backbone": true,
+    "Marionette": true,
+    "$": true,
+    "_": true,
+    "ActiveApp": true,
+    "App": true
+  }
+}

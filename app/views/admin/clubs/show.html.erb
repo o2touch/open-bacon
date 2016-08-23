@@ -1,0 +1,15 @@
+<img src="<%= @club.profile.profile_picture_small_url %>" />
+<h1><%= @club.name %></h1>
+<p>Sport: <%= @club.profile.sport %> </p>
+<p>Colour1: <span style="background-color:#<%= @club.profile.colour1 %>;"><%= @club.profile.colour1 %> </p>
+<p>Colour2: <span style="background-color:#<%= @club.profile.colour2 %>;"><%= @club.profile.colour2 %> </p>
+<p>Ground: <%= @club.location.title %> </p>
+<p>Address: <%= @club.location.address %> </p>
+<div>Teams:
+	<% @club.teams.each do |t| %>
+		<p><%= t.name %></p>
+	<% end %>
+</div>
+<p><%=link_to "Administer", admin_club_path(@club) %></p>
+<p><%=link_to "Edit", edit_admin_club_path(@club) %></p>
+<p><%=link_to "Delete", admin_club_path(@club), :confirm => "Sure?", :method => :delete %></p>

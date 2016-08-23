@@ -1,0 +1,210 @@
+$search-columns-width: 360px;
+$o2-touch-blue: #1a245c;
+$rfu-red: #900f29;
+#r-map .spinner {
+  position: absolute!important;
+  top: 50%!important;
+  left: 50%!important;
+}
+.event_search_page {
+
+
+  #r-results{
+    overflow: scroll;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    top: 34px;
+  }
+
+  button, .button {
+    @include button-basic($o2-touch-blue);
+  }
+
+
+.powered-by-mitoo-link {
+  width: 60px;
+  position: absolute;
+  bottom: 6px;
+  right: 12px;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+  #es-welcome-msg, .empty-view  {
+    text-align: center;
+    list-style: none;
+    i {
+      @include font-size(2);
+      display: block;
+      text-align: center;
+      color: #aaa;
+      margin-top: $bluefields-margin * 2;
+    }
+
+    h3 {
+      @include font-size(1.4);
+      text-transform: uppercase;
+      font-weight: 500;
+      counter-reset: #666;
+      margin-top: $bluefields-margin;
+    }
+    p {
+      text-align: center;
+      color: #999;
+    }
+  }
+
+  .date-block {
+    background: $rfu-red;
+  }
+  
+  #r-search-panel {
+    height: 100%;
+  }
+
+  .search-sidebar {
+    width: $search-columns-width;
+    height: 100%;
+    background: #f1f1f1;
+    box-shadow: 3px 0px 10px -5px black;
+    z-index: 20;
+    position: relative;
+  }
+
+
+
+  .event-list {
+    padding: $bluefields-margin $bluefields-margin*2;
+    margin-top: $bluefields-margin;
+    border-top: 1px solid #CCC;
+  }
+
+  .map_canvas {
+    position: absolute!important;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: $search-columns-width;
+  }
+}
+
+
+.event-list-widget {
+  padding: $bluefields-margin $bluefields-margin*2;
+  .event-location-group {
+    margin-bottom: 24px;
+    margin-top: 12px;
+    .more {
+      text-align: center;
+      padding: 3px;
+      font-style: italic;
+      background: #ddd;
+      color: #777;
+      font-size: 0.8rem;
+      cursor: pointer;
+      &:hover {
+        background: #f1f1f1;
+      }
+    }
+  }
+}
+  .event-location-group {
+
+    .events {
+      .event-row, .widget-league-row {
+        background: $bluefields-white;
+        
+        .informations {
+          @include calc(width, "100% - 50px");
+        }
+
+        .join-button {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+        }
+
+      }
+
+
+      .widget-league-row {
+        padding: $bluefields-margin;
+        border-radius: $bluefields-radius;
+        background: $bluefields-white;
+        position: relative;
+        .informations {
+          @include calc(width, "100% - 50px");
+        }
+
+
+        .league-title {
+          @include geogrotesque(500);
+          text-transform: uppercase;
+          @include font-size(1.4, false);
+          color: #444;
+        }
+
+        [name="view"] {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+        }
+      }
+
+
+    }
+
+    @include transform(scale(1));
+    @include transition(all $transition-time $transition-easing);
+    &.search-highlight {
+      @include transform(scale(1.05));
+    }
+
+  }
+
+  .group-location-information{
+    margin-bottom: $bluefields-margin/2;
+
+
+
+    img, .title {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    img {
+      width: 20px;
+    }
+    .title {
+      width: 90%;
+      @include calc(width, "100% - 30px");
+      padding-left: 6px;
+      color: #828282;
+      font-weight: 200;
+      padding-top: 3px;
+      font-size: 0.8rem;
+      line-height: 1rem;
+    }
+  }
+
+
+
+
+.search-form {
+  position: relative;
+  input, button {
+    border-radius: 0;
+    @include font-size(0.9);
+    padding: 6px 9px;
+    margin: 0;
+  }
+
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

@@ -1,0 +1,17 @@
+<h3><%= title %></h3>
+
+<div class="marketing-copy hide-for-small">
+  <img src="<%= trophyImgPath %>">
+  <p><%= msg %></p>
+  <strong>Completely Free!</strong>
+</div>
+
+<div class="follow-form-region">
+	<div id="form-region"></div>
+</div>
+
+<p class="team-not-here text-center">Team not there? <a href="/search">Find it here</a></p>
+
+<% if (closeCopy) { %>
+  <div class="exit-popup"><%= closeCopy %></div>
+<% } %>

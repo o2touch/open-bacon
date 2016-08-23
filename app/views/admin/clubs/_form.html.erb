@@ -1,0 +1,62 @@
+<% 
+  @club = Club.new if @club.nil?
+  @club.build_profile if @club.profile.nil?
+  @club.build_location if @club.location.nil?
+%>
+<div class="form">
+<%= form_for([:admin, @club]) do |f| %>
+  <% if @club.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@club.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul>
+      <% @club.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.fields_for :location do |l| %>
+    <div class="field">
+      <%= l.label :ground_title %>
+      <%= l.text_field :title %>
+    </div>
+    <div class="field">
+      <%= l.label :address %>
+      <%= l.text_field :address %>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :profile do |p| %>
+  <!-- 
+    <div class="field">
+      <%= p.label :sport %><br />
+      <%= p.text_field :sport %>
+    </div>
+  -->
+    <div class="field">
+      <%= p.label :colour1 %>
+      <%= p.text_field :colour1 %>
+    </div>
+    <div class="field">
+      <%= p.label :colour2 %>
+      <%= p.text_field :colour2 %>
+    </div>
+    <div class="field">
+      <%= p.label :badge %>
+      <%= p.file_field :profile_picture %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+
+<% end %>

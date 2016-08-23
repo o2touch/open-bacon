@@ -1,0 +1,67 @@
+<!-- Theme -->
+<% content_for :head_css do %>
+  <link href="/division/<%= @division.id %>/theme.css" media="all" rel="stylesheet" type="text/css"/>
+<% end %>
+
+<!-- Page  -->
+<div id="r-module" class="unclaimed-faft-page unclaimed-faft-division-page">
+
+  <!-- Body  -->
+  <div class="content row mobile-no-padding">
+        
+    <!-- Main content  -->
+    <div role="main" class="twelve columns no-gutter">
+      
+      <!-- Content  -->
+      <div class="main-content twelve columns no-gutter">
+        
+        <!-- Table -->
+        <% if @division.show_standings? %>
+        <div class="tab-content clearfix">
+          <section class="team">
+            <h1>League Table</h1>
+            <% cache(@division_presenter.standings_cache_key) do %>
+              <%= render :partial => "teams/partials/table", :locals => { :division_presenter => @division_presenter } %>
+            <% end %>
+          </section>
+        </div>
+        <% end %>
+
+        <!-- Upcoming fixture -->
+        <div class="tab-content clearfix">
+        <% if !@division_formatted_fixtures.empty? %>
+          <section class="team">
+            <h1>Upcoming Fixtures</h1>
+            <%= render :partial => "division_seasons/partials/fixtures_list", :locals => { :formated_fixtures => @division_formatted_fixtures } %>
+          </section>
+        <% else %>
+          <section class="team empty">
+            <h1>Upcoming Fixtures</h1>
+            <i class="bf-icon calendar"></i>
+            <p>There are no upcoming fixtures in <%= @division.title %></p>
+          </section>
+        <% end %>
+        </div>
+
+        <!-- Recent result -->
+        <div class="tab-content clearfix">
+        <% if !@division_formatted_results.empty? %>
+          <section class="team">
+            <h1>Recent Results</h1>
+            <%= render :partial => "division_seasons/partials/fixtures_list", :locals => { :formated_fixtures => @division_formatted_results } %>
+          </section>
+        <% else %>
+          <section class="team empty">
+            <h1>Recent Results</h1>
+            <i class="bf-icon trophy"></i>
+            <p>There are no past results in <%= @division.title %></p>
+          </section>
+        <% end %>
+        </div>
+        
+      </div>
+              
+    </div>
+    
+  </div>
+</div>

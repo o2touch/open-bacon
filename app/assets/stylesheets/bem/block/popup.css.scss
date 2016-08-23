@@ -1,0 +1,62 @@
+/*------------------------------------*\
+  POPUP
+\*------------------------------------*/
+.b-popup {
+  background: #eee;
+  border-radius: $bluefields-radius;
+  padding: $bluefields-margin;
+  color: #777;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  z-index: 999999;
+
+  &__close-icon {
+    position: absolute;
+    top: $bluefields-margin / 2;
+    right: $bluefields-margin / 2;
+    @include font-size(1.2, false);
+    @include link_creator(#777);
+    text-decoration: none;
+  }
+
+  &__icon {
+    @include font-size(3);
+    &--green {
+      color: $bluefields-green;
+    }
+  }
+
+  &__title {
+    text-transform: uppercase;
+    font-weight: 600;
+    @include font-size(1.6, false);
+    color: #444;
+  }
+
+  &__text {
+    margin-bottom: $bluefields-margin / 2!important;
+    margin-top: $bluefields-margin / 2;
+  }
+
+  &--blue {
+    background: $bluefields-blue;
+    color: $bluefields-white;
+
+    .b-popup__title {
+      color: $bluefields-white;
+    }
+
+    .b-popup__close-icon {
+      @include link_creator($bluefields-white);
+    }
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--no-padding {
+    padding: 0;
+  }
+}

@@ -1,0 +1,469 @@
+.popup {
+  @include clearfix;
+  background: #eee;
+  border-radius: $bluefields-radius;
+  padding: $bluefields-margin;
+  z-index: 999999;
+  position: relative;
+  @include box-shadow(0px 0px 10px 4px rgba(25, 30, 35, 0.3));
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  a.x {
+    position: absolute;
+    top: $bluefields-margin / 2;
+    right: $bluefields-margin / 2;
+    font-size: 16px;
+    color: #777;
+    text-decoration: none;
+  }
+  .popup-header {
+    text-align: center;
+    margin-bottom: $bluefields-margin;
+    h2 {
+      margin: 0;
+      font-size: 1.6em;
+      line-height: 1.2em;
+      font-weight: 400;
+      color: #444;
+    }
+    p {
+      margin-bottom: $bluefields-margin;
+      margin-top: 9px;
+    }
+  }
+  .cancel {
+    font-size: 14px;
+    float: right;
+    display: inline-block;
+    margin-top: 12px;
+    margin-right: 6px;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #999;
+  cursor: pointer;
+}
+
+.popup-calendar-export {
+  h2 {
+    font-size: 26px;
+    margin-bottom: $bluefields-margin / 2;
+    text-shadow: 1px 1px 1px $bluefields-white;
+  }
+  h3 {
+    font-size: 18px;
+    margin-top: 8px;
+  }
+  hr {
+    margin: $bluefields-margin 0 $bluefields-margin 0;
+    border-bottom: 1px solid $bluefields-white;
+    border-top: 1px solid #eee;
+  }
+  .button {
+    margin-top: $bluefields-margin / 2;
+    margin-bottom: $bluefields-margin;
+  }
+  input {
+    margin-top: $bluefields-margin / 2;
+    margin-bottom: $bluefields-margin / 2;
+  }
+  .show-instruction {
+    float: right;
+  }
+}
+
+.popup.help-popup {
+  h2 {
+    font-size: 24px;
+    margin-bottom: $bluefields-margin / 2;
+    color: #666;
+    @include font-size(1.6, false);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  p {
+    margin-bottom: $bluefields-margin;
+    color: #888;
+  }
+}
+
+.login-form {
+  .password-container {
+    position: relative;
+    .password-recovery {
+      font-size: 12px;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  a[title="signup"] {
+    font-size: 14px;
+    float: right;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 6px;
+  }
+}
+
+.signup-form, .login-form {
+  h3 {
+    text-align: center;
+    margin-bottom: $bluefields-margin;
+    color: #444;
+    font-weight: 400;
+  }
+}
+
+.signup-form {
+  a[title="login"] {
+    font-size: 14px;
+    float: right;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 6px;
+  }
+}
+
+.team-open-invite-confirmation, .confirmation-popup {
+  text-align: center;
+  h2 {
+    color: $bluefields-green;
+    margin-bottom: 0;
+  }
+  ul li {
+    font-size: 14px;
+    color: #555;
+    list-style: disc;
+    margin-left: 60px;
+    text-align: left;
+  }
+  button {
+    margin-top: $bluefields-margin;
+    margin-bottom: $bluefields-margin / 2;
+  }
+}
+
+.repeat-events-popup {
+  height: 220px;
+  .spinner {
+    position: absolute;
+    top: 145px;
+    left: 50%;
+  }
+}
+
+.popup {
+  .post-message {
+    padding: 0;
+  }
+  &.no-padding {
+    padding: 0 !important;
+  }
+  &.no-close {
+    a.x {
+      display: none;
+    }
+  }
+}
+
+.follow-confirmation-flow {
+  border-radius: $bluefields-radius;
+  h1 {
+    text-transform: uppercase;
+    font-weight: 600;
+    @include font-size(1.8, $as_text: false);
+    margin-bottom: $bluefields-margin * 2;
+  }
+  h2 {
+    text-transform: uppercase;
+    font-weight: 400;
+    @include font-size(1.4, $as_text: false);
+  }
+  &.download-app-popup {
+    background: $bluefields-blue;
+    color: $bluefields-white;
+    padding: $bluefields-margin;
+    ul {
+      margin-top: $bluefields-margin;
+      margin-bottom: $bluefields-margin * 2;
+      li {
+        i {
+          display: block;
+          @include font-size(1);
+        }
+      }
+    }
+    .download-section {
+      width: 49%;
+      display: inline-block;
+      vertical-align: bottom;
+      @include respond-to(handhelds) {
+        width: 100%;
+      }
+
+      a.store-button {
+        img {
+          height: 40px;
+        }
+      }
+      .phone-container {
+        @include respond-to(handhelds) {
+          display: none;
+        }
+
+        padding: 0;
+        padding-left: $bluefields-margin * 2;
+        margin-bottom: -12px;
+        max-width: none;
+        img {
+          width: 49%;
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+}
+
+.follow-team-hack {
+  a.x {
+    color: $bluefields-white;
+  }
+}
+
+.popup {
+  max-height: 90%;
+  margin-bottom: 20px!important;
+  &.bluefields-blue {
+    color: $bluefields-white;
+    background-color: $bluefields-blue;
+    a.x {
+      color: inherit;
+    }
+  }
+  @include respond-to(handhelds) {
+    width: 98% !important;
+  }
+}
+
+/* Popup parent */
+.popup-layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Grey background */
+.grey-overlay {
+  z-index: 4000;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: $bluefields-black;
+  @include opacity(0.7);
+}
+
+.new-popup {
+  position: absolute;
+  background: #eee;
+  padding: $bluefields-margin;
+  border-radius: 3px;
+  z-index: 10000;
+  top: 50%;
+  left: 50%;
+  color: #666;
+}
+
+.new-popup {
+  .close {
+    top: $bluefields-margin;
+    right: $bluefields-margin;
+  }
+  h2 {
+    text-transform: uppercase;
+    font-weight: 600;
+    @include font-size(1.4, $as_text: false);
+    margin-bottom: $bluefields-margin / 2;
+    color: #444;
+  }
+  p {
+    margin-bottom: $bluefields-margin / 2;
+    margin-top: $bluefields-margin / 2;
+  }
+  .close-popup {
+    color: #999999 !important;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 1rem;
+  }
+}
+
+
+.team-role-popup {
+  overflow: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.popup {
+  .popup-branding-container {
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+    bottom: 105%;
+    width: 200px;
+    height: 100px;
+    left: 50%;
+    margin-left: -100px;
+  }
+}
+
+
+
+.popup.extended-signup {
+  overflow: visible;
+.male-input {
+    margin-bottom: 4px;
+  }
+    .input-with-button {
+    button, input {
+      height: 40px;
+    }
+  }
+
+  a[name="next"] {
+    float: right;
+  }
+
+  .facebook-signup, .manual-signup, .or-choice-line{
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .select-ui-container {
+      width: 80%;
+      margin: 0 auto;
+      margin-bottom: 12px;
+    }
+
+    .no-facebook-signup {
+      .facebook-signup, .or-choice-line {
+        display: none;
+      }
+      .manual-signup {
+        width: 80%;
+        margin: 0 auto;
+      }
+    }
+    
+    button.facebook {
+      &.focus {
+        box-shadow: 0 0 2px 2px #4264aa, 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+        -webkit-box-shadow: 0 0 2px 2px #4264aa, 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+      }
+    }
+    
+    .facebook-signup, .manual-signup {
+      width: 45%;
+    }
+    
+    .or-choice-line{
+      width: 6%;
+      color: #777;
+    }
+
+        @media only screen and (min-width: 1000px) {
+      .or-choice-line{
+        &:after, &:before {
+          content: none;
+          border: none;
+        }
+      }
+    }
+    
+    @include respond-to(handhelds){
+      .facebook-signup, .manual-signup, .or-choice-line {
+        width: 100%;
+      }
+    }
+    
+    @media only screen and (max-width: 1000px) {
+      .facebook-signup, .manual-signup, .or-choice-line {
+        width: 100%;
+      }
+    }
+
+  .switch-toggle {
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    color: #444;
+  }
+
+  p {
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+    margin-bottom: 12px;
+    color: #777;
+  }
+
+  .buttons {
+    margin-top: 12px;
+  }
+}
+
+
+
+
+.rfu-onboarding-popup {
+  i {
+    margin-bottom: 12px;
+    color: #888;
+    font-size: 2rem;
+  }
+  h4 {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-weight: 500;
+    color: #444;
+  }
+
+  .onboarding-point {
+    margin-top: 12px;
+    margin-bottom:12px;
+    p {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      margin-top: 3px;
+    }
+  }
+}

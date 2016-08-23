@@ -1,0 +1,158 @@
+.fixture-faft-single-test{
+	position: relative;
+	background: #f6f6f6;
+	padding: $bluefields-margin*1.5 $bluefields-margin;
+	.team-left, .team-right, .information-center{
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.versus, .result, .outcome{
+		display: block;
+	}
+
+	.status {
+		color: $bluefields-white!important;
+		padding: 3px 8px;
+		border-radius: 3px;
+		i{
+			margin-right: 3px;
+			color: $bluefields-white!important;
+		}
+		&.postponed {
+			background: $bluefields-orange;
+		}
+		&.cancelled {
+			background: $bluefields-red;
+		}
+	}
+
+
+	.versus{
+		@include font-size(1.4, false);
+		font-weight: 300;
+		color: #999;
+	}
+
+	.result{
+		@include font-size(1.6, false);
+		font-weight: 300;
+		color: #666;
+	}
+
+	.outcome{
+		font-weight: bold;
+		@include font-size(0.8, false);
+		position: absolute;
+		left: 0;
+		width: 100%;
+		top: -0.9rem;
+		&.won {
+			color: $bluefields-green;
+		}
+
+		&.lost {
+			color: $bluefields-red;
+		}
+
+		&.draw {
+			color: $bluefields-orange;
+		}
+
+		&.postponed, &.cancelled {
+			@include font-size(0.8, false);
+		}
+	}
+
+	.team-left{
+		text-align: right;
+		padding-right: $bluefields-margin/2;
+		.fixture-team-information{
+			padding-right: $bluefields-margin/2;
+		}
+	}
+
+	.team-right{
+		text-align: left;
+		padding-left: $bluefields-margin/2;
+		.fixture-team-information{
+			padding-left: $bluefields-margin/2;
+		}
+	}
+
+	.information-center{
+		width: 80px;
+		position: relative;
+		@include respond-to(handhelds){ 
+			width: 80px;
+		}
+	}
+
+	.team-left, .team-right{
+		width: 40%;
+		@include calc(width, "50% - 44px");
+		@include respond-to(handhelds){ 
+			@include calc(width, "50% - 44px");
+		}
+		img{
+			max-width: 45px;
+		}
+	}
+
+	.fixture-team-information{
+		padding-top: $bluefields-margin/2;
+		width: 70%;
+		@include calc(width, "100% - 50px");
+		display: inline-block;
+		vertical-align: middle;
+
+
+		@include respond-to(handhelds){ 
+			display: block;
+			width: 100%;
+		}
+		h1{
+			text-transform: uppercase;
+			@include font-size(1.1, false);
+			font-weight: 600;
+			color: #777;
+			
+			&.current-team{
+				color: #222
+			}
+			a {
+				color: inherit;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			@include respond-to(handhelds){ 
+				@include font-size(1, false);
+			}
+
+		}
+	}
+}
+
+.single-fixture-meta{
+	padding: 3px;
+	border: 1px solid #f6f6f6;
+	display: none;
+	ul{
+		text-align: center;
+		li{
+			display: inline;
+			@include font-size(0.8, false);
+			color: #999;
+			&.title{
+			}
+		&:after{
+				content: " - "
+			}
+			&:last-child:after{
+				content: "";
+			}
+		}
+	}
+}

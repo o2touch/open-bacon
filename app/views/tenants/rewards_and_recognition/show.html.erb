@@ -1,0 +1,74 @@
+<style>
+.donut {
+  height:150px;
+}
+</style>
+<div class="page-title">  
+  <div class="row">
+    <div class="col-md-7 col-sm-6">
+      <h3>Rewards &amp; Recognition: Standings</h3>
+    </div>
+    <div class="col-md-5 col-sm-6">
+    </div>
+  </div>
+</div>
+
+<div id="container">
+
+<table id="overview" class="table">
+
+  <thead>
+    <th>Pos</th>
+    <th>Club</th>
+    <% @points[:dates].each do |date_str| %>
+    <th><%=Date.strptime(date_str, "%Y-%m-%d").strftime("%b")%></th>
+    <% end %>
+  </thead>
+
+  <tbody>
+  
+  <% @points[:teams].each do |t| %>
+    <tr>
+      <td></td>
+      <td><%=t.name%> - <a href="<%=team_path t%>" target="_blank">View <i class="bf-icon arrow-right"/></a></td>
+      <% @points[:dates].each do |date_str| %>
+      <td><%=@points[:data][date_str][t.id][:points]%></td>
+      <% end %>
+    </tr>
+  <% end %>
+
+  </tbody>
+
+</table>
+
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  /* User team & league (navigation information) */
+  window.ActiveApp = {
+    page: "dashboard",
+    Tenant: new Backbone.Model(<%= safe_js_string(@tenant_json) %>)
+  };
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+  BFApp.start();
+
+  var tableApi = $('#overview').DataTable({
+    "bPaginate": false,
+    "aaSorting": [[ 3, "desc" ]],
+    "fnDrawCallback": function ( oSettings ) {
+      /* Need to redo the counters if filtered or sorted */
+      if ( oSettings.bSorted || oSettings.bFiltered )
+      {
+        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+        {
+          $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+        }
+      }
+    },
+  });
+  // tableApi.order([[4,'desc']]);
+});
+</script>

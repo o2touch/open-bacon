@@ -1,0 +1,7 @@
+<p class="comment-type">
+	<a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+  <%= (isAttending) ? "is" : "is not" %> playing
+  <% if (!isEventPage) { %>
+    the event <a href="<%= event.getHref() %>"><%- event.get("title") %></a>
+  <% } %>
+</p>

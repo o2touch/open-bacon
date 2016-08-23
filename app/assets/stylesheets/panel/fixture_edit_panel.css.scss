@@ -1,0 +1,11 @@
+.fixture-edit, .fixture-edit-text{
+  &.fixed{
+	  position: fixed;
+	  top: 52px;
+	}
+	
+	&.bottom{
+	  position: absolute;
+	  bottom:$bluefields-margin;
+	}
+}

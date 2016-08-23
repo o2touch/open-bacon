@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+<meta charset="utf-8" />
+<title><%=@tenant.name%> Dashboard - Mitoo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<link rel="icon" href="<%= asset_path 'favicon.ico' %>" />
+
+<%= stylesheet_link_tag "app-public", :media => "all" %>
+<%= stylesheet_link_tag	"app-admin", :media => "all" %>
+
+<%= render :partial => 'layouts/google_maps' unless Rails.env.test? || !@disable_gmaps.nil? %>
+
+<!-- BEGIN CORE JS FRAMEWORK--> 
+<%= javascript_include_tag "app-admin" %>
+<!-- END CORE TEMPLATE JS -->
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body class="">
+<div id="r-navigation"></div>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container row"> 
+  <!-- BEGIN SIDEBAR -->
+  <div class="page-sidebar" id="main-menu"> 
+  
+  <!-- BEGIN MINI-WIGETS -->
+
+   <!-- END MINI-WIGETS -->
+   
+   <!-- BEGIN SIDEBAR MENU -->	
+    <p class="menu-title">NEW</p>
+    <ul>
+      <li><a href="/tenants/o2touch/refactored_reports"><i class="icon-custom-chart"></i> <span class="title">Users Chart</span></a></li>
+      <li><a href="/tenants/o2touch/csvs/users.csv"><i class="icon-custom-chart"></i> <span class="title">Users CSV</span></a></li>
+    </ul>
+   <p class="menu-title">OLD - ADMIN</p>
+    <ul>  
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>"> <i class="icon-custom-chart"></i> <span class="title">Dashboard</span></a></li>
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/teams"> <i class="icon-custom-chart"></i> <span class="title">Teams</span></a></li>
+  </ul>
+	<p class="menu-title">OLD - REPORTS</p>
+    <ul>	
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/reports"> <i class="icon-custom-chart"></i> <span class="title">All-time Overview</span></a></li>
+	  <li class=""> <a href="/tenants/<%=@tenant.subdomain%>/reports/participation"> <i class="icon-custom-chart"></i> <span class="title">Monthly Participation</span> </a> </li>
+	  <!-- <li class=""> <a href="/tenants/<%=@tenant.subdomain%>/reports/engagement"> <i class="icon-custom-chart"></i> <span class="title">Engagement</span> </a> </li> -->
+	</ul>
+  <p class="menu-title">OLD - REWARDS &amp; RECOGNITION</p>
+    <ul>  
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/rewards"> <i class="icon-custom-chart"></i> <span class="title">Standings</span></a></li>
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/rewards/drilldown"> <i class="icon-custom-chart"></i> <span class="title">Detailed Points</span></a></li>
+  </ul>
+  <p class="menu-title">OLD - CSV DOWNLOADS</p>
+    <ul>
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/csvs/headline.csv"> <i class="icon-custom-chart"></i> <span class="title">Headline</span></a></li>
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/csvs/per_team.csv"> <i class="icon-custom-chart"></i> <span class="title">Per Team</span></a></li>
+      <li class="start"> <a href="/tenants/<%=@tenant.subdomain%>/csvs/players.csv"> <i class="icon-custom-chart"></i> <span class="title">Players</span></a></li>
+    </ul>
+
+	<div class="clearfix"></div>
+    <!-- END SIDEBAR MENU --> 
+  </div>
+   
+  <!-- END SIDEBAR --> 
+  <!-- BEGIN PAGE CONTAINER-->
+  <div class="page-content"> 
+  	<div class="content">
+     <%= yield %>
+	</div>
+</div>
+
+<!-- END CONTAINER --> 
+
+</body>
+</html>

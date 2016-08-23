@@ -1,0 +1,46 @@
+<div id="container">
+	<div class="row spacing-bottom 2col">
+		<div class="grid simple ">
+	        <div class="grid-title no-border">
+	            <h4>Team Follows <span class="bold">Week <%=@current_week%></span> <a href="follows.csv">Export</a></h4>
+	            <div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+				</div>
+	        </div>
+	        <div class="grid-body no-border">
+	                <table class="table no-more-tables">
+	                    <thead>
+	                        <tr>
+	                            <th>Name</th>
+	                            <th>Email</th>
+								<th>Followed on</th>
+								<th>Team</th>
+								<th>Downloaded App</th>
+								<th>Team Members</th>
+								<th>Invited</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+							<% @data.each do |r| %>
+								<tr>
+									<td><%=link_to r[:user].name, admin_user_url(r[:user])%></td>
+									<td><%=r[:user].email%></td>
+									<td><%=r[:user].created_at.strftime("%Y-%m-%d")%></td>
+									<td><%=link_to(r[:team_id], admin_team_url(r[:team_id]))%></td>
+
+									<% if r[:downloaded_app]==false %>
+									<td></td>
+									<% else %>
+									<td><%=r[:downloaded_app].strftime("%Y-%m-%d")%> (<%=distance_of_time_in_words(r[:user].created_at, r[:downloaded_app])%>)</td>
+									<% end %>
+
+									<td><%=r[:team_members].size%></td>
+									<td><%=r[:invited_members].size%></td>
+								</tr>
+							<% end %>
+	                    </tbody>
+	                </table>
+	        </div>
+	    </div>
+	</div>
+</div>

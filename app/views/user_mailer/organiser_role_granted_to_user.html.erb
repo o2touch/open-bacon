@@ -1,0 +1,12 @@
+
+<h2>You're now an organizer</h2>
+
+<p><%= @user.first_name.titleize %>, you've been made an organizer of <i><%= @team.name %></i> on Mitoo.</p>
+
+<a class="button" href="<%= team_url(@team, :only_path => false )%>">View your team on Mitoo</a>
+
+<%
+email_title = "Organizer+Role+Granted+To+User"
+extra_params = @user.email
+%>
+<%==get_img_html(email_title, extra_params) %>

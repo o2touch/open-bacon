@@ -1,0 +1,65 @@
+<div id="sf-organiser" class="columns eight sf-page">
+	<ol class="steps clearfix">
+		<li class="done">Your Team</li>
+		<li class="current">Your Details</li>
+		<li>Done</li>
+	</ol>
+	<h1>Add yourself as the team admin</h1>
+	<p>We just need a few details about you to get you started</p>
+	<div class="sf-content columns twelve centered clearfix">
+
+	  <div class="columns five facebook-signup">
+	    <a href="/users/auth/facebook?save_type=SIGNUPFLOW&team_uuid=<%= team_uuid %>" class="button facebook">
+	      <i class="bf-icon facebook"></i> Add yourself with Facebook
+	    </a>
+	  </div>
+	  
+	  <div class="columns two center-line">
+	    <div class="line"></div>
+	    <p>OR</p>
+	    <div class="line"></div>
+	  </div>
+	  
+	  <div class="columns five normal-signup sf-form">
+	  	<div class="alert-box hide signup-error-alert"></div>
+	    <form class="input-group">
+	      <input type="hidden" value="✓" name="utf8">
+	      <input type="hidden" value="ijs/SmbG/Isw96pKdS90SPJkZBs6xu5qVBa/q7LHncI=" name="authenticity_token">
+	      <label for="signup_user_name">Name</label>
+	      <input id="signup_user_name" type="text" value="" placeholder="Joe Bloggs" name="user[name]">
+	      <label for="signup_user_email">Email</label>
+	      <input id="signup_user_email" type="email" value="" placeholder="joe@example.com" name="user[email]">
+	      <label for="signup_user_mobile_number">Mobile number (for SMS)</label>
+	      <input type="tel" id="signup_user_mobile_number" class="phone-input">
+	      <label for="signup_user_password">Create a password</label>
+	      <input id="signup_user_password" type="password" value="" name="user[password]">
+	      
+	      <div class="columns twelve actions clearfix">
+	      	<button type="submit" data-disabled="Processing" title="next">Next</button>
+	      	<a href="#step1" class="cancel">Back</a>
+	      </div>
+	      
+	    </form>
+	  </div>
+
+    
+
+	</div><!-- /.sf-content -->
+</div><!-- /#sf-organiser -->
+
+<div class="columns four bf-context">
+	<blockquote class="clearfix">
+		<p>Wow, almost there! Just add yourself as the team admin and you're ready to go! </p>
+		<img class="pepe-profile-pic" src="/assets/to_be_sorted/pepe-profile-pic.jpg" />
+		<span>Pepe</span>
+	</blockquote>
+	
+	<h2>Players love Mitoo</h2>
+	
+	<ul>
+		<li>No need for players to sign up</li>
+		<li>All their schedule information in one place</li>
+		<li>Subscribe to your team's calendar</li>
+	</ul>
+	
+</div>

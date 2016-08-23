@@ -1,0 +1,7 @@
+<p class="comment-type">
+	<a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+	was sent a reminder
+  <% if (!isEventPage) { %>
+    for the event <a href="<%= event.getHref() %>"><%- event.get("title") %></a>
+  <% } %>
+</p>

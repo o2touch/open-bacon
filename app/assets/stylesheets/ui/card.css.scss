@@ -1,0 +1,107 @@
+.card{
+	border-radius:$bluefields-radius;
+	overflow: hidden;
+	background: #f9f9f9;
+	position: relative;
+	.card-header{
+		background: $bluefields-blue;
+		border-bottom: 3px solid darken($bluefields-blue, 20%);
+		color: $bluefields-white;
+		padding: $bluefields-margin;
+		.circle{
+			margin-right: $bluefields-margin/2;
+		}
+		
+		h1, h2{
+			line-height: 1em;
+			margin: 0;
+		}
+		
+		a, a:visited, a:hover, a:active{
+			color: inherit;
+		}
+		
+		h1{
+			@include font-size(2, false);
+			font-weight: 600;
+			text-transform: uppercase;
+		}
+		
+		h2{
+			@include font-size(1.4, false);
+			font-weight: 400;
+			text-transform: uppercase;
+		}
+	}
+}
+
+
+
+.team-card, .user-card{
+	.card-header{
+		.circle{
+			vertical-align: top;
+		}
+		.team-info, .user-info{
+			display: inline-block;
+			vertical-align: top;
+			width: calc(100% - 80px);
+			padding-left: $bluefields-margin/2;
+			h4, p{
+				color: $bluefields-white;
+				margin: 0;
+			}
+			
+			h4{
+				font-weight: 600;
+			}
+			
+		}
+	}
+	
+	.card-meta{
+		background: $bluefields-white;
+		ul.team-meta, ul.user-meta{
+			margin: 0;
+			li{
+				display: inline-block;
+				vertical-align: middle;
+				padding: 4px 15px;
+				border-left: 1px solid #eee;
+				border-right: 1px solid $bluefields-white;
+				margin-left: -2px;
+				margin-right: -2px;
+				
+				&.follow{
+					border: 0;
+					position: absolute;
+					right: 11px;
+					bottom: 10px;
+					padding: 0;
+					
+				}
+				
+				&:last-child{
+					border-right: none;
+				}
+				
+				&:first-child{
+					border-left: none;
+				}
+				
+				.title{
+					display: block;
+					color: #333;
+					font-size: 24px;
+					font-weight: 500;
+					@include geogrotesque();
+					line-height: 1em;
+				}
+				.description{
+					font-size: 12px;
+					color: #555;
+				}
+			}
+		}		
+	}
+}

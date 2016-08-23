@@ -1,0 +1,224 @@
+.search-page {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #B2A556;
+  @include cover(image-path("cover_images/bg_search_5.jpg"));
+  &.with-img-loaded {
+    @include background-image(radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)), image-url("cover_images/bg_search_5.jpg"));
+  }
+  #main-navigation {
+    background: rgba(20, 20, 20, 0.1);
+    .navigation-logo {
+      background: none;
+    }
+  }
+  #r-navigation {
+    background: none;
+  }
+  #r-footer {
+    display: none;
+  }
+  .navigation-dropdown:hover .navigation-dropdown-title {
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+  .navigation-dropdown:hover .navigation-dropdown-list {
+    background: rgba(0, 0, 0, 0.29) !important;
+  }
+  .navigation-dropdown-list a:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.search-content {
+  padding-top: 200px;
+  padding-bottom: 60px;
+  @include respond-to(handhelds) {
+    padding-top: 80px;
+  }
+
+  .mitoo-logo {
+    margin: 0 auto;
+    display: block;
+    margin-bottom: $bluefields-margin;
+    max-width: 280px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: $bluefields-margin * 3;
+    font-size: 27px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .close {
+    @include font-size(1);
+  }
+  .search-copy {
+    color: $bluefields-white;
+    @include font-size(1);
+    margin-top: $bluefields-margin * 1.5;
+    a {
+      font-weight: bold;
+      color: $bluefields-white;
+    }
+  }
+}
+
+.search-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: $bluefields-margin / 2 $bluefields-margin;
+  background-color: rgba(20, 20, 20, 0.3);
+  ul {
+    display: inline-block;
+    vertical-align: middle;
+    &.right-link {
+      float: right;
+      a {
+        font-weight: 400;
+      }
+    }
+    li {
+      display: inline-block;
+      color: #ddd;
+      margin-right: $bluefields-margin;
+      @include font-size(0.8);
+      &:last-child:after {
+        margin-right: 0;
+      }
+      a {
+        color: #eee;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.search-layout {
+  select[name='type'] {
+    position: absolute;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    -o-appearance: button;
+    -ms-appearance: button;
+    appearance: button;
+    top: 0;
+    left: 0;
+    height: 36px;
+    width: 145px;
+    z-index: 10;
+    opacity: 0;
+  }
+  .fake-select {
+    position: absolute;
+    width: 145px;
+    top: 1px;
+    height: 34px;
+    left: 1px;
+    border: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-image: image-url("to_be_sorted/arrow_down.png");
+    background-position: 90% 50%;
+    background-repeat: no-repeat;
+    text-align: left;
+    background-color: #eee;
+  }
+  input[name="search"] {
+    padding: 4px 8px;
+    @include font-size(1.2);
+    margin-bottom: 0;
+    // !important hack required to override the shitty rules in the webarch template
+    padding-left: 155px !important;
+  }
+  .inner-search {
+    max-height: 243px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 4px;
+    @include respond-to(handhelds) {
+      max-height: 80000px !important;
+      overflow: auto !important;
+      -webkit-overflow-scrolling: auto !important;
+    }
+
+    @include scrollbar;
+  }
+  form {
+    position: relative;
+  }
+  .spinner-search {
+    position: absolute;
+    top: 19px;
+    right: 17px;
+  }
+  .no-result {
+    margin-top: 20px;
+    color: $bluefields-white;
+    i {
+      @include font-size(3);
+    }
+    p {
+      @include font-size(1.2);
+    }
+  }
+  .team-row {
+    padding: 3px;
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+    &.selected {
+      a {
+        background: #222;
+        background: rgba(0, 0, 0, 0.8);
+      }
+    }
+    a {
+      display: block;
+      color: #333;
+      padding: $bluefields-margin / 2;
+      border-radius: 3px;
+      background: #444;
+      background: rgba(0, 0, 0, 0.6);
+      &:hover, &:focus {
+        background: #333;
+        background: rgba(0, 0, 0, 0.7);
+      }
+      &:focus {
+        outline: 0;
+      }
+      img {
+        max-width: 40px;
+      }
+    }
+    .team-information {
+      display: inline-block;
+      vertical-align: top;
+      width: 74%;
+      padding-left: $bluefields-margin / 2;
+      @include calc(width, "100% - 65px");
+      h4 {
+        text-transform: uppercase;
+        font-weight: 600;
+        @include font-size(1.2, false);
+        color: #aaa;
+      }
+      p {
+        color: #777;
+      }
+      h4, p {
+        font-weight: 400;
+        em {
+          color: $bluefields-blue;
+          font-style: normal;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

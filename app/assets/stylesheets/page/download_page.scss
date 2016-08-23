@@ -1,0 +1,66 @@
+body.download-page {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #B2A556;
+  @include cover(image-path("cover_images/bg_search_5.jpg"));
+  @include background-image(radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), image-url("cover_images/bg_search_5.jpg"));
+}
+
+.download-content {
+  padding-top: 160px;
+  @include respond-to(handhelds) {
+    padding-top: 10px;
+  }
+
+  .screnshot-container {
+    max-height: 200px;
+    display: inline-block;
+    vertical-align: bottom;
+    overflow: hidden;
+    @include respond-to(handhelds) {
+      max-height: 120px;
+    }
+  }
+  .store-screenshot {
+    margin-bottom: $bluefields-margin * 3;
+    img {
+      max-height: 300px;
+    }
+  }
+  h1, h2 {
+    color: $bluefields-white;
+  }
+  h1 {
+    @include font-size(2, false);
+    text-transform: uppercase;
+    font-weight: 600;
+    @include respond-to(handhelds) {
+      @include font-size(1.4, false);
+    }
+  }
+  h2 {
+    @include font-size(1.4, false);
+    font-weight: 400;
+    @include respond-to(handhelds) {
+      @include font-size(1, false);
+    }
+  }
+  .button-container {
+    margin-top: $bluefields-margin * 2;
+  }
+  .no-device-text {
+    margin-top: $bluefields-margin * 3;
+    color: $bluefields-white;
+    a {
+      color: $bluefields-white;
+      text-decoration: underline;
+    }
+  }
+  .app-store-badge, .play-store-badge {
+    display: inline-block;
+  }
+  .cta-store {
+    height: 60px;
+    margin: $bluefields-margin;
+  }
+}

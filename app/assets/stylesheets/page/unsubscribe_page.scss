@@ -1,0 +1,28 @@
+body {
+	height:0;
+}
+
+.row.unsubscribed-content {
+	margin:200px auto;
+
+	.columns {
+		background-color: #fff;
+		padding: 36px;
+
+		h1 {
+			margin-bottom:24px;
+			text-align:center;
+		}
+		h2 {
+			text-align:center;
+			font-family:helvetica, ariel;
+			font-size:24px;
+			font-weight:bold;
+			color:#333;
+		}
+		p {
+			margin-top:12px;
+			font-size:16px;
+		}
+	}
+}

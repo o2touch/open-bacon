@@ -1,0 +1,63 @@
+BFApp.Views.WidgetResultList = Marionette.CollectionView.extend({
+
+  emptyView: BFApp.Views.EmptyResultsView,
+
+  itemViewOptions: {
+    tagName: "li"
+  },
+
+  className: 'event-list-widget',
+
+  events: {
+    "click .more": "showMore"
+  },
+
+  onBeforeRender: function() {
+    var that = this;
+
+    // reset
+    this.$(".event-location-group").remove();
+    this.currentLocationNumber = null;
+
+    // add new location groups
+    _.each(this.locations, function(location, i) {
+      var displayIndex = i + 1;
+
+      BFApp.renderTemplate(that.$el, "map_search/event_location_group", {
+        locationNumber: displayIndex,
+        addressTitle: location.get("title"),
+        distance: location.get("distance"),
+        markerIcon: getMapPinIcon("o2_touch", "pin" + displayIndex)
+      });
+    });
+  },
+
+  appendHtml: function(collectionView, itemView, index) {
+    if (this._showingEmptyView) {
+      this.$el.append(itemView.$el);
+      return;
+    }
+
+    var locationNumber = itemView.model.get("locationNumber");
+    if (locationNumber === this.currentLocationNumber) {
+      this.locationCount++;
+    } else {
+      this.currentLocationNumber = locationNumber;
+      this.locationCount = 1;
+    }
+
+    // only show the first 2
+    if (this.locationCount > 2) {
+      itemView.$el.addClass("hide");
+      // display "show more" link
+      this.$el.find("#location-group-" + locationNumber + " .more").removeClass("hide");
+    }
+    this.$el.find("#location-group-" + locationNumber + " .events").append(itemView.$el);
+  },
+
+  showMore: function(e) {
+    $(e.currentTarget).siblings(".events").find(".event-row.hide").removeClass("hide");
+    $(e.currentTarget).addClass("hide");
+  }
+
+});

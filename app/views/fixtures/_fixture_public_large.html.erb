@@ -1,0 +1,66 @@
+<% 
+  date = event.bftime
+  fixture = event.fixture
+  home = (event.home_or_away == "home")
+  home_away_str = home ? "Home" : "Away"
+%>
+<h1 class="text-center"><%= title %> <% if !date.tbd? %>- <%= date.day %> <%= date.month %><% end %></h1>
+
+<% unless fixture.nil? %>
+  <div class="fixture-faft-single-test <%= "with-result" unless fixture.nil? || fixture.result.blank? %>">
+    
+    <!-- Team left -->
+    <div class="team-left">
+        <% unless fixture.home_team.nil? %>
+        <%= profile_picture_helper(fixture.home_team, :small_original_ratio, class: "hide-for-medium hide-for-large show-for-small") %>
+        <div class="fixture-team-information">
+          <% unless fixture.home_team.nil? %>
+          <h1 <%= "class=current-team" unless fixture.home_team.id != @team.id %>>
+            <% if fixture.home_team.id != @team.id   && !fixture.home_team.nil? && !fixture.home_team.id.nil? %>
+              <%= link_to fixture.home_team.name, default_team_path(fixture.home_team) %>
+            <% else %>
+              <%= fixture.home_team.name %>
+            <% end %>
+            </h1>
+          <% end %>
+        </div>
+        <%= profile_picture_helper(fixture.home_team, :small_original_ratio, class: "hide-for-small") %>
+      <% end %>
+    </div>
+
+    <div class="information-center text-center">
+      <% if !fixture.result.blank? && !fixture.result.away_score.blank? %>
+      <% result = ResultPresenter.new(fixture.result) %>
+        <span class="outcome <%= result.result_for_team(@team) %>"><%= result.result_for_team(@team).upcase %></span>
+        <span class="result"><%= result.final_score %></span>
+      <% else %>
+        <span class="versus">VS</span>
+      <% end %>
+    </div>
+
+    <!-- Right team -->
+    <div class="team-right">
+      <% unless fixture.away_team.nil? %>
+        <%= profile_picture_helper(fixture.away_team, :small_original_ratio) %>
+        <div class="fixture-team-information">
+          <h1 <%= "class=current-team" unless fixture.away_team.id != @team.id %>>
+            <% if fixture.away_team.id != @team.id && !fixture.away_team.nil? && !fixture.away_team.id.nil? %>
+              <%= link_to fixture.away_team.name, default_team_path(fixture.away_team) %>
+            <% else %>
+              <%= fixture.away_team.name %>
+            <% end %>
+          </h1>
+        </div>
+      <% end %>
+    </div>  
+
+  </div>
+
+  <div class="single-fixture-meta">
+    <ul>
+      <!-- <li><%= date.day %> <%= date.month %></li> -->
+      <li><%= date.twelve_hour_time %></li>
+      <li><%= home_away_str %><%= ", " + fixture.location.address unless fixture.location.nil? %></li>
+    </ul>
+  </div>
+<% end %>

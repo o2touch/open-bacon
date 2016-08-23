@@ -1,0 +1,14 @@
+<h2>The results are in!</h2>
+
+<%= render :partial => "result_mailer/fixture_details", :locals => {:fixture => @fixture} %>
+
+<% if @token %>
+  <p>See the whole schedule online</p>
+	<a class="button" href="<%= power_token_url(:token => @token, :only_path => false )%>">View the results and standings</a>
+<% else %>
+  <a class="button" href="<%= team_url(@team, :only_path => false )%>#results">View the results and standings</a>
+<% end %>
+
+<!-- EMAIL TRACKING: REMEMBER TO UPDATE -->
+<!-- track_email( recipient_email, email_name, hash_of_params) -->
+<%==track_email(@recipient.email, "Result Created", {"TeamId" => @team.id.to_s}) %>

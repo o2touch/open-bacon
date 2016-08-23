@@ -1,0 +1,6 @@
+
+<h2><%= @user.first_name.titleize %> has been removed</h2>
+
+<p><%= @user.name %> has been removed as a player on Mitoo.</p>
+
+<a class="button" href="<%= team_url(@team, :only_path => false )%>">View your team on Mitoo</a>

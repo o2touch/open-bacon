@@ -1,0 +1,14 @@
+<% if(!isRegistered && currentUserCanManageTeam){ %>
+<p class="status"><i class="bf-icon info"></i>You can still edit this player's information as they have not yet logged in.</p>
+<% } %>
+<div id="r-player-profile" class="twelve columns player-section"></div>
+<div id="r-player-contact" class="twelve columns player-section"></div>
+<% if(isJunior){ %>
+<div id="r-player-parent" class="twelve columns player-section"></div>
+<div id="r-player-second-parent" class="twelve columns player-section hide">
+  <!-- <button class="small full-width grey add-second-parent">Add a second parent</button> -->
+</div>
+<% } %>
+<div id="r-player-children" class="twelve columns player-section"></div>
+<div id="r-player-permission" class="twelve columns player-section"></div>
+<div id="r-player-actions" class="twelve columns player-section"></div>

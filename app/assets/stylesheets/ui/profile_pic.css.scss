@@ -1,0 +1,16 @@
+$size: "thumb", "small", "medium", "large";
+$size_in_px: 30px, 40px, 55px, 70px;
+$type: "user", "team", "league", "division";
+  
+@for $i from 0 to length($type) {
+  .#{nth($type, $i + 1)}-pic {
+    @if nth($type, $i + 1) != "league" {
+      border-radius: 100%;
+    }
+  }
+}
+@for $j from 0 to length($size) {
+  .#{nth($size, $j + 1)}-pic {
+    @include cube(nth($size_in_px, $j + 1));
+  }
+}

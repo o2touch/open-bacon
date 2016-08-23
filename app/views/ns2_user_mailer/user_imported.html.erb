@@ -1,0 +1,22 @@
+<p>Hi there <%=@recipient.first_name.titleize%></p>
+
+<p>I'm Andy, the new Captain of Mitoo. I wanted you to be the first to know that <b>Football Mitoo has merged with Bluefields</b>. We've got a great new website and mobile apps with much more coming soon!</p>
+
+<p><b>What does this mean for you?</b><br/>
+Whilst nothing has changed on your account, you’ll need to <a href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">set a new password</a> to be able to log in and use the new Mitoo site and mobile apps.</p>
+
+<a class="button" href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">Confirm your Account</a>
+<br/>
+<p><b>Download the iPhone and Android app</b></p>
+
+<p>Today we've released our Mitoo iPhone or Android apps! Now it's even easier to get your team information on-the-go.</p>
+<ul class="bullets">
+  <li>Know when &amp; where the next game is</li>
+  <li>Keep on top of the league table</li>
+  <li>Get the results &amp; scores which matter, right in your hand.</li>
+</ul>
+
+<p>You’ll need to <a href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">set a new password</a> before you can use the new mobile apps. Thank you for being part of Mitoo. Stay tuned for more exciting updates.</p>
+
+<p>Yours in sport,<br />
+Andrew Crump</p>

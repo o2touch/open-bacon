@@ -1,0 +1,47 @@
+/*------------------------------------*\
+	COVER
+\*------------------------------------*/
+.b-cover {
+	height: $cover-height;
+	line-height: $cover-height;
+	width: 100%;
+	text-align: center;
+
+	background-color: #F7F7F7;
+	background-position: center;
+	-webkit-background-size: 	cover;
+  -moz-background-size: 		cover;
+  -o-background-size: 			cover;
+  background-size: 					cover;
+
+	&--default {
+		height: 150px;
+		line-height: 150px;
+	}
+
+	// Centered call to action (add a cover)
+	&__cta {
+		cursor: pointer;
+		margin: 0 auto;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
+
+
+		// Icon in call to action
+		&__icon {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		// Text in call to action
+		&__text {
+			font-style: italic;
+			@include font-size(1.2);
+			color: #aaa;
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+}

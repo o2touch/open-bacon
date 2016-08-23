@@ -1,0 +1,135 @@
+.panel.schedule-edit{
+	.panel-content{
+		border-radius:0;
+		border: none;
+		background: #fafafa;
+	}
+	.panel.re-schedule{
+		width: 347px;
+	}
+
+	
+}
+
+.event-edit-detail{
+	&.fixed{
+		position: fixed;
+		top: 45px;
+	}
+			
+	&.bottom{
+		position: absolute;
+		bottom:12px;
+	}
+	
+	.game-cancel{
+		margin-bottom: $bluefields-margin/2;
+	}
+	.game-cancel, button[title="enable event"], button.postpone-event{
+		position: relative;
+		z-index: 9;
+	}
+	
+
+	button[title="enable event"], .postpone-event{
+		margin-bottom: $bluefields-margin;
+	}
+
+	.add-event-header{
+		#edit-event-type{
+			margin: 0;
+			margin-left: 9px;
+			margin-top: 3px;
+		}
+	}
+	.time{
+		margin-bottom: $bluefields-margin;
+		position: relative;
+		input, select{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+		}
+
+		#edit-event-date{
+			cursor: pointer;
+			width: 50%;
+		}
+
+		#edit-event-hours, #edit-event-minutes, #edit-event-ampm{
+			width: 15.5%;
+		}
+	}
+
+	.event-response{
+		background: $bluefields-white;
+		padding: $bluefields-margin/2;
+		margin-bottom: $bluefields-margin;
+		border-radius:$bluefields-radius;
+	}
+
+
+
+	.repeat{
+		margin-bottom: $bluefields-margin;
+
+		.show-repeat{
+			height:28px;
+		}
+
+		.repeat-form{
+			height:28px;
+			background: $bluefields-white;
+			padding: 5px $bluefields-margin/2;
+			border-radius: $bluefields-radius;
+
+			#repeat-type,
+			.label-repeat,
+			.label-for,
+			#repeat-number,
+			.label-type{
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0;
+				width: auto;
+				margin-right: $bluefields-margin/2;
+			}
+
+			.cancel-repeat{
+				float: right;
+				margin: 0;
+				margin-top: $bluefields-margin/4;
+				color: #666;
+				cursor: pointer;
+			}
+		}
+	}
+
+	button[title="cancel event"]{
+		float: left;
+		margin-top: 8px;
+	}
+
+
+
+
+	hr{
+		border-bottom: 1px solid $bluefields-white;
+		border-top: 1px solid #eee;
+	}
+
+
+	.danger-link{
+		font-size: 12px;
+	}
+
+	.edit-cancelled-overlay{
+		position: absolute;
+		@include calc(height, "100% - 36px");
+		width: 100%;
+		background: $bluefields-white;
+		@include opacity(0.5);
+		top: 0;
+		left: 0;
+	}
+}

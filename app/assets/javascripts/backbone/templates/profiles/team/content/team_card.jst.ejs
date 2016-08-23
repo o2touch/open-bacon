@@ -1,0 +1,49 @@
+<div class="card team-card popover">
+	<div class="card-header" >
+		<%= htmlPic %>
+		<div class="team-info">
+			<h1><%= name %></h1>
+			<h2>
+				<% if(leagueModel){ %>
+						<a href="<%= leagueModel.getHref() %><% if(division){ %>/divisions/<%= division.id %><% } %>">
+							<%- leagueModel.get("title") %>
+							<% if(division){ %><span class="division"> - <%- division.title %><% } %></span>
+						</a>
+					<% } else if(leagueName){ %>
+						<%- leagueName %>
+					<% } %>
+			</h2>
+		</div>
+	</div>
+	
+	<div class="card-meta">
+		<% if(showMeta) { %>
+			<ul class="team-meta">
+				<li>
+					<span class="title"><%= events %></span>
+					<span class="description">Event<% if(events != 1){ %>s<% } %> played</span>
+				</li>
+				<li>
+					<span class="title"><%= teammates %></span>
+					<span class="description">Player<% if(teammates != 1){ %>s<% } %></span>
+				</li>
+				<li>
+					<span class="title"><i class="bf-icon <%= sportIcon %>"></i></span>
+					<span class="description"><%= sport %></span>
+				</li>
+				<li class="right follow">
+					<% if (canFollow) { %>
+						<% if (isFollowing) { %>
+							<button type="button" name="unfollow" class="grey" disabled>Following</button>
+						<% } else { %>
+							<button type="button" name="follow">Follow</button>
+						<% } %>
+					<% } %>
+				</li>
+			</ul>
+
+		<% }else{ %>
+			<p><strong><em>This team is private</em></strong></p>
+		<% } %>
+</div>
+</div>

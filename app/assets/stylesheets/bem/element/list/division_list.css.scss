@@ -1,0 +1,57 @@
+/*------------------------------------*\
+	DIVISION LIST
+\*------------------------------------*/
+.b-division-list {
+	@include grid-row();
+	&__item {
+		margin-bottom: $bluefields-margin*.75;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+
+/*------------------------------------*\
+	DIVISION ITEM
+\*------------------------------------*/
+.b-division {
+	border-radius: $bluefields-radius;
+	display: block;
+	padding: $bluefields-margin*0.75 $bluefields-margin;	
+	border: 1px solid #eee;
+
+	&__title {
+		// @include title(1);
+		@include font-size(1.2);
+		margin-bottom: $bluefields-margin/2;
+		text-transform: uppercase;
+		color: #555;
+		display: block;
+		word-break: break-word;
+	}
+
+	&:hover {
+		background: #eee;
+	}
+
+	&__info-list {
+		&__item {
+			@include font-size(0.9);
+			color: #777;
+			display: inline-block;
+			font-weight: 400;
+			margin-right: $bluefields-margin*2;
+			&:last-child {
+				margin-right: 0;
+			}
+
+			&__title {
+				display: block;
+				text-transform: uppercase;
+				color: #999;
+				@include font-size(0.7);
+			}
+		}
+	}	
+}

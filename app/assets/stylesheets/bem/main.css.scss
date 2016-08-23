@@ -1,0 +1,36 @@
+/*------------------------------------*\
+	VARIABLES
+\*------------------------------------*/
+$section-space: $bluefields-margin * 2;
+$logo-max-width: 125px;
+$button-cta-width: 125px;
+$add-b-height: 80px;
+$section-title-width: 100px;
+$cover-height: 300px;
+
+
+/*------------------------------------*\
+	BLOCKS
+\*------------------------------------*/
+@import "bem/block/cover";
+@import "bem/block/header";
+@import "bem/block/content";
+@import "bem/block/section";
+@import "bem/block/info";
+@import "bem/block/sidebar";
+@import "bem/block/panel";
+@import "bem/block/footer";
+@import "bem/block/popup";
+
+
+/*------------------------------------*\
+	ELEMENT
+\*------------------------------------*/
+@import "bem/element/list/division_list";
+@import "bem/element/list/user_list";
+@import "bem/element/panel/claim";
+@import "bem/element/location";
+
+.b-profile {
+	position: relative;
+}

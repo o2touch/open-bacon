@@ -1,0 +1,31 @@
+{
+  "_comment": "Bluefieldscom/tipsy.git has support for jQuery 1.9, and jackocnr/backbone-live.git has support for the parse option",
+  "name": "Bluefields",
+  "version": "2.5.1",
+  "dependencies": {
+    "backbone": "1.1.0",
+    "backbone-live": "https://github.com/jackocnr/backbone-live.git",
+    "backbone-relational": "0.8.6",
+    "glDatePicker": "https://github.com/Bluefieldscom/glDatePicker.git",
+    "jquery": "1.9.1",
+    "jquery-resize": "latest",
+    "jquery.cookie": "1.4.0",
+    "jquery-file-upload": "9.5.2",
+    "jquery-placeholder": "2.0.7",
+    "jquery-ujs": "latest",
+    "jquery.ui": "1.10.3",
+    "jquery-autosize": "1.18.1",
+    "jquery-easing": "https://github.com/gdsmith/jquery.easing.git#1.3.1",
+    "progress-bar-polyfill": "https://github.com/LeaVerou/HTML5-Progress-polyfill.git",
+    "marionette": "1.4.1",
+    "spin.js": "1.3.2",
+    "spinjs-jquery": "latest",
+    "tipsy": "git@github.com:Bluefieldscom/tipsy.git#1.1",
+    "underscore": "1.5.2",
+    "modernizr": "2.7.1",
+    "intl-tel-input": "latest",
+    "agolia": "https://github.com/algolia/algoliasearch-client-js.git#2.4.7",
+    "moment": "latest",
+    "pickadate": "~3.4"
+  }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xml:fb="http://www.facebook.com/2008/fbml">
+  <head <%== @fb_headprefix if !@fb_headprefix.nil?%>>
+    
+    <!-- Meta & information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <%
+        # SHOW DOWNLOAD APP MARKETING
+        # TODO: Refacator this hack
+    %>
+    <% if !@team.nil? && !@team.is_o2_touch_team? %>
+        
+    <meta name="apple-itunes-app" content="app-id=704514289">
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ddccmacejnnlmjlldabpndpjnljkjjpe">
+
+    <% end %>
+
+    <%= display_meta_tags :site => 'Mitoo', :reverse => true %>
+    
+    <%= stylesheet_link_tag "app-public", :media => "all", :type => "text/css" %>
+    <%= content_for :head_css %>
+
+    <!-- IE fix & Polyfill -->
+    <!--[if lte IE 8]>
+      <%= javascript_include_tag "fix/ie8.js" %>
+    <![endif]-->
+
+    <%= yield :after_head %>
+
+    <%= render :partial => 'layouts/common_head' %> 
+    
+    <%= render :partial => 'layouts/google_maps' unless Rails.env.test? || !@disable_gmaps.nil? %>
+    
+    <%= content_for :head %>
+  </head>
+  <body class="<%= @body_class unless @body_class.nil? %>">
+    <%= render :partial => 'layouts/facebook' unless !@disable_facebook.nil? %>
+    
+    <%= yield %>
+
+    <%= render :partial => 'layouts/google_remarketing' %>
+    <%= render :partial => 'layouts/common_end_body' %>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<style>
+.notice{
+	width:100%;
+	padding:10px;
+	margin-bottom:10px;
+	background-color: rgba(255,255,255,0.4);
+}
+.notice p {
+	margin: 0;
+}
+</style>
+
+<div class="page-title">	
+	<h3>Engagement</h3>
+</div>
+
+<div id="container">
+	<div class="row spacing-bottom 2col">	
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">	
+			<div title="Number of New Users who signed-up (excludes invited users). Analyze by Referrer, Demographics etc." class="tiles blue added-margin">
+			  <div class="tiles-body">		
+				<div class="tiles-title">
+					ACTIVE PLAYERS
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@total_players%>" data-animation-duration="1200"><%=@total_players%></span>
+				</div>				
+				<div class="description"><i class="<%= @total_players_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @total_players_change%>% <span class="blend">than last week</span></span></div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles green added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					MOBILE ACTIVE PLAYERS
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@new_players%>" data-animation-duration="1000"><%=@new_players%></span>	
+				</div>			
+				<div class="description"><i class="<%= @new_players_change > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; <%='%.1f' % @new_players_change%>% <span class="blend">than last week</span></span></div>	
+			 </div>
+			</div>
+		</div>			
+	</div>
+
+</div>

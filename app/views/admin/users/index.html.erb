@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="columns twelve">
+		<h1>Users</h1>
+		<br />
+	</div>
+</div>
+<div class="row">
+	<div class="columns twelve dashboard">
+
+		<h2>Users</h2>
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Email</td>
+					<td>Device</td>
+					<td>Organising</td>
+					<td>Playing</td>
+					<td>Responses</td>
+					<td>Last Response</td>
+					<td>Joined</td>
+					<td>Type</td>
+					<td></td>
+				</tr>
+			</thead>
+			<% @users.each do |user| %>
+				<% if user.role?("Guest")
+					next
+				 end %>
+			<tr>
+				<td><%=link_to user.name, admin_user_path(user) %></td>
+				<td><%=user.email %></td>
+				<td><%=user.mobile_devices.map {|md| md.model + " " + md.os_version}.join(", ") %></td>
+				<td><%=user.events_created.length %></td>
+				<td><%=user.events_playing.length %></td>
+				<td><%=user.teamsheet_entries.length %></td>
+				<td><%=l(user.teamsheet_entries.last.created_at) if(!user.teamsheet_entries.last.nil?)%></td>
+				<td><%=l(user.created_at) %></td>
+				<td><%=link_to "Delete", admin_user_path(user), :confirm => "Sure?", :method => :delete %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

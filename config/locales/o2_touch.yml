@@ -1,0 +1,18 @@
+o2_touch:
+  general:
+    app_name: "O2 Touch"
+    availability:
+      available: "coming"
+      awaiting: "invited"
+      unavailable: "not coming"
+    game_display_name: "O2 TouchBase"
+  event:
+    page_title: "Your o2 event"
+  team:
+     page_title: "Your o2 team"
+  division:
+    page_title: "Your o2 division"
+  league:
+    page_title: "Your o2 league"
+  user:
+    page_title: "You are (o2)"

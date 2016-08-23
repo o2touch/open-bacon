@@ -1,0 +1,43 @@
+<% if (title) { %>
+<div class="text-center join-text-help">
+	<h1><%= title %></h1>
+	<p><%= msg %></p>
+</div>
+<% } %>
+
+<div class="team-form">
+	<% if (edit) { %>
+	<label>Team logo</label>
+	<div class="pfl-pic-section clearfix">
+		<%= htmlPic %>
+		<span class="grey button" name="upload-button" title="Upload Badge" data-disabled="Uploading">
+			<span class="text">Upload badge</span>
+			<input type="file" name="team-profile-picture">
+		</span>
+	</div>
+	<% } %>
+
+	<label for="team-name">Team name</label>
+	<div class="alert-box alert hide"></div>
+	<input id="team-name" class="team-name" type="text" name="name" placeholder="Mitoo Rovers" value="<%= name %>">
+		
+	<div class="inline-input age-group">
+		<input type="radio" name="age_group" id="age-adult" value="99" checked>
+		<label for="age-adult">Adult team</label>
+	</div>
+	<div class="inline-input age-group">
+		<input type="radio" name="age_group" id="age-junior" value="14">
+		<label for="age-junior">Junior team (U14-U18)</label>
+	</div>
+	<div class="inline-input age-group">
+		<input type="radio" name="age_group" id="age-junior-kids" value="9">
+		<label for="age-junior-kids">Junior team (U13)</label>
+	</div>
+
+	<%= bottomFieldsHtml %>
+
+	<div class="inline-input text-right">
+		<a href="#" class="cancel-link" name="cancel">Cancel</a>
+		<button name="save" type="submit" class="small" title="save team" data-disabled="<% if(edit){ %>Saving<% }else{ %>Adding team<% } %>"><% if(edit){ %>Save<% }else{ %>Add team<% } %><div class="spinner hide"></div></button>
+	</div>
+</div>

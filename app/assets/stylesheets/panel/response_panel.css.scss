@@ -1,0 +1,91 @@
+.panel.response{
+	border: none;
+	.panel-content{
+		padding: 0;
+		background: none;
+		
+		.availability{
+			padding: $bluefields-margin/2 $bluefields-margin;
+			h4{
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0;
+				font-size: 20px;
+				margin-left: $bluefields-margin/2;
+				@include calc(width, "100% - 50px");
+			}
+
+			.availability-edit{
+				font-size: 16px;
+				position: absolute;
+				top: 6px;
+				right: 6px;
+			}
+
+			.availability-choice{
+				margin-left: -$bluefields-margin;
+				margin-right: -$bluefields-margin;
+				margin-top: -$bluefields-margin/2;
+				margin-bottom: -$bluefields-margin/2;
+				
+				h4{
+					margin-left: 0;
+					margin-bottom: 6px;
+
+				}
+				button.available{
+					margin-bottom: $bluefields-margin/2;
+				}
+			}
+
+			&.available{
+				background: lighten($bluefields-green, 40%);
+				border: 1px solid $bluefields-green;
+				padding: $bluefields-margin/2 $bluefields-margin;
+				h4{
+					color: $bluefields-green;
+				}
+				.availability-edit{
+					color: lighten($bluefields-green, 10%);
+				}
+			}
+
+			&.unavailable{
+				background: lighten($bluefields-red, 40%);
+				border: 1px solid $bluefields-red;
+				h4{
+					color: $bluefields-red;
+				}
+				.availability-edit{
+					color: lighten($bluefields-red, 10%);
+				}
+			}
+		}
+	}
+}
+
+
+
+.panel.response-multi{
+	.availability{
+		margin-bottom: $bluefields-margin/2;
+		margin-top: $bluefields-margin/2;
+		h4{
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 16px;
+			margin:0;
+		}
+
+		.header-toggle{
+				margin-top: $bluefields-margin/2;
+				margin-bottom: $bluefields-margin;
+				margin-left: 0;
+		}
+
+		button.available{
+			margin-top: $bluefields-margin/2;
+			margin-bottom: $bluefields-margin;
+		}
+	}
+}

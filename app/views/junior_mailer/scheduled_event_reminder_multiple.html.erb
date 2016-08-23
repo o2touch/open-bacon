@@ -1,0 +1,18 @@
+<h2><%=@junior.first_name%> has <%=@teamsheet_entries.size %> events <%= @day_of_week.nil? ? "coming up" : @day_of_week %></h2>
+
+<p><%=@parent.first_name.titleize%>, <%=@junior.first_name.titleize%> has <%=@teamsheet_entries.size %> events and is down as <%= I18n.t "general.availability.available", locale: @tenant.i18n %>. Can <%=@junior.first_name.titleize%> still make it?</p>
+
+<% @teamsheet_entries.each do |tse| %>
+<% @event = tse.event %>
+<% @teamsheet_entry = tse %>
+
+  <%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+  <%= render :partial => "user_mailer/event_response", :locals => {:teamsheet_entry => tse, :junior => @junior} %>
+
+<% end %>
+
+<%
+email_title = "Event+Reminder"
+extra_params = @parent.email
+%>
+<%==get_img_html(email_title, extra_params) %>

@@ -1,0 +1,715 @@
+// COLUMNS HACK; TODO: IMPROVE THAT MOFO
+.squad-tab{
+	@include respond-to(wide-screens) {@include flex();}
+	@include respond-to(medium-screens) {@include flex();}
+}
+
+
+
+.player-contact{
+	margin-top: $bluefields-margin;
+}
+
+.squad-tab{
+
+	ul li, li {
+		list-style: none;
+	}
+
+	//NAVIGATION 	
+	#r-squad-navigation{
+		background: #E4E4E4;
+		margin-left: -13px;
+		margin-bottom: -12px;
+		margin-top: -12px;
+		
+		@include respond-to(handhelds) { display: none;}
+		
+		
+		.squad-navigation{
+			padding: $bluefields-margin/2;
+			padding-top: 0;
+			margin-bottom: $bluefields-margin/2;
+			@include box();
+			&.fixed{
+				position: fixed;
+				top: 40px;
+			}
+			
+			&.bottom{
+				position: absolute;
+				bottom:0;
+			}
+			
+			ul{
+				padding: 0;
+				margin-bottom: $bluefields-margin;
+				li{
+					font-size: 12px;
+					a{
+						padding: $bluefields-margin/2 $bluefields-margin;
+						margin-left: -$bluefields-margin/2;
+						margin-right: -$bluefields-margin/2;
+						display: block;
+						color: #666;
+						border-top: 1px solid transparent;
+						border-bottom: 1px solid transparent;
+						span{
+							color: #999;
+							float:right;
+						}
+						
+						&:hover{
+							background: #ddd;	
+						}
+						
+						&.active{
+							background: $bluefields-white;
+							cursor:  text;
+							margin-right: -7px;
+							border-top: 1px solid #ddd;
+							border-bottom: 1px solid #ddd;
+						}
+						
+						&.disabled{
+							color: #999;
+							cursor:  text;
+							&:hover{
+								background: none;
+							}
+						}
+					}
+					
+				}
+			}
+			
+			button[title="invite player"]{
+				margin-bottom: $bluefields-margin;
+			}
+
+			
+			.search-input{
+				position: relative;
+				margin-top: $bluefields-margin;
+				margin-bottom: $bluefields-margin;
+				.squad-search{
+					font-size: 12px;
+				}
+			}
+			
+			
+			
+			.view-link{
+				color: #555;
+				float:right;
+				padding: 6px;
+				display: inline-block;
+				font-size: 12px;
+				text-align: center;
+				&.active{
+					background: #eee;
+					border-radius:$bluefields-radius;
+				}
+			}
+			
+		}
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	//PLAYER DISPLAY AS CARD
+	.squad-card{
+		margin-bottom: $bluefields-margin;
+		.squad-player {
+
+			
+			&:last-child{
+				float: left;
+			}
+			
+			.squad-player-container{
+				height: 150px;
+				background: #eee;
+				position: relative;
+				border: 3px #eee solid;
+				cursor: pointer;
+				
+				
+				&.new{
+					.squad-player-picture-container{
+						background-image: image-url("profile_picture/user/generic_user_large.png")!important;
+					}
+				}
+				
+				&:hover{
+					.click-for-info{
+						display: block;
+					}
+				}
+				
+				.click-for-info{
+					display: none;
+					position: absolute;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					background: rgba(0,0,0,0.4);
+					padding: $bluefields-margin*2;
+					
+					p{
+						color: $bluefields-white;
+						text-align: center;
+						i{
+							display: block;;
+						}
+					}
+				}
+				
+				&.active{
+					cursor: text;
+					border: 3px #ddd solid;
+					.click-for-info{
+						display: none;
+					}
+				}
+				
+				.squad-player-picture-container{
+					height:  100%;
+					background:  no-repeat center;
+					background-size: cover;
+				}
+				
+				.squad-player-informations{
+					background: #333;
+					color: #eee;
+					padding: 5px 10px;
+					position: absolute;
+					width: 100%;
+					bottom: 0;
+								
+					h4{
+						color: #eee;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						width: 99%;
+						font-size: 16px;
+						font-weight: 400;
+					}
+				}
+			}
+		}
+	}
+	
+	
+
+
+}
+
+#r-squad-information {
+	.squad-onboarding, .squad-form, .squad-player {
+		background: #fafafa;
+		padding: 0;
+		padding: 12px;
+		margin-top: 60px;
+	}
+	h3 {
+      text-transform: uppercase;
+      color: #555;
+      font-weight: 600;
+      @include font-size(1, false);
+      margin-bottom: 9px;
+    }
+}
+
+
+
+.squad-onboarding{
+	padding: $bluefields-margin;
+	
+	
+	#r-squad-add-player-control-link{
+		.squad-sidebar-section{
+			margin-top: $bluefields-margin;
+		}
+	}
+	
+	#r-squad-add-player-control-demo-player{
+		.squad-sidebar-section{
+			margin-bottom: $bluefields-margin;
+		}
+	}
+	
+	@include box();
+	&.fixed{
+		position: fixed;
+		top: 40px;
+	}
+	
+	&.bottom{
+		position: absolute;
+		bottom:0;
+	}
+
+	.white-out {
+		@include opacity(0.3);
+	}
+
+	.squad-sidebar-section {
+		margin-bottom: $bluefields-margin * 2;
+		padding: $bluefields-margin;
+		background-color:$bluefields-white;
+		
+		&:last-child{
+			margin-bottom: 0;
+		}
+
+		&.demo-players {
+			padding:0;
+		}
+
+		.demo-players{
+			background-color:#4391AB;
+			padding: 12px;
+
+			h2 {
+				color:$bluefields-white;
+			}
+
+			p {
+				color:$bluefields-white;
+			}
+		}
+	}
+
+	& > i{
+		width: 130px;
+		margin: 0 auto;
+		@include font-size(5);
+		display: block;
+		color: rgba(0,0,0,0.05);
+		text-align:center;
+	}
+
+	h2 {
+		font-weight: 200;
+		text-align: center;
+		font-size: 22px;
+		line-height: 1.6em;
+		color:#444;
+	}
+
+	h3 {
+		text-align: center;
+	}
+
+	p, ul.bullets{
+		font-size: 14px;
+		text-align: center;
+		line-height: 1.2em;
+		color: #666;
+		margin-bottom: $bluefields-margin;
+		
+	}
+
+	ul.bullets {
+		font-size: 13px;
+		list-style: disc;
+		text-align: left;
+		padding-left: 18px;
+	}
+}
+
+.squad-form{
+	padding: $bluefields-margin;
+	
+	@include box();
+	&.fixed{
+		position: fixed;
+		top:40px;
+	}
+	
+	.adult{
+		margin-bottom: $bluefields-margin;
+	}
+	
+	&.bottom{
+		position: absolute;
+		bottom:0;
+	}
+	
+	p{
+		font-size: 13px;
+		color: #555;
+		margin-bottom: $bluefields-margin;
+	}
+	
+	input[type="text"]{
+		font-size: 13px;
+		height: 30px;
+	}
+	
+	
+	fieldset{
+		p{
+			margin-bottom: $bluefields-margin/2;
+		}
+	}
+	
+	ul.bullets{
+		font-size: 14px;
+		text-align: center;
+		line-height: 1.2em;
+		color: #666;
+		margin-bottom: $bluefields-margin;
+		font-size: 13px;
+		list-style: disc;
+		text-align: left;
+		padding-left: 18px;
+	}
+}
+
+/* Squad sidebar - player */
+#r-squad-information{
+.squad-player{
+	.status{
+		background: lighten($bluefields-blue, 30%);
+		padding: $bluefields-margin/2;
+		margin: -$bluefields-margin+(-1);
+		margin-top: -$bluefields-margin;
+		margin-bottom: $bluefields-margin;
+		color: $bluefields-blue;
+		border: 1px solid $bluefields-blue;
+		position: relative;
+		z-index: 10;
+	}
+	
+	.user-information{
+		position: relative;
+		margin-top: $bluefields-margin/2;
+		a[title="edit player"]{
+			position: absolute;
+			top:$bluefields-margin/2;
+			right:$bluefields-margin/2;
+		}
+	}
+	
+	.edit-player-form{
+		a[title="cancel"]{
+			margin-top: $bluefields-margin/2;
+			display: inline-block;
+			margin-right: $bluefields-margin/2;
+			font-size: 13px;
+		}
+	}
+
+	.user-header{
+		margin-bottom: $bluefields-margin;
+
+		h2{
+			font-weight: 300;
+			margin-top: $bluefields-margin;
+			font-size: 25px;
+			margin-top: 0;
+			margin-bottom: 0;
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: $bluefields-margin/2;
+		}
+	}
+	
+	p{
+		color: #666;
+
+		font-size: 13px;
+	}
+	
+	.player-section{
+		padding-top: $bluefields-margin;
+		padding-bottom: $bluefields-margin;
+		border-bottom: 1px #eeeeee solid;
+		border-top: 1px $bluefields-white solid;
+		
+		&:first-of-type{
+			border-top: none;
+			padding-top: 0;
+		}
+		
+		&:last-of-type{
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+		
+		&:empty{
+			border: none;
+			padding: 0;
+		}
+		
+		.hint{
+			text-align: center;
+			color: #555;
+			font-style: italic;
+		}
+		
+		.icon-action{
+			font-size: 13px;
+			margin-top:3px;
+			&.pen{
+				color: #999;
+				&:hover{
+					color: $bluefields-blue;
+				}
+			}
+			
+			&.check{
+				color: $bluefields-green;
+			}
+		}
+		
+		
+		.player-profile{
+			.circle{
+				margin-right: $bluefields-margin/2;
+			}
+			
+			h2{
+				font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+				font-weight: 300;
+				margin-top: $bluefields-margin;
+				font-size: 22px;
+				margin-top: 0;
+				margin-bottom: 0;
+				display: inline-block;
+				vertical-align: middle;
+				max-width: 74%;
+			}
+			
+			.player-detail{
+				position: relative;
+				
+				.icon-action{
+					font-size: 14px;
+					margin-top: 9px;
+				}
+			}
+			
+			.view-player{
+				font-size: 13px;
+				display: block;
+				margin-left: 44px;
+				margin-top: 6px;
+			}
+			
+			form{
+				margin-bottom: 0;
+				width: 77%;
+				@include calc(width, "100% - 60px");
+				
+				position: absolute;
+				top: 0px;
+				left: 39px;
+				font-size: 14px;
+				
+				input{
+					font-size: 22px;
+					height: 31px;
+					font-weight: 200;
+					margin-bottom: 0;
+				}
+				
+				.alert-box{
+					position: absolute;
+					top: -34px;
+					z-index: 200;
+					width: 100%;
+				}
+			}
+			
+		}
+		
+		p{
+			color: #666;
+			font-size: 13px;
+			margin-bottom: $bluefields-margin/2;
+			&.bf-icon:before, .bf-icon:before{
+				margin-right: $bluefields-margin/2;
+				@include opacity(0.8);
+			}
+		}
+		
+		.player-contact{
+			
+			.contact-detail{
+				position: relative;
+				@include clearfix();
+				
+				p{
+					float: left;
+				}
+				
+				form{
+					margin-bottom: 0;
+					position: absolute;
+					top: -5px;
+					left: 20px;
+					font-size: 13px;
+					
+					width: 80%;
+					@include calc(width, "100% - 40px");
+					input{
+						font-size: 13px;
+						height: 24px;
+						margin-bottom: 0;
+					}
+					
+					.alert-box{
+						position: absolute;
+						top: -34px;
+						z-index: 200;
+						width: 100%;
+					}
+				}
+			}
+		}
+		
+		&.informations{
+			p{
+				margin-left: 15px;
+				word-wrap: break-word;
+			}
+			
+			fieldset{
+				padding-top: $bluefields-margin/2;
+				padding-bottom: $bluefields-margin/4;
+				p{
+					margin-left: 0;
+					margin-bottom: $bluefields-margin/2;
+				}
+				
+			}
+		}
+
+		
+		
+		.player-children{
+			ul{
+				margin-top: $bluefields-margin;
+				margin-bottom: 0;
+				li{
+					@include clearfix;
+					margin-top: $bluefields-margin/2;
+					position: relative;
+					a{
+						.cirlce, span{
+							display: inline-block;
+							vertical-align: middle;
+							font-size: 14px;
+						}
+						
+						span{
+							margin-left: $bluefields-margin/3;
+						}
+					}
+					
+					form{
+						margin-bottom: 0;
+						width: 80%;
+						@include calc(width, "100% - 40px");
+						position: absolute;
+						top: 2px;
+						left: 32px;
+						font-size: 13px;
+						
+						input{
+							font-size: 14px;
+							height: 26px;
+							margin-bottom: 0;
+						}
+						
+						.alert-box{
+							position: absolute;
+							top: -34px;
+							z-index: 200;
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	.player-actions{
+		a.remove-player{
+			display: inline-block;
+			float: right;
+			font-size: 13px;
+		}
+	}
+}
+
+}
+
+/* Squad list group */
+.squad-list-collection, .squad-card {
+	margin-top: -12px;
+	margin-right: -13px;
+}
+
+.squad-card {
+	.squad-player-container  {
+		margin-top: 6px;
+	}
+}
+
+
+
+/* Squad list - display as list*/
+.player-list-item{
+	background:$bluefields-white;
+	padding:$bluefields-margin/3 $bluefields-margin;
+	cursor: pointer;
+	&.active{
+		cursor: text;
+		background: #fafafa;
+		z-index: 9;
+		position: relative;
+
+	
+		.star{
+			display: none;
+		}
+	}
+	
+	&:hover{	
+		background: #f8f8f8;
+	}
+	
+	.circle{
+		margin-right: $bluefields-margin;
+		vertical-align:middle;
+	}
+
+	p{
+		font-size: 12px;
+		display: inline;
+		margin-left: $bluefields-margin/2;
+		span{
+			color: #777;
+		}
+	}
+	
+	.star{
+		color: #ddd;
+		font-size: 16px;
+		margin-top: 6px;
+		&.registered {
+			color: $bluefields-blue;
+		}
+	}
+}

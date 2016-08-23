@@ -1,0 +1,13 @@
+<h2><%=@junior.first_name.titleize %>'s <%= @event.game_type_string %> has been cancelled</h2>
+
+<p><%=@parent.first_name.titleize %>, <%=@junior.first_name.titleize %>'s <%= @event.game_type_string %> has been cancelled. Find out more online:</p>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<a class="button small" href="<%= event_url(@event) %>">View <%= @event.game_type_string %> Details</a>
+
+<%
+email_title = "Event+Cancelled"
+extra_params = @parent.email + "&EventId=" + @event.id.to_s + "&relation=parent"
+%>
+<%==get_img_html(email_title, extra_params) %>

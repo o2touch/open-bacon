@@ -1,0 +1,18 @@
+<% if (!parentSection){ %><h3>Player</h3><% } %>
+<div class="player-detail">
+	<img class="circle profile-pic user-pic thumb-pic" src="<%= profile_pic %>" />
+	<h2 class="user-name"><%= name %></h2>
+	<% if (!isRegistered && currentUserCanManageTeam){ %>
+	<form name="user-name-form" class="hide">
+		<input name="user-name-input" value="<%= name %>" type="text" placeholder="name" />
+	</form>
+	<a href="#" class="bf-icon pen right icon-action" name="edit-user-name" title="edit user email"></a>
+	<% } %>
+</div>
+
+<% if (isJunior){ %>
+<div class="contact-detail">
+	<p><a class="bf-icon eye view-player" href="<%= url %>"> View profile</a></p>
+</div>
+<% } %>
+

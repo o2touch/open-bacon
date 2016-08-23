@@ -1,0 +1,51 @@
+<% if Rails.env.production? %>
+  <% content_for :after_head do %>
+    <script src="//cdn.optimizely.com/js/339994146.js"></script>
+  <% end %>
+<% end %>
+<div class="page-load-animation">
+  <div id="r-navigation"></div>
+  <div id="r-godbar"></div>
+
+  <div class="search-content">
+    <div class="row">
+      <div class="seven columns centered">
+        <h1 style="font-size: 120px;"> <!-- Sorry Leo. Tim x --> 404</h1>
+        <h1>Page not found!</h1>
+        <div class="search-layout">
+          <form id="search-form">
+            <select name="type">
+              <option value="teams">Find a Team</option>
+              <option value="leagues">Find a League</option>
+            </select>
+            <button class="fake-select grey">Find a Team</button>
+            <input type="text" name="search" autocomplete="off" placeholder="Search here">
+            <div class="spinner-search hide"></div>
+            <div class="no-result hide text-center">
+              <i class="bf-icon badge"></i>
+              <p>No results found</p>
+            </div>
+          </form>
+          <div id="r-search-content"></div>
+        </div>
+        <p class="text-center search-copy">Welcome to the UK Mitoo Version 1. <a href="http://more.mitoo.co/">Mitoo V2</a> is coming to the UK very soon.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="search-footer hide-for-small">
+    <ul class="left-link">
+      <li>Mitoo V2 coming soon for:</li>
+      <li><a href="http://more.mitoo.co">Players</a></li>
+      <li><a href="http://more.mitoo.co/leagues-and-clubs">Leagues</a></li>
+      <li><a href="http://more.mitoo.co/governing-bodies-national-leagues-associations">Governing Bodies</a></li>
+    </ul>
+    <ul class="right-link">
+      <li><a href="http://app.mitoo.co/privacy-policy">Privacy &amp; Terms</a></li>
+      <li><a href="http://more.mitoo.co/about">About</a></li>
+    </ul>
+  </footer>
+
+  <div id="r-footer"></div>
+  <div id="r-popup"></div>
+</div>

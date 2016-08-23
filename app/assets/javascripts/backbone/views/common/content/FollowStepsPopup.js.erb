@@ -1,0 +1,128 @@
+BFApp.Views.FollowStepsPopup = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/content/follow_steps_popup",
+
+  className: "follow-steps-popup",
+
+  ui: {
+    "inviteForm": ".invite-form",
+    "doneButton": ".done",
+    "slider": ".slider",
+    "step1": ".step-text-1",
+    "step2": ".step-text-2",
+    "step3": ".step-text-3"
+  },
+
+  events: {
+    "click .next": "showDownloadStep",
+    // "click .invite-more": "addInviteRow",
+    "click .store-link": "clickedDownload"
+  },
+
+  clickedDownload: function() {
+    $.ajax({
+      url: "/api/v1/split/finished/download_popup",
+      type: "POST"
+    });
+  },
+
+  serializeData: function() {
+    return {
+      teamName: this.options.teamName,
+      androidLink: ActiveApp.FaftFollowTeam.playStoreUrl,
+      appstoreLink: ActiveApp.FaftFollowTeam.itunesUrl,
+      isLoggedIn: ActiveApp.CurrentUser.isLoggedIn(),
+      appStoreButtonPath: "<%= asset_path 'store/app_store_badge.svg' %>",
+      playStoreButtonPath: "<%= asset_path 'store/get_it_on_google_play.svg' %>",
+      iphoneStandingPath: "<%= asset_path 'to_be_sorted/iphone_standings.png' %>",
+      androidShedulePath: "<%= asset_path 'to_be_sorted/android_schedule.png' %>"
+    };
+  },
+
+  showSignupStep: function() {
+    this.showStep(1);
+    this.ui.step1.removeClass("complete").addClass("current");
+    this.ui.step2.removeClass("complete current");
+    this.ui.step3.removeClass("complete current");
+  },
+
+  showInviteStep: function() {
+    this.showStep(2);
+    this.ui.step1.addClass("complete").removeClass("current");
+    this.ui.step2.removeClass("complete").addClass("current");
+    this.ui.step3.removeClass("complete current");
+  },
+
+  showDownloadStep: function() {
+    this.showStep(3);
+    this.ui.step1.addClass("complete").removeClass("current");
+    this.ui.step2.addClass("complete").removeClass("current");
+    this.ui.step3.removeClass("complete").addClass("current");
+  },
+
+  showStep: function(step) {
+    this.ui.slider.removeClass("step-1 step-2 step-3").addClass("step-" + step);
+  },
+
+  onShow: function() {
+    this.showInviteStep(2);
+
+    analytics.track("view FAFT download popup", {
+      'popup_type': this.options.popupType,
+    });
+  },
+
+  // addInviteRow: function() {
+  //   var that = this;
+  //   var form = BFApp.renderTemplate(this.ui.inviteForm, "partials/invite-player-row", {});
+  //   form.submit(function(e) {
+  //     e.preventDefault();
+  //     var nameElement = $(this).find("input[name='name']");
+  //     var emailElement = $(this).find("input[name='email']");
+  //     if (that.validateInvite(nameElement, emailElement)) {
+  //       var button = $(this).find("button");
+  //       disableButton(button, true);
+  // 
+  //       $.ajax({
+  //         //url: "/api/v1/users/registrations?faft_team_id="+that.options.teamId+"&faft_division_season_id="+that.options.divisionId+"&save_type=FAFTTEAMINVITE",
+  //         url: "/api/v1/users/registrations?save_type=FAFT_TEAM_FOLLOW_TEST",
+  //         type: "POST",
+  //         data: {
+  //           user: {
+  //             name: nameElement.val().trim(),
+  //             email: emailElement.val().trim()
+  //           },
+  //           team_role: {
+  //             faft_team_id: that.options.teamId,
+  //             faft_division_season_id: that.options.divisionId
+  //           }
+  //         },
+  //         success: function() {
+  //           // clean up button (remove spinner and update text)
+  //           button.html("Invited <i class='bf-icon check'></i>");
+  //           that.ui.doneButton.removeClass("hide");
+  // 
+  //         },
+  //         error: function() {
+  //           errorHandler({
+  //             button: button
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // },
+
+  validateInvite: function(nameElement, emailElement) {
+    var isValidName = BFApp.validation.isName({
+      htmlObject: nameElement
+    });
+
+    var isValidEmail = BFApp.validation.isEmail({
+      htmlObject: emailElement
+    });
+
+    return (isValidName && isValidEmail);
+  }
+
+});

@@ -1,0 +1,14 @@
+<h2><%= @event.game_type_string.titleize %> Added</h2>
+
+<p><%= @recipient.first_name.titleize %>,
+  a <%= @event.game_type_string(false) %> has been added and it's coming up within the next few days.</p>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>s
+
+<a class="button grey small" href="<%= event_url(@event) %>">View Game Details</a>
+
+<%
+email_title = "Event+Created"
+extra_params = @recipient.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

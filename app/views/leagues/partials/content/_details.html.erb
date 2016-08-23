@@ -1,0 +1,66 @@
+<div class="b-section__title">
+  <h1>Details</h1>
+</div>
+
+<div class="b-section__content">
+  <div class="row">
+
+    <!-- BOYS AGE GROUP -->
+    <div class="three columns b-info">
+      <h3 class="b-info__title">Boys age groups</h3>
+      <% if !@league.boys_age_groups.nil? %>
+        <ul class="b-info__list b-info__list">
+          <% @league.boys_age_groups.each do |b| %>
+            <li class="b-info__list__item b-info__list__item--comma-separator"><%= b %></li>
+          <% end %>
+        </ul>
+        <% if @league.display_claim_actions? %>
+        <a class="b-info__link--edit-link js-addLeagueDetails" href="#" data-track-join="add_age_boy">Add an age group</a>
+        <% end %>
+      <% else %>
+        <span class="b-info__list">None</span>
+        <% if @league.display_claim_actions? %>
+        <p class="b-info__text"><a class="b-info__link--edit-link js-addLeagueDetails" href="#" data-track-join="add_age_boy">Add an age group</a></p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- GIRLS AGE GROUP -->
+    <div class="three columns b-info">
+      <h3 class="b-info__title">Girls age groups</h3>
+      <% if !@league.girls_age_groups.nil? %>
+        <ul class="b-info__list b-info__list">
+          <% @league.girls_age_groups.each do |b| %>
+            <li class="b-info__list__item b-info__list__item--comma-separator"><%= b %></li>
+          <% end %>
+        </ul>
+        <% if @league.display_claim_actions? %>
+        <a class="b-info__link--edit-link js-addLeagueDetails" href="#" data-track-join="add_age_girl">Add an age group</a>
+        <% end %>
+      <% else %>
+        <span class="b-info__list">None</span>
+        <% if @league.display_claim_actions? %>
+        <p class="b-info__text"><a class="b-info__link--edit-link js-addLeagueDetails" href="#" data-track-join="add_age_girl">Add an age group</a></p>
+        <% end %>
+      <% end %>  
+    </div>
+
+    <!-- ADULT AGE GROUP -->
+    <% if @league.has_adult_divisions? %>
+      <div class="three columns b-info">
+        <h3 class="b-info__title">Adult</h3>
+        <p class="b-info__text">This league has adult divisions</p>
+      </div>
+    <% end %>
+
+
+    <!-- ADD DETAILS BLOCK-->
+    <% if @league.display_claim_actions? %>
+    <div class="three columns b-info b-info--add-details">
+      <p class="b-info__text"><a class="b-info__link--edit-link js-addLeagueDetails" href="#" data-track-join="add_details">Add details</a></p>
+    </div>
+    <% end %>
+
+
+  </div>
+</div>

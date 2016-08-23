@@ -1,0 +1,71 @@
+<div class="popup-branding-container"></div>
+<div class="twelve columns">
+	<h1><%= title %></h1>
+	<p><%= msg %></p>
+</div>
+
+
+<div class="six columns">
+	<% if (!isLoggedIn) { %>
+	<label for="name-input">Name</label>
+	<input type="text" name="name" value="<%= name %>" placeholder="Joe Bloggs" id="name-input">
+	<% } %>
+
+	<label for="date-of-birth-input">Date of birth (dd/mm/yyyy)</label>
+	<input type="text" name="dob" value="<%= dob %>" placeholder="15/04/1987" id="date-of-birth-input">
+
+	<label>Gender</label>
+	<div class="radio-group">
+		<div class="inline-input male-input">
+			<input id="male-input" name="gender" value="m" type="radio">
+			<label for="male-input">Male</label>
+		</div>
+		<div class="inline-input">
+			<input id="female-input" name="gender" value="f" type="radio">
+			<label for="female-input">Female</label>
+		</div>
+	</div>
+
+	<label for="phone-number-input">Phone number</label>
+	<input type="tel" name="phone" value="<%= phone %>" id="phone-number-input">
+</div>
+
+
+<div class="six columns">
+	<% if (!isLoggedIn) { %>
+	<label for="email-input">Email</label>
+	<input type="email" name="email" value="<%= email %>" placeholder="joe@example.com" id="email-input">
+	<% } %>
+
+	<label>Are you new to Rugby?</label>
+	<div class="radio-group">
+		<div class="inline-input male-input">
+			<input id="new-input" name="type" value="new" type="radio">
+			<label for="new-input">New</label>
+		</div>
+		<div class="inline-input male-input">
+			<input id="returning-input" name="type" value="returning" type="radio">
+			<label for="returning-input">Returning</label>
+		</div>
+		<div class="inline-input male-input">
+			<input id="existing-input" name="type" value="existing" type="radio">
+			<label for="existing-input">Existing</label>
+		</div>
+	</div>
+
+	<% if (!isLoggedIn) { %>
+	<label for="password-input">Password</label>
+	<input type="password" name="password" id="password-input">
+	<% } %>
+
+	<div class="inline-input">
+		<label for="terms-input"><input type="checkbox" name="terms" id="terms-input">Tick here to confirm you have read and agreed to our <a href="http://www.rfu.com/takingpart/o2touchtermsandconditions" target="_blank">Terms and Conditions</a>.</label>
+	</div>
+</div>
+
+
+<div class="twelve columns buttons">
+	<div class="inline-input text-right">
+		<button type="submit" name="submit">Submit</button>
+	</div>
+</div>

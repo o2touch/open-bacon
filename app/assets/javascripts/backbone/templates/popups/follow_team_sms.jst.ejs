@@ -1,0 +1,21 @@
+<h1>Download the app</h1>
+<p class="text-center">Get the game information &amp; results which matter, right in your hand</p>
+<form class="hide-for-small">
+	<div class="input-with-button">
+		<div class="input-container">
+			<input type="tel" name="mobile" placeholder="Mobile number">
+		</div>
+		<button type="submit" name="send" class="small">Text me the link</button>
+	</div>
+</form>
+
+<p class="text-center hide-for-small">Or download it from:</p>
+<p class="text-center">
+<a href="<%= ActiveApp.FaftFollowTeam.itunesUrl %>" class="store-link no-underline" target="_blank" data-track="iOS" data-track-type="paywall-flow">
+	<img class="cta-store" src="<%= appStoreButtonPath %>"/>
+</a>
+<a href="<%= ActiveApp.FaftFollowTeam.playStoreUrl %>" class="store-link no-underline" target="_blank" data-track="Play Store" data-track-type="paywall-flow">
+	<img class="cta-store" src="<%= playStoreButtonPath %>"/>
+</a>
+</p>
+<p class="text-right"><a href="#" class="skip link-grey">Skip</a></p>

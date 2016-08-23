@@ -1,0 +1,35 @@
+<script>
+// Marketing popup
+// JO 03.03.14 - I dumped this here as we no longer wanted it on the team page, but may want the code in the future - this partial will not work as-in - it expects a bunch of JS vars to be set
+$(document).on("mouseleave.marketing", function (e) {
+  // don't trigger this popup if they're on the paywall
+  if (!$("body").hasClass('paywall')) {
+    // account for scrolling
+    var y = e.pageY - $(window).scrollTop();
+    if (y < 0) {
+      // if not yet following, show follow popup
+      if (!ActiveApp.CurrentUser.isFollowingFaftTeam) {
+        if (!$.cookie('viewedFAFTPageLeavingPopup')) {
+          var marketingOptions = {
+            exitPopup: true
+          };
+          _.defaults(marketingOptions, followFormOptions);
+          BFApp.vent.trigger("follow-team:show", marketingOptions);
+          $.cookie('viewedFAFTPageLeavingPopup', true);
+        }
+      } else {
+        if (!$.cookie('viewedDownloadLeavingPopup')) {
+          BFApp.vent.trigger("download-app:show", {
+            teamName: "<%= @team.name %>",
+            actionType: "followed",
+            teamId: <%= @team.id %>,
+            <%= @division.nil? ? "" : "divisionId: #{@division.id}," %>
+            popupType: "on_exit"
+          });
+          $.cookie('viewedDownloadLeavingPopup', true);
+        }
+      }
+    }
+  }
+});
+</script>

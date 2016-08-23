@@ -1,0 +1,7 @@
+<p class="comment-type">
+  <a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+  rescheduled the event
+  <% if (!isEventPage) { %>
+    <a href="<%= event.getHref() %>"><%- event.get("title") %></a>
+  <% } %>
+</p>

@@ -1,0 +1,38 @@
+/*------------------------------------*\
+	LAYOUT
+\*------------------------------------*/
+.b-layout {
+	@include grid-row();
+	margin-bottom: $bluefields-margin * 2;
+
+	&__main {
+		position: relative;
+		z-index: 2;
+	}
+
+	&__sidebar {
+		position: relative;
+		z-index: 1;
+	}
+
+
+	&--league {
+		.b-layout__main {
+			@include grid-columns($columns: 9, $gutter: false);
+		}
+
+		.b-layout__sidebar {
+			@include grid-columns($columns: 3, $gutter: false);
+		}
+	}
+}
+
+
+/*------------------------------------*\
+	CONTENT
+\*------------------------------------*/
+.b-main-content {
+	background: $bluefields-white;
+  @include box-shadow(12px 0 12px -7px rgba(0, 0, 0, 0.05), -12px 0 12px -7px rgba(0, 0, 0, 0.05));
+  padding: $bluefields-margin*4 $bluefields-margin*2;
+}

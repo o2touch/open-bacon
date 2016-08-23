@@ -1,0 +1,43 @@
+/* This file is the control room of the bluefields css */
+
+/* BF Color */
+$bluefields-blue:         #4FADE3; 
+$bluefields-grey:         #EEEEEE;
+$bluefields-red:          #D63632;
+$bluefields-green:        #5DA423;
+$bluefields-yellow:       #F9C638;
+$bluefields-orange:       #F77F00;
+$bluefields-white:        #fefefe;
+$bluefields-black:        #121212;
+$google-red:              #d34836;
+/* Other Color */
+$facebook-blue:           #3B5998;
+$twitter-blue:            #4099FF;
+
+/* UI settings */
+$bluefields-margin:       12px;
+$bluefields-radius:       3px;
+
+/* Grid setings */
+$grid-width:              1280px;
+$gutter-width:            $bluefields-margin - 2px;
+$columns-number:          12;
+$columns-number-string:   ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve");
+
+$o2-touch-blue: #1a245c;
+$rfu-red: #900f29;
+
+/* Responsive settings */
+$break-small:             760px;
+$break-large:             $grid-width;
+
+
+/* Animation settings */
+$transition-time:         0.3s;
+$transition-easing:       ease-in-out;
+
+$base-font-size:					14px;
+$line-height:							1.4;
+
+
+$navigation-height: 			50px;

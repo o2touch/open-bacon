@@ -1,0 +1,24 @@
+# Configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+#   sidekiq -C config.yml
+# Numbers are how regularly queues are checked, relative to eachother.
+# SMS queue is separate as openssl shit is fucked (ie. segfaulting when run in parallel)
+---
+:verbose: false
+:queues:
+  - [default, 4]
+  - [pusher, 4]
+  - [messages, 4]
+  - [real-time-messages, 2]
+  - [aggregate-messages, 2]
+  - [ns2-delivery-queue, 4]
+  - [ns2-sms-delivery-queue, 1]
+  - [ns2-app-events, 2]
+  - [faft-instruction-queue, 20]
+  - [paperclip, 1]
+development:
+  :concurrency: 40
+staging:
+  :concurrency: 13
+production:
+  :concurrency: 40

@@ -1,0 +1,92 @@
+<div class="page-title">
+  <i class="icon-user"></i>
+  <h3>Followers</h3>
+  <h4>How many <span class="semi-bold">Followers</span> do we have?</h4>
+</div>
+
+<div id="container">
+
+  <div class="row spacing-bottom 2col"> 
+    
+    <div class="col-md-6 col-sm-12 spacing-bottom-sm"> 
+      <div class="grid simple ">
+        <div class="grid-title no-border">
+          <h4>Followers signed-up by week</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table small">
+            <thead>
+              <tr>
+                <th>Week</th>
+                <th>Date</th>
+                
+                <th>Followed</th>
+                <th>Installs</th>
+                <th></th>
+                <th>Invited</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @followers_users_summary.each do |week| %>
+              <tr>
+                <td><%=week['week']%></td>
+                <td><%= week['date'] %></td>
+
+                <td><%=week['follow']%></td>
+
+                <td><%=week['download']%></td>
+                <td><%='%.1f' % week['pc_download'].to_f%>%</td>
+
+                <td><%=week['invited']%></td>
+                <td><%='%.1f' % week['pc_invited'].to_f%>%</td>
+
+                <td><a href="<%=@url%>?week=<%=week['date']%>">Go</a></td>
+              </tr>
+              <% end %>
+            </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12 spacing-bottom-sm"> 
+      <div class="grid simple ">
+        <div class="grid-title no-border">
+          <h4>Signups in week beginning <%=@week_detail.strftime("%d-%m-%Y")%></h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Signed-up</th>
+                <th>How</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @followers.each do |u| %>
+              <tr>
+                <td><%=u.name%></td>
+                <td><%=u.created_at.strftime("%Y-%m-%d") %></td>
+                <td><%=u.invited_by_source%></td>
+                <td><a href="<%=admin_user_path(u)%>">View</a></td>
+              </tr>
+              <% end %>
+            </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<h3>Children in team</h3>
+<ul>
+	<%  _.each(children.models, function(child){ %>
+	<li class="child" data-id="<%= child.get("id") %>">
+		<a href="/users/<%= child.get("id") %>">
+			<img class="circle profile-pic user-pic thumb-pic" src="<%= child.get("profile_picture_thumb_url")%>" />
+			<span class="child-name"><%= child.get("name") %></span>
+		</a>
+
+		<form name="child-name-form" class="hide">
+			<input name="child-name-input" value="<%= child.get("name") %>" type="text"/>
+		</form>
+
+		<% if(!isRegistered && currentUserCanManageTeam){ %>
+		<a href="#" class="bf-icon pen right icon-action" name="edit-user-child" title="edit child"></a>
+		<% }%>
+	</li>
+	<% }); %>
+</ul>

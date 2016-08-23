@@ -1,0 +1,63 @@
+<%
+	claimBase = unclaimed_team_profile_url(profile, :sport => profile.sport, :league_slug => profile.league_name.titleize.gsub(/ /,"").underscore, :only_path => false)
+	claimURL =  claimBase + "?kme=Clicked+Claim+Profile+Campaign&kmi=" + profile.contact_email
+%>
+<br />
+<% fullname = profile.contact_name.titleize.split(' ') %>
+<p>Hi <%= fullname[0] %>,</p>
+<p>I'm writing to invite you to <a href="<%=claimURL%>">claim your profile</a> on Bluefields - the best site to help you organize your sports games. To get you started we've created a page for your team:</p>
+
+<table width="90%" cellpadding="0" cellspacing="0" class="team_block" align="center">
+	<tbody>
+
+		<tr>
+			<td width="60" valign="top"><img src="<%= image_path("generic_team_small.png") %>"></td>
+			<td valign="top"> <img src="http://bluefields.com<%=image_path('unclaimed_tag.png') %>" class="tag"/><strong><%= profile.name %></strong>
+			<br />
+			<span class="dummy"><%= [profile.sport.titleize,profile.league_name].delete_if{|a|a.nil?}.join(" | ")%></span>
+			<br />
+			<p><%= profile.location%></p>
+			</td>
+		</tr>
+		
+		<tr>
+			<td></td>
+			<td>
+				<%
+					userDetails = UserFullContactDetails.find_by_email(profile.contact_email)
+				 %>
+				
+				<% if !userDetails.nil? && !userDetails.photo_url.nil? %><img width="50" src="<%=userDetails.photo_url %>" /><% end %>
+				
+				<span><%=profile.contact_name%></span>
+				<span><%=profile.contact_number%></span>
+				
+			</td>	
+		</tr>
+		
+		<tr>
+			<td colspan="2"><a href="<%=claimURL%>" class="cta large" style="<% if !profile.colour1.nil? %>background: #<%= profile.colour1 %><% end %>">CLAIM NOW</a></td>
+		</tr>
+	</tbody>
+</table>
+<p><a href="<%=claimBase%>/wrong">Information incorrect? Correct them here</a></p>
+
+<p>With Bluefields, you'll <b>save time</b> managing your <%= profile.sport %> team for <b>free</b>:</p>
+
+<ul>
+	<li>Automate text and email reminders</li>
+	<li>A place for players to interact and talk about the game</li>
+	<li>Great team website which we keep up-to-date for you</li>
+</ul>
+
+<p>See how we're strengthening the global amateur sports network and <a href="<%=claimURL%>">claim your profile</a>.</p>
+
+<p>If you have any questions please do not hesitate to contact me</p>
+
+<p>Regards,<br/>Andrew</p>
+
+<%
+email_title = "Claim+Profile+Campaign"
+extra_params = "&EmailId=CP0001"
+%>
+<% if Rails.env.production?%><img src="http://trk.kissmetrics.com/e?_k=3ad62edda1e56fdd473b316d92be8a6a8f57389f&_n=Viewed+E-mail+<%=email_title%>&_p=<%=profile.contact_email%><%=extra_params%>"/><% end %>

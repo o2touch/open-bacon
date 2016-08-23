@@ -1,0 +1,25 @@
+<header>
+ <span class="user-name">Post a message</span>
+</header>
+<div class="msg-content">
+  <textarea class="message-area" placeholder="<%= messagePlaceholder %>" ></textarea>
+  <% if (showStar) { %>
+    <i class="bf-icon star highlight-star" original-title="Highlight this message"></i>
+  <% } %>
+</div>
+<footer class="actions clearfix">
+  <% if (groups.length) { %>
+  <ul class="msg-groups <%= (!isOrganiser) ? 'hide' : '' %>">
+    <li class="show-groups-dropdown"><i class="bf-icon users"></i></li>
+    <li>
+      <ul class="groups-dropdown hide">
+        <li><em>Send notifications to</em></li>
+        <% $.each(groups, function(i, group) { %>
+          <li data-id="<%= group.id %>" class="group-of-players <%= group.className %> <%= group.selected %>"><i class="bf-icon users"></i> <%= group.name %></li>
+        <% }); %>
+      </ul>
+    </li>
+  </ul>
+  <% } %>
+  <button type="submit" data-team-color="button" class="small" title="add message" data-disabled="Posting" disabled>Post message</button>
+</footer>

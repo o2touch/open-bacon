@@ -1,0 +1,67 @@
+
+<div class="rfu-admin">
+  <div class="seven columns centered">
+    <h1>RFU Admin Dashboard</h1>
+    <p>Welcome to the RFU admin area. Here you can search through all of your teams and leagues, as well as create new ones.</p>
+    <button type="button" name="create-team">Create team</button>
+    <button type="button" name="create-league">Create league</button>
+
+    <div class="search-layout">
+      <form id="search-form">
+        <select name="type">
+          <option value="teams">Find a Team</option>
+          <option value="leagues">Find a League</option>
+        </select>
+        <button class="fake-select grey">Find a Team</button>
+        <input type="text" name="search" autocomplete="off" placeholder="Search here">
+        <div class="spinner-search hide"></div>
+        <div class="no-result hide text-center">
+          <i class="bf-icon badge"></i>
+          <p>No results found</p>
+        </div>
+      </form>
+      <div id="r-search-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+
+<%= javascript_include_tag "app-public" %>
+
+<script>
+  // hack to stop google maps complaining. shouldn't be on this page anyway
+  window.showMap = function() {};
+
+  /* User team & league (navigation information) */
+  window.ActiveApp = {};
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+	ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+  /* App */
+  BFApp.start();
+  SearchApp.start({
+    // o2 touch - hardcode this for now, but may need to generalise later
+    tenantId: 2
+  });
+
+  // create team/league buttons
+  $("button[name=create-team]").click(function() {
+    BFApp.vent.trigger("team-form:show", {
+      title: "Create Team",
+      model: new App.Modelss.Team(),
+      goToTeamPage: true
+    });
+  });
+  $("button[name=create-league]").click(function() {
+    BFApp.vent.trigger("league-form:show", {
+      title: "Create League",
+      model: new App.Modelss.League({
+        location: new App.Modelss.Location()
+      })
+    });
+  });
+</script>

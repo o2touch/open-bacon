@@ -1,0 +1,94 @@
+<%
+	#####
+	# LEO: You can use the @tenant variable to access the name '@tenant.name' to switch the
+	# design based on tenants. O2 Touch is 'o2_touch'
+	#####
+%>
+
+<script>
+var page = 'Login Page';
+analytics.track('Viewed ' + page, {});
+</script>
+
+<div class="row login-page <%= @tenant.nil? ? "" : "tenant-"+@tenant.name %>">
+	<div class="four columns centered">
+
+			<% if !@tenant.nil? && @tenant.name == 'o2_touch' %>
+			<img class="o2touch-logo" src="<%= asset_path 'identity/02touch/02_blue_200.png' %>">
+			<% end %>
+
+			<h2>Login</h2>
+			<a href="/users/auth/facebook" class="button facebook full-width"><i class="bf-icon facebook"></i> Login with Facebook</a>
+			<span class="or-choice-line">or</span>
+
+			<form id="login-form">
+				<label for="login_user_email">Email</label>
+			  <input type="email" id="login_user_email" placeholder="joe@bloggs.com">
+			  <label for="login_user_password">Password</label>
+				<input type="password" id="login_user_password">
+				<div class="actions">
+					<button type="submit" class="button login-button" data-disabled="Logging in">Log in</button>
+					<%= link_to "Forgot your password?",  new_user_password_path , :class=>"password-recovery" %>
+				</div>
+			</form>
+	</div>
+</div>
+
+<script>
+$(function() {
+
+	var submitButton = $(".login-button"),
+		emailInput = $("#login_user_email"),
+		passwordInput = $("#login_user_password");
+
+	$(".reveal-modal").remove();
+
+	$("#login-form").submit(function(e){
+		e.preventDefault();
+		
+		var email = BFApp.validation.isEmail({
+			htmlObject: emailInput
+		});
+		var password = BFApp.validation.isPassword({
+			htmlObject: passwordInput
+		});
+		
+		if (email && password) {
+			disableButton(submitButton);
+		
+			var data = {
+				remote: true, 
+				commit: "Sign in",
+				utf8: "✓",
+					user: {
+						remember_me: 1, 
+						password: passwordInput.val(), 
+						email: emailInput.val()
+					}
+			};
+
+			$.ajax({
+				type : "post",
+				url : "/d/users/sign_in.json",
+				dataType : 'json',
+				data: data,
+				success: function(data){
+					goToUrl(data.redirect);
+					return false;
+				},
+				error: function(data){
+					errorHandler({
+						button: submitButton,
+						message: "Your username/password is incorrect"
+					});
+				}
+			});
+		} else {
+			enableButton(submitButton);
+		}
+
+		return false;
+	});
+
+});
+</script>

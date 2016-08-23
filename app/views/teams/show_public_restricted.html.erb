@@ -1,0 +1,62 @@
+<% content_for :head do %>
+  <!-- tell fb which img to use when you share a link to this page -->
+  <meta property="og:image" content="<%= @team.profile.profile_picture(:original) %>">
+  <link href="<%=team_stylesheet_path(@team)%>" media="all" rel="stylesheet">
+  <link href="/tim.css" media="all" rel="stylesheet">
+<% end %>
+
+
+<script>
+var ActiveApp = {};
+
+// Tenant for this team
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+// data required for nav
+ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+// team data
+ActiveApp.ProfileTeam = App.Modelss.Team.findOrCreate(<%= safe_js_string(@team_json) %>);
+ActiveApp.ProfileTeamStats = {
+  numTeamEvents: <%= @team.events.size %>,
+  numTeamPlayers: <%= @team.players.size %>
+};
+
+// Show Download Links
+ActiveApp.FaftFollowTeam = {
+	showDownloadLinks: <%= show_app_download_link? %>,
+	itunesUrl: "<%= itunes_url('team_private_no_perms').html_safe %>",
+	playStoreUrl: "<%= play_store_url('team_private_no_perms').html_safe %>"
+};
+
+ActiveApp.pageType = "private-team";
+
+/* Define & Start app */
+$(function() {
+	var options = {
+		context:"team"
+	};
+	
+	BFApp.on("start", function(){
+		BFApp.rootController.startPrivateProfileModule(options);
+	});
+
+	BFApp.start();	
+	var root = "teams/<%= @team.id %>";
+});
+</script>
+
+
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+<div id="main-content">
+	<noscript>
+		<p>This is a private team profile</p>
+	</noscript>
+</div>

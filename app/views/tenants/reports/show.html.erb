@@ -1,0 +1,533 @@
+<style>
+.notice{
+	width:100%;
+	padding:10px;
+	margin-bottom:10px;
+	background-color: rgba(255,255,255,0.4);
+}
+.notice p {
+	margin: 0;
+}
+</style>
+
+<div class="page-title">	
+	<div class="row">
+		<div class="col-md-8 col-sm-6">
+			<h3>Dashboard - Year Overview</h3>
+		</div>
+	</div>
+</div>
+
+<div id="container">
+
+<div class="row spacing-bottom col-2">	
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">	
+			<div title="Number of New Users who signed-up (excludes invited users). Analyze by Referrer, Demographics etc." class="tiles blue added-margin">
+			  <div class="tiles-body">		
+				<div class="tiles-title">
+					TOTAL PARTICIPATION
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="0" data-animation-duration="1200">0</span>
+				</div>				
+				<div class="description"><i class="<%= 1 > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; 0% <span class="blend">from launch</span></span></div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles green added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					TOTAL NEW TO RUGBY
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="0" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class="<%= 1 > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; 0% <span class="blend">from launch</span></span></div>	
+			 </div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles red added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					TOTAL MALE
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="0" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class="<%= 1 > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; 0% <span class="blend">from launch</span></span></div>	
+			 </div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles purple added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					TOTAL FEMALE
+				</div>	
+				<div class="heading">
+					<span class="animate-number" data-value="<%=@female_players%>" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class="<%= 1 > 0 ? "icon-custom-up" : "icon-custom-down"%>"></i><span class="text-white mini-description ">&nbsp; 0% <span class="blend">from launch</span></span></div>	
+			 </div>
+			</div>
+		</div>			
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-6 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Total by Gender</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<h5>Male Vs Female Participation</h5>
+						<p>Monthly participation of male and female players</p>
+						<div id="chart-stacked-gender" style="height:200px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Total by Source</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<h5>Web/Mobile vs by Operator</h5>
+						<p>How did those that participated sign up?</p>
+						<div id="chart-stacked-source" style="height:200px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- 	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Players</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-player-overview"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Participation by Frequency</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<h5>Participation by frequency</h5>
+						<p>Frequency participation distribution. Use this to see frequency trends over time.</p>
+						<div id="chart-participation"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>New vs Existing Players</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">						
+						<div id="chart-rugbyplayers"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- 	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Ricksaw</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-ricksaw"></div>
+						<div id="legend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+</div>
+<script type="text/javascript">
+$(function() {
+
+	var monthNames = [ "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December" ];
+
+	chartData = {
+		overviewChart: [
+			{ week: '2013-11-11', total: 12000, active: 8000 },
+		    { week: '2013-11-18', total: 11034, active: 8600 },
+		    { week: '2013-11-25', total: 15023, active: 8800 },
+		    { week: '2013-12-2', total: 18000, active: 8900 }
+		],
+
+		frequencyDonut: [
+		    { label: 'Frequent', value: 7000},
+			{ label: 'Infrequent', value: 5000}
+		],
+
+		frequencyChart: [
+			{ month: '2013-9-1', once: 12000, twice: 8000, thrice: 8000 },
+		    { month: '2013-10-1', once: 11034, twice: 8600, thrice: 8000 },
+		    { month: '2013-11-1', once: 15023, twice: 8800, thrice: 8000 },
+		    { month: '2013-12-1', once: 18000, twice: 8900, thrice: 8000 }
+		],
+
+		rugbyPlayersChart: [
+			{ month: '2013-9-1', once: 12000, twice: 8000, thrice: 2300 },
+		    { month: '2013-10-1', once: 11034, twice: 6600, thrice: 2400 },
+		    { month: '2013-11-1', once: 15023, twice: 9800, thrice: 1900 },
+		    { month: '2013-12-1', once: 18000, twice: 8900, thrice: 2200 }
+		],
+	};
+
+
+	window.frequencyChart = new Morris.Line({
+	  element: 'chart-participation',
+	  data: chartData.frequencyChart,
+	  xkey: 'month',
+	  dateFormat: function(x){
+	  	return monthNames[new Date(x).getMonth()];
+	  },
+	  xLabels: "month",
+	  xLabelFormat: function(x){
+	  	return monthNames[new Date(x).getMonth()];
+	  },
+	  ykeys: ['once', 'twice', 'thrice'],
+	  labels: ['1x', '2x', '3x']
+	});
+
+	// window.overviewChart = new Morris.Line({
+	//   element: 'chart-player-overview',
+	//   data: chartData.overviewChart,
+	//   xkey: 'week',
+	//   ykeys: ['total', 'active'],
+	//   labels: ['Total', 'Active']
+	// });
+
+	// window.frequencyDonut = new Morris.Donut({
+	//   element: 'frequency-donut',
+	//   data: chartData.frequencyDonut,
+	//   colors: ["#333333", "#666666"]
+	// });
+
+	window.rugbyPlayersChart = new Morris.Line({
+	  element: 'chart-rugbyplayers',
+	  data: chartData.rugbyPlayersChart,
+	  lineColors: ["#333","#f35957","#736086"],
+	  xkey: 'month',
+	  dateFormat: function(x){
+	  	return monthNames[new Date(x).getMonth()];
+	  },
+	  xLabels: "month",
+	  xLabelFormat: function(x){
+	  	return monthNames[new Date(x).getMonth()];
+	  },
+	  ykeys: ['once', 'twice', 'thrice'],
+	  labels: ['all', 'male', 'female']
+	});
+
+});
+
+loadStackedChart();
+loadStacked2Chart();
+// loadRicksawChart();
+
+function drawChartsFromData(data){
+	window.overviewChart.setData(data.overviewChart)
+
+	$('.animate-number').each(function(){
+		 $(this).animateNumbers($(this).attr("data-value"), true, parseInt($(this).attr("data-animation-duration")));	
+	});
+}
+
+
+//Ricksaw Chart Sample 
+function loadRicksawChart(){
+	var seriesData = [
+		[
+			{x: new Date(2013, 9, 1).getTime(), y: 3000},
+			{x: new Date(2013, 10, 1).getTime(), y: 4000},
+			{x: new Date(2013, 11, 1).getTime(), y: 5000},
+			{x: new Date(2013, 12, 1).getTime(), y: 6000},
+		], [],[]];
+		seriesData = [
+		[], [],[]];
+	var random = new Rickshaw.Fixtures.RandomData(50);
+
+	for (var i = 0; i < 50; i++) {
+		random.addData(seriesData);
+	}
+
+	rick = new Rickshaw.Graph( {
+		element: document.querySelector("#chart-ricksaw"),
+		height: 200,
+		renderer: 'area',
+		series: [
+			{
+				data: seriesData[0],
+				color: '#736086',
+				name:'Existing Players'
+			},{
+				data: seriesData[1],
+				color: '#f8a4a3',
+				name:'New to Rugby'
+			},
+			{
+				data: seriesData[2],
+				color: '#eceff1',
+				name:'All'
+			}
+		]
+	} );
+	var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+		graph: rick
+	});
+
+	random.addData(seriesData);
+	rick.update();
+
+	var ticksTreatment = 'glow';
+
+	var xAxis = new Rickshaw.Graph.Axis.Time( {
+		graph: rick,
+		ticksTreatment: ticksTreatment
+	});
+
+	xAxis.render();
+
+	var yAxis = new Rickshaw.Graph.Axis.Y( {
+		graph: rick,
+		tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+		ticksTreatment: ticksTreatment
+	});
+
+	var legend = new Rickshaw.Graph.Legend( {
+	graph: rick,
+	element: document.getElementById('legend')
+	});	
+
+	yAxis.render();
+
+	var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+		graph: rick,
+		legend: legend
+	} );
+
+	var order = new Rickshaw.Graph.Behavior.Series.Order( {
+		graph: rick,
+		legend: legend
+	} );
+
+	var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
+		graph: rick,
+		legend: legend
+	} );	
+}
+
+function loadStackedChart(){
+
+    var d1_1 = [
+        [new Date(2013, 9, 1).getTime(), 12609],
+        [new Date(2013, 10,1).getTime(), 13500],
+        [new Date(2013, 11, 1).getTime(), 15350],
+        [new Date(2013, 12, 1).getTime(), 14788]
+    ];
+ 
+    var d1_2 = [
+        [new Date(2013, 9, 1).getTime(), 300],
+        [new Date(2013, 10, 1).getTime(), 340],
+        [new Date(2013, 11, 1).getTime(), 380],
+        [new Date(2013, 12, 1).getTime(), 410]
+    ];
+
+    var data2 = [
+        {
+            label: "Male",
+            data: d1_1,
+            bars: {
+                show: true,
+                barWidth: 15*24*60*60*1000,
+                align: "center",
+                fill: true,
+                lineWidth:0,
+                order: 0,
+                fillColor:  "#f35957"
+            },
+            color: "#f35957"
+        },
+        {
+            label: "Female",
+            data: d1_2,
+            bars: {
+                show: true,
+                barWidth: 15*24*60*60*1000,
+                align: "center",
+                fill: true,
+                lineWidth: 0,
+                order: 0,
+                fillColor:  "#736086"
+            },
+            color: "#736086"
+        }
+    ];
+
+	$.plot($('#chart-stacked-gender'), data2, {		
+		 grid: {
+            hoverable: true,
+            clickable: false,
+            borderWidth: 1,
+			borderColor:'#f0f0f0',
+			labelMargin:8
+
+        },
+		xaxis: {
+            min: (new Date(2013, 8, 1)).getTime(),
+            max: (new Date(2013, 12, 30)).getTime(),
+            mode: "time",
+            timeformat: "%b",
+            tickSize: [1, "month"],
+            monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            tickLength: 0, // hide gridlines
+            axisLabel: 'Month',
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            axisLabelPadding: 5
+        },
+		stack: true
+	});
+}
+
+function loadStacked2Chart(){
+
+    var d1_1 = [
+        [new Date(2013, 9, 1), 1903],
+        [new Date(2013, 10, 1), 1903],
+        [new Date(2013, 11, 1), 1903],
+        [new Date(2013, 12, 1), 1903]
+    ];
+ 
+    var d1_2 = [
+        [new Date(2013, 9, 1), 1903],
+        [new Date(2013, 10, 1), 1903],
+        [new Date(2013, 11, 1), 1903],
+        [new Date(2013, 12, 1), 1903]
+    ];
+
+    var data2 = [
+        {
+            label: "Web/Mobile",
+            data: d1_1,
+            bars: {
+                show: true,
+                barWidth: 15*24*60*60*1000,
+                align: "center",
+                fill: true,
+                lineWidth:0,
+                order: 0,
+                fillColor:  "rgba(243, 89, 88, 0.7)"
+            },
+            color: "rgba(243, 89, 88, 0.7)"
+        },
+        {
+            label: "Operator",
+            data: d1_2,
+            bars: {
+                show: true,
+                barWidth: 15*24*60*60*1000,
+                align: "center",
+                fill: true,
+                lineWidth: 0,
+                order: 0,
+                fillColor:  "rgba(251, 176, 94, 0.7)"
+            },
+            color: "rgba(251, 176, 94, 0.7)"
+        }
+
+    ];
+
+	$.plot($('#chart-stacked-source'), data2, {		
+		grid: {
+            hoverable: true,
+            clickable: false,
+            borderWidth: 1,
+			borderColor:'#f0f0f0',
+			labelMargin:8
+        },
+		    xaxis: {
+            min: (new Date(2013, 8, 1)).getTime(),
+            max: (new Date(2013, 12, 30)).getTime(),
+            mode: "time",
+            timeformat: "%b",
+            tickSize: [1, "month"],
+            monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            tickLength: 0, // hide gridlines
+            axisLabel: 'Month',
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            axisLabelPadding: 5
+        },
+		stack: true
+	});
+
+}
+
+</script>

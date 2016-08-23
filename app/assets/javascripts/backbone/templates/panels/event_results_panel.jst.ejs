@@ -1,0 +1,14 @@
+<div class="score <% if(!scoreFor){ %>hide<% } %>">
+	<h4><%= scoreFor %> - <%= scoreAgainst %></h4> 
+</div>
+<% if (BFApp.rootController.permissionsModel.can("canManageAvailability")){ %>
+<form class="classic clearfix <% if(scoreFor){ %>hide<% } %> ">
+	<input type="text" placeholder="Us" class="score-for" value="<%= scoreFor %>">
+	<span>-</span>
+	<input type="text" placeholder="Them" class="score-against" value="<%= scoreAgainst %>">
+	<button type="submit" class="bfcolor small full-width save"><i class="bf-icon check"></i></button>
+</form>
+<div class="actions clearfix <% if(!scoreFor){ %>hide<% } %>">
+	<a class="edit-score no-underline"><i class="bf-icon pen"></i></a>
+</div>
+<%}%>

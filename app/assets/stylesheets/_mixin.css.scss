@@ -1,0 +1,338 @@
+@mixin box-shadow($shadow1: 0 0 20px rgba(0, 0, 0, 0.3), $shadow2: false, $shadow3: false, $shadow4: false, $shadow5: false) {
+  $params: $shadow1;
+  @if $shadow2 != false {
+    $params: $shadow1, $shadow2;
+  }
+  @if $shadow3 != false {
+    $params: $shadow1, $shadow2, $shadow3;
+  }
+  @if $shadow4 != false {
+    $params: $shadow1, $shadow2, $shadow3, $shadow4;
+  }
+  @if $shadow5 != false {
+    $params: $shadow1, $shadow2, $shadow3, $shadow4, $shadow5;
+  }
+  -webkit-box-shadow: $params;
+  -moz-box-shadow: $params;
+  box-shadow: $params;
+}
+
+@mixin cover($url) {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='#{$url}',sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='#{$url}', sizingMethod='scale')";
+}
+
+@mixin transform($string) {
+  -webkit-transform: $string;
+  -moz-transform: $string;
+  -ms-transform: $string;
+  -o-transform: $string;
+}
+
+@mixin rotate($rotation) {
+  transform: rotate($rotation);
+  -ms-transform: rotate($rotation);
+  -moz-transform: rotate($rotation);
+  -webkit-transform: rotate($rotation);
+  -o-transform: rotate($rotation);
+}
+
+@mixin radius($r) {
+  -khtml-border-radius: $r;
+  -webkit-border-radius: $r;
+  -moz-border-radius: $r;
+  -ms-border-radius: $r;
+  -o-border-radius: $r;
+  border-radius: $r;
+}
+
+@mixin radius-lr($left, $right) {
+  border-radius: $left $right $right $left;
+  -moz-border-radius: $left $right $right $left;
+  -webkit-border-radius: $left $right $right $left;
+}
+
+@mixin radius-tb($top, $bottom) {
+  border-radius: $top $top $bottom $bottom;
+  -moz-border-radius: $top $top $bottom $bottom;
+  -webkit-border-radius: $top $top $bottom $bottom;
+}
+
+@mixin clearfix {
+  display: block;
+  clear: both;
+  &:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+  }
+}
+
+@mixin inline-block {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
+@mixin box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -khtml-box-sizing: border-box;
+}
+
+@mixin rec($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+@mixin cube($s) {
+  width: $s;
+  height: $s;
+}
+
+@mixin no-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin transit($effect, $s, $curve: ease-in-out) {
+  -moz-transition: $effect $s $curve;
+  -ms-transition: $effect $s $curve;
+  -o-transition: $effect $s $curve;
+  transition: $effect $s $curve;
+}
+
+@mixin gradient($from, $to) {
+  background-color: $from;
+  background-image: -moz-linear-gradient($from, $to);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+  background-image: -webkit-linear-gradient($from, $to);
+  background-image: -o-linear-gradient($from, $to);
+  background-image: linear-gradient($from, $to);
+}
+
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+@mixin arrowSetup($arrowSize, $arrowColor, $margin, $side, $align) {
+  @if $side == "top" {
+    border-bottom-color: $arrowColor;
+    top: -2 * $arrowSize;
+  }
+  @if $side == "bottom" {
+    border-top-color: $arrowColor;
+    bottom: -2 * $arrowSize;
+  }
+  @if $side == "left" {
+    border-right-color: $arrowColor;
+    left: -2 * $arrowSize;
+  }
+  @if $side == "right" {
+    border-left-color: $arrowColor;
+    right: -2 * $arrowSize;
+  }
+  @if $side == "right" or $side == "left" {
+    @if $align == "center" {
+      top: 50%;
+      margin-top: -$arrowSize;
+    }
+    @else if $align == "top" {
+      top: $margin;
+    }
+    @else if $align == "bottom" {
+      bottom: $margin;
+    }
+  }
+  @if $side == "bottom" or $side == "top" {
+    @if $align == "center" {
+      right: 50%;
+      margin-right: -$arrowSize;
+    }
+    @else if $align == "left" {
+      left: $margin;
+    }
+    @else if $align == "right" {
+      right: $margin;
+    }
+  }
+}
+
+@mixin arrow($side: "right", $align: "center", $size: 20px, $color: #f6f6f6, $borderColor: "none", $borderSize: 3px) {
+  $selector: "&:after, &:before";
+  @if $borderColor == "none" {
+    $selector: "&:after";
+  }
+  #{$selector} {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-width: $size;
+    @include arrowSetup($size, $color, $size, $side, $align);
+  }
+  @if $borderColor != "none" {
+    &:before {
+      border-width: $borderSize + $size;
+      @include arrowSetup($size + $borderSize, $borderColor, $size - $borderSize, $side, $align);
+    }
+  }
+}
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: $break-small) {
+      @content;
+    }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) {
+      @content;
+    }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $break-large) {
+      @content;
+    }
+  }
+}
+
+@mixin opacity($value) {
+  filter: alpha(opactiy = $value * 100);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
+  -moz-opacity: $value;
+  -khtml-opacity: $value;
+  opacity: $value;
+}
+
+@mixin link_creator($color) {
+  color: $color;
+  &:hover {
+    color: lighten($color, 10%);
+  }
+  &:active {
+    color: darken($color, 10%);
+  }
+  &:visited {
+    color: darken($color, 5%);
+  }
+}
+
+@mixin opacity($value) {
+  filter: alpha(opactiy = $value * 100);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
+  -moz-opacity: $value;
+  -khtml-opacity: $value;
+  opacity: $value;
+}
+
+@mixin font-size($font-size: 1, $as-text: true) {
+  font-size: $font-size * $base-font-size;
+  font-size: $font-size + rem;
+  @if $as-text == false {
+    line-height: $font-size * $base-font-size;
+    line-height: $font-size + rem;
+  }
+  @else if $as-text == true {
+    line-height: $font-size * $line-height * $base-font-size;
+    line-height: $font-size * $line-height + rem;
+  }
+}
+
+@mixin geogrotesque($weight: 400, $style: normal) {
+  font-family: "geogrotesque", Arial, Helvetica, sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+@mixin helvetica($weight: normal, $style: normal) {
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin filter($filter-type, $filter-amount) {
+  -webkit-filter: $filter-type + unquote("(#{$filter-amount})");
+  -moz-filter: $filter-type + unquote("(#{$filter-amount})");
+  -ms-filter: $filter-type + unquote("(#{$filter-amount})");
+  -o-filter: $filter-type + unquote("(#{$filter-amount})");
+  filter: $filter-type + unquote("(#{$filter-amount})");
+}
+
+@mixin scrollbar($size: 6px, $radius: 6px, $primary: rgba(0, 0, 0, 0.4), $secondary: transparent) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: $radius;
+  }
+  &::-webkit-scrollbar-track {
+    background: $secondary;
+  }
+  // For Internet Explorer
+  body {
+    scrollbar-face-color: $primary;
+    scrollbar-track-color: $secondary;
+  }
+}
+
+
+@mixin flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox; // 2011 (IE 10)
+  display: flex;
+}
+
+@mixin flex-box($flex) {
+  -webkit-box-flex: $flex;
+  -webkit-flex: $flex;
+  -ms-flex: $flex;
+  flex: $flex;
+}
+
+
+
+
+@mixin title($type) {
+  @if $type == 1 {
+    // @include geogrotesque();
+    text-transform: uppercase;
+    font-weight: 600;
+  }  
+}
+
+
+

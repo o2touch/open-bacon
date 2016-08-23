@@ -1,0 +1,30 @@
+BFApp.Views.MobileDownloadAppPopup = Marionette.ItemView.extend({
+
+  template: "backbone/templates/popups/mobile_download_app_popup",
+
+  ui: {
+    "button": "#download-app"
+  },
+
+  events: {
+    "click @ui.button": "clickDownload"
+  },
+
+  onRender: function() {
+
+  },
+
+  serializeData: function() {
+    return {
+      team: this.model,
+      stats: ActiveApp.MobileSplashData,
+      imagePath: '<%= asset_path "to_be_sorted/ptp_download_iphone@2x.png" %>'
+    };
+  },
+
+  clickDownload: function() {
+    BFMetricsService.clickedDownloadAction("ptp_download_test_1");
+    window.location.href = "/download-app"
+  }
+
+});

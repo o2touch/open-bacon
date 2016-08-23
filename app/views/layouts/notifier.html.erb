@@ -1,0 +1,75 @@
+
+<% 
+# Get team/league/tenant informations
+@team = @event.team unless (!@team.nil? || @event.nil? || @event.team.blank?)
+@league ||= @team ? @team.primary_league : NullLeague.new  
+@tenant = LandLord.default_tenant if @tenant.nil?
+@tenant_name = @tenant.name
+
+# Set proper color depending on tenant/team settings
+if @tenant.config.style_override_colours
+  @colour1 = @tenant.colour_1
+  @colour2 = @tenant.colour_2
+elsif !@team.nil?
+  @colour1 = @team.profile.colour1
+  @colour2 = @team.profile.colour2
+else
+  @colour1 = LandLord.default_tenant.colour_1
+  @colour2 = LandLord.default_tenant.colour_2
+end
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Will be removed by roadie -->
+    <link rel="stylesheet" type="text/css" href="assets/email.css">
+
+    <!-- Will not be removed by roadie -->
+    <style data-immutable="true">
+      #outlook a { padding:0; }
+      .button { background:#<%= @colour1 %>; }
+      .game-type-game .date { background:#<%= @colour1 %>!important; }
+      .game-type-game .title { color:#<%= @colour1 %>!important; }
+      
+      #footer a:hover { color: #7bc2ea!important;}
+      #footer a:active { color: #2399dc!important;}
+      #footer a:visited { color: #39a3e0!important;}
+
+      .ExternalClass, .ReadMsgBody{width:100%;}
+      .ExternalClass, .ReadMsgBody, 
+      .ExternalClass, .ReadMsgBody p, 
+      .ExternalClass, .ReadMsgBody span, 
+      .ExternalClass, .ReadMsgBody font, 
+      .ExternalClass, .ReadMsgBody td, 
+      .ExternalClass, .ReadMsgBody div { 
+        line-height: 100%; 
+      } 
+    </style>
+  </head>
+  <body>
+    <table class="body" border="0" cellpadding="0" cellspacing="8" height="100%" width="100%">
+      <tr>
+        <td align="center" valign="top" bgcolor="#f1f1f1">
+          <center>
+            <table cellspacing="50" cellpadding="50">
+              <tr>
+                <td>
+                  <table class="container" width="420">
+                    <tr>
+                      <td align="center" valign="top">
+                        <%= render :partial => "layouts/mail/template" %>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

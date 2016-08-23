@@ -1,0 +1,65 @@
+@mixin button-basic($color){
+  border-color: darken($color, 8%) darken($color, 16%) darken($color, 26%) darken($color, 16%);
+  color: lighten($color, 90%);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  &:visited{
+    color: lighten($color, 90%);
+  }
+
+  @if lightness($color) > 80% {
+    color: darken($color, 80%);
+    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  }
+
+  @include gradient(lighten($color, 3%), $color);
+  @include box-shadow(
+    1px 0px 0px 0px rgba(darken($color, 8%), 0.1), 
+    0px 1px 0px 0px rgba(darken($color, 18%), 0.1),
+    inset 1px 0px 1px 0px rgba(lighten($color, 27%), 0.1),
+    inset 0px 1px 1px 0px rgba(lighten($color, 27%), 0.3)
+  );
+
+  &:hover{
+    color: lighten($color, 95%);
+    @if lightness($color) > 80% {
+      color: darken($color, 85%);
+    }
+    border-color: darken($color, 4%) darken($color, 8%) darken($color, 12%) darken($color, 8%);
+    @include gradient(lighten($color, 8%), lighten($color, 4%));
+    @include box-shadow(         
+      1px 0px 0px 0px rgba(darken($color, 5%), 0.1), 
+      0px 1px 0px 0px rgba(darken($color, 15%), 0.1), 
+      inset 1px 0px 1px 0px rgba(lighten($color, 20%), 0.1), 
+      inset 0px 1px 1px 0px rgba(lighten($color, 20%), 0.3)
+    );
+  }
+
+  &:active{
+    border-color: darken($color, 5%) darken($color, 10%) darken($color, 15%) darken($color, 10%);
+    color: lighten($color, 90%);
+    @if lightness($color) > 80% {
+      color: darken($color, 85%);
+    }
+    @include gradient(lighten($color,8%), darken($color,2%));
+    @include box-shadow(         
+      1px 0px 0px 0px rgba(lighten($color, 5%), 0.1), 
+      0px 1px 0px 0px rgba(lighten($color, 16%), 0.1), 
+      inset 1px 0px 1px 0px rgba(darken($color, 5%), 0.1), 
+      inset 0px 1px 1px 0px rgba(darken($color, 1%), 0.1)
+    );
+  }
+
+  &:focus, &.focus{
+    $focusColor:lighten($color, 5%);
+    color: lighten($color, 90%);
+    @if lightness($color) > 90% {
+      $focusColor:darken($color, 10%);
+      color: darken($color, 85%);
+    }
+    @include box-shadow( 0 0 3px $focusColor, 0 1px 0  rgba(255, 255, 255, 0.5) inset);
+  }
+
+  &[disabled=disabled], &:disabled{
+    @include opacity(0.3);
+  }
+}

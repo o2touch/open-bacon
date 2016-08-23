@@ -1,0 +1,16 @@
+<h2><%= !@juniors.nil? ? "#{@juniors.map(&:first_name).to_sentence}'s " : "" %>Schedule</h2>
+
+<p><%= @recipient.first_name.titleize %>, the current schedule is below. You'll receive any changes via email and you can always view the most up-to-date schedule online.</p>
+
+<%= render :partial => "user_mailer/schedule_event_list", :locals => {:events => @events, :timezone => @recipient.time_zone} %>
+
+<% if !@team_invite_token.nil? %>
+	<p>See the whole schedule online</p>
+	<a class="button" href="<%= team_invite_link_url(:token => @team_invite_token, :only_path => false )%>">View the schedule</a>
+<% else %>
+	<a class="button" href="<%= team_url(@team, :only_path => false )%>#schedule">View the schedule on Mitoo</a>
+<% end %>
+
+<!-- EMAIL TRACKING: REMEMBER TO UPDATE -->
+<!-- track_email( recipient_email, email_name, hash_of_params) -->
+<%==track_email(@recipient.email, "Member Schedule Created", {"TeamId" => @team.id.to_s}) %>

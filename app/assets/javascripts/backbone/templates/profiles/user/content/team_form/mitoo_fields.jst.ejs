@@ -1,0 +1,36 @@
+<label for="team-sport">Team sport</label>
+<select id="team-sport" class="team-sport" name="sport">
+<% _.each(sportsList, function(sportsItem) { %>
+	<option value="<%= sportsItem %>" <% if(sportsItem==sport){ %> selected<% } %>><%= sportsItem %></option>
+<% }); %>
+</select>
+
+<% if (edit && showLeague) { %>
+<label for="league-name">League name</label>
+<input type="text" value="<%= league %>" id="league-name"> 
+<% } %>
+
+<div class="colour-selector-container primary">
+	<label>Team primary color</label>
+	<ul class="inline-input colour-selector primary">
+		<% for(i=0;i<colours.length;i++) {%>
+		<li style="background:#<%=colours[i]%>" class="colour-<%=colours[i]%><% if(colours[i] == colour1) {%> showChecked<%}%>">
+			<label>
+				<i class="bf-icon check"></i>
+				<input type="radio" value="<%=colours[i]%>" name="primary" <% if(colours[i] == colour1) {%>checked<%}%>></label>
+		</li>
+		<% } %>
+	</ul>
+</div>
+<div class="colour-selector-container secondary">
+	<label>Team secondary color</label>
+	<ul class="inline-input colour-selector secondary">
+		<% for(i=0;i<colours.length;i++) {%>
+		<li style="background:#<%=colours[i]%>" class="colour-<%=colours[i]%><% if(colours[i] == colour2) {%> showChecked<%}%>" >
+			<label>
+				<i class="bf-icon check"></i>
+				<input type="radio" value="<%=colours[i]%>" name="secondary" <% if(colours[i] == colour2) {%>checked<%}%>></label>
+		</li>
+		<% } %>
+	</ul>
+</div>

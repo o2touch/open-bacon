@@ -1,0 +1,18 @@
+<div class="columns twelve">
+  <h1><%= @league.title %></h1>
+
+  <% if @all_p.count > 0 %>
+  	<div><%= link_to "VALIDATE", admin_import_validate_path(@league.id), class: "button small" %></div>
+  <% elsif @all_p.count == 0 && @all_i.count == 0 && @all.count > 0 %>
+  	<div><%= link_to "BUILD SHIT", admin_import_create_models_path(@league.id), class: "button small" %></div>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+</div>
+
+<%= render 'data_summary', title: "divisions", all: @divisions, invalid:  @divisions_i, pergatory: @divisions_p, existing: [] %>
+<%= render 'data_summary', title: "teams", all: @teams, invalid:  @teams_i, pergatory: @teams_p, existing: [] %>
+<%= render 'data_summary', title: "users", all: @users, invalid:  @users_i, pergatory: @users_p, existing: @users_e %>
+<%= render 'data_summary', title: "fixtures", all: @fixtures, invalid:  @fixtures_i, pergatory: @fixtures_p, existing: @fixtures_e %>

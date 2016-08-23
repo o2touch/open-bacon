@@ -1,0 +1,41 @@
+<div class="page-nav columns twelve no-gutter">
+  <ul>
+    <li><a href="/admin/metrics/teams/all">All</a></li>
+    <li><a href="/admin/metrics/teams">Adult</a></li>
+    <li><a href="/admin/metrics/teams/junior">Junior</a></li>
+    <li><a href="/admin/metrics/teams/leagues">Leagues (non-faft)</a></li>
+  </ul>
+</div>
+
+<div class="columns eleven centered">
+  <h1>Teams (All)</h1>
+
+  <div class="columns five">
+    <h2>Active Teams per week</h2>
+    <p>Number of teams with <b>&gt; 4 players</b> and an event scheduled in <b>last/next 7 days - per week</b></p>
+    <table class="metrics">
+      <tr>
+        <td>Week</td>
+        <td></td>
+        <td>Active</td>
+        <td></td>
+        <td>WoW Growth</td>
+      </tr>
+
+      <% @active_teams_summary.each do |week| %>
+      <tr class="<%=week['mood']%> <%=week['future']%>">
+        <td><%=week['week']%></td>
+        <td><%=week['date'].strftime("%-d %b")%></td>
+        <td><%=week['active']%></td>
+        <td><%=week['diff']%></td>
+        <td><%='%.1f' % week['wow_rate'].to_f %>%</td>
+    <!--     <td>
+          <%week['teams'].each do |id|%>
+            <a href="/admin/teams/<%=id%>"><%=id%></a>
+          <% end %>
+        </td> -->
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

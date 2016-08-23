@@ -1,0 +1,18 @@
+<header>
+  <h3><i class="panel-icon bf-icon star"></i> Points</h3>
+</header>
+<form class="panel-content clearfix">
+  
+  <% _.each(pointsCategories, function(value, key) { %>
+  <div class="points-element clearfix" data-points-type="<%= key %>">
+    <label class="four columns text-right" for="<%= key %>_home"><%= value %></label>
+    <input class="home_points text-right" id="<%= key %>_home" type="text" value="<%= (key in homePoints) ? homePoints[key] : '' %>">
+    <input class="away_points" type="text" value="<%= (key in awayPoints) ? awayPoints[key] : '' %>">
+  </div>
+  <% }); %>
+  
+  <div class="inline-input text-right">
+    <a href="#" class="cancel-link" name="cancel">Cancel</a>
+    <button type="submit" class="save-button small" name="save">Save</button>
+  </div>
+</form>

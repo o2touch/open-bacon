@@ -1,0 +1,11 @@
+<h2><%= @event.game_type_string.titleize %> Cancelled!</h2>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<a class="button small"href="<%= team_url(@event.team) %>">View updated schedule</a>
+
+<%
+email_title = "Follower+Event+Cancelled"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

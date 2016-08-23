@@ -1,0 +1,38 @@
+<%
+  position = @team.nil? ? -1 : division_presenter.standings_position(@team)
+  i = 0
+%>
+<table>
+  <thead>
+    <tr>
+      <td>Pos</td>
+      <th>Team</th>
+      <td>P</td>
+      <td class="hide-for-small">W</td>
+      <td class="hide-for-small">L</td>
+      <td class="hide-for-small">D</td>
+      <td>Pts</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% division_presenter.standings[:series].each do |k| %>
+    <% r = division_presenter.standings[:data][k] %>
+    <tr <% if position.to_f == i+1 %> class="current_team"<% end %>>
+      <% team = Team.find(k) %>
+      <td><%=i+1%></td>
+      <% if position.to_f == i+1  %>
+      <th><%=team.name%></th>
+      <% else %>
+      <td><%=link_to team.name, default_team_path(team)%></td>
+      <% end %>
+      <td class="played"><%=r[:played]%></td>
+      <td class="won hide-for-small"><%=r[:won]%></td>
+      <td class="lost hide-for-small"><%=r[:lost]%></td>
+      <td class="drawn hide-for-small"><%=r[:drawn]%></td>
+
+      <td class="points"><%=r[:points]%></td>
+    </tr>
+      <% i += 1 %>
+    <% end %>
+  </tbody>
+</table>

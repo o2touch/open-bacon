@@ -1,0 +1,42 @@
+<div class="date-block" <% if(color) { %>style="background:#<%= color %>;"<% } %> >
+	<div class="inner-date">
+		<span class="day"><%= date %></span>
+		<span class="month"><%= cutMonth %></span>
+	</div>
+</div>
+			
+<div class="informations">
+	<a class="event-title <% if(rowType=="new"){%>prevent-click<% } %>" href="<%= href %>" <% if(color) { %>style="color:#<%= color %>;"<% } %>>
+		<%- title %>
+	</a>
+	<p class="event-details">
+		<span class="time"><%= (timeTBC) ? "Time TBC" : time %> </span>
+		<% if(locationTitle){ %>
+			<span class="location">at <%- locationTitle %></span>
+		<% } %>
+	</p>
+</div>
+
+<% if (showActions) { %>
+	<div class="event-availability">
+		<% if (displayLock) { %>
+			<i original-title="Managed by league" class="bf-icon lock"></i>
+		<% } else if (canRespond && !isCancelled && !isPostponed) { %>
+			<button type="button" class="tiny grey i-am-available full-width <% if (userStatus == 1) { %>success<% } %>"><%= (justMeInvited) ? "" : invitedChild+" is " %><%= copy.available %></button>
+			<button type="button" class="tiny grey i-am-not-available full-width <% if (userStatus == 0) { %>alert<% } %>"><%= (justMeInvited) ? "" : invitedChild+" is " %><%= copy.unavailable %></button>
+		<% } %>
+	</div>
+<% } %>
+
+
+<% if(isPostponed) { %>
+<div class="game-status-label game-postponed">Event postponed</div>
+<% } else if(isCancelled) { %>
+<div class="game-status-label game-cancelled">Event cancelled</div>
+<% } %>
+
+<% if (showActions && canEditEvent) { %>
+<div class="fixture-action bf-background" >
+	<a href="#"  class="edit-event no-underline"><i class="bf-icon pen"></i></a>
+</div>
+<% } %>

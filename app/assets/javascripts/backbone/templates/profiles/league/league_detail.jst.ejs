@@ -1,0 +1,37 @@
+<div class="league-container">
+	<div class="league-info">
+		<%= htmlPic %>
+		<div class="league-details">
+			<h2 name="league-title"><%= title %></h2>
+			<% if (sport) { %><p>Sport: <strong><%= sport %></strong></p><% } %>
+			<% if (location) { %><p>Location: <strong><%= location %></strong></p><% } %>
+		</div>
+	</div>
+	
+	<% if (leagueDivisions.length || isLeagueAdmin) { %>
+	<div class="division-selector">
+		<% if (leagueDivisions.length) { %>
+		<span>Division:</span>
+		<ul class="division-dropdown">
+			<li class="current-division"><%= currentDivision.get("title") %></li>
+			<li class="other-division">
+				<ul>
+					<% _.each(leagueDivisions, function(division) { %>
+					<li data-id="<%= division.get("id") %>" class="division <% if(currentDivision.get("id") == division.get("id")){ %>active-division<% } %>"  ><%= division.get("title") %></li>
+					<% }) %>
+				</ul>
+			</li>
+		</ul>
+		<% } %>
+		
+		<% if (isLeagueAdmin) { %>
+		<button type="button" name="add">Create division</button>
+		<% } %>
+	</div>
+	<% } %>
+
+	<% if (canUpdateLeague) {%>
+	<a href="#" id="btn-edit-profile" class="bf-icon cog no-underline"></a>
+	<% } %>
+</div>
+

@@ -1,0 +1,34 @@
+<h2>Welcome to <%= @league.title %> on Mitoo</h2>
+
+<p><%= @user.first_name.titleize %> you've been made a captain of <i><%= @team.name %></i> on Mitoo.</p>
+
+<p><em><%= @league.title %></em> is now using Mitoo to provide all the information you need to get to the game.</p>
+
+<p>Mitoo makes it really easy to organize your team, with:</p>
+<ul>
+	<li>RSVP management</li>
+	<li>Real-time team messaging</li>
+	<li>Automatic game reminders for your players</li>
+	<li>And much <a href="http://help.mitoo.co/customer/portal/articles/1200429-what-can-a-team-organizer-do-">more</a></li>
+</ul>
+
+<p>Check out
+<% if @team_invite_token.nil? %>
+  <a href="<%= team_url(@team, :only_path => false )%>">your team</a>,
+<% else %>
+  <a href="<%= team_invite_link_url(:token => @team_invite_token, :only_path => false )%>">your team</a>,
+<% end %>it's set up and good to go!</p>
+
+<% if @team_invite_token.nil? %>
+  <a class="button" href="<%= team_url(@team, :only_path => false )%>">View your team on Mitoo</a>
+<% else %>
+  <a class="button" href="<%= team_invite_link_url(:token => @team_invite_token, :only_path => false )%>">View your team on Mitoo</a>  
+<% end %>
+
+<p>Have any questions? Get in touch with us at <a href="http://help.mitoo.co">help.mitoo.co</a> or email <a href="mailto:help@mitoo.co?subject=Question for Mitoo"/>help@mitoo.co</a></p>
+
+<%
+email_title = "League+Organizer+Role+Granted+To+User"
+extra_params = @user.email
+%>
+<%==get_img_html(email_title, extra_params) %>

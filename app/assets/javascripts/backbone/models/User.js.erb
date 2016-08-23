@@ -1,0 +1,285 @@
+App.Modelss.User = App.Modelss.ActivityItemObject.extend({
+
+  defaults: {
+    "profile_picture_thumb_url": "<%= asset_path 'profile_pic/user/generic_user_thumb.png'%>",
+    "profile_picture_small_url": "<%= asset_path 'profile_pic/user/generic_user_small.png'%>",
+    "profile_picture_medium_url": "<%= asset_path 'profile_pic/user/generic_user_medium.png'%>",
+    "profile_picture_large_url": "<%= asset_path 'profile_pic/user/generic_user_large.png'%>"
+  },
+
+  relations: [{
+    type: Backbone.HasMany,
+    key: 'team_roles',
+    relatedModel: 'App.Modelss.TeamRole',
+    collectionType: 'App.Collections.TeamRoles'
+  }, {
+    type: Backbone.HasMany,
+    key: 'league_roles',
+    relatedModel: 'App.Modelss.LeagueRole',
+    collectionType: 'App.Collections.LeagueRoles'
+  }],
+
+  parse: function(response) {
+    // Backbone Relational stores all ActivityItemObject models together, so we differentiate them
+    // by including their type in the ID
+    if (response.id) {
+      response.relationalId = "user" + response.id;
+    }
+    return response;
+  },
+
+  getPictureHtml: function(size) {
+    var htmlPic = BFApp.renderProfilePicture({
+      src: this.get("profile_picture_" + size + "_url"),
+      srcDefault: this.defaults["profile_picture_" + size + "_url"],
+      size: size,
+      type: "user",
+      title: this.get("name")
+    });
+    return htmlPic;
+  },
+
+
+
+  getHref: function() {
+    return (this.get("username")) ? "/" + this.get("username") : "/users/" + this.get("id");
+  },
+
+  getLink: function() {
+    return "<a href='" + this.getHref() + "'>" + this.get("name") + "</a>";
+  },
+
+
+
+  isLoggedIn: function() {
+    return (typeof this.get("id") !== "undefined");
+  },
+
+  isCurrentUser: function() {
+    return ActiveApp.CurrentUser.get("id") == this.get("id");
+  },
+
+  isPlayer: function(team) {
+    return this.hasTeamRole(team, BFApp.constants.teamRole.PLAYER);
+  },
+
+  isFollower: function(team) {
+    return this.hasTeamRole(team, BFApp.constants.teamRole.FOLLOWER);
+  },
+
+  isTeamOrganiser: function(team) {
+    return this.hasTeamRole(team, BFApp.constants.teamRole.ORGANISER);
+  },
+
+  isLeagueOrganiser: function(league) {
+    return this.hasLeagueRole(league, BFApp.constants.teamRole.ORGANISER);
+  },
+
+  isTeamParent: function(team) {
+    return this.hasTeamRole(team, BFApp.constants.teamRole.PARENT);
+  },
+
+  isRegistered: function() {
+    return this.hasRole("Registered");
+  },
+
+  isInLimbo: function() {
+    return this.isLoggedIn() && !this.isRegistered();
+  },
+
+  needsPassword: function() {
+    return (this.get("needs_password") == true);
+  },
+
+  checkRegistered: function() {
+    if (this.isInLimbo()) {
+      BFApp.vent.trigger("signup-popup:show");
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  isInvited: function() {
+    return this.hasRole("Invited");
+  },
+
+  isJunior: function() {
+    return Boolean(this.get("junior"));
+  },
+
+  isParent: function() {
+    return Boolean(this.get("parent"));
+  },
+
+
+  getParents: function(collection) {
+    var parentsIDS = this.get("parent_ids");
+    var parents = new App.Collections.Users(collection.filter(function(user) {
+      return _.contains(parentsIDS, user.get("id"));
+    }));
+    return parents;
+  },
+
+  getChildrens: function(collection) {
+    var that = this;
+    var childrens = new App.Collections.Users(collection.filter(function(user) {
+      return _.contains(user.get("parent_ids"), that.get("id"));
+    }));
+    return childrens;
+  },
+
+  toJSON: function() {
+    return {
+      user: _.clone(this.attributes)
+    };
+  },
+
+  sync: function(method, model, options) {
+    options = options || {};
+    options.custom = options.custom || {};
+
+    var url = "";
+
+    // user signing up to a specified tenant
+    if (options.custom.save_type == "USER") {
+      url = "/api/v1/users/registrations?save_type=" + options.custom.save_type + "&tenant_id=" + options.custom.tenantId;
+    }
+    // user signing up to join an event
+    else if (options.custom.save_type == "EVENT") {
+      url = "/api/v1/users/registrations?save_type=" + options.custom.save_type + "&event_id=" + options.custom.eventId;
+    }
+    // user signing up to follow BF team
+    else if (options.custom.save_type == "TEAMFOLLOW") {
+      url = "/api/v1/users/registrations?save_type=" + options.custom.save_type + "&team_id=" + options.custom.teamId;
+    }
+    // invited user setting their password
+    else if (options.custom.save_type == "CONFIRM_USER") {
+      url = "/api/v1/users/registrations?save_type=" + options.custom.save_type;
+    } else if (options.custom.save_type == "SIGNUPFLOW") {
+      // if this is in the new signup flow, we must use a custom URL, send the team_uuid
+      // and also structure the JSON differently
+      url = "/api/v1/users/registrations?team_uuid=" + options.custom.team_uuid + "&save_type=" + options.custom.save_type;
+    } else if (method == "create" || options.custom.save_type == "JUNIOR") {
+      if (options.custom.save_type == "EVENT" || options.custom.save_type == "TEAMMEMBER" ||
+        options.custom.save_type == "TEAMPROFILE" || options.custom.save_type == "JUNIOR") {
+        url = "/api/v1/users/invitations?";
+      } else {
+        url = "/api/v1/users/registrations?";
+      }
+
+      // add on all the different options
+      _.each(options.custom, function(value, key) {
+        url += key + "=" + value + "&";
+      });
+      if (options.custom.save_type == "OPENINVITE") {
+        if (options.custom.event_id == null || options.custom.response_status == null) {
+          console.warn("You must set event_id and response_status when using saveType OPENINVITE");
+        }
+      }
+      if (url.charAt(url.length - 1) == "&") url = url.slice(0, -1);
+
+    } else if (options.custom.save_type == "TEAMOPENINVITELINK") {
+      url = "/api/v1/users/registrations?";
+      // add on all the different options
+      _.each(options.custom, function(value, key) {
+        url += key + "=" + value + "&";
+      });
+
+      if (url.charAt(url.length - 1) == "&") url = url.slice(0, -1);
+
+    } else {
+      url = "/api/v1/users/" + this.get("id");
+    }
+
+    options.url = url;
+    // console.log("user sync with model ("+method+") = %o", model);
+    // console.log("and options = %o", options);
+    Backbone.sync(method, model, options);
+    model.unset("password");
+    model.unset("password_confirmation");
+  },
+
+  invitePlayer: function(options) {
+    var c = new App.Collections.Users(this);
+
+    options = options || {};
+    options.response_status = [];
+    options.response_status[this.get("id")] = options.response;
+
+    c.inviteAndSave(options);
+  },
+
+  hasRole: function(role_name) {
+    var roles = this.get("roles");
+    if (roles === undefined) return false;
+
+    return _.any(roles, function(role) {
+      var r = false;
+      if (role.name == role_name) r = true;
+      if (role.role !== undefined && role.role.name == role_name) r = true;
+      return r;
+    });
+  },
+
+  hasLeagueRole: function(league, role_id) {
+    var user_id = this.get("id");
+    var league_id = league.get("id");
+    var roles = this.get('league_roles').filter(function(role) {
+      return ((role.get('league_id') == league_id) && (role.get('role_id') == role_id) && (role.get('user_id') == user_id));
+    });
+    return (roles.length > 0);
+  },
+
+  hasTeamRole: function(team, role_id) {
+    return this.getTeamRole(team, role_id) !== null;
+  },
+
+  getTeamRole: function(team, role_id) {
+    var user_id = this.get("id");
+    var team_id = team.get("id");
+    var roles = this.get('team_roles').filter(function(role) {
+      return ((role.get('team_id') == team_id) && (role.get('role_id') == role_id) && (role.get('user_id') == user_id));
+    });
+    return roles.length > 0 ? roles[0] : null;
+  },
+
+  hasRoleInTeam: function(team) {
+    var user_id = this.get("id");
+    var team_id = team.get("id");
+    var roles = this.get('team_roles').filter(function(role) {
+      return (role.get('team_id') == team_id && role.get('user_id') == user_id);
+    });
+    return (roles.length > 0);
+  },
+
+  getForename: function() {
+    return this.get("name").split(" ")[0];
+  },
+
+  sharesTeamWithCurrentUser: function() {
+    var result = false,
+      that = this;
+    _.each(ActiveApp.CurrentUserTeams.models, function(team) {
+      if (that.hasRoleInTeam(team)) result = true;
+    });
+    return result;
+  },
+
+  // convert BE format (YYYY-MM-DD) to display format (DD/MM/YYYY)
+  getDOB: function() {
+    var val = this.get("dob");
+    if (val) {
+      return moment(val, "YYYY-MM-DD").format("DD/MM/YYYY");
+    }
+    return "";
+  },
+
+  // convert input val (DD/MM/YYYY) into BE format (YYYY-MM-DD)
+  setDOB: function(val) {
+    if (val) {
+      this.set("dob", moment(val, "DD/MM/YYYY").format("YYYY-MM-DD"));
+    }
+  }
+
+});

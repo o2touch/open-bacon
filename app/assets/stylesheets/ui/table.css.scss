@@ -1,0 +1,130 @@
+/* Table reset */
+table, caption, thead, tbody, tfoot, tr, th, td {
+  border:none;
+  padding:0;
+  margin:0;
+  border-spacing: 0;
+}
+
+/* Table variables */
+$black: black;
+$row-bg-head:#f8f8f8;
+$row-bg-even:#f5f5f5;
+$row-bg-odd:white;
+
+$row-bg-background:#f8f8f8;
+
+/* Table css */
+table {
+  font-size:14px;
+  width:100%;
+  border: 1px solid darken($row-bg-head,8%); 
+
+
+  thead {
+    tr {
+      background: $bluefields-white;
+
+      th, td {
+        background: $bluefields-white;
+        position: relative;
+        padding: $bluefields-margin/3 $bluefields-margin/2;
+        text-align: left;
+        border-right: 1px solid darken($row-bg-head,5%);
+        border-bottom: 1px solid darken($row-bg-head,5%);
+        &:last-child{
+          border-right: none;
+        }
+      }
+
+      th{
+        font-weight: 500;
+        .team-number{
+          color: #777;
+        }
+      }
+      td{font-weight: 400;}
+    }
+  }
+
+
+  tbody {
+    a{
+      color:$bluefields-blue;
+      text-transform: uppercase;
+    }
+    
+    tr {
+      color:#444;
+      &:nth-child(even) {
+        background:$row-bg-background;
+        &:hover{
+          background:darken($row-bg-even,2%);
+        }
+      }
+
+      &:nth-child(odd) {
+        background:$row-bg-odd;
+        &:hover{
+          background:darken($row-bg-odd,5%);
+        }
+      }
+
+      th, td{
+        padding: $bluefields-margin/3 $bluefields-margin/2;
+        text-align: left;
+        border-right:  1px solid darken($row-bg-head,5%);
+        &:last-child{
+          border-right: none;
+        }
+      }
+
+      th{
+        font-weight: 400;
+        text-transform: uppercase;
+        
+        .circle{
+          width: 25px;
+          height: 25px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+        span{
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: $bluefields-margin/2;
+        }
+
+      }
+      td{font-weight: 300;}
+    }
+  }
+
+/*    @include respond-to(handhelds) {
+    thead, tbody{
+      td{
+        &:nth-child(5), &:nth-child(6), &:nth-child(7), &:nth-child(8), &:nth-child(9){
+          display: none;
+        }  
+      }
+    }
+  }
+
+  @include respond-to(medium-screens) {
+    thead, tbody{
+      td{
+        &:nth-child(7), &:nth-child(8){
+          display: none;
+        }  
+      }
+    }
+  }  */
+
+}
+
+
+.expand-table{
+  margin-top: -2px!important;
+  border-radius:0 0 3px 3px!important;
+  border-color:#ddd!important;
+}

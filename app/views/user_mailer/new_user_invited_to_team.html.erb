@@ -1,0 +1,12 @@
+<h2>Join the team</h2>
+
+<p><%=@organiser.name.titleize%> has added you to <%=@team.name.titleize%> on <%= I18n.t("general.app_name", locale: @tenant.i18n) %>.</p>
+<p>You can now use <%= I18n.t("general.app_name", locale: @tenant.i18n) %> to see the up-to-date schedule, details about your games, practices &amp; events and keep track of when you can play.</p>
+
+<!-- <a class="button" href="<%= team_invite_link_url(:token => @team_invite_token, :only_path => false )%>">Join the team</a>  
+ -->
+<%
+email_title = "Team+Invite"
+extra_params = @user.email + "&TeamId=" + @team.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

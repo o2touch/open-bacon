@@ -1,0 +1,34 @@
+.user-page {
+  .header {
+    background: #333333;
+    width: 100%;
+    height: 83px;
+  }
+
+  #activity-feed {
+    margin-left: -12px;
+    margin-right: -12px;
+    margin-bottom: -12px;
+  }
+
+
+  .body {
+    div[role=main] {
+      margin-top: $bluefields-margin;
+      @include grid-columns(8);
+      nav.content-navi-container {
+        @include respond-to(handhelds) {
+          margin-top: 0;
+        }
+      }
+      .primary-content {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+    aside[role=complementary] {
+      margin-top: -68px;
+      @include grid-columns(4);
+    }
+  }
+}

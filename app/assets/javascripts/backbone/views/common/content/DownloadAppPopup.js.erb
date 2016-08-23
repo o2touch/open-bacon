@@ -1,0 +1,35 @@
+BFApp.Views.DownloadAppPopup = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/content/download_app_popup",
+
+  className: "download-app-popup follow-confirmation-flow ",
+
+  events: {
+    "click .store-button": "trackDownload"
+  },
+
+  serializeData: function() {
+    var headline = "Registration confirmed! Now download the app.";
+    if (this.options.actionType != null && this.options.teamName != null) {
+      headline = "You " + this.options.actionType + " " + this.options.teamName + ", now download the app.";
+    }
+
+    return {
+      androidLink: ActiveApp.FaftFollowTeam.playStoreUrl,
+      appstoreLink: ActiveApp.FaftFollowTeam.itunesUrl,
+      headline: headline,
+      appStoreButtonPath: "<%= asset_path 'store/app_store_badge.svg' %>",
+      playStoreButtonPath: "<%= asset_path 'store/get_it_on_google_play.svg' %>",
+      iphoneStandingPath: "<%= asset_path 'to_be_sorted/iphone_standings.png' %>",
+      androidShedulePath: "<%= asset_path 'to_be_sorted/android_schedule.png' %>"
+    };
+  },
+
+  trackDownload: function(e) {
+    if (!_.isUndefined(window._gaq)) {
+      _gaq.push(['_trackEvent', 'Download Link', 'Download App', $(e.currentTarget).data("track")]);
+    }
+  }
+
+
+});

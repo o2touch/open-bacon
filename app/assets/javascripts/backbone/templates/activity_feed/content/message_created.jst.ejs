@@ -1,0 +1,17 @@
+<p class="comment-type">
+	<% if (!league) { %>
+		<a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+	<% } %>
+
+	<% if (messageable) { %>
+		left a message on
+		<a href="<%= messageable.getHref() %>"><%- messageable.getTitle() %></a>
+	<% } else if(league){ %>
+		<a href="<%= league.getHref() %>"><%- league.get("title") %></a>
+	<% } %>
+	</a>
+</p>
+
+<div class="message-content">
+  <p><%- text %></p>
+</div>

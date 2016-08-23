@@ -1,0 +1,8 @@
+<p class="comment-type">
+  <a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+   updated the score (for/against)
+  <% if (!isEventPage) { %>
+    for <a href="<%= event.getHref() %>"><%- event.get("title") %></a>
+  <% } %>
+</p>
+<h2 class="result-updated-string"><%= scoreFor %> - <%= scoreAgainst %></h2> 

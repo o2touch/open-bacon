@@ -1,0 +1,73 @@
+@import "_variables.css.scss";
+@import "_mixin.css.scss";
+@import "ui/button_mixin.css.scss";
+
+<% if tenant.config.style_override_colours %>
+	$colour1: #<%= tenant.colour_1 %>;
+	$colour2: #<%= tenant.colour_2 %>;
+<% else %>
+	$colour1: #<%= colour1 %>;
+	$colour2: #<%= colour2 %>;
+<% end %>
+
+
+@import "theme/partial/navigation.css.scss";
+@import "theme/partial/theme_global.css.scss";
+
+// Header
+.unclaimed-faft-page .team-header:before {
+  background-image: linear-gradient(rgba(darken($colour1, 20%), 0.3) 0, rgba(darken($colour1, 20%), 0.3) 100%);
+}
+
+<% if tenant.name == 'o2_touch' %>
+.navigation-logo {
+	background-image: url(<%= '/assets/identity/02touch/02_white_100.png' %>);
+	background-size: auto 75%;
+}
+	<% if tenant.config.style_override_colours %>
+	button, .button {
+		@include button-basic(#<%= tenant.colour_1 %>);
+	}
+	<% end %>
+
+	.sport-cover {
+	  background-image: url(<%= 'assets/sport_image/cover/tenant/o2touch/cover_team.jpg' %>)!important;
+	  &.club-cover { background-image: url(<%= 'assets/sport_image/cover/tenant/o2touch/cover_club.jpg' %>)!important; }
+	  &.division-cover { background-image: url(<%= 'assets/sport_image/cover/tenant/o2touch/cover_division.jpg' %>)!important; }
+	  &.league-cover { background-image: url(<%= 'assets/sport_image/cover/tenant/o2touch/cover_league.jpg' %>)!important; }
+ 	}
+
+	.sport-icon {
+	 	background-image: url(<%= 'assets/sport_image/icon/tenant/o2touch.png' %>)!important;
+	}
+  
+	.popup-branding-container {
+		background-image:url(<%= 'assets/identity/02touch/02_white_200.png' %>);
+	}
+<% end %>
+
+<% if tenant.name == 'o2_touch' %>
+.powered-by-mitoo {
+	display: inline-block;
+}
+<% end %>
+
+
+.home-location .location-card {
+		background: $colour1;
+		@if lightness($colour1) < 80% {
+      color: $bluefields-white;
+    }
+    &:after {
+      border-top-color: $colour1;
+    }
+	}
+
+<% if !import.nil? %>
+@import "theme/<%= import %>.css.scss";
+<% end %>
+
+
+[data-team-color*='button'] {
+	@include button-basic($colour1);
+}

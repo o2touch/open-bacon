@@ -1,0 +1,436 @@
+/* Event Controller */
+BFApp.Controllers.Event = Marionette.Controller.extend({
+
+  // the show function is called by the router
+  show: function(id) {
+
+    this.onModelReady(ActiveApp.Event);
+
+    /**
+     * BELOW IS OLD STALE CODE
+     * Perhaps from when you used to be able to view a 2nd event within the same "app"
+     */
+
+    // default to the original event model loaded in the json
+    /*if (id === "" || isNaN(id)) {
+      id = ActiveApp.Event;
+    }
+
+    if (!this.isSetup) {
+      // if it's the first run, and we've got the event object in the json, use it
+      if (ActiveApp.Event) {
+        this.onModelReady(ActiveApp.Event);
+      } else {
+        // Load Event Async'ly
+        var eventModel = App.Modelss.Event.findOrCreate({
+          id: id
+        });
+        eventModel.fetch({
+          success: _.bind(this.onModelReady, this)
+        });
+      }
+      this.isSetup = true;
+    }*/
+
+    analytics.track('Viewed Event Show', {
+      'isLoggedIn': ActiveApp.CurrentUser.isLoggedIn()
+    });
+  },
+
+
+  // the main event model is now ready to use
+  onModelReady: function(eventModel) {
+    var that = this;
+
+    var permissions = new App.Modelss.Ability(eventModel.get("permissions"));
+    BFApp.rootController.registerCurrentPermissions(permissions);
+
+    /* Demo mode test */
+    if (BFApp.rootController.permissionsModel.can("canManageAvailability") && eventModel.get("type") == "DemoEvent") {
+      BFApp.demoMode = 1;
+    }
+
+    /* Show general event layout */
+    this.layout = new BFApp.Views.EventLayout({
+      model: eventModel
+    });
+    this.layout.render();
+    BFApp.content.show(this.layout);
+
+    // show event card first
+    this.showEventCard(eventModel);
+    this.showHeaderMap(eventModel);
+    this.showEventInformationPanel(eventModel);
+
+    // main content
+    this.showMainContent(eventModel);
+
+    // o2 touch join popup
+    // Update: don't show this if they're already a part of the team (canViewAllDetails)
+    if (getParameterByName("join") && BFApp.rootController.permissionsModel.can("canJoin") && !BFApp.rootController.permissionsModel.can("canViewAllDetails")) {
+      BFApp.vent.trigger("event-register-form:show");
+    }
+
+    // PANELS
+    if (BFApp.rootController.permissionsModel.can("canViewAllDetails")) {
+      this.loadTeamsheet(eventModel);
+    }
+
+    var clubId = eventModel.get("team").get("club_id");
+    if (ActiveApp.Tenant.get("page_options").show_club_widget && clubId) {
+      this.showClubPanel(clubId);
+    }
+
+    /* Score panel */
+    if (eventModel.canSetResult() || eventModel.hasResult()) {
+      this.showResultPanel(eventModel);
+    }
+
+    if (BFApp.rootController.permissionsModel.can("canEditEvent")) {
+      this.showActionPanel(eventModel);
+      /* this.showDangerPanel(eventModel); */
+    }
+
+    // initialise the placeholder plugin for shit browsers.
+    // this needs to go at the end
+    $("input, textarea").placeholder();
+  },
+
+
+  showClubPanel: function(clubId) {
+    var that = this;
+
+    this.layout.initClubPanel();
+    this.club = new App.Modelss.Club({
+      id: clubId
+    });
+    this.club.fetch({
+      success: function() {
+        that.onClubReady();
+      },
+      error: function() {
+        errorHandler();
+      }
+    });
+  },
+
+  onClubReady: function() {
+    var clubPanel = new BFApp.Views.ClubPanel({
+      model: this.club
+    });
+    this.layout.clubPanelLayout.showContent(clubPanel);
+  },
+
+  showResultPanel: function(eventModel) {
+    this.layout.initResultPanel();
+    var resultsPanelView = new BFApp.Views.EventResultsPanel({
+      model: eventModel
+    });
+    this.layout.resultPanelView.showContent(resultsPanelView);
+  },
+
+
+  showHeaderMap: function(eventModel) {
+    // gmaps slows down the tests, so dont include it
+    <%
+    if ENV['RAILS_ENV'] != 'test' %>
+      this.headerMapView = new BFApp.Views.Map({
+        model: eventModel,
+        customHeight: true,
+        staticMode: true,
+        disableMarker: true
+      });
+    this.layout.headerMapView.show(this.headerMapView);
+    this.headerMapView.showMap(); <% end %>
+  },
+
+
+  loadSquad: function(teamId) {
+    var that = this;
+
+    this.squadCollection = new App.Collections.Users();
+    this.squadCollection.fetchTeamAssociates(teamId, {
+      success: function() {
+        that.onSquadReady();
+      },
+      error: function() {
+        errorHandler();
+      }
+    })
+  },
+
+
+  loadTeamsheet: function(eventModel) {
+    this.teamsheetCollection = new App.Collections.TeamsheetEntries(null, {
+      eventId: eventModel.get("id")
+    });
+
+    this.teamsheetCollection.fetch({
+      success: _.bind(this.onTeamsheetEntriesReady, this, eventModel)
+    });
+
+    // Invite Response Channel
+    if (BFApp.Pusher) {
+      var msgName = "event-" + eventModel.get('id') + "-teamsheet";
+      var channel = BFApp.Pusher.subscribe(msgName);
+      this.teamsheetCollection.live({
+        pusher: BFApp.Pusher,
+        pusherChannel: channel,
+        eventType: "teamsheet-entry"
+      });
+    }
+  },
+
+
+  showMainContent: function(eventModel) {
+    // only show activity feed if user has permission
+    if (BFApp.rootController.permissionsModel.can("canViewAllDetails")) {
+      // show spinner
+      var spinner = new BFApp.Views.Spinner();
+      this.layout.feed.show(spinner);
+
+      // fetch activity
+      this.activityItemCollection = new App.Collections.ActivityItems();
+      this.activityItemCollection.context = "event";
+      this.activityItemCollection.fetch({
+        data: {
+          feed_type: "activity",
+          event_id: eventModel.get("id"),
+          // no max
+          item_count: -1
+        },
+        success: _.bind(this.onActivityFeedReady, this)
+      });
+
+      // Activity Item Channel
+      if (BFApp.Pusher) {
+        //var msgName = "activity_feed-activity-" + eventModel.get("id");
+        var msgName = "event-" + eventModel.get("id") + "-activity";
+        var msgChannel = BFApp.Pusher.subscribe(msgName);
+        this.activityItemCollection.live({
+          pusher: BFApp.Pusher,
+          pusherChannel: msgChannel,
+          eventType: "activity_item"
+        });
+      }
+    } else if (BFApp.rootController.permissionsModel.can("canJoin")) {
+      // user has not joined yet, else would have canViewAllDetails
+      // this is a joinable event, so show join view
+      // NOTE: this is currently hardcoded to o2 touch because the whole popup is branded and has custom fields etc. 
+      // and will be a big ball ache to try and specify all this shit from the BE
+      var joinView = new BFApp.Views.JoinEventView();
+      this.layout.feed.show(joinView);
+    } else {
+      var permDenied = new BFApp.Views.PermissionDenied({
+        msg: "Click the login link in the top right to continue"
+      });
+      this.layout.feed.show(permDenied);
+    }
+  },
+
+
+  onSquadReady: function() {
+    var squadView = new BFApp.Views.UsersListPanel({
+      collection: this.squadCollection
+    });
+    this.layout.teamsheetPanelView.showContent(squadView);
+  },
+
+
+  onTeamsheetEntriesReady: function(eventModel) {
+    // tell the event card that the teamsheet has now loaded
+    this.showResponsePanel(eventModel);
+
+    this.showGameStatusPanel(eventModel);
+
+    // Demo mode
+    if (!BFApp.demoMode) {
+      // this.demoTour = new BFApp.Controllers.Ride();
+      // this.demoTour.initEventTour(this.layout)
+      // this.demoTour.startTour();
+    }
+
+    // Display "goal" in godbar if not enough players
+    if (BFApp.rootController.permissionsModel.can("canManageAvailability") && ActiveApp.Tenant.get("page_options").show_goals) {
+      this.updateOnboardingVisibility();
+      this.listenTo(this.teamsheetCollection, "add remove", this.updateOnboardingVisibility);
+    }
+
+    // Reminders Panel
+    // Note: this is now just a manual send button, which we always display
+    this.showRemindersPanel(eventModel);
+
+    // teamsheet panel
+    var teamsheetContentView = new BFApp.Views.TeamsheetPanel({
+      teamsheetCollection: this.teamsheetCollection,
+      eventModel: eventModel
+    });
+    this.layout.teamsheetPanelView.showContent(teamsheetContentView);
+  },
+
+
+
+  updateOnboardingVisibility: function() {
+    var numPlayers = this.teamsheetCollection.getNumPlayersExcludingMe();
+    if (numPlayers < BFApp.numTeammatesForActivation) {
+      var goalView = new BFApp.Views.AddPlayersNotice();
+      BFApp.vent.trigger("show:godbar", {
+        view: goalView,
+        godbarClass: "bluefields-blue stripe team-color"
+      });
+    } else if (BFApp.godbar.currentView && BFApp.godbar.currentView.isAddPlayersNotice) {
+      BFApp.vent.trigger("hide:godbar");
+    }
+  },
+
+
+  showRemindersPanel: function(eventModel) {
+    this.listenTo(eventModel, "change:status", _.bind(this.showRemindersPanel, this));
+    if (eventModel.canManageReminders()) {
+      if (!this.layout.reminders.currentView) {
+        this.layout.initRemindersPanel();
+      }
+
+      var remindersPanelView = new BFApp.Views.RemindersPanel({
+        model: eventModel,
+        collection: this.teamsheetCollection
+      });
+
+      this.layout.remindersPanelView.showContent(remindersPanelView);
+
+      BFApp.vent.on("teamsheetPlayer:remove", function() {
+        if (that.teamsheetCollection.length === 0) {
+          that.layout.reminders.close();
+        }
+      });
+
+    } else {
+      this.layout.reminders.close();
+    }
+  },
+
+
+  showActionPanel: function(eventModel) {
+    this.actionPanelView = new BFApp.Views.EventActionPanel({
+      model: eventModel
+    });
+    this.layout.actionPanelView.showContent(this.actionPanelView);
+
+    <%
+    if ENV['RAILS_ENV'] != 'test' %>
+      this.listenTo(this.actionPanelView, "location:popup", function(isOpening) {
+        if (isOpening) {
+          this.headerMapView.setColour(false);
+          if (this.sidebarMapView) {
+            this.sidebarMapView.setColour(false);
+          }
+        } else {
+          this.headerMapView.showLocation();
+          if (this.sidebarMapView) {
+            this.sidebarMapView.showLocation();
+          }
+        }
+      }); <% end %>
+  },
+
+  /*
+  showDangerPanel: function(eventModel) {
+    var dangerPanelView = new BFApp.Views.DangerPanel({
+      model: eventModel
+    });
+    this.layout.dangerPanelView.showContent(dangerPanelView)
+  },
+  */
+
+
+  /*showSharePanel: function(eventModel) {
+    this.listenTo(eventModel, "change:status", _.bind(this.showSharePanel, this));
+    if (!ActiveApp.Event.get("team").get("league") && BFApp.rootController.permissionsModel.can("canManageAvailability") && !BFApp.demoMode && eventModel.isOpen()) {
+      var sharePanelView = new BFApp.Views.SharePanel({
+        model: eventModel
+      });
+
+      if (!this.layout.share.currentView) {
+        this.layout.initSharePanel();
+      }
+
+      this.layout.sharePanelView.showContent(sharePanelView);
+
+    } else {
+      this.layout.share.close();
+    }
+  },*/
+
+  showEventInformationPanel: function(eventModel) {
+    var informationsPanelView = new BFApp.Views.EventInformationsPanel({
+      model: eventModel
+    });
+    this.layout.informationPanelView.showContent(informationsPanelView);
+
+    if (eventModel.get("location")) {
+      var panel = this.layout.initSidebarMapPanel();
+      this.sidebarMapView = new BFApp.Views.Map({
+        model: eventModel
+      });
+      panel.showContent(this.sidebarMapView);
+      this.sidebarMapView.showMap();
+    }
+  },
+
+  showResponsePanel: function(eventModel) {
+    this.listenTo(eventModel, "change:status", _.bind(this.showResponsePanel, this));
+    var myTeamsheet = this.teamsheetCollection.getMyTeamsheetEntries();
+    if (eventModel.isOpen() && myTeamsheet.length !== 0) {
+      this.layout.initResponsePanel(myTeamsheet);
+    } else {
+      this.layout.response.close();
+    }
+  },
+
+
+  showGameStatusPanel: function(eventModel) {
+    var that = this;
+
+    this.listenTo(eventModel, "change:status", _.bind(this.showGameStatusPanel, this));
+
+    if (eventModel.isCancelled() || eventModel.isPostponed()) {
+      var gameStatusPanelView = new BFApp.Views.GameStatus({
+        model: eventModel,
+        teamsheet: this.teamsheetCollection
+      });
+
+      this.layout.initGameStatusPanel();
+      this.layout.gameStatusPanelView.showContent(gameStatusPanelView);
+
+      gameStatusPanelView.on("re-schedule:clicked", function() {
+        that.actionPanelView.showPostponeEdit();
+      });
+
+    } else {
+      this.layout.gameStatus.close();
+    }
+  },
+
+
+  onActivityFeedReady: function(data) {
+    // Activity feed
+    var activityFeedView = new BFApp.Views.ActivityFeedTab({
+      activityItemCollection: this.activityItemCollection,
+      canPostMsg: BFApp.rootController.permissionsModel.can("canPostMessage"),
+      isOrganiser: BFApp.rootController.permissionsModel.get("canManageAvailability"),
+      context: "event"
+    });
+    this.layout.feed.show(activityFeedView);
+  },
+
+
+
+  showEventCard: function(eventModel) {
+    this.eventCardView = new BFApp.Views.EventCard({
+      model: eventModel,
+    });
+
+    this.layout.gamecard.show(this.eventCardView);
+  },
+
+});

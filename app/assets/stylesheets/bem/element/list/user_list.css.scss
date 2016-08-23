@@ -1,0 +1,30 @@
+/*------------------------------------*\
+	USER LIST
+\*------------------------------------*/
+.b-user-list {
+	&__item {
+		margin-bottom: $bluefields-margin/2;
+		margin-top: $bluefields-margin/2;
+
+		&__pic {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		&__info {
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: $bluefields-margin/2;
+			&__name {
+				display: block;
+				color: #333;
+				font-weight: bold;
+			}
+			
+			&__role {
+				display: block;
+				color: #555;
+			}
+		}
+	}
+}

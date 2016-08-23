@@ -1,0 +1,90 @@
+<link rel="icon" href="<%= asset_path 'favicon.ico' %>" />
+
+<script>
+  // fix facebook callback URL ugliness
+  if (window.location.hash == '#_=_') window.location.hash = '';
+
+  // no console output in production or on old IE
+  window.isProduction = <%= (Rails.env.production?) %>;
+  if (isProduction || typeof(console) === 'undefined') {
+      var console = {};
+      console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+  }
+
+  <% if (!current_user.nil? )#&& !current_user.email.match(/bluefields.com$/)) %>
+    // analytics vars
+
+    <% cache("#{current_user.cache_key}:common_head_metrics") do %>
+      window.current_user = {
+        id: '<%= current_user.id if current_user!=nil %>',
+        name: '<%= current_user.name if current_user!=nil %>',
+        email: '<%= current_user.email if current_user!=nil %>',
+        created: '<%=current_user.created_at.to_time.iso8601 if current_user!=nil %>',
+        team_roles: '<%=current_user.cached_team_roles.collect {|r| r.role_id }.uniq.join(",") if current_user!=nil %>',
+        user_roles: '<%=current_user.cached_roles.collect {|r| r.id }.uniq.join(",") if current_user!=nil %>',
+        event_count: <%=current_user.events_created.reject {|e| e.type=="DemoEvent"}.size if current_user!=nil %>,
+        invited_by_source: '<%=current_user.invited_by_source %>',
+        leagues_as_team_organiser: '<%= current_user.leagues_as_team_organiser.map{|l| l.id }.join(",") unless current_user.nil? %>',
+        leagues_as_player: '<%= current_user.leagues_as_player.map{|l| l.id }.join(",") unless current_user.nil?%>',
+        mobile_app_installed: '<%= (current_user.mobile_devices.size > 0) unless current_user.nil?%>'
+      };
+    <% end %>
+  <% end %>
+
+
+  // segment.io: creates an async script element, which gets loaded after our main app.js
+
+  <% if Rails.env.production? && !@exclude_from_analytics %>
+  window.analytics=window.analytics||[],window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(t){return function(){var a=Array.prototype.slice.call(arguments);return a.unshift(t),window.analytics.push(a),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(t){if(!document.getElementById("analytics-js")){var a=document.createElement("script");a.type="text/javascript",a.id="analytics-js",a.async=!0,a.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.io/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n)}},window.analytics.SNIPPET_VERSION="2.0.9",
+  analytics.load("9c4i1jarui");
+  analytics.page();
+  <% else %>
+  window.analytics = {
+    page: function(name, params) {
+      console.log("page called NAME: %s PARAMS: %o", name, params);
+    },
+    identify: function(id, params) {
+      console.log("identify called ID: %s PARAMS: %o", id, params);
+    },
+    track: function(action, params) {
+      console.log("track called ACTION: %s PARAMS: %o", action, params);
+    }
+  };
+  // Kiss Metrics stuff is not loaded in development
+  window.KM = {
+    ab: function(test, value) {
+      console.log("ab calling TEST: %s VALUE: %o", test, value);
+      return value[0];
+    }
+  };
+  window._kmq = {
+    push: function(myFunction) {
+      if (typeof(myFunction) == "function") myFunction();
+    }
+  };
+  <% end %>
+
+  if (typeof window.current_user != "undefined") {
+  analytics.identify(window.current_user.id, {
+      name: window.current_user.name,
+      email: window.current_user.email,
+      created: window.current_user.created,
+      team_roles: window.current_user.team_roles,
+      user_roles: window.current_user.user_roles,
+      event_count: window.current_user.event_count,
+      invited_by_source: window.current_user.invited_by_source,
+      leagues_as_team_organiser: window.current_user.leagues_as_team_organiser,
+      leagues_as_player: window.current_user.leagues_as_player,
+      mobile_app_installed: window.current_user.mobile_app_installed
+  });
+  analytics.identify(window.current_user.email, {}, {
+      providers: { 'All': false, 'Kissmetrics': true }
+  });
+  }
+</script>
+
+<!-- google analytics: creates an async script element, which gets loaded after our main app.js -->
+<%= analytics_init if Rails.env.production? %>
+
+<%= csrf_meta_tags %>
+<%= include_gon %>

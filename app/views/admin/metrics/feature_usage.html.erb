@@ -1,0 +1,32 @@
+<div class="columns eleven centered">
+  <h1>Metrics</h1>
+
+  <% @data.each do |d| %>
+
+  <div class="columns three">
+    <h2>Feature: <%=d[:name]%></h2>
+    <p><%=d[:desc]%> - Released: <%=d[:date].strftime("%-d %b")%></p>
+
+    <table class="metrics">
+      <tr>
+        <td>Week</td>
+        <td>Date</td>
+        <td>Total</td>
+      </tr>
+
+      <%
+        event_name = d[:event_name]
+      %>
+      <% d[:data]['data']['series'].each do |date| %>
+      <% val = d[:data]['data']['values'][event_name][date] %>
+      <tr>
+        <td><%=Date.parse(date).strftime("%W")%></td>
+        <td><%=Date.parse(date).strftime("%-d %b")%></td>
+        <td><%=val%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
+
+</div>

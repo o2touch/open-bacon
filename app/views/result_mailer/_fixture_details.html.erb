@@ -1,0 +1,42 @@
+<% @american_football = false %>
+<% day = @fixture.bftime.day %>
+<% month = @fixture.bftime.month %>
+<% time = @fixture.bftime.twelve_hour_time %>
+<table class="fixture" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="fixture-content" >
+    <td class="fixture-date">
+        <span class="day"><%=day%></span>
+        <span class="month"><%=month%></span>
+    </td>
+<!--     <td  width="10%" class="time-and-date">
+      <%= time %>
+    </td> -->
+    <td  class="team-left">
+      <% if @american_football == true%>
+        <%= @fixture.away_team.name %>
+      <% else %>
+        <%= @fixture.home_team.name %>
+      <% end %>
+    </td>
+    <% if @result != nil %>
+      <td class="score">
+          <% if @american_football == true%>
+            <%= @result.away_final_score_str %>
+            @
+            <%= @result.home_final_score_str %>
+          <% else %>
+            <%= @result.home_final_score_str %>
+            -
+            <%= @result.away_final_score_str %>
+          <% end %>
+      </td>
+    <% end %>
+    <td  class="team-right">
+      <% if @american_football == true%>
+        <%= @fixture.home_team.name %>
+      <% else %>
+        <%= @fixture.away_team.name %>
+      <% end %>
+    </td>
+  </tr>
+</table>

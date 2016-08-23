@@ -1,0 +1,37 @@
+.league-page .header{
+  background-color: $colour1;
+  border-bottom: 5px $colour2 solid;
+}
+.fixtures-list .fixtures-group .date-block{
+  background:$colour1;
+}
+
+
+
+/*------------------------------------*\
+	HEADER STYLE
+\*------------------------------------*/
+.b-header {
+	background: $colour1;
+
+	&__logo {
+		img{
+			border: 3px solid $colour1;
+		}
+	}
+
+	@if lightness($colour1) > 80% {
+		&__information {
+			&__title, &__sport {
+				color: $bluefields-black;
+			}
+		}
+	}
+
+	&__cta {
+		&__button {
+			border-color: $colour1 !important;
+			color: $colour1 !important;
+		}
+	}
+}

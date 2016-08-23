@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mitoo</title>
+		
+		<% if (!current_user.nil? && !current_user.email.match(/bluefields.com$/)) || current_user.nil? %>
+			<% if !current_user.nil? %> 
+				<script>
+				//_kmq.push(['identify', '<%= current_user.email if current_user!=nil %>']);
+				analytics.identify('<%= current_user.email if current_user!=nil %>', {
+            name: '<%= current_user.name if current_user!=nil %>',
+            email: '<%= current_user.email if current_user!=nil %>',
+            created: '<%=current_or_guest_user.created_at.to_i%>'
+          });
+				</script>
+			<% end %>
+		<% else%>
+			<script>
+			//_kmq = []
+			analytics = {
+          identify: function(id,params){
+
+          },
+          track: function(action, params){
+
+          }
+        }
+			</script>
+		<% end %>
+		
+		<script>		
+		if(typeof(console) === 'undefined') {
+    		var console = {}
+    		console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+		}
+		</script>
+				
+		<script src="//ajax.cdnjs.com/ajax/libs/underscore.js/1.3.2/underscore-min.js"></script>
+		<script type="text/javascript" src="//use.typekit.com/tsk1uqu.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
+		<!--[if gt IE 6]>
+		    <%= stylesheet_link_tag "ie", :media => "all" %>
+		<![endif]-->
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		<%= include_gon %>
+		<%= javascript_include_tag "default" %>
+		<%= csrf_meta_tags %>
+		  
+		<%= analytics_init if Rails.env.production? %>
+		
+		<%if flash[:analytics_event]%>
+		<script type="application/javascript">
+  			_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
+  		</script>
+		<% end %>
+		
+		<meta name="viewport" content="width=1100, initial-scale=0.7" />
+		<link rel="icon" href="/assets/favicon.ico" />
+</head>
+<body style="padding: 0px;" id="texture">
+<%= render :partial => 'home/form' %>
+<% 
+status = "logged_out"
+if current_user
+	if current_user.role?("Invited")
+		status = "invited"		      	
+	elsif !current_user.role?("Guest")
+		status = "logged_in"
+	end
+	#status = "logged_in"
+end
+%>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+    	<div class="row">
+	     <div class="columns five">
+			<% if status == "logged_in" %>
+				<%= link_to raw('Your Games'), "/events/", :class => "left" %>	
+			<% end %>
+			<% if !current_user.nil? && current_user.role?("Admin") %>
+				<%= link_to raw('Admin Dashboard'), "/admin/index/", :class => "left" %>
+			<% end %>	
+	     </div>
+	      <div class="columns two">
+	      	<%= image_tag 'bflogo_grey.png', :alt => "Mitoo"%>
+	      </div>
+		  <div class="columns five">
+			<% if status == "logged_out" %>
+				<!--<a id="btn-show-signup" class="button radius right nice white small signup" href="/signup">Sign Up</a>-->
+				<a id="btn-show-login" class="right white small login" href="#">Login</a>
+			<% elsif status == "invited" %>
+				<%= link_to raw('Logout'), destroy_user_session_path, :method => :delete, :class => "button nice small right" %>
+		      	<div class="right"><%=current_user.name %></div>
+		    <% elsif status == "logged_in" %>
+		    	<%= link_to raw('Logout'), destroy_user_session_path, :method => :delete, :class => "button nice small right" %>
+				<div class="right"><%=current_user.name %></div>	
+			<% end %>	
+		  </div>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<div class="container content">		
+	<%= yield %>
+</div>
+<div id="popup" class="reveal-modal" style="opacity: 1; visibility: hidden; top: 100px; width: auto; margin-left: -200px; left: 50%;"></div>
+</body>
+</html>

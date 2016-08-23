@@ -1,0 +1,52 @@
+<div class="twelve columns">
+    <h1>Team Administration</h1>
+</div>
+
+<div class="twelve columns">
+  <table>
+    <thead>
+      <th>Team Name</th>
+      <th>Admin &amp; Player Activation Email</th>
+    </thead>
+    <tbody>
+    <% @teams.each do |t| %>
+      <tr>
+        <td><%=t.name%></td>
+        <td data-id="<%=t.id%>"><%=link_to 'Re-send', "#" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+$("td a").click(function(e){
+  var target = $(e.currentTarget).parent();
+
+  // Let's give the user some feedback
+  target.html('Sending...');
+
+  $.post('/api/v1/teams/' + target.data("id") + '/send_activation_links', function(response){
+  
+    var msg = "";
+    var orgSize = response.organisers.length;
+    var playerSize = response.players.length;
+
+    if(orgSize > 0 || playerSize > 0){
+      
+      // Let's make the message nice to read
+      orgMsg = (orgSize > 1) ? orgSize + " organisers" : "an organiser";
+      playerMsg = (playerSize > 1) ? playerSize + " players" : "a player";
+
+      if(orgSize > 0) msg += orgMsg;
+      if(orgSize > 0 && playerSize > 0) msg += " and ";
+      if(playerSize > 0) msg += playerMsg;
+
+      target.html('<span style="color:green">Sent to ' + msg + '</span>');
+    }else{
+      target.html('<span>None to send (everybody has activated)</span>');
+    }
+  });
+  return false;
+});
+</script>

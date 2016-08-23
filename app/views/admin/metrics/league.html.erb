@@ -1,0 +1,11 @@
+<div class="columns eleven centered">
+  <h1>League Metrics</h1>
+
+  <div class="columns five">    
+    <ul>
+      <% @leagues.each do |league| %>
+        <li><a href="league/divisions/<%=league.divisions.collect { |d| d.id}.join(",") %>"><%=league.title%></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

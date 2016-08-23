@@ -1,0 +1,229 @@
+BFApp.Views.SearchPanelLayout = Marionette.Layout.extend({
+
+  template: "backbone/templates/map_search/search_panel_layout",
+
+  className: 'search-sidebar',
+
+  ui: {
+    searchInput: "input[name=search]",
+    distanceInput: "input[name=distance]",
+    submitButton: "button[name=submit]",
+    welcomeMessage: "#es-welcome-msg"
+  },
+
+  regions: {
+    results: "#r-results"
+  },
+
+  events: {
+    "submit form": "submitForm",
+    "keyup input[name=search]": "searchKeyup"
+  },
+
+  initialize: function(options) {
+    var searchClient = new AlgoliaSearch('1ESI9QYTPJ', '8c45f667d9649e81fa2a735dacefaa42');
+    var indexName = (this.options.context == "event") ? 'o2_touch_events_<%= Rails.env %>' : 'public_leagues_<%= Rails.env %>';
+    this.searchIndex = searchClient.initIndex(indexName);
+
+    var collectionClass = (this.options.context == "event") ? App.Collections.Events : App.Collections.Leagues;
+    this.collection = new collectionClass([], {
+      comparator: false // prevent sorting
+    });
+  },
+
+  serializeData: function() {
+    var placeholder, welcomeTitle, welcomeMsg;
+    if (this.options.context == "event") {
+      placeholder = "Enter your postcode to get started";
+      welcomeTitle = "Find Events Near You";
+      welcomeMsg = "Enter your postcode above to find nearby events";
+    } else {
+      placeholder = "Enter an address to get started";
+      welcomeTitle = "Find Leagues Near You";
+      welcomeMsg = "Enter an address above to find nearby leagues";
+    }
+    return {
+      placeholder: placeholder,
+      welcomeTitle: welcomeTitle,
+      welcomeMsg: welcomeMsg,
+      query: this.options.location.get("address")
+    };
+  },
+
+  searchKeyup: function() {
+    var s = this.ui.searchInput.val();
+    this.options.location.setFromString(s);
+
+    // if delete query string, empty collection and re-show welcome msg. map will auto reset.
+    if (!$.trim(s)) {
+      // dont show the empty message
+      this.results.$el.addClass("hide");
+      this.collection.reset();
+      // this will reset the locations array, so the old location groups dont get re-rendered
+      this.processLocations();
+      this.ui.welcomeMessage.removeClass("hide");
+    }
+  },
+
+  onRender: function() {
+    this.listView = new BFApp.Views.WidgetResultList({
+      itemView: (this.options.context == "event") ? BFApp.Views.WidgetEventRow : BFApp.Views.WidgetLeagueRow,
+      collection: this.collection
+    });
+    this.results.show(this.listView);
+  },
+
+  // if gmaps can't find a location for the address string, then cancel the algolia search and reset everything
+  geocodeFailed: function() {
+    this.locations = [];
+    this.listView.locations = this.locations;
+    this.collection.reset();
+
+    enableButton(this.ui.submitButton);
+    this.ui.welcomeMessage.addClass("hide");
+    this.results.$el.removeClass("hide");
+  },
+
+  // this happens when the user drags the pin
+  removeResults: function() {
+    this.locations = [];
+    this.listView.locations = this.locations;
+    this.collection.reset();
+
+    this.results.$el.addClass("hide");
+    this.ui.welcomeMessage.removeClass("hide");
+  },
+
+  submitForm: function(e) {
+    e.preventDefault();
+    var that = this;
+
+    var isValid = BFApp.validation.validateInput({
+      htmlObject: this.ui.searchInput,
+      require: true,
+      requireMessage: false
+    });
+
+    if (isValid) {
+      this.ui.welcomeMessage.addClass("hide");
+
+      // default to 50 miles
+      /*if (!this.ui.distanceInput.val()) {
+        this.ui.distanceInput.val("50");
+      }*/
+
+      disableButton(this.ui.submitButton);
+
+      // if drag pin, the location will already have a latlng
+      if (this.options.location.hasLatLng()) {
+        this.performSearch();
+      } else {
+        this.trigger("require:geocode");
+      }
+    }
+  },
+
+  performSearch: function() {
+    var that = this,
+      maxDistanceInMiles = 50,
+      // Note: use unix() here instead of valueOf() as BE expects time in seconds not millis
+      now = moment().unix();
+
+    // if they selected a google places result, then form may not yet be disabled
+    if (!this.ui.submitButton.prop("disabled")) {
+      disableButton(this.ui.submitButton);
+    }
+    // various situations mean we always have to check this
+    this.ui.welcomeMessage.addClass("hide");
+
+    var queryParams = {
+      getRankingInfo: 1,
+      aroundLatLng: this.options.location.getLatLng(),
+      aroundRadius: maxDistanceInMiles * BFApp.constants.metresInMile,
+      numericFilters: (this.options.context == "event") ? "time>" + now : "tenant_id=" + BFApp.constants.getTenantId("O2 Touch"),
+      // we get loads of events so we can do further grouping afterwards
+      hitsPerPage: (this.options.context == "event") ? 100 : 10
+    };
+    if (this.options.context == "event") {
+      queryParams.tagFilters = 'touchbase';
+    }
+
+    // JO: trust me this is a last resort
+    // For IE9: try again after 3 seconds (this gets cancelled on success)
+    var retryTimeout = false;
+    if ($("html").hasClass("ie9")) {
+      retryTimeout = setTimeout(function() {
+        that.actualSearch(queryParams);
+      }, 3000);
+    }
+    this.actualSearch(queryParams, retryTimeout);
+  },
+
+  actualSearch: function(queryParams, retryTimeout) {
+    var that = this;
+
+    this.searchIndex.search("", function(success, content) {
+      if (retryTimeout) {
+        clearTimeout(retryTimeout);
+      }
+      enableButton(that.ui.submitButton);
+
+      if (success) {
+        that.results.$el.removeClass("hide");
+
+        // first parse this shit into models so we can process them properly
+        // but pass silent:true so we dont update the view until we've dont some post-processing
+        that.collection.reset(content.hits, {
+          parse: true,
+          silent: true
+        });
+        // then extract closest 3 locations and drop any events at other locations
+        that.processLocations();
+        // this will update the map/pins
+        that.trigger("new:locations", that.locations);
+      } else {
+        errorHandler();
+      }
+    }, queryParams);
+  },
+
+  // builds an array of the first 3 locations (in order), to use for consistent numbering of pins on the map as well as the list of results on the left, and then drops all the other results (with different locations)
+  processLocations: function() {
+    var that = this,
+      currentLocation = null;
+
+    this.locations = [];
+    var models = this.collection.filter(function(model) {
+      var location = model.get("location");
+      if (currentLocation && location.isEquivalentTo(currentLocation)) {
+        // this event's location is in the list, so keep it (and mark it's locationNumber)
+        model.set("locationNumber", that.locations.length);
+        return true;
+      } else if (that.locations.length < 3) {
+        // this event's location is not in the list, so add it, and keep the event
+        that.locations.push(location);
+        currentLocation = location;
+        model.set("locationNumber", that.locations.length);
+        return true;
+      } else {
+        // this event's location is not in the list, and we've already got enough, so ditch it
+        return false;
+      }
+    });
+    // tell the listView about the locations
+    this.listView.locations = this.locations;
+    // trigger the re-render
+    this.collection.reset(models);
+  },
+
+  highlightLocation: function(number) {
+    var locationGroups = this.listView.$el.find(".event-location-group");
+    locationGroups.removeClass("search-highlight");
+    locationGroups.filter("[data-pin=" + number + "]").addClass("search-highlight");
+  },
+
+  unhighlightLocation: function(number) {
+    this.listView.$el.find(".event-location-group[data-pin=" + number + "]").removeClass("search-highlight");
+  }
+
+});

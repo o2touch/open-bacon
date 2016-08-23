@@ -1,0 +1,126 @@
+<%
+#####
+# TEAM DYNAMIC STYLESHEET
+#####
+
+# Here you have access to 'team' and 'tenant' variable
+%>
+
+<%= render :partial => "themes/default_theme", :locals => { :tenant => tenant, :colour1 => team.profile.colour1, :colour2 => team.profile.colour2 } %>
+
+/* Public page style */
+.unclaimed-faft-team-page {
+
+	// Fixture list
+	.fixture-faft-test .fixture-information h5 a {
+	  color: $colour1;
+	}
+	.date-block {
+		background: $colour1;
+		@if lightness($colour1) < 80% {
+      color: $bluefields-white;
+    }
+	}
+
+	// Left navigation
+	.nav-group ul li a.current-team {
+    color: $colour1;
+  }
+
+	// stats
+  .stat h5 {
+  	color: $colour1;
+  }
+
+
+  // single fixture style
+  .fixture-faft-single-test .fixture-team-information h1.current-team {
+  	color: $colour1;
+  }
+
+	// Table
+  table tbody tr.current_team td{
+  	color: $colour1;
+  }
+	
+	// Top nav
+  .content-navigation {
+  	background: $colour1;
+  	@if lightness($colour1) < 80% {
+  		ul li.season-information, ul li a {
+      	color: $bluefields-white;
+      }
+    }
+
+    ul li a.selected {
+    	background: darken($colour1, 5%);
+	    &:after {
+	    	border-top-color: darken($colour1, 5%);
+	    }
+	    &:hover {
+	    	background: darken($colour1, 5%);
+		    	&:after {
+		    	border-top-color: darken($colour1, 5%);
+		    }
+	    }
+    }
+
+    ul li a:hover {
+    	background: darken($colour1, 5%);
+    }
+  }
+
+	// Search
+  .nav-group .team-search-form {
+  	background: $colour1;
+  }
+
+}
+
+
+/* Private page */
+.team-page {
+	.header{
+	  background-color: $colour1;
+	  border-bottom: 5px $colour2 solid;
+	}
+
+	.bf-background{
+	  background-color:$colour1;
+	}
+
+	/* Calendar, button & Progress bar */
+	.gldp-flatwhite .today{
+	  background: lighten($colour1, 20%);
+	  border: none;
+	}
+
+	.gldp-flatwhite .selected{
+	  background: $colour1;
+	  border-top: none;
+	  border: none;
+	}
+
+	.event-type-game .date-block {
+		background: $colour1!important;
+	}
+
+	.event-type-game {
+		.event-title {
+			color: $colour1!important;
+		}
+	}
+
+	.player-list-item .star.registered {
+		color: $colour1!important;
+	}
+}
+
+
+/* Private public page style */
+.team-page-private {
+	.card-header {
+		background: $colour1;
+		border-bottom: 3px solid $colour2;
+	}
+}

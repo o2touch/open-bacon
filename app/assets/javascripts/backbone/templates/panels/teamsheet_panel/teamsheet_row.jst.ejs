@@ -1,0 +1,17 @@
+<a href="/users/<%= userId %>">
+  <%= htmlPic %>
+  <span <% if(isCurrentUser){ %> class="bold" <% } %> ><%= userName %></span>
+</a>
+<% if (haveControls) { %>
+<div class="controller right">
+  <% if (response_status !== 1) { %>
+    <a href="#" class="btn-yes" id="yes-<%= userId %>" title="Mark as <%= copy.available %>"><% if (response_status !== 2) { %>change to<% } %> <%= copy.available %></a>  
+  <% } %>
+  <% if (response_status == 2) { %>
+    | 
+  <% } %>
+  <% if (response_status !== 0) { %>
+  <a href="#" class="btn-no" id="no-<%= userId %>" title="Mark as <%= copy.unavailable %>"><% if (response_status !== 2) { %>change to<% } %> <%= copy.unavailable %></a> 
+  <% } %>
+</div>
+<% } %>

@@ -1,0 +1,27 @@
+<div class="fixture">
+	<h2>
+		<%= link_to @fixture.home_team.name, @fixture.home_team unless @fixture.home_team.nil? %>
+		(FAFT: <%= @fixture.home_team.source_id unless @fixture.home_team.nil? %>)
+		<%= @fixture.result.home_final_score_str unless @fixture.result.nil? %>
+		-
+		<%= @fixture.result.away_final_score_str unless @fixture.result.nil? %>
+		(FAFT: <%= @fixture.away_team.source_id unless @fixture.away_team.nil? %>)
+		<%= link_to @fixture.away_team.name, @fixture.away_team unless @fixture.away_team.nil? %>
+	</h2>
+	<p>
+		<%= @fixture.time %>
+	</p>
+	<p>
+		League: <%= link_to @fixture.division.league.title, @fixture.division.league %>, 
+		(FAFT: <%= @fixture.division.league.source_id %>,
+		 BF: <%= @fixture.division.league.id %>)
+	</p>
+	<p>
+		Division: <%= @fixture.division.title %>
+	  (FAFT: <%= @fixture.division.source_id %>
+		BF: <%= @fixture.division.id %>)
+	</p>
+
+	<p>Fixture BF ID: <%= @fixture.id %></p>
+	<p>Fixture FAFT ID: <%= @fixture.source_id %></p>
+</div>

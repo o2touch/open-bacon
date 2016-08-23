@@ -1,0 +1,407 @@
+
+/* All type of input: 
+
+-- text input --
+email
+date
+datetime
+datetime-local
+month
+number
+password
+search
+tel
+text
+time
+url
+week
+
+-- button input --
+button
+submit
+reset
+image
+
+-- special input --
+radio
+checkbox
+file
+range
+color
+hidden
+
+*/
+
+/* Mixin for crossbrowser support */
+@mixin placeholder($color){
+	&::-webkit-input-placeholder {
+		color: $color;
+	}
+	&:-moz-placeholder {
+		color: $color;
+	}
+	&::-moz-placeholder {
+		color: $color;
+	}
+	&:-ms-input-placeholder {
+		color: $color;
+	}
+}
+
+/* All text input selector */
+$text-input:"input[type='email'],
+	input[type='date'],
+	input[type='datetime'],
+	input[type='datetime-local'],
+	input[type='month'],
+	input[type='number'],
+	input[type='password'],
+	input[type='search'],
+	input[type='tel'],
+	input[type='text'],
+	input[type='time'],
+	input[type='url'],
+	input[type='week']";
+	
+
+/* General form tag margin */
+form{
+	width:100%;
+	font-size:13px;
+	margin:0;
+	@include transit(background, 0.2s);
+
+	
+	.alert-box{
+
+		&.alert{
+			z-index: 20;
+			position: absolute;
+			margin-top: -31px;
+			font-size: 12px;
+			padding: 3px 6px;
+			@include arrow($side:"bottom", $align:"center", $color:lighten($bluefields-red, 30%), $size:10px, $borderColor: lighten($bluefields-red, 20%), $borderSize:1px);
+		}
+	}
+	
+	input, textarea, select, .inline-input, fieldset, ul.colour-selector, .intl-tel-input {
+		font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+		margin: 0 0 $bluefields-margin 0;
+		max-width: 100%;
+		font-size: inherit;
+		&:last-child{ margin-bottom:0;}
+		&:first-child{margin-top:0;}
+	}
+	
+	label{
+		display: block;
+		font-weight: 500;
+
+		margin: 0 0 $bluefields-margin/2 0;
+		cursor: pointer;
+		&:first-child{margin-top:0;}
+
+	}
+
+}
+
+	fieldset{
+		border:1px solid #ddd;
+	
+		border-radius:$bluefields-radius;
+		padding:$bluefields-margin/2;
+		legend{
+			color:#777;
+		}
+	}
+
+
+.classic{
+	padding:$bluefields-margin;
+	border-radius:$bluefields-radius;
+	background:#f6f6f6;
+	border:1px solid #eee;
+	@include clearfix();
+
+	label{
+		color: #555;
+	}	
+}
+
+
+#{$text-input}, select, textarea, input[type="file"], fieldset{
+	width:100%;
+	@include transit(all, 0.2s);
+}
+
+/* Inline css for radio, checkbox or other inline element */
+input[type="file"], textarea, #{$text-input}{
+	-webkit-appearance:none;
+	border: 1px solid #ddd;
+	min-height: 28px;
+	border-radius:$bluefields-radius;
+	padding:$bluefields-margin/3 $bluefields-margin/2;
+	outline:none;
+	@include box();
+	@include placeholder(#999);
+	@include transit(all, 0.2s);
+	@include box-shadow(0 0 0px 1000px white inset);
+
+	color: #222;
+	
+	&:focus{
+		border: 1px solid $bluefields-blue;
+		@include placeholder(#bbb);
+		@include box-shadow(0 0 0px 1000px white inset, 0px 0px 1px 0px $bluefields-blue);
+	}
+
+
+	&[disabled]{
+		background: #eee;
+		border: 1px solid #ddd;
+		color: #666;
+		@include box-shadow(0 0 0px 1000px #eee inset);
+		@include placeholder(#aaa);
+	}
+
+	&.error{
+		 border: 1px solid $bluefields-red;
+		 background: lighten($bluefields-red, 40%);
+
+		 &:focus{
+			 @include box-shadow(0px 0px 1px 0px $bluefields-red);
+		 }
+	}
+
+}
+
+/* Fix for search input */
+input[type=search] { 
+	appearance:textfield;
+	-moz-appearance:textfield; /* Firefox */
+	-webkit-appearance:textfield; /* Safari and Chrome */
+	padding:$bluefields-margin/3 0;
+}
+
+/* label color */
+label{
+	&.disabled{
+		color:#888;
+	}
+	&.error{
+		color:$bluefields-red;
+	}
+
+	&.success{
+		color:$bluefields-green;
+	}
+}
+
+/* Inline css for radio, checkbox or other inline element */
+.inline-input{
+	border:0;
+	padding:0;
+	min-height: 17px;
+	input, textarea, select, label{
+		display:inline-block;
+		vertical-align:middle;
+		width:auto;
+		margin: 0;
+
+		max-width:100%;
+
+		margin-right:$bluefields-margin/2;
+		&:last-child{
+			margin-right:0;
+		}
+	}
+
+	
+	.cancel-link{
+		margin-right: $bluefields-margin/2;
+	}
+
+}
+
+
+textarea{
+	min-width: 100%;
+}
+
+/* Picture uploads (on user and team pages) */
+.pfl-pic-section {
+	margin-bottom: $bluefields-margin;
+	position: relative;
+	// force the height as they have to match
+	.circle{
+		width: 40px!important;
+		height: 40px!important;
+		margin-right: $bluefields-margin/2;
+	}
+	
+	button, input {height: 38px;}
+
+	input[type=file] {
+		position: absolute;
+		display: block;
+		top: 0;
+		right: 0;
+		margin: 0;
+		@include opacity(0);
+		cursor: pointer;
+	}
+}
+
+.colour-selector-container{
+	display: inline-block;
+	margin-bottom: $bluefields-margin;
+}
+/* Colour selector */
+ul.colour-selector {
+	@include clearfix;
+	li {
+		height: 34px;
+		width: 34px;
+		position: relative;
+		@include inline-block;
+		float: left;
+		margin: 0 3px 0 0;
+		@include box;
+		text-align: center;
+		@include radius(20px);
+
+		label {
+			display: block;
+			height: 100%;
+			cursor: pointer;
+		}
+
+		input[type=radio] {
+			margin: 11px 0;
+			@include opacity(0);
+			cursor: pointer;
+		}
+
+		i.check {
+			position: absolute;
+			color: $bluefields-white;
+			display: none;
+			top:8px;
+			left: 9px;
+			font-size: 15px;
+			line-height: 15px;
+		}
+
+		&.showChecked {
+			i {display: inline;}
+		}
+	}
+}
+
+.actions{
+	text-align: right;
+	button, .cancel{
+		float:right;
+	}
+	.cancel{
+		margin-right: $bluefields-margin;
+		margin-top: 11px;
+
+		&.left{
+			float:left;
+		}
+		&.small{
+			margin-top:7px;
+		}
+	}
+}
+
+
+.or-choice-line {
+		text-align: center;
+		display: table;
+		white-space: nowrap;
+		margin: $bluefields-margin/2 auto;
+		color: $bluefields-black;
+		position: relative;
+		width: 100%;
+		&:before, &:after {
+			border-top: 1px solid rgba($bluefields-black, 0.1);
+			content: '';
+			display: table-cell;
+			position: absolute;
+			top: 9px;
+			width: 45%;
+		}
+
+		&:before { right: 0; }
+		&:after { left: 0; }
+}
+
+
+
+.input-with-button {
+	display: table;
+	width: 100%;
+	button, .button {
+		display: table-cell;
+		vertical-align: middle;
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+		white-space: nowrap;
+	}
+
+	.input-container {
+		display: table-cell;
+		vertical-align: middle;
+		width: 100%;
+		input {
+			width: 100%;
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+}
+
+
+
+
+.select-ui-container {
+	position: relative;
+	width: 100%;
+	select, .select-ui {
+		width: 100%;
+		height: 100%;
+	}
+
+	.select-ui {
+		text-align: left;
+		&.bf-icon {
+			padding-right: 28px;
+			&:before {
+				color: #999;
+				position: absolute;
+				right: 12px;
+			}
+		}
+	}
+
+	select {
+		position: absolute;
+		top: 0;
+		left: 0;
+		-webkit-appearance: button;
+    -moz-appearance: button;
+    -o-appearance: button;
+    -ms-appearance: button;
+    appearance: button;
+    @include opacity(0);
+	}
+
+}
+
+
+
+.inline-input.inline-radio-input {
+	margin-bottom: 6px;
+}

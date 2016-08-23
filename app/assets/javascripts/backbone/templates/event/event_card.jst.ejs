@@ -1,0 +1,10 @@
+<h1><%- title %></h1>
+<h2 class="day"><%= date %></h2>
+<% if(location){ %><p class="location"><%- location %></p> <% }%>
+
+<a class="team-link" href="<%= teamUrl %>" title="<%= teamName %>">
+	<div class="team-link-container">
+		<%= htmlPic %>
+		<span><%= teamName %></span>
+	</div>
+</a>

@@ -1,0 +1,48 @@
+a{
+	text-decoration: none;
+	cursor: pointer;
+	
+	@include link_creator($bluefields-blue);
+
+	&.bf-link {
+		@include link_creator($bluefields-red);
+	}
+
+	&.error {
+		@include link_creator($bluefields-red);
+	}
+	
+	&.success {
+		@include link_creator($bluefields-green);
+	}
+	
+	&.warning {
+		@include link_creator($bluefields-orange);
+	}
+	
+	&.link-black {
+		@include link_creator($bluefields-black);
+	}
+
+	&.link-grey {
+		@include link_creator(#777);
+	}
+
+	&:hover{
+		text-decoration: underline;
+		.underline-hover {
+			text-decoration: underline!important;
+		}
+	}
+	
+	&.no-underline, &.no-underline:hover{
+		text-decoration: none!important;
+	}
+
+	&.link-disabled {
+		pointer-events: none;
+  	cursor: default;
+  	@include opacity(0.7);
+	}
+
+}

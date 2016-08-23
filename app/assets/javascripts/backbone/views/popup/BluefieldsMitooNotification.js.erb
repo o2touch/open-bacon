@@ -1,0 +1,25 @@
+BFApp.Views.BluefieldsMitooNotification = Marionette.ItemView.extend({
+
+  template: "backbone/templates/popups/bluefields_mitoo_notification",
+
+  className: "notification",
+
+  triggers: {
+    "click .close": "close"
+  },
+
+  onRender: function() {
+    this.$el.css({
+      "right": "-500px"
+    }).animate({
+      "right": "20px"
+    }, BFApp.constants.time, BFApp.constants.easingIn);
+  },
+
+  serializeData: function() {
+    return {
+      pic: '<%= asset_path "identity/old/bf-logo.png" %>'
+    };
+  },
+
+});

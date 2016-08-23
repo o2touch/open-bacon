@@ -1,0 +1,22 @@
+/*------------------------------------*\
+	CLAIM BLOCK
+\*------------------------------------*/
+.b-claim {
+	padding-top: $bluefields-margin;
+	padding-bottom: $bluefields-margin;
+	&__title {
+		@include font-size(1.4, false);
+		margin-bottom: $bluefields-margin/2;
+		text-transform: uppercase;
+		font-weight: 500;
+		color: #444;
+	}
+
+	&__text {
+		color: #666;
+	}
+
+	&__button {
+		margin-top: $bluefields-margin/2;
+	}
+}

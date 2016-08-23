@@ -1,0 +1,18 @@
+<h2>Schedule</h2>
+
+<p><%= @invitee.first_name.titleize %>, the current schedule is below. You'll receive any changes via email and you can always view the most up-to-date schedule online.</p>
+
+<%= render :partial => "user_mailer/schedule_event_list", :locals => {:events => @events, :timezone => @invitee.time_zone} %>
+
+<% if !@team_invite.nil? %>
+	<p>See the whole schedule online</p>
+	<a class="button" href="<%= team_invite_link_url(:token => @team_invite.token, :only_path => false )%>">View the schedule</a>
+<% else %>
+	<a class="button" href="<%= team_url(@team, :only_path => false )%>#schedule">View the schedule on Mitoo</a>
+<% end %>
+
+<%
+email_title = "Schedule+Initial"
+extra_params = @invitee.email + "&TeamId=" + @team.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

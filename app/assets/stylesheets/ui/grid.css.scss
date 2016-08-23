@@ -1,0 +1,113 @@
+@mixin grid-calc-helper($property, $columns) {
+  #{$property}: 100% / $columns-number * $columns;
+}
+
+@mixin grid-row {
+  width: 100%;
+  max-width: $grid-width;
+  margin: 0 auto;
+  @include clearfix;
+  padding: 0 $gutter-width / 2 0 $gutter-width / 2;
+  .columns.first {
+    padding-left: 0;
+  }
+  .columns.last {
+    padding-right: 0;
+  }
+
+  &--relative {
+    position: relative;
+  }
+}
+
+@mixin grid-columns($columns: false, $offset: false, $mobile: false, $center: false, $gutter: true) {
+  float: left;
+  display: block;
+  position: relative;
+  @if $columns != false {
+    @include grid-calc-helper(width, $columns);
+  }
+  @if $gutter != false {
+    padding: 0 $gutter-width / 2 0 $gutter-width / 2;
+  }
+  @if $offset != false {
+    @include grid-calc-helper(margin-left, $offset);
+  }
+  @if $center != false {
+    float: none;
+    margin: 0 auto;
+  }
+  @include respond-to(handhelds) {
+    @if $mobile != false {
+      @include grid-calc-helper(width, $mobile);
+    }
+    @else {
+      width: 100%;
+    }
+  }
+}
+
+.row {
+  @include grid-row;
+  .row {
+    padding: 0;
+  }
+}
+
+.columns {
+  float: left;
+  display: block;
+  padding: 0 $gutter-width / 2 0 $gutter-width / 2;
+  position: relative;
+  min-height: 1px;
+  $allClassSelector: "";
+  @for $i from 1 through $columns-number {
+    &.#{nth($columns-number-string, $i)} {
+      @include grid-calc-helper(width, $i);
+      &.popup, &.b-popup {
+        max-width: $grid-width / $columns-number * $i;
+      }
+    }
+    $allClassSelector: $allClassSelector + "&.#{nth($columns-number-string, $i)}, ";
+  }
+  @for $i from 1 through $columns-number - 1 {
+    &.#{offset-by}-#{nth($columns-number-string, $i)} {
+      @include grid-calc-helper(margin-left, $i);
+      @include respond-to(handhelds) {
+        margin-left: 0;
+      }
+    }
+  }
+  /* Media query */
+  @include respond-to(handhelds) {
+    #{$allClassSelector} {
+      width: 100%;
+    }
+    @for $i from 1 through $columns-number {
+      &.#{mobile}-#{nth($columns-number-string, $i)} {
+        @include grid-calc-helper(width, $i);
+      }
+    }
+  }
+
+  &.centered {
+    float: none;
+    margin: 0 auto;
+  }
+  &.no-gutter {
+    padding: 0;
+  }
+  &.center {
+    float: none;
+    margin: 0 auto;
+  }
+}
+
+@include respond-to(handhelds) {
+  .mobile-no-padding {
+    padding: 0;
+  }
+  .columns {
+    margin-left: 0;
+  }
+}

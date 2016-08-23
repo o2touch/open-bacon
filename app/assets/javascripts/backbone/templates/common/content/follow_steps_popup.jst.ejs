@@ -1,0 +1,57 @@
+<ul class="steps row <% if (!isLoggedIn) { %>hide<% } %>">
+  <li class="step-text step-text-1 six columns mobile-four text-center">1. Follow</li>
+  <li class="step-text step-text-2 six columns mobile-four text-center">2. Download App</li>
+<!--   <li class="step-text step-text-3 four columns mobile-four text-center">3. Tell Your Team</li>
+ -->
+ </ul>
+
+<div class="slider">
+  <div class="slide-1">
+    #signup
+  </div>
+  
+  <div class="slide-2 download-the-app-step">
+    <h1 class="text-center">Download the app to receive important team updates on-the-go</h1>
+    <div class="download-section text-center">
+      <h2>Important team information at your fingertips</h2>
+      <ul class="clearfix">
+        <li class="four columns"><i class="bf-icon calendar"></i>Upcoming fixtures</li>
+        <li class="four columns"><i class="bf-icon list"></i>League position</li>
+        <li class="four columns"><i class="bf-icon trophy"></i>Recents results</li>
+      </ul>
+      <a class="six columns mobile-six text-center store-button store-link" href="<%= androidLink %>" target="_blank" data-track="iOS" data-track-type="popup-button">
+        <img class="cta-store" src="<%= playStoreButtonPath %>"/>
+      </a>
+      <a class="six columns mobile-six text-center store-button store-link" href="<%= appstoreLink %>" target="_blank" data-track="Play Store" data-track-type="popup-button">
+        <img class="cta-store" src="<%= appStoreButtonPath %>"/>
+      </a>
+    </div>
+    <div class="download-section">
+      <div class="phone-container">
+        <a class="store-link" href="<%= androidLink %>" target="_blank" data-track="iOS" data-track-type="popup-image">
+          <img src="<%= androidShedulePath %>" class="iphone_img" alt="Download the Iphone app">
+        </a>
+        <a class="store-link" href="<%= appstoreLink %>" target="_blank" data-track="Play Store" data-track-type="popup-image">
+          <img src="<%= iphoneStandingPath %>" class="android_img" alt="Download the android app">
+        </a>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="slide-3 invite-player-step">
+    <h1 class="text-center">Tell your teammates about the <%- teamName %> team page</h1>
+    <div class="invite-copy text-center">
+      <p>Simply add your teammates' email addresses and we'll send them updates about your team too</p>
+      <small>We promise we'll only send important updates about <%- teamName %></small>
+    </div>
+    <div class="invite-form nine columns center"></div>
+    <div class="nine columns center">
+      <div class="two columns offset-by-ten">
+        <p class="invite-more text-center">+ Invite another</p>
+      </div>
+    </div>
+    <button type="button" class="full-width done next hide">Done</button>
+    <span class="skip next">Skip this step</span>
+  </div>
+</div>

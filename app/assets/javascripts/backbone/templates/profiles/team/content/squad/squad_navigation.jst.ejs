@@ -1,0 +1,19 @@
+<div class="search-input twelve columns">
+	<input class="squad-search" type="text" placeholder="Search" />
+</div>
+
+<ul class="twelve columns navigation-link">
+	<li><a class="active no-underline" title="all" href="#">Players <span></span></a></li>
+	<li><a class="no-underline" title="organisers" href="#">Team admins <span></span></a></li>
+	<li><a class="no-underline" title="parents" href="#">Parents <span></span></a></li>
+</ul>
+
+
+
+<% if (canManageRoster) { %>
+<div class="twelve columns">
+	<button type="button" class="small full-width" title="invite player" <%= (disable) ? 'disabled="disabled"' : '' %>>Add player</button>
+<a href="#" class="no-underline six columns view-link active" title="list-view"><i class="bf-icon list"></i> List</a>
+<a href="#" class="no-underline six columns view-link" title="card-view"><i class="bf-icon user"></i> Card</a>
+</div>
+<% } %>

@@ -1,0 +1,28 @@
+<table>
+	<thead>
+		<tr>
+			<th>Error(s)</th>
+			<th>File</th>
+			<th>Line no</th>
+			<th>Identifer</th>
+			<% data.first.params.each do |k, v| %>
+				<th><%= k %></th>	
+			<% end %>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% data.each do |di| %>
+			<tr>
+				<td><%= di.message %></td>
+				<td><%= di.file %></td>
+				<td><%= di.line %></td>
+				<td><%= di.identifier %></td>
+				<% di.params.each do |k, v| %>
+					<td><%= v %></td>
+				<% end %>
+				<td><%= link_to "DELETE", admin_import_path(di), method: :delete %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

@@ -1,0 +1,19 @@
+.club-information-panel {
+	.panel-content {
+		.club-information-content {
+			padding-left: 6px;
+			h3 {
+				text-align: left;
+				font-weight: 600;
+				text-transform: uppercase;
+				color: #444;
+			}
+			width: 70%;
+			@include calc(width,"100% - 40px");
+
+			.address {
+				color: #444;
+			}
+		}
+	}
+}

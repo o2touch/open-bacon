@@ -1,0 +1,19 @@
+<table width="100%" cellspacing="0">
+  <tr>
+    <td valign="top" align="center">
+      <table class="team-header" style="border-color: #<%= @colour2 %>;" bgcolor="#<%= @colour1 %>" border="0" cellpadding="0" cellspacing="12" width="100%">
+        <tr>
+          <!-- Team logo -->
+          <td class="align-middle text-right">
+            <img class="circle team-pic" src="<%= paperclip_url(@team.profile.profile_picture_small_url) %>" width="45"/>
+          </td>
+      
+          <!-- Team Name -->
+          <td class="align-middle text-left">
+            <a class="team-name" href="<%=team_url(@team) %>"><h1><%=@team.name.upcase%></h1></a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

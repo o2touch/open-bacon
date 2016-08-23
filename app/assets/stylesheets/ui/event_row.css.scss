@@ -1,0 +1,211 @@
+/* Event row layout & style */
+.event-row {
+	position: relative;
+	background: #f1f1f1;
+	@include clearfix();
+
+  &:nth-child(odd) {
+  	background-color: #fbfbfb; 
+    .date-block {
+			@include opacity(0.9);
+    }
+  }
+	
+	&.with-score {
+		.informations {
+			@include calc(width, "100% - 75px");
+		}
+	}
+
+	.date-block {
+		display: inline-block;
+		vertical-align: middle;
+		position: absolute;
+    top: 0;
+    bottom: 0;
+	}
+
+	.informations{
+		display: inline-block;
+		vertical-align: middle;
+		padding: $bluefields-margin / 2 $bluefields-margin * 0.75;
+		padding-left: 47px;
+		width: 100%;
+		@include ellipsis();
+		.event-title {
+			@include helvetica;
+      @include font-size(1);
+      @include ellipsis();
+      color: #666;
+		}
+		
+		.event-details {
+			@include font-size(0.8);
+			@include ellipsis();
+      color: #999;
+      font-weight: 300;
+      text-align: left;
+      margin-bottom: 0;
+		}
+	}
+	
+	.event-score {
+		@include font-size(1.4);
+		text-align: right;
+		display: inline-block;
+		vertical-align: middle;
+		width: 70px;
+		padding-right: 6px;
+	}
+}
+
+
+
+/* Event color code Color */
+.event-row{
+	&.event-type-game {
+		.date-block { background: $bluefields-blue; }
+		.informations{
+			a, .event-title { color: $bluefields-blue; }
+		}
+	}
+	
+	&.event-type-event {
+		.date-block { background: #888; }
+		.informations{ 
+			a, .event-title { color: #444; }
+		}
+	}
+	
+	&.event-type-practice{
+		.date-block { background: #ccc; }
+		.informations{
+			a, .event-title { color: #999; }
+		}
+	}
+}
+
+/* Game status */
+.game-status-label {
+	position: absolute;
+	top: 0;
+	right: 30px;
+	padding: 3px 6px;
+	@include font-size(0.7);
+	color: $bluefields-white;
+	border-bottom-right-radius: $bluefields-radius;
+	border-bottom-left-radius: $bluefields-radius;
+	&.game-postponed {
+		background: $bluefields-orange;
+	}
+	&.game-cancelled {
+		background: $bluefields-red;
+	}
+}
+
+
+
+/* Edit score custom for organiser */
+.event-row.can-edit-score {
+	.event-score {
+		padding-right: 20px;
+	}
+}
+
+
+/* Score edit popover */
+.event-row-edit-score{
+	form {
+		position: absolute;
+		background: #eee;
+		padding: 6px;
+		width: 250px;
+		right: 0;
+		bottom: 100%;
+		
+		.alert-box {
+			position: absolute;
+			text-align: center;
+			top: auto;
+			right: 50%;
+			@include transform(translateX(50%));
+			&:first-of-type {
+				bottom: 56px;
+				@include arrow($side:"bottom", $align:"center", $color:lighten($bluefields-red, 30%), $size:10px, $borderColor: lighten($bluefields-red, 20%), $borderSize:1px);
+			}
+
+			&:last-of-type {
+				top: 80px;
+				@include arrow($side:"top", $align:"center", $color:lighten($bluefields-red, 30%), $size:10px, $borderColor: lighten($bluefields-red, 20%), $borderSize:1px);
+			}
+		}
+
+
+		@include arrow($side: "bottom", $align: "right", $color: #eee, $size: 9px);
+
+		input, button {
+			width: 24%;
+			margin: 0;
+		}
+					
+		span{
+			text-align: center;
+			color: #444;
+		}
+					
+		button{
+			height: 27px;
+			padding: 0;
+		}
+		
+		
+	}
+
+	.close-score {
+		width: 19%;
+		text-align: center;
+		display: inline-block;
+	}
+
+	.edit-score{
+		position: absolute;
+		top: $bluefields-margin/2;
+		right: $bluefields-margin/2;
+		color:#777;
+		@include font-size(0.9, false);
+	}
+}
+
+/* Availability - layout */
+.event-row.with-availability {
+	.informations {
+		@include calc(width, "100% - 90px");
+	}
+}
+
+/* Availability */
+.event-availability{
+	width: 80px;
+	display: inline-block;
+	display: i;
+	vertical-align: middle;
+
+	.bf-icon.lock{
+		font-size: 22px;
+		color: #888;
+		position: absolute;
+		top: 13px;
+		right: 12px;
+	}
+	.i-am-available{
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		padding: 3px;
+	}					
+	.i-am-not-available{
+		margin-top: -1px;
+		border-top-right-radius: 0;
+		border-top-left-radius: 0;
+		padding:3px;
+	}
+}

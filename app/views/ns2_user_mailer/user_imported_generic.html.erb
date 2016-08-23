@@ -1,0 +1,19 @@
+<% @token_url = PowerToken.generate_token("/", @recipient) %>
+
+<p>Hi there <%=@recipient.first_name.titleize%></p>
+
+<p>As a previous Mitoo/Goalrun user, I wanted to let you know of the exciting changes here and how you can activate your account so that you have full access to Mitoo.</p>
+
+<p><b>Over 1.6 million players, parents and coaches have used Mitoo</b> in the last year and we've had great feedback.</p>
+
+<p>We’ve made some major improvements to the site, and have released our new iPhone and Android apps that allow you to receive team updates on-the-go.</p>
+
+<p>You'll need to <a href="<%=power_token_url(@token_url)%>">activate your account</a>. Simply click the button below and find the team you want to follow.</p>
+
+<a class="button" href="<%=power_token_url(@token_url)%>">Activate my Account</a>
+
+<br/>
+<p>That's all you need to get started on the new Mitoo.</p>
+
+<p>Yours in sport,<br />
+Andrew Crump</p>

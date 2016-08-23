@@ -1,0 +1,22 @@
+<form class="search-form">
+  <!-- <label for="search-input">Location / postcode</label> -->
+  <input type="text" id="search-input" name="search" placeholder="<%= placeholder %>" value="<%= query %>">
+
+  <!-- <label for="distance-input">Distance (in miles)</label>
+  <input type="text" id="distance-input" name="distance" value="20"> -->
+
+  <button type="submit" name="submit">Search</button>
+</form>
+
+<div id="es-welcome-msg">
+  <div class="icon"><i class="bf-icon search"></i></div>
+  <h3><%= welcomeTitle %></h3>
+  <p><%= welcomeMsg %></p>
+</div>
+
+<div id="r-results" class="hide"></div>
+<div class="mitoo-logo"></div>
+
+
+<!-- Powered link -->
+<a class="powered-by-mitoo-link" href="http://mitoo.co/" ></a>

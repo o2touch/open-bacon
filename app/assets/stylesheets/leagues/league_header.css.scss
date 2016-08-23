@@ -1,0 +1,148 @@
+.league-profile-details{
+	margin-top: $bluefields-margin*3;
+	margin-bottom: $bluefields-margin*3;
+	@include grid-columns($columns:5, $center:true);
+	.league-container{
+		@include box-shadow();
+		@include radius($bluefields-radius);
+		.league-info{
+			background: #f9f9f9;
+			padding: $bluefields-margin;
+			border-radius: $bluefields-radius $bluefields-radius 0 0;
+			h2{
+				text-transform: uppercase;
+				font-weight: 500;
+				color: #333;
+			}
+			
+			p{
+				color: #555;
+			}
+		}
+		
+		.division-selector{
+			background: #eee;
+			padding: $bluefields-margin/2;
+			border-top: 1px #ccc solid;
+			border-radius: 0 0 $bluefields-radius $bluefields-radius;
+			
+			span{
+				vertical-align: middle;
+				display: inline-block;
+				color: #444;
+				padding: 6px
+			}
+			
+			ul.division-dropdown{
+				vertical-align: middle;
+				display: inline-block;
+				@include calc(width, "100% - 220px");
+				@include radius($bluefields-radius);
+				@include gradient($bluefields-white, #F1F1F1);
+				
+				background: $bluefields-white;
+				border: 1px solid #ddd;
+				position:relative;
+				
+				margin: 0;
+				
+				
+				&:hover{
+					@include gradient($bluefields-white, #FAFAFA);
+				}
+				
+				&.open{
+					
+					li.other-division{
+						display: block;
+						cursor: pointer;
+					}
+				}
+			
+				li.current-division{
+					padding: $bluefields-margin/4 $bluefields-margin/2;
+					color: #666;
+					font-weight: 500;
+					cursor: pointer;
+					line-height: 25px;
+					word-break: break-word;
+					&:after{
+						content: "";
+						display: block;
+						width: 0;
+						height: 0;
+						border: inset 5px;
+						border-color: rgba(160, 160, 160, 0.9) transparent transparent transparent;
+						border-top-style: solid;
+						position: absolute;
+						top: 14px;
+						right: 14px;
+					}
+				}
+				
+				li.other-division{
+					display: none;
+					position: absolute;
+					width: 100%;
+					color: #444;
+					z-index: 20;
+					font-weight: 500;
+					top:0;
+					@include radius($bluefields-radius);
+					@include box-shadow();
+					ul{
+						margin: 0;
+						li.division{
+							position: relative;
+							padding: $bluefields-margin/4 $bluefields-margin/2;
+							margin: 0;
+							line-height: 25px;
+							word-break: break-word;
+							&:first-child{
+								border-radius: $bluefields-radius $bluefields-radius 0 0;
+							}
+							
+							&:last-child{
+								border-radius: 0 0 $bluefields-radius $bluefields-radius;
+							}
+							
+							&:nth-child(even) {
+								background: #f9f9f9;
+							}
+							&:nth-child(odd) {
+								background: $bluefields-white;
+							}
+							
+							&.active-division{
+								background: #f2f2f2;
+								&:after{
+									font-family: "bluefields-icon";
+									content: "\F008";
+									position: absolute;
+									right: 8px;
+									top: 5px;
+									color: #888;
+								}
+							}
+							
+							&:hover{
+								background: #e9e9e9;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.header.cover-image {
+	background-position: center;
+	.league-profile-details{
+		.league-container{	
+			.league-info{
+				background: rgba(255,255,255,0.9);
+			}
+		}
+	}
+}

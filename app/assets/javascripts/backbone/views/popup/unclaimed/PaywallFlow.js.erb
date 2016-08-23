@@ -1,0 +1,69 @@
+BFApp.Views.PaywallFlow = Marionette.Layout.extend({
+
+  template: "backbone/templates/popups/paywall_flow",
+
+  className: "paywall-popup-flow",
+
+  regions: {
+    paywall: "#pf-paywall",
+    password: "#pf-password",
+    facebookShare: "#pf-facebook-share",
+    download: "#pf-download"
+  },
+
+  initialize: function(options) {
+    this.listenTo(BFApp.vent, "paywall-flow:next", function(options) {
+      if (options.paywallPassword) {
+        this.showPasswordStage(options);
+      }
+      // NOTE: removed share stage as involves FB.login() asking for lots of perms, which would now have to go through a lengthy review process with Facebook that we don't have time for
+      /*else if (options.shareStage) {
+         this.showShareStage(options);
+       }*/
+      else if (options.downloadStage) {
+        this.showDownloadStage(options);
+      }
+    });
+  },
+
+  // show this one first
+  onRender: function() {
+    $("body").addClass("paywall");
+    this.showPaywallStage();
+    // preload the facebook faces img
+    (new Image()).src = "<%= asset_path 'faft/facebook_wall.png' %>";
+  },
+
+  showPaywallStage: function() {
+    var view = new BFApp.Views.FollowTeamPopupPaywall(this.options);
+    this.paywall.show(view);
+  },
+
+  showPasswordStage: function(options) {
+    var view = new BFApp.Views.FollowTeamPopupPassword(options);
+    this.password.show(view);
+
+    // insert nice transitions here
+    this.password.$el.removeClass("hide");
+    this.paywall.$el.addClass("hide");
+  },
+
+  /*showShareStage: function(options) {
+    var view = new BFApp.Views.PaywallFacebookShare(options);
+    this.facebookShare.show(view);
+
+    // insert nice transitions here
+    this.facebookShare.$el.removeClass("hide");
+    this.password.$el.addClass("hide");
+  },*/
+
+  showDownloadStage: function(options) {
+    var view = new BFApp.Views.FollowTeamPopupSMS(options);
+    this.download.show(view);
+
+    // insert nice transitions here
+    this.download.$el.removeClass("hide");
+    this.password.$el.addClass("hide");
+  }
+
+});

@@ -1,0 +1,8 @@
+<div class="player-list-item clearfix <% if(newItem){%>active new<% }%>" data-id="<%= id %>">
+	<%= profilePicHtml %>
+	<p class="squad-name">
+		<span class="squad-name-inner"></span>
+		<% if(isOrganiser){ %><span>(Team admin)</span><% } %> 
+		<i original-title="<% if(isRegistered){%>Registered<% }else{ %>Not registered<% } %> " class="right bf-icon star <% if(isRegistered){%>registered<% } %>"></i>
+	</p>
+</div>

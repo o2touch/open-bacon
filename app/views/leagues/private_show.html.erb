@@ -1,0 +1,51 @@
+<% content_for :head do %>
+<link href="/league_theme/<%= @league.id %>/theme.css" media="all" rel="stylesheet" type="text/css" class="css-reload league_theme"/>
+<script>
+var ActiveApp = {};
+
+// Tenant for this event
+ActiveApp.Tenant = new Backbone.Model(<%= safe_js_string(@tenant_json) %>);
+
+// Current logged in user
+ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+// The league profile being viewed
+ActiveApp.ProfileLeague = App.Modelss.League.findOrCreate(<%= safe_js_string(@league_json) %>);
+
+ActiveApp.FaftFollowTeam = {
+	showDownloadLinks: <%= show_app_download_link? %>,
+  itunesUrl: "<%= itunes_url('footer_link').html_safe %>",
+  playStoreUrl: "<%= play_store_url('footer_link').html_safe %>"
+};
+
+
+$(function() {
+	BFApp.on("start", function() {
+		BFApp.rootController.startLeagueProfileModule();
+	});
+
+	// Start BF App
+	BFApp.start();	
+});
+</script>
+
+
+
+
+
+<% end %><%# this is where we end content_for head %>
+ 
+<div id="r-navigation"></div>
+<div id="r-godbar"></div>
+<div id="r-module"></div>
+<div id="r-footer"></div>
+<div id="r-popup"></div>
+<div id="r-activity-indicator"></div>
+
+
+<!-- Hack to display olark for Footy league & SPSC Detroit -->
+<% if @league.id == 6245 || @league.id == 6243 %>
+<%= render :partial => "partials/olark" %>
+<% end %>

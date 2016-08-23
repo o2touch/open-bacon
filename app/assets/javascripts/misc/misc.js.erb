@@ -1,0 +1,447 @@
+// add contains method to String prototype
+// allows str.contains("ting")
+String.prototype.contains = function() {
+  return String.prototype.indexOf.apply(this, arguments) !== -1;
+};
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+
+
+function getMapPinIcon(tenant, name) {
+  // if you dont specify a tenant, try and grab it automatically
+  tenant = tenant || ActiveApp.Tenant.get("name");
+  // grab the full path for pin.png using the asset_path,
+  // then use String.replace() to adapt it for other pins
+  var pinIcon = BFApp.constants.tenantPinIcons[tenant];
+  if (name) {
+    // updated: on prod, this regex needs to match the cache busting hash as well e.g.
+    // "pin-48974nyw987cyr98w74yncrw987498497c.png"
+    pinIcon = pinIcon.replace(/pin(-[0-9a-z]+)?/, name);
+  }
+  return pinIcon;
+}
+
+
+
+function errorHandler(options) {
+  options = options || {};
+
+  var email = (window.ActiveApp && ActiveApp.Tenant && ActiveApp.Tenant.get("name") == "o2_touch") ? "o2touchhelp@mitoo.co" : "help@mitoo.co";
+
+  _.defaults(options, {
+    button: false,
+    message: "Something went wrong, please let us know at " + email,
+    errorBox: false,
+    errorType: "alert",
+    callback: false
+  });
+
+  var errorBoxClass = "alert-box";
+
+  // re-enable the button
+  if (options.button instanceof jQuery) {
+    enableButton(options.button);
+  }
+
+  // if the user didn't specify an error box...
+  if (!options.errorBox && options.button) {
+    var form = options.button.closest("form");
+    // try finding one within the form, else prepend a new one
+    if (form.length) {
+      var errorBox = form.find("." + errorBoxClass);
+      if (errorBox.length) {
+        options.errorBox = errorBox;
+      } else {
+        options.errorBox = $("<div>", {
+          "class": errorBoxClass
+        }).prependTo(form);
+      }
+    } else {
+      // else look for one next to the button, else add it
+      var errorBox = options.button.siblings("." + errorBoxClass);
+      if (errorBox.length) {
+        options.errorBox = errorBox;
+      } else {
+        options.errorBox = $("<div>", {
+          "class": errorBoxClass
+        }).insertBefore(options.button);
+      }
+    }
+  }
+
+  // handle specific error situations
+  // NOTE: must check that status is 422 to avoid trying to parse the response as JSON when it is actually a full HTML page... #bbb
+  // ALSO: check that first char is not "<"
+  if (options.type == "register" && options.response && options.response.status == 422 && options.response.responseText && options.response.responseText.charAt(0) != "<") {
+    var responseText = JSON.parse(options.response.responseText);
+    if (responseText.message == "User exists") {
+      options.message = "There is already an account associated with that email address";
+    }
+  }
+
+  // display the message
+  if (options.errorBox) {
+    options.errorBox.removeClass("hide").addClass(options.errorType).addClass("error-handler");
+    options.errorBox.html(options.message);
+  } else {
+    alert(options.message);
+  }
+
+  // call the callback
+  if (_.isFunction(options.callback)) {
+    options.callback();
+  }
+}
+
+
+
+// *********************************************************************************
+// ******************************** GENERAL FUNCTION *******************************
+// *********************************************************************************
+
+// ***********************************************
+// ******* General disable button function *******
+// ***********************************************
+function disableButton(button, isSubmit) {
+  // isSubmit should default to true
+  if (isSubmit !== false) {
+    isSubmit = true;
+  }
+
+  button.prop("disabled", true);
+
+  button.data("enabled", button.text());
+  if (button.attr("data-disabled")) {
+    // don't blindly replace the contents of the button...
+    // if it contains a span.text, then just update that
+    var buttonText = button.children(".text");
+    var newText = button.attr("data-disabled") + "...";
+    if (buttonText.length) {
+      buttonText.text(newText);
+    } else {
+      button.text(newText);
+    }
+  }
+  button.append("<div class='spinner'></div>");
+
+  var spinnerAttributes = {
+    lines: 8, // The number of lines to draw
+    length: 0, // The length of each line
+    width: 3, // The line thickness
+    radius: 5, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 0, // The rotation offset
+    color: '#fff', // #rgb or #rrggbb
+    top: '6px', // center vertically
+    left: 'auto', // center horizontally
+    position: 'absolute', // element position
+    speed: 1.3, // Rounds per second
+    trail: 87, // Afterglow percentage
+    opacity: 1 / 4, // Opacity of the lines
+    fps: 20, // Frames per second when using setTimeout()
+    zIndex: 2e9, // Use a high z-index by default
+    className: 'spinner-animation', // CSS class to assign to the element
+    hwaccel: false, // Whether to use hardware acceleration
+    shadow: false, // Whether to render a shadow
+  };
+
+  if (button.hasClass("tiny")) {
+    spinnerAttributes.lines = 7;
+    spinnerAttributes.width = 2;
+    spinnerAttributes.radius = 4;
+  } else if (button.hasClass("small")) {
+    //put special option here
+  } else if (button.hasClass("medium")) {
+    //put special option here
+  } else if (button.hasClass("large")) {
+    spinnerAttributes.lines = 9;
+    spinnerAttributes.width = 4;
+    spinnerAttributes.radius = 6;
+  } else if (button.hasClass("full-width")) {
+    //put special option here
+  } else if (button.hasClass("expand")) {
+    //put special option here
+  }
+
+  if (button.hasClass("grey")) {
+    spinnerAttributes.color = "#000";
+  }
+
+  button.find(".spinner").spin(spinnerAttributes);
+
+  if (isSubmit) {
+    var form = button.closest("form");
+    // remove any general form errors
+    form.children(".alert-box").remove();
+    // disable all other form inputs
+    var inputs = form.find("input, textarea, select, button");
+    inputs.blur();
+    var enabledInputs = inputs.not(":disabled");
+    // mark them as "submitting", so we know which ones to re-enable later
+    enabledInputs.data("submitting", true).prop("disabled", true);
+  }
+}
+
+
+// **********************************************
+// ******* General enable button function *******
+// **********************************************
+function enableButton(button) {
+  //actions
+  button.find(".spinner").remove();
+
+  var newText = button.data("enabled");
+  if (newText) {
+    var buttonText = button.children(".text");
+    if (buttonText.length) {
+      buttonText.text(newText);
+    } else {
+      button.text(newText);
+    }
+  }
+
+  button.prop("disabled", false);
+
+  // re-enable the inputs we disabled
+  var inputs = button.closest("form").find("input, textarea, select, button").filter(function() {
+    return ($(this).data("submitting") == true);
+  });
+  inputs.prop("disabled", false);
+}
+
+
+
+/* Check key */
+function keyIsCharacter(key) {
+  return (key !== 12 && key !== 13 && key !== 16 && key !== 17 && key !== 18 && key !== 27 && key !== 27 && key !== 37 && key !== 38 && key !== 39 && key !== 18 && key !== 40 && key !== 91 && key !== 93)
+}
+
+
+function matchSearch(needle, haystack) {
+  return (haystack.toLowerCase().indexOf(needle.toLowerCase().trim()) !== -1);
+}
+
+
+
+// neat function to grab URL parameters by name
+// e.g. getParameterByName("b") of "example.com?a=1&b=2" would be "2"
+// from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values/901144#901144
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.search);
+  if (results == null) return "";
+  else return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+// get a URL hash parameter by index (0-indexed)
+// e.g. getHashParameter(0) of "#help/about" would be "help"
+function getHashParameter(urlHash, n) {
+  if (typeof(urlHash) === "undefined" || urlHash.length <= 1) return "";
+  // substring to get rid of the initial # character
+  var a = urlHash.substring(1).split("/");
+  return (a.length > n) ? a[n] : "";
+}
+
+
+function capitaliseFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+// check if 2 URLs are the same (ignoring hash)
+function sameOrigin(a, b) {
+  return (a.split("#")[0] == b.split("#")[0]);
+}
+
+// if already on this page, (or if firefox), we must trigger a reload
+function goToUrl(url, isAbsolute) {
+  var isFirefox = /Firefox/i.test(navigator.userAgent);
+  var currentUrl = (isAbsolute) ? window.location.href : window.location.pathname;
+  var isSameOrigin = sameOrigin(url, currentUrl);
+
+  window.location.href = url;
+  if (isSameOrigin || isFirefox) {
+    // the reload arg is to skip cache
+    document.location.reload(true);
+  }
+}
+
+
+/*
+Sticky function - Léo
+29 April 2013
+
+on windows resize
+  If screen layout
+    if: parent is present (height/width/view) => Do the magic (with firefox position absolute support)
+    else: => Put back in normal
+  else, Put back in normal
+fire an resize event once
+
+*/
+
+function sticky(el, context, widthAdjust) {
+
+  widthAdjust = typeof(widthAdjust) == 'undefined' ? 0 : widthAdjust;
+
+  var parent = (context) ? context : $(el).parent();
+  $(window).on("resize scroll", function(event) {
+    if ($(window).width() > 755) {
+      if (parent.offset() && parent.offset().top !== 0 && parent.offset().left !== 0) {
+
+        var offsetTop = parent.offset().top - 40;
+
+        var containerHeight = parent.height();
+        var elementHeight = $(el).outerHeight();
+
+        var offsetBottom = offsetTop + containerHeight - elementHeight;
+        var windowsScroll = $(window).scrollTop();
+
+        var hasClassBottom = $(el).hasClass("bottom");
+        var hasClassFixed = $(el).hasClass("fixed");
+
+        var fixed = (windowsScroll > offsetTop && windowsScroll < offsetBottom && !hasClassFixed);
+        var bottom = ((windowsScroll > offsetBottom || windowsScroll == offsetBottom) && !hasClassBottom);
+        var normal = (windowsScroll < offsetTop && (hasClassFixed || hasClassBottom));
+
+        if (fixed) {
+          $(el).removeClass("bottom").addClass("fixed");
+          hasClassFixed = true;
+        } else if (bottom) {
+          $(el).removeClass("fixed").addClass("bottom");
+          hasClassBottom = true;
+        } else if (normal) {
+          $(el).removeClass("fixed bottom");
+        }
+
+        if ((hasClassFixed || hasClassBottom) && $(el).outerWidth() + (widthAdjust) !== parent.width() + (widthAdjust)) {
+          $(el).outerWidth(parent.width() + (widthAdjust));
+        } else if (normal) {
+          $(el).css('width', '');
+        }
+      }
+
+    } else {
+      $(el).removeClass("fixed bottom");
+      $(el).css('width', '');
+    }
+  }).resize();
+}
+
+// when the server returns error status, try to extract the error message from the response object
+function getErrorMessage(xhr) {
+  if (xhr.responseText) {
+    var responseObject = JSON.parse(xhr.responseText);
+    if (responseObject.message) {
+      return responseObject.message;
+    }
+  }
+  return "Sorry, something went wrong";
+}
+
+/* outside click detector */
+(function($) {
+  $.fn.outside = function(ename, cb) {
+    return this.each(function() {
+      var $this = $(this),
+        self = this;
+
+      $(document).bind(ename, function tempo(e) {
+        if (e.target !== self && !$.contains(self, e.target)) {
+          cb.apply(self, [e]);
+          if (!self.parentNode) $(document.body).unbind(ename, tempo);
+        }
+      });
+    });
+  };
+}(jQuery));
+
+
+// INIT FILE UPLOADER
+function initFileUploader(buttonElem, thumb, action, model) {
+  var fileInput = buttonElem.children("input");
+  fileInput.fileupload({
+    url: action,
+    dataType: 'json',
+    maxFileSize: 5000000, // 5 MB
+    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+  }).on('fileuploadprocessalways', function(e, data) {
+    if (data.files.error) {
+      var errorMsg = "<div class='alert-box alert'>" + data.files[0].error + "</div>";
+      buttonElem.parent().prepend(errorMsg);
+    } else {
+      buttonElem.siblings(".alert-box").remove();
+      disableButton(buttonElem, false);
+      data.submit();
+    }
+  }).on('fileuploaddone', function(e, data) {
+    // update the model
+    var json = data.response().result;
+    model.set({
+      profile_picture_large_url: json.profile_picture_large_url,
+      profile_picture_medium_url: json.profile_picture_medium_url,
+      profile_picture_small_url: json.profile_picture_small_url,
+      profile_picture_thumb_url: json.profile_picture_thumb_url
+    });
+    // update the thumb
+    thumb.attr("src", json.profile_picture_small_url);
+    // update button
+    enableButton(buttonElem);
+  }).on('fileuploadfail', function(e, data) {
+    errorHandler({
+      button: buttonElem
+    });
+  });
+}
+
+
+
+// get timezone offset in hours
+// while not 100% reliable, it's the best way: http://stackoverflow.com/a/1091399/217866
+function getTimezoneHours() {
+  // getTimezoneOffset returns offset in minutes
+  return (new Date()).getTimezoneOffset() / 60;
+}
+
+
+// find URLs in a string and create link tags
+// from http://stackoverflow.com/a/37687/217866
+function addLinkTags(text) {
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(exp, "<a href='$1' target='_blank' rel='nofollow'>$1</a>");
+}
+
+
+// Convert a string to a slug (URL friendly with hyphens for spaces)
+// It removes anything thats not an alpha char or space, then replaces spaces with hyphens
+// http://stackoverflow.com/a/1054862/217866
+function convertToSlug(s) {
+  return (s) ? s.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-') : "";
+}
+
+
+
+function convertSportCss(s) {
+  if (s) {
+    return s.replace(/ /, '_').replace(/[()]/g, '').toLowerCase();
+  }
+  return "soccer";
+}
+
+/**
+ * Global tweaks
+ */
+$(document).ready(function() {
+  // clear form errors on focus (if in an app that uses our validation lib)
+  if (BFApp.validation) {
+    $(document).on("focus", "input, select, textarea", function() {
+      BFApp.validation.removeValidationError({
+        htmlObject: $(this)
+      });
+    });
+  }
+});

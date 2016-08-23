@@ -1,0 +1,10 @@
+<div class="availability-status<% if (status == 2){ %> hide<% } %>">
+	<img class="circle" src="<%- pic %>" alt="<%= name %>"/>
+	<h4><% if (currentUser){ %>You are <% }else{ %><%= name %> is <% } %> <% if (status == 1){ %><%= copy.available %><% }else{ %><%= copy.unavailable %><% } %></h4>
+	<a href="#" class="availability-edit"><i class="bf-icon pen"></i></a>
+</div>
+
+<div class="availability-choice <% if (status !== 2){ %>hide<% } %>">
+	<button type="button" class="success available full-width"><% if (currentUser){ %>You are <% }else{ %><%= name %> is <% } %><%= copy.available %></button>
+	<button type="button" class="alert unavailable full-width"><% if (currentUser){ %>You are <% }else{ %><%= name %> is <% } %><%= copy.unavailable %></button>
+</div>

@@ -1,0 +1,44 @@
+<%= htmlPic %>
+
+<div class="activity-item-information">
+
+	<!-- Activity subject / preview -->
+	<div class="activity-text-content"></div>
+
+
+	<!-- Like/comment/date section -->
+	<div class="activity-actions">
+
+		<!-- Like -->
+		<% if (activity_item.likeable() && !fromLeague) { %>
+			<span class="activity-action-item">
+				<a href="#" class="activity-item-like <% if (placeholder) { %>link-disabled<% } %>">
+					<% if (!alreadyLiked) { %>Like<% } else { %>Unlike<% } %>
+				</a>
+			</span>
+		<% } %>
+
+		<!-- Comment -->
+		<% if (activity_item.commentable() && !fromLeague) { %>
+			<span class="activity-action-item">
+				<a href="#" class="toggle-comment-form <% if (placeholder) { %>link-disabled<% } %>">Comment</a>
+			</span>
+		<% } %>
+	
+		<!-- Date -->
+		<span class="activity-action-item"><%= date %></span>
+	</div>
+
+	<!-- Comment/form container -->
+	<div class="activity-comment">
+		<div class="activity-like-container"></div>
+		<div class="activity-item-comments-container"></div>
+		<div class="activity-comment-form-container"></div>
+	</div>
+</div>
+
+<!-- Starred information -->
+<% if (showStar && !fromLeague) { %>
+<i original-title="<%= (starred) ? 'Remove from highlights' : 'Highlight' %>" 
+	class="bf-icon star highlight-star <%= (starred) ? 'selected' : '' %>"></i>
+<% } %>

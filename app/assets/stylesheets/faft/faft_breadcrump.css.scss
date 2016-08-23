@@ -1,0 +1,41 @@
+.content-breadcrump {
+	height: 35px;
+	line-height: 35px;
+	padding-left: $bluefields-margin/2;
+	padding-right: $bluefields-margin/2;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	@include respond-to(handhelds){ 
+		text-align: center;
+	}
+	li {
+		display: inline;
+		
+		&.current-team a{
+			color: $bluefields-blue;
+		}
+		a {
+			@include font-size(0.8);
+			color: #666;
+			max-width: 30%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: inline-block;
+			vertical-align: middle;
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+		&:after {
+			content: " /";
+			color: #888;
+		}
+		&:last-of-type{
+			&:after{
+				content: none;
+			}
+		}
+	}
+}

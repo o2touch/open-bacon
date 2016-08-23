@@ -1,0 +1,36 @@
+<% if (emptyTeams) { %>
+  <p class="text-center bottom-spacer">No teams found for this division.<br>Please ask the League Admin to add some teams to follow!</p>
+<% } %>
+
+<% if (showTeamDropdown || isExitPopup) { %>
+  <select name="team">
+    <% _.each(teams.models, function(team) { %>
+      <option value="<%= team.get('id') %>" <%= (isExitPopup && team.get("id") == profileTeamId) ? "selected" : "" %>>
+        <%= team.get('name') %>
+      </option>
+    <% }); %>
+    <% if (emptyTeams) { %>
+      <option>Select your team</option>
+    <% } %>
+  </select>
+<% } %>
+
+<% if (!isLoggedIn) { %>
+  <button type="button" class="facebook radius full-width" name="facebook">
+    <i class="bf-icon facebook"></i> Signup With Facebook
+  </button>
+  <span class="or-choice-line">or</span>
+  <input name="name" type="text" placeholder="Name">
+  <input name="email" type="email" placeholder="Email">
+  <input name="password" type="password" placeholder="Password">
+<% } %>
+
+<% if (isFollowing) { %>
+  <button type="submit" name="follow" class="full-width follow-team grey" disabled>
+    Following
+  </button>
+<% } else { %>
+  <button type="submit" name="follow" class="full-width follow-team orange">
+    <%= (isLoggedIn) ? "Follow"+buttonSuffix : "Sign Up"+buttonSuffix %> For Updates
+  </button>
+<% } %>

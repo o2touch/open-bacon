@@ -1,0 +1,45 @@
+<!-- <h3>Add a Player</h3>
+<p>Players receive notifications about events and can create a login to see details online.</p>
+ -->
+
+<label for="player-name"><% if(junior){ %>Junior's<%} else { %>Player's<%} %> name</label>
+<input placeholder="Joe Bloggs" name="player-name" type="text" value="<%= model.get("name") %>" <%if(secondParent){%>disabled<%}%> >
+	
+<% if (junior) { %>
+<fieldset>
+	<legend>Parent's Details</legend>
+	<!-- <p>Associate a parent with this junior for notifications.</p> -->
+	<div class="inline-input"><input id="i-am-parent" name="i-am-parent" type="checkbox"> <label for="i-am-parent">I am the parent</label></div>
+	<div class="parent-details-collapsible">
+		<label for="parent-name">Parent's name</label>
+		<input placeholder="Joe Bloggs Sr" id="parent-name" name="parent-name" type="text" value="<% if(model.get("parent_name") && !secondParent){ %><%= model.get("parent_name") %><%} %>">
+		<label for="parent-email">Parent's email</label>
+		<input placeholder="joe@example.com" id="parent-email" name="parent-email" type="text" value="<% if(model.get("parent_email") && !secondParent){ %><%= model.get("parent_email") %><%} %>">
+		<label for="user-mobile-number">Parent's mobile</label>
+		<input type="tel" id="user-mobile-number" class="phone-input" value="<% if(model.get("parent_mobile") && !secondParent){ %><%= model.get("parent_mobile") %><%} %>">
+	</div>
+</fieldset>
+
+<% } else { %>
+
+<div class="adult">
+	<label for="user-email">Email</label>
+	<input id="user-email" placeholder="joe@example.com" name="email" type="email" value="<%= model.get('email') %>">
+	<label for="user-mobile-number" class="mobile-hint">Mobile number</label>
+	<input type="tel" id="user-mobile-number" class="phone-input" value="<%= model.get('mobile_number') %>">
+</div>
+<% } %>
+
+<% if (showTeams) { %>
+<label for="sf-team">Team</label>
+<select name="team" id="sf-team">
+	<% teams.each(function(team) { %>
+		<option value="<%= team.get('id') %>"><%= team.get("name") %></option>
+	<% }); %>
+</select>
+<% } %>
+	
+<div class="inline-input text-right">
+	<a href="#" title="cancel" class="cancel-link">Cancel</a>
+	<button type="submit" name="save" class="small" data-disabled="Adding" data-team-color="button">Add</button>
+</div>

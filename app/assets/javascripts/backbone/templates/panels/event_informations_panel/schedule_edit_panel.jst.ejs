@@ -1,0 +1,42 @@
+<% if (postponeMode) { %>
+	<label class="switch-light switch-candy header-toggle no-label" onclick="">
+		<input class="tbc-toggle" type="checkbox" <% if (rescheduling) { %>checked<% } %>>
+		<span>
+			<span>Date TBD</span>
+			<span>Reschedule</span>
+		</span>
+		<a></a>
+	</label>
+
+	<p class="tbc-hint <% if (rescheduling) { %>hide<% } %>">Notify players that this event has been postponed.</p>
+<% } %>
+
+<div class="date-form <% if (postponeMode && !rescheduling) { %>hide<% } %>" >
+	<input readonly type="text" id="event-date" value="<%= eventTime %>" gldp-id="mydate">
+	<div id="edit-event-date-calendar" gldp-el="mydate" style="top:0;left:0;height:170px;position:relative;"></div>
+	<select id="event-time-hour" class="three columns time-select">
+		<% for (var i=1;i<=12;i++){ %>
+			<option value="<%= i %>" <% if(i==hours){ %>selected<% } %> >
+				<%= i %>
+			</option>
+		<% } %>
+	</select>
+	<select id="event-time-min" class="three columns time-select">
+		<% for (var i=0;i<60;i+=5){ %>
+			<option value="<%= i %>" <% if(i==minutes){ %>selected<% } %> >
+				<%= (i<10) ? "0"+i : i %>
+			</option>
+		<% } %>
+	</select>
+	<select id="event-time-ampm" class="three columns time-select end">
+		<option value="am" <% if(ampm=="am"){ %>selected<% } %> >am</option>
+		<option value="pm" <% if(ampm=="pm"){ %>selected<% } %> >pm</option>
+	</select>
+</div>
+
+<div class="inline-input text-right">
+	<a href="#" class="close-panel cancel-link">Cancel changes</a>
+	<button type="button" class="small save-event right" data-disabled="Saving"><% if(rescheduling){ %>Reschedule<% }else if(postponeMode){ %>Postpone<% }else{ %>Save<% } %></button>
+</div>
+
+<i class="bf-icon x close-panel"></i>

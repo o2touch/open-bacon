@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<!--[if !IE]><!--><html><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <%= stylesheet_link_tag "app-event-search", :media => "all", :type => "text/css" %>
+    <%= render :partial => 'layouts/google_maps' %>
+  </head>
+
+  <body class="event_search_page">
+    <div id="r-search-panel"></div>
+    <div id="r-map"></div>
+
+    <%= javascript_include_tag "app-event-search" %>
+    <script>
+      // spinner behind gmap while loading
+      $("#r-map").spin({
+        width: 4,
+        radius: 20,
+        corners: 1,
+        lines: 10,
+        color: '#555',
+        top: 'auto',
+        left: 'auto'
+      });
+      // start app
+      BFApp.start();
+    </script>
+  </body>
+</html>

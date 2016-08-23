@@ -1,0 +1,13 @@
+{
+  "name": "backbone-live",
+  "homepage": "https://github.com/jackocnr/backbone-live",
+  "_release": "aa6d5857d4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "aa6d5857d4be4c7a5b2fd74f102d9a3c7f8058e7"
+  },
+  "_source": "https://github.com/jackocnr/backbone-live.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/jackocnr/backbone-live.git"
+}

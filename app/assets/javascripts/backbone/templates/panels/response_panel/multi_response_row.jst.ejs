@@ -1,0 +1,17 @@
+<img class="circle" src="<%- pic %>" alt="<%= name %>"/>
+<h4><% if (currentUser){ %>You<% }else{ %><%= name %><% } %></h4>
+<% if (status == 2){ %>
+<div class="clearfix">
+	<button type="button" class="success available small"><%= copy.available %></button>
+	<button type="button" class="alert unavailable small"><%= copy.unavailable %></button>
+</div>
+<% }else{ %>
+<label class="toggle android header-toggle" onclick="">
+	<input class="availability-toggle" type="checkbox" <% if (status == 1){ %>checked<% } %>>
+	<p>
+		<span><%= copy.available.capitalize() %></span>
+		<span><%= copy.unavailable.capitalize() %></span>
+	</p>
+	<a class="slide-button"></a>
+</label>
+<% } %>

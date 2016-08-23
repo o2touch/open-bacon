@@ -1,0 +1,187 @@
+<div class="columns eleven centered">
+
+  <div class="columns eleven">  
+    <h1><%=@title%></h1>
+  </div>
+
+  <div class="columns four">
+    <h2>Actives per week</h2>
+    <p>Teams with <b>&gt; 4 players</b> and an event scheduled in <b>last/next 7 days</b></p>
+    <table class="metrics">
+      <tr>
+        <td>Week</td>
+        <td></td>
+        <td>Active</td>
+        <td colspan=2>WoW Growth</td>
+        <td></td>
+      </tr>
+`
+      <% @active_teams_summary.each do |week| %>
+      <tr class="<%=week['mood']%> <%=week['future']%>">
+        <td><%=week['week']%></td>
+        <td><%=week['date'].strftime("%-d %b")%></td>
+        <td><%=week['active']%></td>
+        <td><%=week['diff']%></td>
+        <td><%='%.1f' % week['wow_rate'].to_f %>%</td>
+        <td><a href="<%=@url%>?week=<%=week['week'].split('-').second%>">Go</a></td>
+    <!--     <td>
+          <%week['teams'].each do |id|%>
+            <a href="/admin/teams/<%=id%>"><%=id%></a>
+          <% end %>
+        </td> -->
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="columns offset-by-one seven">
+
+    <div class="columns eleven">  
+      <h2><a href="<%=@url%>?week=<%=(@current_week - 1) %>">&lt;</a>Week <%=@current_week%><a href="<%=@url%>?week=<%=(@current_week + 1) %>">&gt;</a></h2>
+      
+      
+    </div>
+
+    <ul class="kpis clearfix">
+      <li>
+        <%=@new_teams_summary.count%>
+        <span class="desc">New</span>
+      </li>
+      <li>
+        <%=@activated_teams.count%>
+        <span class="desc">Activated</span>
+      </li>
+      <li>
+        <%=@churned_teams.count%>
+        <span class="desc">Churned</span>
+      </li>
+      <li class="divider">
+        <%=@active_teams.count%>
+        <span class="desc">Total Active</span>
+      </li>
+    </ul>
+
+  
+    <h3>New</h3>
+    <p>New teams added this week.</p>
+    <table class="metrics">
+      <tr>
+        <td>Name</td>
+        <td>Events</td>
+        <td>Players</td>
+        <td>Demo</td>
+        <td></td>
+      </tr>
+
+      <% @new_teams_summary.each do |team| %>
+      <% active = @active_teams.include?(team) %>
+      <tr class="<%=active ? 'active' : ''%>">
+        <td><%=link_to team.name, team_path(team)%></td>
+        <td><%=team.events.count%></td>
+        <td><%=team.players.count%></td>
+        <td><%=team.demo_players.size > 0 ? "Y" : "" %></td>
+        <td><%=link_to "Admin", admin_team_path(team)%></td>
+      </tr>
+      <% end %>
+    </table>
+
+    <h3>Activated</h3>
+    <p>Teams that have activated this week.</p>
+    <table class="metrics">
+      <tr>
+        <td></td>
+        <td></td>
+        <td colspan=2 style="text-align:center">Players</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>Events</td>
+        <td>Total</td>
+        <td>&#37; Rgstd<td>
+        <td>Created<td>
+        <td></td>
+      </tr>
+
+      <% @activated_teams.each do |team| %>
+      <% percent_active = (team.active_players.count.to_f / team.players.count.to_f * 100).round %>
+      <tr>
+        <td><%=link_to team.name, team_path(team)%></td>
+        <td><%=team.events.count%></td>
+        <td><%=team.players.count%></td>
+        <td><%=percent_active%></td>
+        <td><%=distance_of_time_in_words(team.created_at, @current_week_date)%></td>
+        <td><%=link_to "Admin", admin_team_path(team)%></td>
+      </tr>
+      <% end %>
+    </table>
+  
+    <h3>Churned</h3>
+    <p>Teams that were active last week, but are not this week.</p>
+    <table class="metrics">
+      <tr>
+        <td></td>
+        <td></td>
+        <td colspan=2 style="text-align:center">Players</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>Events</td>
+        <td>Total</td>
+        <td>&#37; Rgstd<td>
+        <td>Created<td>
+        <td></td>
+      </tr>
+
+      <% @churned_teams.each do |team| %>
+      <% percent_active = (team.active_players.count.to_f / team.players.count.to_f * 100).round %>
+      <tr>
+        <td><%=link_to team.name, team_path(team)%></td>
+        <td><%=team.events.count%></td>
+        <td><%=team.players.count%></td>
+        <td><%=percent_active%></td>
+        <td><%=distance_of_time_in_words(team.created_at, @current_week_date)%></td>
+        <td><%=link_to "Admin", admin_team_path(team)%></td>
+      </tr>
+      <% end %>
+    </table>
+
+    <hr />
+
+    <h2>Active up to week <%=@current_week%></h2>
+    <p>Teams with <b>&gt; 4 players</b> and an event scheduled in <b>last/next 7 days</b></p>
+    <table class="metrics">
+
+      <tr>
+        <td></td>
+        <td colspan=2 style="text-align:center">Events</td>
+        <td colspan=2 style="text-align:center">Players</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>Total</td>
+        <td>Future</td>
+        <td>Total</td>
+        <td>&#37; Rgstd</td>
+        <td></td>
+      </tr>
+
+      <% @active_teams.each do |team| %>
+      <% percent_active = (team.active_players.count.to_f / team.players.count.to_f * 100).round %>
+      <tr>
+        <td><%=link_to team.name, team_path(team)%></td>
+        <td><%=team.events.count%></td>
+        <td><%=team.future_events.count%></td>
+        <td><%=team.players.count%></td>
+        <td><%=percent_active%></td>
+        <td><%=link_to "Admin", admin_team_path(team)%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>

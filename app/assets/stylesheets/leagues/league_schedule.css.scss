@@ -1,0 +1,415 @@
+.standings-table{
+	margin-bottom: $bluefields-margin*2;
+			.league-table-section {
+			margin-bottom: $bluefields-margin*2;
+		}
+	h4{
+		color: #777;
+		font-weight: 500;
+		font-size: 20px;
+		margin: 0;
+		line-height: 25px;
+		margin-bottom: 6px;
+		
+	}
+}
+
+.adjustement-form{
+	padding: $bluefields-margin/2;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	margin-top: -1px;
+	border: 1px solid darken($row-bg-head,8%); 
+	position: relative;
+	margin-top: 4px;
+
+	select, input, button {
+		width: 100%;
+	}
+}
+
+
+.schedule-navigation{
+	
+	font-size: 14px;
+	padding: $bluefields-margin/2;
+	margin-bottom: $bluefields-margin;
+	
+	a[name='back']{
+		float: right;
+		margin-right: 12px;
+		margin-top: 7px;
+		font-size: 12px;
+	}
+	
+	button[name='discard']{
+		margin-right: $bluefields-margin/2;
+	}
+	
+	button{
+		height: 28px;
+	}
+}
+
+
+
+.schedule-date{
+	margin: 0;
+}
+
+.add-fixture{
+	border: 1px solid #f1f1f1;
+	display: block;
+	padding: 12px;
+	color: #999;
+	margin-bottom: 12px;
+	text-align: center;
+	background: #fdfdfd;
+	&:hover{
+		background: white;
+	}
+}
+
+.currently-publishing{
+	font-size: 14px;
+	margin-bottom: $bluefields-margin;
+}
+
+/* Group of fixture */
+.fixtures-list{
+	.fixtures-group{
+		position: relative;
+		margin-bottom: $bluefields-margin*2;
+		
+		.date{
+			background: $bluefields-blue;
+			text-align: center;
+			line-height: 0.8em;
+			padding: 5px 7px 8px 8px;
+			color:$bluefields-white;
+			display: inline-block;
+			min-width: 42px;
+			.day{
+				font-size: 20px;
+				margin-top: 6px;
+				margin-bottom:3px;
+				font-weight: 500;
+				display: block;
+			}
+			
+			.month{
+				font-size: 12px;
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+#r-schedule-preview{
+	.date{
+		@include opacity(0.5);
+	}
+}
+
+/* fixture row */ 
+.fixture{
+	border: 1px solid #f1f1f1;
+	position: relative;
+	margin-top: -1px;
+	&:nth-child(odd){ background: #f8f8f8; }
+	&:nth-child(even){ background: #fdfdfd; }
+	
+	overflow: hidden;
+	&:hover{
+		background: white;
+	}
+	
+	.time{
+		width:37px;
+		text-align: center;
+		display: inline-block;
+		vertical-align: middle;
+		i{ color: #999; }
+		span{ font-size: 13px; }
+		.hours{ color: #777; }
+		.ampm{ color: #aaa; }
+	}
+	
+	.team-left, .team-right{
+		margin-bottom: 0;
+	}
+	
+	&.no-team{
+		.team-left, .team-right{
+			width: 13%!important;
+		}
+		.informations{
+			width: 71%!important;
+		}
+	}
+	
+	&.has-results{
+		.team-left, .team-right{
+			width: 36%!important;
+		}
+		.informations{
+			width: 25%!important;
+			span{
+					font-size: 20px!important;
+
+				}
+			}
+		}
+	
+	
+	
+	.fixture-content{
+		@include calc(width, "100% - 45px");
+		display: inline-block;
+		padding: $bluefields-margin/2;
+		text-align: center;
+		border-left: 1px solid #f1f1f1;
+	
+		.team-left, .team-right, .informations{
+			display: inline-block;
+			vertical-align: middle;
+		}
+				
+		.team-left, .team-right{
+			@include calc(width, "50% - 20px");
+			font-size: 14px;
+			color: #555;
+			a{
+				text-decoration: underline;
+			}
+			&.disabled{
+				a{
+					text-decoration: none;
+					color: #777;
+				}
+			}
+			
+			&.tbc{
+				color: #777;
+				font-style: italic;
+			}
+
+				
+			span{
+				@include calc(width, "100% - 40px");
+			}	
+
+			span,  img{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+		}
+		
+		.team-left{
+			text-align: left;
+			img{ margin-right: $bluefields-margin/2; }
+		}
+		
+		.informations{
+			width:25px;
+			span{
+				font-size: 14px;
+				line-height: 1.3;
+				color: #777;
+			}
+		}
+		
+		.team-right{
+			text-align: right;
+			img{ margin-left: $bluefields-margin/2; }
+		}
+		
+		.game-status{
+			position: absolute;
+			top: 7px;
+			right: 0;
+			top:0;
+			font-size: 10px;
+			padding: 2px 5px;
+
+			display: none;
+		}
+		
+		.game-cancel{
+			position: absolute;
+			width: 130px;
+			right: 10px;
+			@include calc(right, "50% - 86px");
+			top: 7px;
+			padding: 5px;
+			text-align: center;
+			font-size: 14px;
+		}
+	}
+	
+
+
+	.fixture-action{
+		position: absolute;
+		right: 0;
+		top: 0;
+		background: #4fade3;
+		height: 100%;
+		right: -31px;
+		overflow: hidden;
+		p[name="edit-fixture"]{
+			color: white;
+			display: block;
+			padding-left: 6px;
+			padding-right: 6px;
+			@include calc(top, "50% - 9px");
+			position: relative;
+			height: 100%;
+		}
+		@include transit(right, 0s, linear);
+	}
+}
+
+.edit-mode{
+	.fixture{
+		background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJElEQVQIW2P89OnTfz4+PkYGJADmoEvAVSBLoGiDSaAIwowCABixE9v+WDKEAAAAAElFTkSuQmCC) repeat;
+	}
+}
+.results-tab{
+	.game-status{
+		display: inline;
+	}
+}
+.results-tab, .edit-mode{
+	.fixture{
+		&:hover{
+			background: $bluefields-white;
+			cursor: pointer;
+			.fixture-action{
+				max-width: 200px;
+				right: 0px;
+				@include transit(right, 0.2s);
+			}
+
+		}
+		
+		
+		&.edited, &.cancelled{
+			.game-status{display:inline!important;}
+		}
+		
+		
+		
+		&.selected{
+			@include calc(width, "100% + 12px");
+			z-index: 40;
+			left: -7px;
+			border-color: #ddd;
+			background: $bluefields-white;
+			padding-right: 16px;
+			@include box-shadow(-1px 2px 4px -2px rgba(30,30,30,0.3));
+			border-style: solid;
+			.fixture-content{
+				padding: $bluefields-margin*0.75;
+
+			}
+			
+			.fixture-action{
+				display: none;
+			}
+		}
+	}
+}
+
+.unpublished{
+	color: #777;
+	float: right;
+	margin-right: 12px;
+	margin-top: 7px;
+	font-size: 12px;
+}
+
+
+
+.fixture.has-results{
+	.versus, .results-home, .results-away{
+		color: #aaa!important;
+		font-weight: 400!important;
+	}
+}
+
+
+
+
+.schedule-fixture-edit{
+	.edit-cancelled-overlay{
+		position: absolute;
+		@include calc(height, "100% - 36px");
+		width: 100%;
+		background: $bluefields-white;
+		@include opacity(0.5);
+		top: 0;
+		left: 0;
+	}
+
+	.bf-icon.info{
+		color: #999;
+		float: right;
+	}
+
+	hr{
+		border-bottom: 1px solid $bluefields-white;
+		border-top: 1px solid #eee;
+		margin: $bluefields-margin;
+		margin-left: -12px;
+		margin-right: -12px;
+	}
+	
+	button[name="re-enable"]{
+		margin-top: $bluefields-margin;
+		position: relative;
+	}
+	
+	button[name="re-enable"], .alert.game-cancel{
+		z-index: 10;
+	}
+	
+	#prev-locations {
+		margin-bottom: 4px;
+	}
+
+	.alert.game-cancel{
+		font-size: 14px;
+	}
+
+	.danger-link{
+		font-size: 12px;
+	}
+
+	.location-field{
+		margin-bottom: $bluefields-margin;
+	}
+
+	button[title="cancel fixture"]{
+		float: left;
+		margin-top: 8px;
+	}
+
+	.time{
+		position: relative;
+		input, select{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+		}
+
+		#edit-fixture-date{
+			cursor: pointer;
+			width: 49%;
+		}
+
+		#edit-fixture-hours, #edit-fixture-minutes, #edit-fixture-ampm{
+			width: 15%;
+		}
+	}
+}

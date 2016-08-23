@@ -1,0 +1,33 @@
+.panel.teams {
+  .team-list {
+    margin-bottom: 0;
+    a {
+      display: block;
+      margin-bottom: $bluefields-margin / 2;
+      border-radius: $bluefields-radius;
+      padding: 6px 9px;
+      background-repeat: no-repeat;
+      background-position: 95%;
+      background-size: 35px;
+      text-decoration: none;
+      h4 {
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+        color: $bluefields-white;
+        margin: 0;
+        margin-left: $bluefields-margin / 2;
+        margin-top: 4px;
+        text-transform: uppercase;
+        font-weight: 600;
+        @include calc(width, "100% - 40px");
+        @include font-size(1.3, false);
+        @include ellipsis;
+      }
+    }
+  }
+
+  .tenant-form {
+    padding-bottom: 0;
+  }
+}

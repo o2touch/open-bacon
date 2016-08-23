@@ -1,0 +1,82 @@
+<div class="content">
+
+<!-- Main content Part 1 "Team Content" -->
+
+  <div>
+
+    <div class="team-header">
+      <img src="/assets/profile_pic/team/generic_team_large.png" alt="" />
+      <h3><%=team.get("name") %></h3>
+      <h4>
+      <a href="#" title="team.division.get("leagueName")">
+      <%=team.division.get("leagueName") %>
+      </a>
+      <a href="#" title="<%=team.division.get("name")%>">
+      <%=team.division.get("name")%>
+      </a>
+      </h4>
+    </div>
+
+    <div class="team-info">
+      <ul class="team-cards owl-carousel">
+        <% if(stats.nextGame){ %>
+        <li>
+          <header>
+            <h3 class="event-identifer-title">Next Game</h3>
+          </header>
+          <div class="fixture-team-information">
+            <h1><%=stats.nextGame.teamName%></h1>
+            <div class="date"><%=stats.nextGame.date%></div>
+            <div class="home_away"><%=stats.nextGame.home_away%></div>
+          </div>
+
+        </li>
+        <% } %>
+        <% if(stats.lastResult){ %>
+        <li>
+          <header>
+            <h3 class="event-identifer-title">Last Result</h3>
+          </header>
+          <div class="fixture-team-information">
+            <h1><%=stats.lastResult.teamName%></h1>
+            <div class="result"><%=stats.lastResult.result%></div>
+            <div class="home_away"><%=stats.lastResult.home_away%></div>
+          </div>
+        </li>
+        <% } %>
+        <li>
+          <header>
+            <h3 class="event-identifer-title">and lots more...</h3>
+          </header>
+          <div class="fixture-team-information">
+            <div class="result">League standings</div>
+            <div class="result">All upcoming games</div>
+            <div class="home_away">League results</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="owl-controls"></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Main content Part 2 "Download the app" -->
+
+<div class="download-app-main">
+  <div class="download-app-main-copy text-center">
+    <h3> DOWNLOAD THE APP TO VIEW MORE</h3>
+    <h4> Full league standings, every upcoming game, opponent results and more...</h4>
+
+    <div class="download-cta-container">
+      <button id="download-app">GET THE APP</button>
+    </div>
+
+    <div class="download-mobile-image text-center">
+      <img src="<%= imagePath %>">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+$cardWidth: 550px;
+
+
+.event-card{
+	width: $cardWidth;
+	position: absolute;
+	top:$bluefields-margin*3;
+	padding: $bluefields-margin;
+	padding-right: 35px;	
+
+	@include box-shadow(0 8px 6px -6px rgba(0,0,0,0.4));
+	@include calc(left, "50% - #{$cardWidth/2}");
+
+	h1{
+		color: $bluefields-white;
+		font-weight: 600;
+		@include font-size(1.6, false);
+		text-transform: uppercase;
+	}	
+						
+	h2{
+		@include font-size(1.4, false);
+		text-transform: uppercase;
+		color: $bluefields-white;
+	}
+						
+	.location{
+		font-weight: 200;
+	}
+	
+	.team-link{
+		background: #2ABD7A;
+		padding: $bluefields-margin/2;
+		max-width: 300px;
+		white-space: nowrap;
+		text-decoration: none;
+		@include position(absolute, (-28px) (-$bluefields-margin) auto auto);
+		@include border-left-radius($bluefields-radius);
+		// @include transition (max-width $transition-time $transition-easing $transition-time);
+		.circle{ @include size(27);}
+		.team-link-container{
+			overflow: hidden;
+		}
+		span{
+			// @include opacity(0);
+			color:$bluefields-white;
+			margin-left: 3px;
+			margin-right: 3px;
+			@include font-size(1.2, false);
+			@include geogrotesque(500, normal);
+			// @include transition (opacity $transition-time $transition-easing 0);
+			vertical-align: middle;
+		}
+		
+		&:after{
+			content: " ";
+			position: absolute;
+			bottom: (-$bluefields-margin);
+			right: 0;
+			@include triangle(($bluefields-margin), darken(#2ABD7A, 20%), up-left);
+		}
+		
+		// &:hover{
+		// 	max-width: 300px;
+		// 	@include transition (max-width $transition-time $transition-easing 0);
+		// 	span{
+		// 		@include opacity(1);
+		// 		@include transition (opacity $transition-time $transition-easing $transition-time);
+		// 	}
+		// }
+	}
+	
+}
+
+.event-card{
+	&.game{
+		background: $bluefields-blue;
+		@include arrow($side:"bottom",$color:$bluefields-blue, $size:20px);
+		h5,h6, .location{ color: $bluefields-white; }
+	}
+	
+	&.other{
+		background: #888;
+		@include arrow($side:"bottom",$color:#888, $size:20px);
+		h5, h6, .location{ color: $bluefields-white;}
+	}
+	
+	&.practice{
+		background: #ccc;
+		@include arrow($side:"bottom",$color:#ccc, $size:20px);
+		h5,h6, .location{ color: $bluefields-white;}
+	}
+}

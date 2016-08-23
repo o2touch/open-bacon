@@ -1,0 +1,247 @@
+SearchApp.Views.SearchLayout = Marionette.Layout.extend({
+
+  template: "backbone/templates/search/search_layout",
+
+  className: "search-layout",
+
+  regions: {
+    results: "#r-results"
+  },
+
+  // ui: {
+  //   "searchType": "select[name='type']",
+  //   "searchInput": "input[name='search']",
+  //   "loading": ".spinner-search",
+  //   "noResultMessage": ".no-result",
+  //   "fakeSelect": ".fake-select"
+  // },
+
+  // events: {
+  //   "change select[name='type']": "changeType",
+  //   "keyup input[name='search']": "searchKeyup",
+  //   "keydown input[name='search']": "searchKeydown",
+  //   "submit form": "onSubmit"
+  // },
+
+  manualBind: function() {
+    var that = this;
+
+    // we have to do a manual bind because for some reason the markup is already in the BE view instead of in this layout's view
+    this.ui = {};
+    this.ui.searchType = $("select[name='type']");
+    this.ui.searchInput = $("input[name='search']");
+    this.ui.loading = $(".spinner-search");
+    this.ui.noResultMessage = $(".no-result");
+    this.ui.fakeSelect = $(".fake-select");
+    this.ui.searchForm = $("#search-form");
+
+    this.ui.searchInput.on("keyup", function(e) {
+      that.searchKeyup(e);
+    });
+
+    this.ui.searchInput.on("keydown", function(e) {
+      that.searchKeydown(e);
+    });
+
+    this.ui.searchType.on("change", function(e) {
+      that.changeType(e);
+    });
+
+    this.ui.searchForm.submit(function() {
+      return false;
+    })
+  },
+
+  initialize: function(options) {
+    /* Search client */
+    this.searchClient = new AlgoliaSearch('1ESI9QYTPJ', '8c45f667d9649e81fa2a735dacefaa42');
+
+    /* Query & collection ready */
+    this.prevQuery = "";
+
+    this.dropdownIndex = 0;
+  },
+
+  onRender: function() {
+    this.manualBind();
+    this.changeType();
+  },
+
+  onShow: function() {
+    /* Load team if search is present in url */
+    if (this.options.defaultSearchQuery) {
+      this.loadResults(this.options.defaultSearchQuery);
+      this.ui.searchInput.val(this.options.defaultSearchQuery);
+    }
+
+    /* Focus the input & prepare the spinner */
+    this.ui.searchInput.focus();
+    this.ui.loading.spin({
+      lines: 8,
+      length: 4,
+      width: 2,
+      radius: 3,
+      color: "#aaa"
+    });
+  },
+
+  changeType: function() {
+    var searchInitPrefix, placeholderSuffix, listClass, collectionClass;
+
+    if (this.ui.searchType.val() == "teams") {
+      searchInitPrefix = "all_teams";
+      // placeholderSuffix = "team name example";
+      this.ui.fakeSelect.text("Find a Team");
+      collectionClass = App.Collections.Teams;
+      listClass = SearchApp.Views.TeamList;
+    } else {
+      searchInitPrefix = "public_leagues";
+      // placeholderSuffix = "league name example";
+      this.ui.fakeSelect.text("Find a League");
+      collectionClass = App.Collections.Leagues;
+      listClass = SearchApp.Views.LeagueList;
+    }
+
+    this.collection = new collectionClass([], {
+      comparator: false // prevent sorting
+    });
+
+    this.searchIndex = this.searchClient.initIndex(searchInitPrefix + '_<%= Rails.env %>');
+    // this.ui.searchInput.attr("placeholder", "Eg: " + placeholderSuffix);
+
+    this.listView = new listClass({
+      collection: this.collection
+    });
+    this.results.show(this.listView);
+
+    // trigger a search
+    this.prevQuery = "";
+    this.searchKeyup();
+  },
+
+  searchKeyup: function() {
+    var query = this.ui.searchInput.val();
+
+    /* Return if query hasn't change */
+    if (query == this.prevQuery) return;
+    /* Update variable for previous comparation */
+    this.prevQuery = query;
+
+    /* Hide no result message */
+    this.ui.noResultMessage.addClass("hide");
+
+    if (query) {
+      this.loadResults(query);
+    } else {
+      /* Empty collection if query is empty */
+      this.collection.reset();
+    }
+  },
+
+  loadResults: function(query) {
+    var that = this;
+
+    /* Show spinner & start search query */
+    this.ui.loading.removeClass("hide");
+
+    var queryParams = {};
+    if ("tenantId" in this.options) {
+      queryParams.numericFilters = "tenant_id=" + this.options.tenantId;
+    }
+
+    this.searchIndex.search(query, function(success, content) {
+      that.handleResults(success, content);
+    }, queryParams);
+  },
+
+
+  handleResults: function(success, content) {
+    if (success) {
+      /* Update result & hide spinner */
+      this.collection.reset(content.hits);
+      this.ui.loading.addClass("hide");
+      this.dropdownIndex = 0;
+
+      if (content.hits.length) {
+        this.listView.children.findByIndex(0).$el.addClass("selected");
+      } else {
+        /* If no result, show no result message */
+        this.ui.noResultMessage.removeClass("hide");
+      }
+    } else {
+      errorHandler();
+    }
+  },
+
+
+  /* Handling User behavior */
+  searchKeydown: function(e) {
+    var that = this;
+
+
+    /* If no result, return */
+    if (!that.listView.children.length) return;
+
+    /* Key switch */
+    switch (e.which) {
+
+      /* Up */
+      case 40:
+
+        /* If off search limit return, else prevent default event, update index */
+        if (that.dropdownIndex + 2 > that.listView.children.length) return;
+        e.preventDefault();
+        that.dropdownIndex++;
+
+        /* select next item, add/remove selected class */
+        var selectedEl = that.listView.children.findByIndex(that.dropdownIndex).$el;
+        selectedEl.addClass("selected").prev("li").removeClass("selected");
+
+        /* Update dropdown intern scroll */
+        that.scrollToItem(selectedEl, that.listView.$el);
+        break;
+
+        /* Down */
+      case 38:
+
+        /* If off search limit return, else prevent default event, update index */
+        if (that.dropdownIndex - 1 < 0) return;
+        e.preventDefault();
+        that.dropdownIndex--;
+
+        /* select next item, add/remove selected class */
+        var selectedEl = that.listView.children.findByIndex(that.dropdownIndex).$el;
+        selectedEl.addClass("selected").next("li").removeClass("selected");
+
+        /* Update dropdown intern scroll */
+        that.scrollToItem(selectedEl, that.listView.$el);
+        break;
+
+        /* Enter */
+      case 13:
+        window.location.href = that.listView.children.findByIndex(that.dropdownIndex).$el.find("a").prop("href");
+        break;
+    }
+  },
+
+  // Copy form jack plugin
+  scrollToItem: function(element, container) {
+    var containerHeight = container.height(),
+      containerTop = container.offset().top,
+      containerBottom = containerTop + containerHeight,
+      elementHeight = element.outerHeight(),
+      elementTop = element.offset().top,
+      elementBottom = elementTop + elementHeight,
+      newScrollTop = elementTop - containerTop + container.scrollTop();
+
+    if (elementTop < containerTop) {
+      // scroll up
+      container.scrollTop(newScrollTop - 3);
+    } else if (elementBottom > containerBottom) {
+      // scroll down
+      var heightDifference = containerHeight - elementHeight;
+      container.scrollTop(newScrollTop - heightDifference + 3);
+    }
+  }
+
+});

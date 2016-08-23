@@ -1,0 +1,16 @@
+<h2><%=@user.first_name.titleize%>, are you <%= I18n.t "general.availability.available", locale: @tenant.i18n %>?</h2>
+
+<p>
+	There's <%= event_type_string(@event.game_type_string) %> coming up and <%=@event.user.name %> needs to know if you can make it!</p>
+
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => @time_zone_mismatch} %>
+
+<%= render :partial => "user_mailer/event_response", :locals => {:teamsheet_entry => @tse} %>
+
+<a class="button grey small" href="<%= invite_link_url(:token => @tse.token, :only_path => false )%>">View <%= @event.game_type_string %> Details</a>
+
+<%
+email_title = "Invite+Reminder"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

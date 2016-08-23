@@ -1,0 +1,101 @@
+<% if Rails.env.production? %>
+  <% content_for :after_head do %>
+    <script src="//cdn.optimizely.com/js/339994146.js"></script>
+  <% end %>
+<% end %>
+<% content_for :head_css do %>
+  <link rel="canonical" href="<%=root_url()%>" />
+<% end %>
+<div class="page-load-animation">
+  <div id="r-navigation"></div>
+  <div id="r-godbar"></div>
+
+  <div class="search-content">
+    <div class="row">
+      <div class="seven columns centered">
+        <img class="mitoo-logo" src="<%= asset_path 'identity/logo/logo_white_400.png' %>">
+        <h1>More than just a game</h1>
+        <div class="search-layout">
+          <form id="search-form">
+            <select name="type">
+              <option value="teams">Find a Team</option>
+              <option value="leagues">Find a League</option>
+            </select>
+            <button class="fake-select grey">Find a Team</button>
+            <input type="text" name="search" autocomplete="off" placeholder="Search here">
+            <div class="spinner-search hide"></div>
+            <div class="no-result hide text-center">
+              <i class="bf-icon badge"></i>
+              <p>No results found</p>
+            </div>
+          </form>
+          <div id="r-search-content"></div>
+        </div>
+        <p class="text-center search-copy">Welcome to the UK Mitoo Version 1. <a href="http://more.mitoo.co/">Mitoo V2</a> is coming to the UK very soon.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="search-footer hide-for-small">
+    <ul class="left-link">
+      <li>Mitoo V2 coming soon for:</li>
+      <li><a href="http://more.mitoo.co">Players</a></li>
+      <li><a href="http://more.mitoo.co/leagues-and-clubs">Leagues</a></li>
+      <li><a href="http://more.mitoo.co/governing-bodies-national-leagues-associations">Governing Bodies</a></li>
+    </ul>
+    <ul class="right-link">
+      <li><a href="http://app.mitoo.co/privacy-policy">Privacy &amp; Terms</a></li>
+      <li><a href="http://more.mitoo.co/about">About</a></li>
+    </ul>
+  </footer>
+
+  <div id="r-footer"></div>
+  <div id="r-popup"></div>
+</div>
+
+
+
+
+
+
+<%= javascript_include_tag "app-public" %>
+
+<script>
+  // hack to stop google maps complaining. shouldn't be on this page anyway
+  window.showMap = function() {};
+  
+  // listen for image load event
+  window.objImage = new Image();
+  objImage.onLoad=imagesLoaded();
+  objImage.onError=imagesLoaded();
+  objImage.src='<%= asset_path "cover_images/bg_search_5.jpg" %>';
+
+  function imagesLoaded(){
+    $("body").addClass("with-img-loaded");
+  }
+
+  /* User team & league (navigation information) */
+  window.ActiveApp = {
+    page: "home",
+    Tenant: new Backbone.Model(<%= safe_js_string(@tenant_json) %>)
+  };
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+  
+
+  /* Store information */
+  <% download_the_app = current_user.nil? ? $rollout.active?(:faft_follow_team) : $rollout.active?(:faft_follow_team, current_user) %>
+
+  ActiveApp.FaftFollowTeam = {
+    showDownloadLinks: <%= download_the_app %>,
+    itunesUrl: "<%= itunes_url('faft_search_page').html_safe %>",
+    playStoreUrl: "<%= play_store_url('faft_search_page').html_safe %>"
+  };
+
+  /* App */
+  BFApp.start();
+  SearchApp.start({
+    defaultSearchQuery: "<%= @query %>"
+  });
+</script>

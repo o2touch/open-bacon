@@ -1,0 +1,4 @@
+# uneeded files downloaded by bower
+*.md
+*.rb
+*.erb

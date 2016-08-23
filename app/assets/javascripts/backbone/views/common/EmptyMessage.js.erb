@@ -1,0 +1,15 @@
+BFApp.Views.EmptyMessage = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/empty_message",
+
+  className: "empty-message",
+
+  serializeData: function() {
+    return {
+      icon: this.options.icon,
+      title: this.options.title,
+      msg: this.options.msg
+    };
+  }
+
+});

@@ -1,0 +1,62 @@
+/*------------------------------------*\
+	HEADER
+\*------------------------------------*/
+.b-header {
+	background: $bluefields-blue;
+	padding: $bluefields-margin;
+
+	&__logo {
+		position: absolute;
+		top: 50%;
+		-webkit-transform: translateY(-50%);
+		max-width: $logo-max-width;
+		left: 0;
+		z-index: 20;
+		img{
+			background: $bluefields-white;
+			border: 3px solid $bluefields-blue;
+		}
+	}
+
+	&__information {
+		display: inline-block;
+		vertical-align: middle;
+		padding-left: $logo-max-width + $bluefields-margin;
+		padding-right: $button-cta-width + $bluefields-margin;
+		width: 100%;
+
+		&__title {
+			color: $bluefields-white;
+			text-transform: uppercase;
+			font-weight: 500;
+		}
+
+		&__sport {
+			color: $bluefields-white;
+		}
+	}
+
+	&__cta {
+		font-size: 0;
+		position: absolute;
+		top: 50%;
+		-webkit-transform: translateY(-50%);
+		right: 0;
+
+		&__button {
+			border-color: $bluefields-blue !important;
+			color: $bluefields-blue !important;
+
+			&:first-child {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				border-right: none;
+			}
+
+			&:last-child {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
+}

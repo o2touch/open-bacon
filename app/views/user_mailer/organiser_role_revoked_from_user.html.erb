@@ -1,0 +1,9 @@
+<h2>You're no longer an organizer</h2>
+
+<p><%= @user.first_name.titleize %>, you're <b>no longer an organizer</b> of <%= @team.name %> on Mitoo.</p>
+
+<%
+email_title = "Organizer+Role+Revoked+From+User"
+extra_params = @user.email
+%>
+<%==get_img_html(email_title, extra_params) %>

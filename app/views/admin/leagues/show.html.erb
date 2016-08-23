@@ -1,0 +1,106 @@
+
+<div class="columns ten centered">
+  <p id="notice"><%= notice %></p>
+
+  
+  <div class="columns two">
+    <img src="<%=@league.logo%>" />
+  </div>
+
+  <div class="columns ten">
+
+    <h1><%= @league.title %></h1>
+
+    <p>
+      <b>Sport:</b>
+      <%= @league.sport %>
+    </p>
+
+    <p>
+      <b>Region:</b>
+      <%= @league.region %>
+    </p>
+
+    <p>
+      <b>Colour1:</b>
+      <%= @league.colour1 %>
+    </p>
+
+    <p>
+      <b>Colour2:</b>
+      <%= @league.colour2 %>
+    </p>
+
+    <p>
+    <p>
+    <%= link_to 'Edit', edit_admin_league_path(@league), class: "button tiny" %>
+    <%= link_to 'Back', admin_leagues_path, class: "button tiny" %>
+    <%= link_to 'Import Data', admin_import_path(@league.id), class: "button tiny" %>
+    <%= link_to 'Dwnld Fixtures', admin_import_fixtures_path(@league.id, :csv), class: "button tiny" %>
+    </p>
+  </div>
+
+  <div class="columns six">
+
+    <% @league.divisions.each do |d| %>
+    <div class="division">
+      <h2><%=d.title%></h2>
+      <p><%=d.rank%> | <%=d.start_date%> | <%=d.end_date%> | <%=d.age_group%> | <%= link_to d.source_id, "http://full-time.thefa.com/Index.do?divisionseason=#{d.source_id}"%></p>
+
+      <table>
+        <% d.teams.each do |t| %>
+          <tr>
+            <td><%=link_to t.name, team_path(t)%></td>
+            <td><%=t.associates.size %></td>
+            <td><%=link_to 'Admin', admin_team_path(t)%></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <% end %>
+
+  </div>
+
+  <div class="columns six">
+    <h2>League details</h2>
+   <table>  
+      <% unless @league.source_id.nil? %>
+      <tr>
+        <td>FAFT Id</td>
+        <td><%=link_to @league.source_id, "" %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td>Created</td>
+        <td><%=@league.created_at%></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="columns six">
+    <h2>League Organisers</h2>
+    <table>
+      <% @league.organisers.each do |o| %>
+        <tr>
+          <td><%=link_to o.name, user_path(o)%></td>
+          <td><%=o.email%></td>
+          <td><%=link_to 'Admin', admin_user_path(o)%></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= link_to 'Add Organiser', admin_league_add_organiser_form_path(@league), class: "button tiny" %>
+  </div>
+
+  <div class="columns six">
+    <h2>League Config</h2>
+   <table>
+      <% @league.league_config.each do |o| %>
+        <tr>
+          <td><%=o[0]%></td>
+          <td><%=o[1]%></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>

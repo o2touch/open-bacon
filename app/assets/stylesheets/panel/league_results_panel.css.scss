@@ -1,0 +1,97 @@
+.results-panel{
+  margin-bottom: $bluefields-margin;
+  position: relative;
+
+  .cancel-link{
+    font-size: 13px;
+  }
+  .alert-box{
+    position: absolute;
+    bottom: 100px;
+  }
+  .result_card{
+    @include clearfix();
+    margin-bottom: $bluefields-margin;
+    border-radius: 3px;
+    overflow: hidden;
+    .left-team, .right-team {
+      width:50%;
+      float: left;
+      padding: 4px;
+    
+      .circle{
+        display:inline-block;
+        width:30px;
+        height:30px;
+        vertical-align:middle;
+      }
+      
+      input{
+        margin-top: 6px;
+      }
+      
+      span{
+        margin:0;
+        @include calc(width, "100% - 35px");
+        vertical-align: middle;
+        display: inline-block;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+
+    .left-team{
+      span {
+        text-align: left;
+      }
+
+      input {
+        text-align: right;
+      }
+    }
+
+    .right-team{
+      span {
+        text-align: right;
+      }
+
+      input {
+        text-align: left;
+      }
+    }
+
+
+
+  }
+  
+  // &.football, &.generic {
+  //   .away_team{
+  //     text-align: right;
+  //     input, span{
+  //       text-align: right;
+  //     }
+  //   }
+  //   .home_team{
+  //     text-align: right;
+  //     input, span{
+  //       text-align: right;
+  //     }
+  //   }
+  // }
+  
+  // &.soccer{
+  //   .home_team{
+  //     text-align: right;
+  //     input, span{
+  //       text-align: right;
+  //     }
+  //   }
+  //   .away_team{
+  //     text-align: right;
+  //     input, span{
+  //       text-align: right;
+  //     }
+  //   }
+  // }
+}

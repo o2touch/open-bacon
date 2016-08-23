@@ -1,0 +1,18 @@
+BFApp.Views.DownloadApp = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/content/download_app",
+
+  className: "download-app download-state-item",
+
+  serializeData: function() {
+    return {
+      androidLink: ActiveApp.FaftFollowTeam.playStoreUrl,
+      appstoreLink: ActiveApp.FaftFollowTeam.itunesUrl,
+      iphoneImgPath: "<%= asset_path 'store/screenshot/iphone_result.png' %>",
+      androidImgPath: "<%= asset_path 'store/screenshot/android_standings.png' %>",
+      appStoreButton: "<%= asset_path 'store/app_store_badge.svg' %>",
+      androidStorebutton: "<%= asset_path 'store/get_it_on_google_play.svg' %>"
+    };
+  }
+
+});

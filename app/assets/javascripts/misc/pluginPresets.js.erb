@@ -1,0 +1,96 @@
+// set window.isGB from the user's language settings (not super reliable)
+(function() {
+  // IE uses navigator.userLanguage
+  var lang = (navigator.language || navigator.userLanguage).toLowerCase();
+  // looking for a string like "en_GB" or "en-gb" etc
+  window.isGB = (lang.contains("en") && lang.contains("gb"));
+})();
+
+
+/* ----------------
+  Date/time formats 
+ --------------- */
+
+// e.g. 2:30pm
+moment.fn.getFormattedTime = function() {
+  return this.format("h:mma");
+};
+
+// e.g. 6th Feb    OR    Feb 6th
+// NOTE: be careful when changing this as it is used by all the others
+moment.fn.getShortDate = function() {
+  return (window.isGB) ? this.format("Do MMM") : this.format("MMM Do");
+};
+
+// e.g. Saturday, Feb 6th
+moment.fn.getMediumDate = function() {
+  return this.format("dddd, ") + this.getShortDate();
+};
+
+// e.g. Saturday, Feb 6th 2:30pm
+moment.fn.getMediumDateTime = function() {
+  return this.format("dddd, ") + this.getShortDate() + " " + this.getFormattedTime();
+};
+
+// replicate the native Date.prototype.toDateString()
+// e.g. Sat Feb 6th 2014
+moment.fn.toDateString = function() {
+  // NOTE: do not localise with getShortDate() here as this exact format is expected in other places in the code
+  return this.format("ddd MMM Do YYYY");
+};
+
+// create a fake ISO string which ignores timezones and just looks exactly like
+// what the user entered e.g. if they entered 7:30am, it would be xxxxxxT07:30:00Z
+// irrespective of which timezone they're in
+// e.g. 2014-04-01T13:48:49Z
+moment.fn.toCustomISO = function() {
+  return this.format("YYYY-MM-DD[T]HH:mm:ss[Z]");
+};
+
+// returns an object with keys: hours, minutes, ampm
+moment.fn.get12hrTimeObject = function() {
+  // round DOWN to nearest 5 mins to match select box
+  // we round down so no complications with going over 60...
+  var minutes = 5 * Math.floor(this.minutes() / 5);
+
+  return {
+    hours: this.format("hh"),
+    minutes: (minutes < 10) ? "0" + minutes : "" + minutes,
+    ampm: this.format("a")
+  };
+};
+
+
+// ram our defaults into glDatePicker
+if ($.fn.glDatePicker) {
+  _.extend($.fn.glDatePicker.defaults, {
+    cssName: 'flatwhite',
+    calendarOffset: {
+      x: 1,
+      y: 1
+    },
+    selectableDateRange: [{
+      from: new Date(),
+      to: new Date(1e15)
+    }]
+  });
+}
+
+
+
+var getIntlTelInputOptions = function(defaultCountry) {
+  var options = {
+    numberType: "MOBILE",
+    nationalMode: true,
+    utilsScript: "<%= asset_path 'intl-tel-input/lib/libphonenumber/build/utils', type: :javascript %>"
+  };
+  if (defaultCountry) {
+    options.defaultCountry = defaultCountry;
+  } else if (window.ActiveApp && ActiveApp.CurrentUser && ActiveApp.CurrentUser.get("country")) {
+    options.defaultCountry = ActiveApp.CurrentUser.get("country").toLowerCase();
+  } else {
+    options.defaultCountry = "auto";
+  }
+
+  return options;
+};

@@ -1,0 +1,12 @@
+<table>
+		<tr>
+			<td>Name</td>
+			<td>Can Post?</td>
+		</tr>
+	<% @asPage.each do |page|%>
+		<tr>
+		<td><a href="<%=page["link"]%>"><%=page["name"]%></a></td>
+		<td><%=page["can_post"]%></td>
+		</tr>
+	<% end %>
+</table>

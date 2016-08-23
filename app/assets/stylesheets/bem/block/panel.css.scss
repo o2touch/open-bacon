@@ -1,0 +1,24 @@
+/*------------------------------------*\
+	PANEL 
+\*------------------------------------*/
+.b-panel {
+	&__title {
+		text-transform: uppercase;
+    color: #555;
+    font-weight: 600;
+    @include font-size(1, false);
+    margin-bottom: 9px;
+	}
+
+	&__content {
+		padding: $bluefields-margin/2 $bluefields-margin;
+		
+		&--white {
+			background-color: $bluefields-white;
+		}
+		
+		&--outline {
+			border: 1px solid #ccc;
+		}
+	}
+}

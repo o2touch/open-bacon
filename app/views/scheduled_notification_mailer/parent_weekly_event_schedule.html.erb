@@ -1,0 +1,19 @@
+<h2><%=@junior.first_name%>'s upcoming events</h2>
+
+<p>
+	<%= @recipient.first_name.titleize %>, here are <%=@junior.first_name%>'s upcoming events for this week, through to next <%=@time_until.strftime("%A")%>.
+	<% if @signup %>
+		We'll send you one of these emails every Monday morning, so you're always prepared for the week ahead.
+	<% end %>
+</p>
+
+<%= render :partial => "user_mailer/schedule_event_list", :locals => {:events => @events, :timezone => @recipient.time_zone} %>
+
+<% if @token %>
+  <p>See the whole schedule online</p>
+  <a class="button" href="<%= power_token_url(:token => @token, :only_path => false )%>">View the schedule</a>
+<% else %>
+  <a class="button" href="<%= user_url(@recipient, :only_path => false )%>">View your upcoming games</a>
+<% end %>
+
+<%==track_email(@recipient.email, "User+Weekly+Schedule+Email", {}) %>

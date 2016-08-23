@@ -1,0 +1,188 @@
+@include font-face('bluefields-icon', 'typography/bluefields-icon/bluefields-icon-2', $asset-pipeline: true);
+.bf-icon {
+	font-family:"bluefields-icon";
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.bf-icon.arrow-bottom:before { content: "\f100"; }
+.bf-icon.arrow-left:before { content: "\f102"; }
+.bf-icon.arrow-left-r:before { content: "\f14c"; }
+.bf-icon.arrow-right:before { content: "\f103"; }
+.bf-icon.arrow-right-r:before { content: "\f104"; }
+.bf-icon.arrow-top:before { content: "\f106"; }
+.bf-icon.arrow-top-r:before { content: "\f14d"; }
+.bf-icon.arrow-bottom-r:before { content: "\f107"; }
+.bf-icon.badge:before { content: "\f108"; }
+.bf-icon.baseball:before { content: "\f109"; }
+.bf-icon.basketball:before { content: "\f10a"; }
+.bf-icon.bell:before { content: "\f10b"; }
+.bf-icon.bowling:before { content: "\f10c"; }
+.bf-icon.calendar:before { content: "\f10d"; }
+.bf-icon.calendar-alt:before { content: "\f10e"; }
+.bf-icon.chat:before { content: "\f10f"; }
+.bf-icon.chat-alt:before { content: "\f110"; }
+.bf-icon.check:before { content: "\f111"; }
+.bf-icon.check-r:before { content: "\f112"; }
+.bf-icon.cheerleading:before { content: "\f113"; }
+.bf-icon.clock:before { content: "\f114"; }
+.bf-icon.cog:before { content: "\f115"; }
+.bf-icon.cricket:before { content: "\f116"; }
+.bf-icon.cycling:before { content: "\f117"; }
+.bf-icon.download:before { content: "\f118"; }
+.bf-icon.eye:before { content: "\f119"; }
+.bf-icon.facebook:before { content: "\f11a"; }
+.bf-icon.heart:before { content: "\f11b"; }
+.bf-icon.hockey:before { content: "\f11c"; }
+.bf-icon.home:before { content: "\f11d"; }
+.bf-icon.info:before { content: "\f11e"; }
+.bf-icon.less:before { content: "\f11f"; }
+.bf-icon.less-r:before { content: "\f120"; }
+.bf-icon.list:before { content: "\f121"; }
+.bf-icon.list-dot:before { content: "\f122"; }
+.bf-icon.list-dot-r:before { content: "\f123"; }
+.bf-icon.list-r:before { content: "\f124"; }
+.bf-icon.lock:before { content: "\f125"; }
+.bf-icon.login:before { content: "\f126"; }
+.bf-icon.logout:before { content: "\f127"; }
+.bf-icon.mail:before { content: "\f128"; }
+.bf-icon.map:before { content: "\f129"; }
+.bf-icon.overview:before { content: "\f12a"; }
+.bf-icon.pen:before { content: "\f12b"; }
+.bf-icon.phone:before { content: "\f12c"; }
+.bf-icon.pin:before { content: "\f12d"; }
+.bf-icon.plus:before { content: "\f12e"; }
+.bf-icon.plus-r:before { content: "\f12f"; }
+.bf-icon.postpone:before { content: "\f14e"; }
+.bf-icon.rugby:before { content: "\f130"; }
+.bf-icon.search:before { content: "\f131"; }
+.bf-icon.share:before { content: "\f132"; }
+.bf-icon.share-alt:before { content: "\f133"; }
+.bf-icon.soccer:before { content: "\f134"; }
+.bf-icon.softball:before { content: "\f135"; }
+.bf-icon.star:before { content: "\f136"; }
+.bf-icon.stat-down:before { content: "\f137"; }
+.bf-icon.stat-down-alt:before { content: "\f138"; }
+.bf-icon.stat-up:before { content: "\f139"; }
+.bf-icon.stat-up-alt:before { content: "\f13a"; }
+.bf-icon.statistic:before { content: "\f13b"; }
+.bf-icon.statistic-down:before { content: "\f13c"; }
+.bf-icon.statistic-down-r:before { content: "\f13d"; }
+.bf-icon.statistic-r:before { content: "\f13e"; }
+.bf-icon.statistic-up:before { content: "\f13f"; }
+.bf-icon.statistic-up-r:before { content: "\f140"; }
+.bf-icon.swimming:before { content: "\f141"; }
+.bf-icon.tennis:before { content: "\f142"; }
+.bf-icon.trash:before { content: "\f143"; }
+.bf-icon.trophy:before { content: "\f144"; }
+.bf-icon.twitter:before { content: "\f145"; }
+.bf-icon.unlock:before { content: "\f146"; }
+.bf-icon.upload:before { content: "\f147"; }
+.bf-icon.user:before { content: "\f148"; }
+.bf-icon.users:before { content: "\f149"; }
+.bf-icon.x:before { content: "\f14a"; }
+.bf-icon.x-r:before { content: "\f14b"; }
+
+
+// @include font-face('bluefields-icon', 'typography/bluefields-icon/bluefields-icon-1', $asset-pipeline: true);
+
+// .bf-icon {
+// 	font-family:"bluefields-icon";
+// 	display:inline-block;
+// 	vertical-align:middle;
+// 	font-weight:normal;
+// 	font-style:normal;
+// 	speak:none;
+// 	text-decoration:inherit;
+// 	text-transform:none;
+// 	text-rendering:optimizeLegibility;
+// 	-webkit-font-smoothing:antialiased;
+// 	-moz-osx-font-smoothing:grayscale;
+// }
+
+// /* Icons */
+// .bf-icon.arrow-bottom:before { content:"\f001";}
+// .bf-icon.arrow-left-r:before { content:"\f002";}
+// .bf-icon.arrow-left:before { content:"\f003";}
+// .bf-icon.arrow-right-r:before { content:"\f004";}
+// .bf-icon.arrow-right:before { content:"\f005";}
+// .bf-icon.arrow-top-r:before { content:"\f006";}
+// .bf-icon.arrow-top:before { content:"\f007";}
+// .bf-icon.arrow_bottom-r:before { content:"\f008";}
+// .bf-icon.badge:before { content:"\f009";}
+// .bf-icon.baseball:before { content:"\f00a";}
+// .bf-icon.basketball:before { content:"\f00b";}
+// .bf-icon.bell:before { content:"\f00c";}
+// .bf-icon.bowling:before { content:"\f00d";}
+// .bf-icon.calendar:before { content:"\f00e";}
+// .bf-icon.calendar_alt:before { content:"\f00f";}
+// .bf-icon.chat:before { content:"\f010";}
+// .bf-icon.chat_alt:before { content:"\f011";}
+// .bf-icon.check-r:before { content:"\f012";}
+// .bf-icon.check:before { content:"\f013";}
+// .bf-icon.cheerleading:before { content:"\f014";}
+// .bf-icon.clock:before { content:"\f015";}
+// .bf-icon.cog:before { content:"\f016";}
+// .bf-icon.cricket:before { content:"\f017";}
+// .bf-icon.cycling:before { content:"\f018";}
+// .bf-icon.download:before { content:"\f019";}
+// .bf-icon.eye:before { content:"\f01a";}
+// .bf-icon.facebook:before { content:"\f01b";}
+// .bf-icon.heart:before { content:"\f01c";}
+// .bf-icon.hockey:before { content:"\f01d";}
+// .bf-icon.home:before { content:"\f01e";}
+// .bf-icon.info:before { content:"\f01f";}
+// .bf-icon.less-r:before { content:"\f020";}
+// .bf-icon.less:before { content:"\f021";}
+// .bf-icon.list-dot-r:before { content:"\f022";}
+// .bf-icon.list-dot:before { content:"\f023";}
+// .bf-icon.list-r:before { content:"\f024";}
+// .bf-icon.list:before { content:"\f025";}
+// .bf-icon.lock:before { content:"\f026";}
+// .bf-icon.login:before { content:"\f027";}
+// .bf-icon.logout:before { content:"\f028";}
+// .bf-icon.mail:before { content:"\f029";}
+// .bf-icon.map:before { content:"\f02a";}
+// .bf-icon.overview:before { content:"\f02b";}
+// .bf-icon.pen:before { content:"\f02c";}
+// .bf-icon.phone:before { content:"\f02d";}
+// .bf-icon.pin:before { content:"\f02e";}
+// .bf-icon.plus-r:before { content:"\f02f";}
+// .bf-icon.plus:before { content:"\f030";}
+// .bf-icon.rugby:before { content:"\f031";}
+// .bf-icon.search:before { content:"\f032";}
+// .bf-icon.share:before { content:"\f033";}
+// .bf-icon.share_alt:before { content:"\f034";}
+// .bf-icon.soccer:before { content:"\f035";}
+// .bf-icon.softball:before { content:"\f036";}
+// .bf-icon.star:before { content:"\f037";}
+// .bf-icon.stat_down:before { content:"\f038";}
+// .bf-icon.stat_down_alt:before { content:"\f039";}
+// .bf-icon.stat_up:before { content:"\f03a";}
+// .bf-icon.stat_up_alt:before { content:"\f03b";}
+// .bf-icon.statistic:before { content:"\f03c";}
+// .bf-icon.statistic_down:before { content:"\f03d";}
+// .bf-icon.statistic_down_r:before { content:"\f03e";}
+// .bf-icon.statistic_r:before { content:"\f03f";}
+// .bf-icon.statistic_up:before { content:"\f040";}
+// .bf-icon.statistic_up_r:before { content:"\f041";}
+// .bf-icon.swimming:before { content:"\f042";}
+// .bf-icon.tennis:before { content:"\f043";}
+// .bf-icon.trash:before { content:"\f044";}
+// .bf-icon.trophy:before { content:"\f045";}
+// .bf-icon.twitter:before { content:"\f046";}
+// .bf-icon.unlock:before { content:"\f047";}
+// .bf-icon.upload:before { content:"\f048";}
+// .bf-icon.user:before { content:"\f049";}
+// .bf-icon.users:before { content:"\f04a";}
+// .bf-icon.x-r:before { content:"\f04b";}
+// .bf-icon.x:before { content:"\f04c";}

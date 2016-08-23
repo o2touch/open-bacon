@@ -1,0 +1,267 @@
+<style>
+.donut {
+	height:150px;
+}
+</style>
+<div class="page-title">	
+	<div class="row">
+		<div class="col-md-7 col-sm-6">
+			<h3>Monthly Participation</h3>
+		</div>
+		<div class="col-md-5 col-sm-6">
+			<select id="month-data" class="float:right;">
+			</select>
+		</div>
+	</div>
+</div>
+
+<div id="container">
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">	
+			<div title="Number of New Users who signed-up (excludes invited users). Analyze by Referrer, Demographics etc." class="tiles blue added-margin">
+			  <div class="tiles-body">		
+				<div class="tiles-title">
+					TOTAL PLAYERS
+				</div>	
+				<div class="heading">
+					<span id="total-players" class="animate-number" data-value="0" data-animation-duration="1200">0</span>
+				</div>				
+				<div class="description"><i class=""></i><span class="text-white mini-description "><span id="total-players-last-period"></span> <span class="blend">change since last month</span></span></div> 
+				</div>	
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles green added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					NEW TO RUGBY
+				</div>	
+				<div class="heading">
+					<span id="new_to_rugby" class="animate-number" data-value="0" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class=""></i><span class="text-white mini-description "><span id="new_to_rugby_last_period"></span> <span class="blend">change since last month</span></span></div>
+			 </div>
+			</div>
+		</div>			
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles red added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					TOTAL FREQUENT
+				</div>	
+				<div class="heading">
+					<span id="total_frequent" class="animate-number" data-value="" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class=""></i><span class="text-white mini-description "><span id="total_frequent_last_period"></span> <span class="blend">change since last month</span></span></div>
+			 </div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6 spacing-bottom-sm">
+			<div class="tiles purple added-margin">
+			 <div class="tiles-body">
+	
+				<div class="tiles-title">
+					TOTAL INFREQUENT
+				</div>	
+				<div class="heading">
+					<span id="total_infrequent" class="animate-number" data-value="0" data-animation-duration="1000">0</span>	
+				</div>			
+				<div class="description"><i class=""></i><span class="text-white mini-description "><span id="total_infrequent_last_period"></span> <span class="blend">change since last month</span></span></div>
+			 </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">
+		<div class="col-md-4 col-sm-6 spacing-bottom-sm">
+			<div class="grid simple">
+				<div class="grid-title no-border">
+					<h4>By Gender</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<p>Participation of male and female players</p>
+					<div id="gender-donut" class="donut"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6 spacing-bottom-sm">
+			<div class="grid simple">
+				<div class="grid-title no-border">
+					<h4>By Experience</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<p>New to rugby vs exiting players</p>
+					<div id="new-existing-donut" class="donut"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6 spacing-bottom-sm">
+			<div class="grid simple">
+				<div class="grid-title no-border">
+					<h4>By Source</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+						<p>How did those that participated sign up?</p>
+						<div id="source-donut" class="donut"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2" style="display:none">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>New vs Existing Players</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-ricksaw"></div>
+						<div id="legend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<h4>Week-to-Week Breakdown</h4>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-6 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Total by Gender</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-stacked-gender" style="height:200px;"></div>
+						<div id="stacked-gender-legend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Total by Source</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-stacked-source" style="height:200px;"></div>
+						<div id="stacked-source-legend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+<!-- 		<div class="col-md-9 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Participation by Frequency</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-participation"></div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<div class="col-md-3 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Frequency</h4>
+					<p>Frequency of participation in month.</p>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="frequency-donut"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+<script type="text/javascript">
+$(function() {
+	/* User team & league (navigation information) */
+  window.ActiveApp = {
+    page: "dashboard",
+    Tenant: new Backbone.Model(<%= safe_js_string(@tenant_json) %>)
+  };
+  ActiveApp.CurrentUser = App.Modelss.User.findOrCreate(<%= safe_js_string(@user_json) %>, {parse: true});
+  ActiveApp.CurrentUserTeams = new App.Collections.Teams(<%= safe_js_string(@current_user_teams_json) %>);
+  ActiveApp.CurrentUserLeagues = new App.Collections.Leagues(<%= safe_js_string(@current_user_leagues_json) %>);
+
+  BFApp.start();
+
+  var now = new Date(Date.now());
+  var monthNames = [ "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December" ];
+  var monthsOfYear = [];
+  for (var d = new Date(2014, 5, 1); d <= now; d.setMonth(d.getMonth() + 1)) {
+      monthsOfYear.push(new Date(d));
+  }
+
+  var monthDropdown = $("#month-data");
+  $.each(monthsOfYear, function() {
+      monthDropdown.append($("<option />").val(this.getMonth() + 1 + "-" + this.getFullYear()).text(monthNames[this.getMonth()] + " " + this.getFullYear()));
+  });
+  $("#month-data option:last-child").attr("selected","selected");
+
+	monthDropdown.change(function(){
+    var month_year = $(this).val().split("-");
+		loadParticipationCharts(ActiveApp.Tenant.get("subdomain"), month_year[0], month_year[1]);
+	});
+
+  var month_year = monthDropdown.val().split("-");
+  loadParticipationCharts(ActiveApp.Tenant.get("subdomain"), month_year[0], month_year[1]);
+});
+</script>

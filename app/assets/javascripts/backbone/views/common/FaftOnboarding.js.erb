@@ -1,0 +1,15 @@
+BFApp.Views.FaftOnboarding = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/faft_onboarding",
+  className: "faft-onboarding text-center",
+  
+  serializeData: function(){
+    return {
+      isFollowing: ActiveApp.CurrentUser.isFollowingFaftTeam,
+      img1: "<%= asset_path 'faft/team/onboarding/tracking.png' %>",
+      img2: "<%= asset_path 'faft/team/onboarding/notification.png' %>",
+      img3: "<%= asset_path 'faft/team/onboarding/connect.png' %>"
+    };
+  }
+
+});

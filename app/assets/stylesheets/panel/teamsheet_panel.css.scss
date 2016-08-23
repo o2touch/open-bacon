@@ -1,0 +1,83 @@
+.panel.teamsheet{
+	.invite-player-button{
+		position: absolute;
+		top: 1px;
+		right: 9px;
+		color: #999;
+		font-size: 16px;
+		cursor: pointer;
+		font-size: 12px;
+	}
+
+	header h3 {
+		padding-right: 27px;
+	}
+
+	.users-list{
+		.empty{
+			color: #999;
+			font-size: 12px;
+			margin-left: 12px;
+		}
+
+		&.available, &.unavailable{
+			.btn-no{
+				color: #999;
+				&:hover{color: $bluefields-red;}
+			}
+			.btn-yes{
+				color: #999;
+				&:hover{color: $bluefields-green;}
+			}
+		}
+
+		&.awaiting{
+			.btn-no{color: $bluefields-red;}
+			.btn-yes{color: $bluefields-green;}
+			.title{
+				margin-top: $bluefields-margin;
+			}
+		}
+		
+		&.unavailable{
+			.title{
+				margin-top: $bluefields-margin;
+			}
+		}
+
+		.title{
+			.total{
+				color: #aaa;
+			}
+		}
+
+		li{
+			position: relative;
+			
+			a:hover{
+				background: none;
+			}
+			.controller{
+				display:none;
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 31px;
+				line-height: 31px;
+				padding: 0 $bluefields-margin 0 $bluefields-margin; 
+				color: #999;
+				@include linear-gradient(270deg, #f1f1f1, $bluefields-white);
+				a {
+					font-size: 12px;
+					display: inline-block;
+				}
+			}
+
+			&:hover{
+				.controller{
+					display:block;
+				}
+			}
+		}
+	}
+}

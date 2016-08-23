@@ -1,0 +1,25 @@
+BFApp.Views.Footer = Marionette.ItemView.extend({
+
+  template: "backbone/templates/common/footer",
+
+  className: "b-footer",
+
+  serializeData: function() {
+    var data = {
+      logoImg: "<%= asset_path 'identity/powered-by-mitoo.png' %>",
+      showO2TouchTerms: (window.ActiveApp && ActiveApp.Tenant && ActiveApp.Tenant.get("name") == "o2_touch")
+    };
+    if (ActiveApp.FaftFollowTeam) {
+      data.showDownloadLinks = ActiveApp.FaftFollowTeam.showDownloadLinks;
+      data.androidLink = ActiveApp.FaftFollowTeam.playStoreUrl;
+      data.appstoreLink = ActiveApp.FaftFollowTeam.itunesUrl;
+    } else {
+      data.showDownloadLinks = false;
+      data.androidLink = false;
+      data.appstoreLink = false;
+    }
+
+    return data;
+  }
+
+});

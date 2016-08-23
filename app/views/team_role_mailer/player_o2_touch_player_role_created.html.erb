@@ -1,0 +1,23 @@
+<p>Hi <%= @recipient.first_name.titleize %>,</p>
+
+<p>You have now joined <%= @event.title %>,
+<% if !@event.bftime.tbd? %>
+	on <%= "#{@event.bftime.weekday} #{@event.bftime.day.to_i.ordinalize} #{@event.bftime.month}"%> at <%= @event.bftime.twelve_hour_time %>,
+<% end %>
+make sure you have fun!</p>
+
+<p>Here is what you can do next:</p>
+
+<p><b>Join the conversation and ask any questions</b></p>
+<ul class="bullets">
+	<li>Easily add messages to the <a href="<%= event_url(@event, only_path: false)%>">event page</a> to join in.</li>
+</ul>
+
+<p><b>Go to the team page to join other events</b></p>
+<ul class="bullets">
+	<li>Check out the <a href="<%= team_url(@team, only_path: false)%>">team page</a> to see other upcoming games and events</li>
+</ul>
+
+<p>We will let you know about <a href="<%= team_url(@team, only_path: false)%>"><%= @team.name %></a> upcoming games via email</p>
+
+<a class="button" href="<%= event_url(@event, only_path: false) %>">Let's do it</a>

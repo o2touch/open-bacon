@@ -1,0 +1,32 @@
+.date-block {
+  text-align: center;
+  width: 40px;
+  background: $bluefields-blue;
+  padding: 9px 0px;
+  color: $bluefields-white;
+  position: relative;
+
+  .inner-date {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    margin-top: -18px;
+  }
+  
+  .day {
+    @include font-size(1.2, false);
+    font-weight: 500;
+    display: block;
+    height: 1rem;
+  }
+  
+  .month {
+    @include font-size(0.9, false);
+    text-transform: uppercase;
+  }
+
+  .tbd {
+    margin-top: 9px;
+    display: block;
+  }
+}

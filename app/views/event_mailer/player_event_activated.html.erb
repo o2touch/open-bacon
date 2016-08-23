@@ -1,0 +1,13 @@
+
+<h2><%=@user.first_name.titleize %>, your <%= @event.game_type_string %> is back on</h2>
+
+<p>Your <%= @event.game_type_string %> is no longer cancelled. Find out more information by viewing it online:</p>
+<%= render :partial => "user_mailer/event_details", :locals => {:event => @event, :time_zone_mismatch => false} %>
+
+<a class="button small" href="<%= event_url(@event) %>">View <%= @event.game_type_string %> Details</a>
+
+<%
+email_title = "Event+Activated"
+extra_params = @user.email + "&EventId=" + @event.id.to_s
+%>
+<%==get_img_html(email_title, extra_params) %>

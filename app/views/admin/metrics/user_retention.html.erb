@@ -1,0 +1,78 @@
+<div class="page-title">	
+	<div class="row">
+		<div class="col-md-8 col-sm-6">
+			<h3>User Retention</h3>
+		</div>
+	</div>
+</div>
+
+<div id="container">
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>Signups vs Actives</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-participation"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row spacing-bottom col-2">	
+		<div class="col-md-12 col-sm-12 spacing-bottom-sm">	
+			<div class="grid simple"> 
+				<div class="grid-title no-border">
+					<h4>User Engagement over 30 days</h4>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="remove"></a>
+					</div>
+				</div>
+				<div class="grid-body no-border">
+					<div class="row-fluid">
+						<div id="chart-engagement"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+$(function() {
+
+	chartData = {
+		frequencyChart: <%==@data.to_json%>,
+		engagementChart: <%==@engagement_data.to_json%>,
+	};
+
+	window.frequencyChart = new Morris.Line({
+	  element: 'chart-participation',
+	  data: chartData.frequencyChart,
+	  xkey: 'week',
+	  ykeys: ['signups', 'actives'],
+	  labels: ['Signups', 'Active']
+	});
+
+	window.engagementChart = new Morris.Line({
+	  element: 'chart-engagement',
+	  data: chartData.engagementChart,
+	  xkey: 'day',
+	  ykeys: ['dau', 'dau_followers', 'dau_organisers'],
+	  labels: ['Players', 'Followers', 'Organisers']
+	});
+
+});
+
+</script>

@@ -1,0 +1,15 @@
+	<% if (complete) { %>
+		<div class="goal-tick"><i class="bf-icon check"></i></div>
+	<% } %>
+
+	<div class="goal-details">
+		<div class="title">
+			<%= title %>
+			<%= (showSubGoalProgress) ? " ("+subGoalProgress+"/"+subGoal+")" : "" %>
+		</div>
+		<div class="description"><%= description %></div>
+	</div>
+
+	<% if (complete) { %>
+		<div class="goal-done">DONE!</div>
+	<% } %>

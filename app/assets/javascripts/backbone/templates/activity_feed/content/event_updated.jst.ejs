@@ -1,0 +1,22 @@
+<p class="comment-type">
+	<a href="<%= user.getHref() %>"><%= user.get("name") %></a>
+	<% if (isEventPage) { %>
+		updated the event
+	<% } else { %>
+		updated the <%= attrsString %> for event
+		<a href="<%= event.getHref() %>"><%- event.get("title") %></a>
+	<% } %>
+</p>
+
+<% if (isEventPage) { %>
+	<div class="activity-comment-update">
+    <% _.each(attrs, function(attr) { %>
+      <% if(attr.newValue !== "blank"){ %>
+        <p><strong><%= attr.name %></strong> updated to <%- attr.newValue %></p>
+      <% }else{ %>
+        <p><strong><%= attr.name %></strong> removed</p>
+      <% } %>
+    		
+    <% }); %>
+	</div>
+<% } %>

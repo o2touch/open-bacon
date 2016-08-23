@@ -1,0 +1,174 @@
+$commentBackground : #f8f8f8;
+
+
+/* Activity Item */
+.activity-item {
+	padding: $bluefields-margin;
+	position: relative;
+	border-top: 1px solid #eee;
+}
+
+/* Activity Item - starred */
+.activity-item.starred {
+	background: lighten(#4fade3, 35%);
+	border-top: 1px solid lighten(#4fade3, 30%);
+	.comment, .activity-comment-form, .activity-like, .comment-toggle {
+		background: lighten(#4fade3, 39%);
+		&:after, &:before {
+			border-right-color: $bluefields-white;
+		}
+	}
+}
+
+
+/* Layout */
+.activity-item-information{
+	display: inline-block;
+	vertical-align: top;
+	width: 70%;
+	@include calc(width, "100% - 45px");
+	padding-left: $bluefields-margin/2;
+}
+
+
+/* Action line (like/comment links) */
+.activity-actions {
+	margin-top: $bluefields-margin/2;
+	display: block;
+	color: #787878;
+	@include font-size(0.7);
+
+	.activity-action-item {
+		&:after {
+			content: '\00B7';
+			color: #bbb;
+			margin-left: 3px;
+			margin-right: 3px;
+			text-decoration: none!important;
+		}
+		&:last-child:after {
+			content: none;
+		}
+	}
+
+}
+
+/* Comment line (username did blabla) */
+.comment-type {
+	color: #666;
+	a {
+		font-weight: bold;
+	}
+}
+
+/* Action line (show comment/you like this) */
+.comment-toggle, .activity-like {
+	padding: $bluefields-margin/4 $bluefields-margin/2;
+	background-color: $commentBackground;
+	color: #787878;
+	@include font-size(0.7);
+	margin-bottom: 2px;
+	a {
+		color: #787878;
+	}
+}
+
+
+/* Comments container */
+.activity-comment {
+	// margin-top: $bluefields-margin;
+}
+
+
+/* Comment row */
+.comment{
+	padding: $bluefields-margin/4 $bluefields-margin/2;
+	background-color: $commentBackground;
+	@include font-size(0.8);
+	margin-bottom: 2px;
+	.comment-text {
+		display: inline-block;
+		vertical-align: top;
+		width: 80%;
+		@include calc(width, "100% - 35px");
+		padding-left: 3px;
+		color: #666;
+	
+		a {
+			font-weight: bold;
+		}
+
+		span{
+			word-wrap: break-word;
+		}
+		small{
+			color: #787878;
+			display: block;
+			@include font-size(0.7);
+		}
+	}
+}
+
+
+
+/* Comment input */
+.activity-comment-form {
+	padding: $bluefields-margin/2;
+	border-radius: $bluefields-radius;
+	background-color: $commentBackground;
+	form {
+		display: inline-block;
+		vertical-align: top;
+		width: 80%;
+		@include calc(width, "100% - 35px");
+		padding-left: 3px;
+	}
+
+	.comment-input {
+		@include font-size(0.8);
+	}
+}
+
+
+/* Event preview */
+.activity-item {
+	.event-row {
+		margin-bottom: $bluefields-margin;
+		margin-top: $bluefields-margin/2;
+	}
+}
+
+
+.activity-comment {
+	margin-top: $bluefields-margin/2;
+}
+
+/* Event informations update */
+.activity-comment-update{
+	padding: $bluefields-margin/2 $bluefields-margin;
+	background: #fafafa;
+	@include font-size(0.95);
+	border:1px solid #f1f1f1;
+	margin-top: $bluefields-margin/2;
+	margin-bottom: $bluefields-margin;
+}
+
+/* Message from user */
+.message-content {
+	@include font-size(0.95);
+}
+
+.result-updated-string {
+	@include font-size(2);
+}
+
+
+/* Starred icon */
+.highlight-star{
+	position: absolute;
+	top:$bluefields-margin*0.75;
+	right:$bluefields-margin;
+	@include respond-to(handhelds) {
+		display: inline;
+	}
+}
