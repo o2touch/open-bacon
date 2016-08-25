@@ -22,13 +22,8 @@ dump.rdb
 /tmp
 /public/system/user_profile_pictures/
 
-# Ignore database settings
-config/database.yml
-config/redis.yml
-config/sidekiq-redis.yml
-
-# Ignore keen initializer
-config/initializers/keen.rb
+# DB
+/config/database.yml
 
 # Ignore temp sass folder
 /.sass-cache

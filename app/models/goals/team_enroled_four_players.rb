@@ -13,6 +13,6 @@ class TeamEnroledFourPlayers < GoalCheckListItem
 
   def notify
     name = "team-#{@team.id}-goals"
-    Pusher[name].trigger('update_goal', self.to_json, nil)
+    # Pusher[name].trigger('update_goal', self.to_json, nil)
   end
 end

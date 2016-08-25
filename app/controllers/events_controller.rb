@@ -186,18 +186,18 @@ class EventsController < ApplicationController
     # get the user
     @user = current_user
     
+    # No FB Ting
     # Set Facebook Object
-    @fb_headprefix = "prefix=\"og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# #{Facebook::NAMESPACE.to_s}: http://ogp.me/ns/fb/#{Facebook::NAMESPACE.to_s}#\""
-    
+    # @fb_headprefix = "prefix=\"og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# #{Facebook::NAMESPACE.to_s}: http://ogp.me/ns/fb/#{Facebook::NAMESPACE.to_s}#\""
     # fb open graph shit
-    set_meta_tags :open_graph => {
-      :title => @event.game_type_string,
-      :description => @event.title,
-      :determiner => "a",
-      :type  => "#{Facebook::NAMESPACE.to_s}:game",
-      :url   => url_for(@event),
-      :image => request.protocol + request.host_with_port + ActionController::Base.helpers.image_path('/fb/gameicon.jpg')
-    }
+    # set_meta_tags :open_graph => {
+    #   :title => @event.game_type_string,
+    #   :description => @event.title,
+    #   :determiner => "a",
+    #   :type  => "#{Facebook::NAMESPACE.to_s}:game",
+    #   :url   => url_for(@event),
+    #   :image => request.protocol + request.host_with_port + ActionController::Base.helpers.image_path('/fb/gameicon.jpg')
+    # }
     
     set_meta_tags "bluefields:event_time" => l(@event.time)
 
