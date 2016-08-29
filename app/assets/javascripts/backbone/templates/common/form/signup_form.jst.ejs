@@ -1,13 +1,6 @@
 <div class="signup-form">
 	<% if (title) { %><h3><%= title %></h3><% } %>
 
-	<% if (showFacebook) { %>
-	<a href="/users/auth/facebook?<%= fbParams %>" class="button facebook full-width">
-		<i class="bf-icon facebook"></i> <%= fbButtonText %>
-	</a>
-	<span class="or-choice-line">or</span>
-	<% } %>
-	
 	<div class="alert-box hide signup-error-alert"></div>
 	<form>
 		<% if (showLabels) { %><label for="user-name">Name</label><% } %>
