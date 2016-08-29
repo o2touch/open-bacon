@@ -1,25 +1,13 @@
-/*var UserProfileApp = _.extend({}, AppBase, {
+var UserProfileApp = _.extend({}, AppBase, {
 
   type: AppTypes.UserProfile,
 
   showFBConnect: function() {
-    FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        var uid = response.authResponse.userID;
-        var accessToken = response.authResponse.accessToken;
-      } else if (response.status === 'not_authorized') {
-        $("#onboarding-panel").append("<a href='javascript:ProfileApp.loginFB()'>Connect Facebook</a>");
-
-      } else {}
-    });
+    // nope.
   },
 
   loginFB: function() {
-    FB.login(function(response) {
-      if (response.session) {
-        location.href = '/users/auth/facebook';
-      } else {}
-    });
+    // nope.
   },
 
   fbOnLoad: function() {
@@ -38,6 +26,6 @@
   init: function() {
     //this.Teammates = new App.Collections.PlayersCollection();
   }
-});*/
+});
 
 App.vent = Backbone.Events;
