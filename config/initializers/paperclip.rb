@@ -22,7 +22,7 @@ RACKSPACE_CONFIG = {
       aws_secret_access_key: '',
       persistent: false
     },
-    fog_directory: ''
+    fog_directory: '',
     fog_public: true,
     fog_host: ''
   },
