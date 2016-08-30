@@ -27,33 +27,21 @@ RACKSPACE_CONFIG = {
     fog_host: 'http://bacon-uploads-prod.s3.amazonaws.com'
   },
   'development' => {
-  # Couldn't get Fog to work with local storage, so all comented to revert to
-  #  paper clip default local storage.
-  #   path: '',
-  #   storage: :fog,
-  #   fog_credentials: {
-  #     provider: 'Local',
-  #     local_root: "#{Rails.root}/public/",
-  #   },
-  #   fog_directory: "",
-  #   fog_host: "http://localhost:3000",
-  # },
-    path: '',
+    path: ENV['S3_BUCKET'],
     storage: :fog,
     fog_credentials: {
-      provider: 'Rackspace',
-      rackspace_username: 'bluefields',
-      rackspace_api_key: 'ea772e526fa7b5dc72eaecc18dbbc942',
-      persistent: false
+      provider: 'AWS',
+      aws_access_key_id: ENV['AWS_ACCESS_KEY'],
+      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      persistent: false,
+      region: ENV['AWS_REGION'],
     },
-    fog_directory: "bluefields_#{Rails.env}_static",
+    fog_directory: ENV['S3_BUCKET'],
     fog_public: true,
-    fog_host: 'http://dev.img.mstatic.co'
+    fog_host: "http://s3-eu-west-1.amazonaws.com",
   },
 }
  
 unless RACKSPACE_CONFIG[Rails.env].nil?
   Paperclip::Attachment.default_options.update(RACKSPACE_CONFIG[Rails.env])
-  Paperclip::Attachment.default_options[:url] = ':s3_domain_url'
-  Paperclip::Attachment.default_options[:s3_host_name] = 's3-eu-west-1.amazonaws.com'
 end

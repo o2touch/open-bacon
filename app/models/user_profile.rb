@@ -7,7 +7,7 @@ class UserProfile < ActiveRecord::Base
 
   has_attached_file :profile_picture, 
     :styles => { :large => "300x300#", :medium=> "120x120#", :small => "60x60#", :thumb => "30x30#" }, 
-    :path => "user_profile_pictures/:id/:style/:filename",
+    :path => "#{ENV['S3_BUCKET']}/user_profile_pictures/:id/:style/:filename",
     :url => "/system/user_profile_pictures/:id/:style/:filename",
     :default_url => "/assets/profile_pic/user/generic_user_:style.png"
   # validates_attachment_content_type :profile_picture, :content_type => %w(image/jpeg image/jpg image/png)

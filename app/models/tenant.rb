@@ -30,7 +30,7 @@ class Tenant < ActiveRecord::Base
       :small_original_ratio  => "60x60",
       :thumb_original_ratio  => "30x30"
     }, 
-    :path => "tenent_logos/:id/:style/:filename",
+    :path => "#{ENV['S3_BUCKET']}/tenent_logos/:id/:style/:filename",
     :url => "/system/tenent_logos/:id/:style/:filename", :default_url => "/assets/profile_pic/team/generic_team_:style.png"
 
   # TODO: Add some uniq validation on names and 

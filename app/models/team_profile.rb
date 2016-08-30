@@ -14,7 +14,7 @@ class TeamProfile < ActiveRecord::Base
       :small_original_ratio  => "60x60",
       :thumb_original_ratio  => "30x30"
     }, 
-    :path => "team_profile_pictures/:id/:style/:filename",
+    :path => "#{ENV['S3_BUCKET']}/team_profile_pictures/:id/:style/:filename",
     :url => "/system/team_profile_pictures/:id/:style/:filename",
     :default_url => "/assets/profile_pic/team/generic_team_:style.png"
   

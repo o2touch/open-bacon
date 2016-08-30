@@ -18,14 +18,14 @@ class League < ActiveRecord::Base
 
 	has_attached_file :logo,
     :styles => { :large => "300x300#", :medium=> "120x120#", :small => "60x60#", :thumb => "30x30#" },
-    :path => 'leagues/logos/:id/:style/:filename',
+    :path => "#{ENV['S3_BUCKET']}/leagues/logos/:id/:style/:filename",
     :url => "/system/:hash.:extension",
     :hash_secret => "bc496440-a3cd-0130-5d9a-3c0754364732",
     :default_url => "/assets/profile_pic/league/generic_league_:style.png"
   validates_attachment_content_type :logo, :content_type => %w(image/jpeg image/jpg image/png)
 
   has_attached_file :cover_image,
-    :path => 'leagues/logos/:id/:style/:filename',
+    :path => "#{ENV['S3_BUCKET']}/leagues/logos/:id/:style/:filename",
     :url => "/system/:hash.:extension",
     :hash_secret => "bc496440-a3cd-0130-5d9a-3c0754364732",
     :default_url => "default.png"
