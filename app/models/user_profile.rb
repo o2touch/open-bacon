@@ -2,12 +2,12 @@ class UserProfile < ActiveRecord::Base
   MINIMUM_BIO_LENGTH = 1
   MAXIMUM_BIO_LENGTH = 120
 
-  has_one :user  #SR - Why doesnt a user have one user profile?
+  has_one :user
   belongs_to :location
 
   has_attached_file :profile_picture, 
     :styles => { :large => "300x300#", :medium=> "120x120#", :small => "60x60#", :thumb => "30x30#" }, 
-    :path => "#{ENV['S3_BUCKET']}/user_profile_pictures/:id/:style/:filename",
+    :path => "user_profile_pictures/:id/:style/:filename",
     :url => "/system/user_profile_pictures/:id/:style/:filename",
     :default_url => "/assets/profile_pic/user/generic_user_:style.png"
   # validates_attachment_content_type :profile_picture, :content_type => %w(image/jpeg image/jpg image/png)

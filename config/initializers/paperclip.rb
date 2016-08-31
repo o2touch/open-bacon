@@ -1,6 +1,6 @@
 RACKSPACE_CONFIG = {
   'production' => {
-    path: ENV['S3_BUCKET'],
+    path: '',
     storage: :fog,
     fog_credentials: {
       provider: 'AWS',
@@ -11,7 +11,7 @@ RACKSPACE_CONFIG = {
     },
     fog_directory: ENV['S3_BUCKET'],
     fog_public: true,
-    fog_host: "http://s3-eu-west-1.amazonaws.com",
+    fog_host: "http://#{ENV['S3_BUCKET']}.s3-eu-west-1.amazonaws.com",
   },
   'staging' => {
     path: '',
@@ -27,7 +27,7 @@ RACKSPACE_CONFIG = {
     fog_host: ''
   },
   'development' => {
-    path: ENV['S3_BUCKET'],
+    path: '',
     storage: :fog,
     fog_credentials: {
       provider: 'AWS',
@@ -35,10 +35,12 @@ RACKSPACE_CONFIG = {
       aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
       persistent: false,
       region: ENV['AWS_REGION'],
+      path_style: true
     },
     fog_directory: ENV['S3_BUCKET'],
     fog_public: true,
-    fog_host: "http://s3-eu-west-1.amazonaws.com",
+    fog_host: "http://#{ENV['S3_BUCKET']}.s3-eu-west-1.amazonaws.com",
+      path_style: true
   },
 }
  
