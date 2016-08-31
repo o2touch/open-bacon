@@ -94,7 +94,9 @@ ActionMailer::Base.smtp_settings = {
   :address => ENV['MAIL_SERVER'],
   :port => ENV['MAIL_PORT'],
   :domain => ENV['MAIL_DOMAIN'],
-  :authentication => ENV['MAIL_PORT'],
-  :user_name => ENV['MAIL_USER'],
-  :password => ENV['MAIL_PASSWORD']
+  :authentication => :plain,
+  # :user_name => ENV['MAIL_USER'],
+  # :password => ENV['MAIL_PASSWORD']
+  :user_name => ENV['TEST_MAIL_USER'],
+  :password => ENV['TEST_MAIL_PASSWORD']
 }
