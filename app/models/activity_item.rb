@@ -173,27 +173,29 @@ class ActivityItem < ActiveRecord::Base
   end
 
   def send_push_notification(feed_type, object, type="add", socketID=nil)
-    ActivityItem.delay_for(1.seconds, queue: 'pusher').send_push_notification(self.id, feed_type, object.id, object.class.name, type, socketID)
+    # Removed. This send the web socket type push, not mobile app type push.
+    # ActivityItem.delay_for(1.seconds, queue: 'pusher').send_push_notification(self.id, feed_type, object.id, object.class.name, type, socketID)
   end
 
   def self.send_push_notification(id, feed_type, object_id, object_type, type="add", socketID=nil)
+    # Removed. This send the web socket type push, not mobile app type push.
     # We pass the object id but we think it's not really needed here. There is an engineering task to remove this.
-    ai = ActivityItem.find(id)
-    logger.info "IN ACTIVITY PUSH NOTIFICATION"
+    # ai = ActivityItem.find(id)
+    # logger.info "IN ACTIVITY PUSH NOTIFICATION"
 
-    # TODO SR - Extract into class and mock it out.
-    rabl_out = Rabl::Renderer.new('api/v1/activity_items/show', ai, :view_path => 'app/views', :format => 'hash', :scope => BFFakeContext.new).render
+    # # TODO SR - Extract into class and mock it out.
+    # rabl_out = Rabl::Renderer.new('api/v1/activity_items/show', ai, :view_path => 'app/views', :format => 'hash', :scope => BFFakeContext.new).render
     
-    if object_type == Team.name || object_type == DivisionSeason.name #We want to remove profile feed_type but for now this nasty hack
-      feed_type = "activity"
-    end
+    # if object_type == Team.name || object_type == DivisionSeason.name #We want to remove profile feed_type but for now this nasty hack
+    #   feed_type = "activity"
+    # end
 
-    name = "#{object_type.downcase}-#{object_id.to_s}-#{feed_type}" 
-    Pusher[name].trigger(
-      type + '_activity_item',
-      rabl_out,
-      socketID
-    )
+    # name = "#{object_type.downcase}-#{object_id.to_s}-#{feed_type}" 
+    # Pusher[name].trigger(
+    #   type + '_activity_item',
+    #   rabl_out,
+    #   socketID
+    # )
   end
 
   def timestamp

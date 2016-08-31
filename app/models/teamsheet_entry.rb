@@ -51,19 +51,21 @@ class TeamsheetEntry < ActiveRecord::Base
   end
   
   def send_push_notification(type="add", socketID=nil)
-    TeamsheetEntry.delay_for(2.seconds, queue: 'pusher').send_push_notification(self.id, type, socketID)
+    # Removed. This send the web socket type push, not mobile app type push.
+    # TeamsheetEntry.delay_for(2.seconds, queue: 'pusher').send_push_notification(self.id, type, socketID)
   end
 
   def self.send_push_notification(id, type="add", socketID=nil)
-    tse = TeamsheetEntry.find(id)
+    # Removed. This send the web socket type push, not mobile app type push.
+    # tse = TeamsheetEntry.find(id)
 
-    rabl_out = Rabl::Renderer.new('api/v1/teamsheet_entries/show_reduced_activity_item', tse, :view_path => 'app/views', :format => 'hash', :scope => BFFakeContext.new).render
-    name = "event-#{tse.event.id}-teamsheet"
-    Pusher[name].trigger(
-      type + '_teamsheet-entry',
-      rabl_out,
-      socketID
-    )
+    # rabl_out = Rabl::Renderer.new('api/v1/teamsheet_entries/show_reduced_activity_item', tse, :view_path => 'app/views', :format => 'hash', :scope => BFFakeContext.new).render
+    # name = "event-#{tse.event.id}-teamsheet"
+    # Pusher[name].trigger(
+    #   type + '_teamsheet-entry',
+    #   rabl_out,
+    #   socketID
+    # )
   end
     
   def add_open_graph(fbid)
