@@ -51,8 +51,9 @@ gem 'celluloid'
 gem 'slim', '>= 1.3.0'
 gem 'devise-async'
 
-# Cron
-gem 'whenever', '~> 0.9'
+# Cron replacement
+gem 'clockwork'
+
 
 gem 'gon', '~> 4.0.2'
 # for JS templating

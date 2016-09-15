@@ -57,9 +57,6 @@ class TriggerService
 
 
     def scheduled_user_event_reminders(time_job_started=Time.now, job_interval=15, events=nil)
-      # SR - When we are confident sidekiq won't fall over this can all be removed in favour of scheduled sidekiq jobs at the time the 
-      # notification is created. 
-
       users_to_remind = {}
 
       # Moved this query into here from rake task, because it is tightly coupled with the logic of this function: time range and status of events

@@ -115,9 +115,11 @@ GEM
       timers (>= 4.1.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
-    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
+    clockwork (2.0.0)
+      activesupport
+      tzinfo
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coffee-rails (3.2.2)
@@ -598,8 +600,6 @@ GEM
     warden (1.2.6)
       rack (>= 1.0)
     websocket (1.2.1)
-    whenever (0.9.4)
-      chronic (>= 0.6.3)
     xml-simple (1.1.5)
 
 PLATFORMS
@@ -620,6 +620,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rbenv
   celluloid
+  clockwork
   coffee-rails (~> 3.2.1)
   color
   colored (~> 1.2)
@@ -708,7 +709,6 @@ DEPENDENCIES
   uuid
   vestal_versions!
   warden (~> 1.2.1)
-  whenever (~> 0.9)
 
 RUBY VERSION
    ruby 1.9.3p551
