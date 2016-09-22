@@ -176,7 +176,8 @@ BluefieldsRails::Application.routes.draw do
         resources :messages, controller: 'event_messages', except: [:new, :edit], as: :api_v1_event_message
 
         namespace :mail do
-          resources :messages, only: [:create, :bounced]
+          resources :messages, only: [:create]
+          post 'messages/bounced' => 'messages#bounced'
         end
 
         resources :points, only: [:update]

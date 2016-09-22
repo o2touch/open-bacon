@@ -1,8 +1,8 @@
 include IncomingMailHelper
 
 class Api::V1::Mail::MessagesController < Api::V1::ApplicationController
-	skip_before_filter :authenticate_user!, only: [:create]
-	skip_authorization_check only: [:create]
+	skip_before_filter :authenticate_user!, only: [:create, :bounced]
+	skip_authorization_check only: [:create, :bounced]
 
 	respond_to :html 
 
