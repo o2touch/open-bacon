@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160408235818) do
+ActiveRecord::Schema.define(:version => 20160922201825) do
 
   create_table "active_campaign_events", :force => true do |t|
     t.string   "email"
@@ -89,6 +89,9 @@ ActiveRecord::Schema.define(:version => 20160408235818) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "app_events", ["obj_id"], :name => "obj_id"
+  add_index "app_events", ["subj_id"], :name => "subj_id"
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -510,6 +513,7 @@ ActiveRecord::Schema.define(:version => 20160408235818) do
     t.integer  "tenant_id"
   end
 
+  add_index "ns2_notification_items", ["app_event_id"], :name => "app_event_id"
   add_index "ns2_notification_items", ["status"], :name => "status"
   add_index "ns2_notification_items", ["type"], :name => "type"
   add_index "ns2_notification_items", ["user_id"], :name => "user_id"
@@ -566,6 +570,7 @@ ActiveRecord::Schema.define(:version => 20160408235818) do
   add_index "poly_roles", ["obj_id"], :name => "team_id"
   add_index "poly_roles", ["user_id", "obj_id"], :name => "index_team_roles_on_user_id_and_team_id"
   add_index "poly_roles", ["user_id"], :name => "index_team_roles_on_user_id"
+  add_index "poly_roles", ["user_id"], :name => "user_id"
 
   create_table "power_tokens", :force => true do |t|
     t.string   "token"
@@ -703,6 +708,8 @@ ActiveRecord::Schema.define(:version => 20160408235818) do
     t.datetime "profile_picture_updated_at"
     t.boolean  "profile_picture_processing"
   end
+
+  add_index "team_profiles", ["profile_picture_file_name"], :name => "profile_picture_file_name"
 
   create_table "team_roles", :force => true do |t|
     t.integer  "user_id"
@@ -913,11 +920,13 @@ ActiveRecord::Schema.define(:version => 20160408235818) do
     t.text     "configurable_settings_hash"
     t.string   "configurable_parent_type"
     t.integer  "configurable_parent_id"
+    t.boolean  "unsubscribe"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["email"], :name => "email"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["time_zone"], :name => "time_zone"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "users_from_beta", :primary_key => "uid", :force => true do |t|

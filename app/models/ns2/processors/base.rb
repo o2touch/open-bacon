@@ -27,6 +27,9 @@ class Ns2::Processors::Base
 
 		# simply to clean up the above methods
 		def email_ni(app_event, user, tenant, datum, meta_data)
+			# don't send to unsubscribed people
+			return nil unless user.should_send_email?
+
 			# set the mailer, unless it's been manually set
 			# maybe move this to inside email_notification_item.rb ?? TS
 			meta_data[:mailer] = "#{app_event.obj.class}Mailer" unless meta_data.has_key? :mailer

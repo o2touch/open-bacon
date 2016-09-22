@@ -133,6 +133,11 @@ class User < ActiveRecord::Base
     true # Must return true
   end
 
+  # if email changed, set unsubscribe to false
+  before_save do
+    self.unsubscribe = false if self.changed.include? "email"
+    true
+  end
 
   # for callback
   def internationalize_mobile_number
@@ -652,7 +657,9 @@ class User < ActiveRecord::Base
   end
 
   def should_send_email?
-    self.email.nil? ? false : true
+    return false if self.email.nil?
+    return false if self.unsubscribe
+    true
   end
 
   def should_send_sms?

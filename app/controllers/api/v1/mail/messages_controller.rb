@@ -6,6 +6,16 @@ class Api::V1::Mail::MessagesController < Api::V1::ApplicationController
 
 	respond_to :html 
 
+  def bounced
+    user = User.find_by_email(params['recipient'])
+    if user
+      user.unsubscribe = true
+      user.save
+    end
+
+    head :ok
+  end
+
 	def create
 		pretty_print_mail(params)
 		# if it's not mailgun do nothing (but pretend it's all 200)
