@@ -21,7 +21,7 @@ BFApp.Views.SearchPanelLayout = Marionette.Layout.extend({
   },
 
   initialize: function(options) {
-    var searchClient = new AlgoliaSearch('1ESI9QYTPJ', '8c45f667d9649e81fa2a735dacefaa42');
+    var searchClient = new AlgoliaSearch('XS6P544I6J', '0f9d2f1d867de571b48b07519b0178f8');
     var indexName = (this.options.context == "event") ? 'o2_touch_events_<%= Rails.env %>' : 'public_leagues_<%= Rails.env %>';
     this.searchIndex = searchClient.initIndex(indexName);
 
