@@ -745,13 +745,6 @@ class User < ActiveRecord::Base
     @goals
   end
 
-  def unsubscribe
-    UsersUnsubscribed.where({
-      user_id: self.id,
-      email: self.email,
-    }).first_or_create
-  end
-
   def locale
     return "en-US" if self.country == "US"
     return "en-GB" if self.country == "GB"
